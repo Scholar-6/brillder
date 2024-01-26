@@ -86,7 +86,8 @@ export enum FirstChoice {
 }
 
 interface SixStepState {
-  choice: FirstChoice | null;
+  readingChoice: FirstChoice | null;
+  writingChoice: FirstChoice | null;
   readingChoicesV2: ReadingChoiceV2[];
   secondChoices: any[];
   thirdChoices: any[];
@@ -101,10 +102,13 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
   constructor(props: FirstQuestionProps) {
     super(props);
 
-    let choice = null;
+    let readingChoice = null;
+    let writingChoice = null;
 
-    if (props.answer) {
-      choice = props.answer.answer.choice;
+    if (props.answer && props.answer.answer) {
+      const {answer} = props.answer;
+      readingChoice = answer.readingChoice;
+      writingChoice = answer.writingChoice;
     }
 
     let secondChoices = [
@@ -441,7 +445,8 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     ];
 
     this.state = {
-      choice,
+      readingChoice,
+      writingChoice,
       readingChoicesV2: [],
       secondChoices,
       thirdChoices,
@@ -453,14 +458,20 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     }
   }
 
-  setChoice(choice: FirstChoice) {
-    this.setState({ choice });
+  setReadingChoice(readingChoice: FirstChoice) {
+    this.setState({ readingChoice });
   }
+
+  setWritingChoice(writingChoice: FirstChoice) {
+    this.setState({ writingChoice });
+  }
+
 
   getAnswer() {
     return {
       subStep: this.state.subStep,
-      choice: this.state.choice,
+      readingChoice: this.state.readingChoice,
+      writingChoice: this.state.writingChoice,
       readingChoicesV2: this.state.readingChoicesV2,
       secondChoices: this.state.secondChoices,
       thirdChoices: this.state.thirdChoices,
@@ -620,32 +631,34 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           </div>
           <div className="boxes-container start font-16">
             <CheckBoxV2
-              currentChoice={WritingChoice.first} choice={this.state.choice}
-              label="Writing well is something I take pride in and hugely enjoy." setChoice={choice => this.setChoice(choice)}
+              currentChoice={WritingChoice.first} choice={this.state.writingChoice}
+              label="Writing well is something I take pride in and hugely enjoy."
+              setChoice={this.setWritingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={WritingChoice.second} choice={this.state.choice}
-              label="I am confident that I’m a good written communicator and I like writing." setChoice={choice => this.setChoice(choice)}
+              currentChoice={WritingChoice.second} choice={this.state.writingChoice}
+              label="I am confident that I’m a good written communicator and I like writing."
+              setChoice={this.setWritingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={WritingChoice.third} choice={this.state.choice}
+              currentChoice={WritingChoice.third} choice={this.state.writingChoice}
               label="The only time I write at length is for schoolwork. I don’t object to it but I don’t relish it."
-              setChoice={choice => this.setChoice(choice)}
+              setChoice={this.setWritingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={WritingChoice.fourth} choice={this.state.choice}
+              currentChoice={WritingChoice.fourth} choice={this.state.writingChoice}
               label="I’m not a natural communicator on paper: writing is a chore I’d rather do without."
-              setChoice={choice => this.setState({ choice })}
+              setChoice={this.setWritingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={WritingChoice.fifth} choice={this.state.choice}
+              currentChoice={WritingChoice.fifth} choice={this.state.writingChoice}
               label="Travel, Geography and Other Cultures"
-              setChoice={choice => this.setState({ choice })}
+              setChoice={this.setWritingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={WritingChoice.sixth} choice={this.state.choice}
+              currentChoice={WritingChoice.sixth} choice={this.state.writingChoice}
               label="I hate writing and much prefer subjects have little or no need for it."
-              setChoice={choice => this.setState({ choice })}
+              setChoice={this.setWritingChoice.bind(this)}
             />
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.fourth })} />
@@ -814,27 +827,27 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           </div>
           <div className="boxes-container font-16">
             <CheckBoxV2
-              currentChoice={ReadingChoice.first} choice={this.state.choice}
-              label="I absolutely love reading and devour all sorts of books." setChoice={choice => this.setChoice(choice)}
+              currentChoice={ReadingChoice.first} choice={this.state.readingChoice}
+              label="I absolutely love reading and devour all sorts of books." setChoice={this.setReadingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={ReadingChoice.second} choice={this.state.choice}
-              label="I do read for pleasure and enjoy books if they interest me." setChoice={choice => this.setChoice(choice)}
+              currentChoice={ReadingChoice.second} choice={this.state.readingChoice}
+              label="I do read for pleasure and enjoy books if they interest me." setChoice={this.setReadingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={ReadingChoice.third} choice={this.state.choice}
+              currentChoice={ReadingChoice.third} choice={this.state.readingChoice}
               label="I read if I have to - if a book is set at school - and usually don’t mind unless the book is really boring."
-              setChoice={choice => this.setChoice(choice)}
+              setChoice={this.setReadingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={ReadingChoice.fourth} choice={this.state.choice}
+              currentChoice={ReadingChoice.fourth} choice={this.state.readingChoice}
               label="I get very little pleasure from reading and I don’t enjoy reading for school."
-              setChoice={choice => this.setState({ choice })}
+              setChoice={this.setReadingChoice.bind(this)}
             />
             <CheckBoxV2
-              currentChoice={ReadingChoice.fifth} choice={this.state.choice}
+              currentChoice={ReadingChoice.fifth} choice={this.state.readingChoice}
               label="I hate reading and hardly ever touch a book."
-              setChoice={choice => this.setState({ choice })}
+              setChoice={this.setReadingChoice.bind(this)}
             />
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
