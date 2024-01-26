@@ -13,8 +13,8 @@ import SecondTable from "./SecondTable";
 
 interface FirstQuestionProps {
   answer: any;
-  onChoiceChange(answer: any): void;
-  moveNext(): void;
+  saveAnswer(answer: any): void;
+  moveNext(answer: any): void;
   moveBack(answer: any): void;
 }
 
@@ -40,7 +40,7 @@ export enum ReadingChoiceV2 {
   Travel,
   Nature,
   History,
-  Biology,
+  Biography,
   Art,
   Power,
   Religion,
@@ -62,6 +62,20 @@ export enum WritingChoice {
   fourth,
   fifth,
   sixth
+}
+
+export enum SixStepFourthChoices {
+  InTheClassroom = 1,
+  ICantStand,
+  AtHome,
+  WithMyFriends,
+  MyFriends,
+  IPreferPractical,
+  ILove,
+  ImNot,
+  ILikeTalking,
+  IPreferToListen,
+  IReallyAdmire
 }
 
 export enum FirstChoice {
@@ -166,36 +180,47 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
 
     let fourthChoices = [
       {
+        type: SixStepFourthChoices.InTheClassroom,
         label: 'In the classroom, I enjoy contributing ideas and showing what I know.',
         choice: null
       }, {
+        type: SixStepFourthChoices.ICantStand,
         label: 'I can’t stand pretentious people who waffle on about stuff which isn’t relevant.',
         choice: null
       }, {
+        type: SixStepFourthChoices.AtHome,
         label: 'At home, my family talk a lot about what’s going on in the world and we have interesting discussions.',
         choice: null
       }, {
+        type: SixStepFourthChoices.WithMyFriends,
         label: 'With my friends I mainly gossip and enjoy the chance to banter and have fun.',
         choice: null
       }, {
+        type: SixStepFourthChoices.MyFriends,
         label: 'My friends put forward new ideas and challenge my thinking in ways I value.',
         choice: null
       }, {
+        type: SixStepFourthChoices.IPreferPractical,
         label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more solid answers.',
         choice: null
       }, {
+        type: SixStepFourthChoices.ILove,
         label: 'I love the chance to put an argument in a proper debate, and I’m good at undermining other people’s arguments.',
         choice: null
       }, {
+        type: SixStepFourthChoices.ImNot,
         label: 'I’m not a confident communicator - my strengths are in other areas.',
         choice: null
       }, {
+        type: SixStepFourthChoices.ILikeTalking,
         label: 'I like talking in depth with others about music, books or about documentaries, plays and films we’ve seen.',
         choice: null
       }, {
+        type: SixStepFourthChoices.IPreferToListen,
         label: 'I prefer to listen carefully and chip in only when something really needs to be said.',
         choice: null
       }, {
+        type: SixStepFourthChoices.IReallyAdmire,
         label: 'I really admire people who can communicate effectively in foreign languages.',
         choice: null
       }
@@ -430,7 +455,20 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
 
   setChoice(choice: FirstChoice) {
     this.setState({ choice });
-    this.props.onChoiceChange({ choice });
+  }
+
+  getAnswer() {
+    return {
+      subStep: this.state.subStep,
+      choice: this.state.choice,
+      readingChoicesV2: this.state.readingChoicesV2,
+      secondChoices: this.state.secondChoices,
+      thirdChoices: this.state.thirdChoices,
+      fourthChoices: this.state.fourthChoices,
+      fifthBChoices: this.state.fifthBChoices,
+      seventhChoices: this.state.seventhChoices,
+      sixthChoices: this.state.sixthChoices,
+    }
   }
 
   renderReadingChoiceV2(label: string, currentChoice: ReadingChoiceV2) {
@@ -513,6 +551,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           }} />
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixth })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.final });
           }}>Finish Course Selector</button>
         </div>
@@ -542,6 +581,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           }} />
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.fifthB })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.seventh });
           }}>Continue</button>
         </div>
@@ -562,6 +602,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           }} />
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.fifthA })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.sixth });
           }}>Continue</button>
         </div>
@@ -609,6 +650,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.fourth })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.fifthB });
           }}>Continue</button>
         </div>
@@ -637,9 +679,8 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           }} />
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.third })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({
-              subStep: SixthSubStep.fifthA
-            });
+            this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SixthSubStep.fifthA });
           }}>Continue</button>
         </div>
       );
@@ -667,9 +708,8 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           }} />
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.second })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({
-              subStep: SixthSubStep.fourth
-            });
+            this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SixthSubStep.fourth });
           }}>Continue</button>
         </div>
       );
@@ -698,9 +738,8 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           }} />
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixB })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({
-              subStep: SixthSubStep.third
-            });
+            this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SixthSubStep.third });
           }}>Continue</button>
         </div>
       );
@@ -738,19 +777,18 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             <Grid item xs={6}>
               <div className="boxes-container end font-16">
                 {this.renderReadingChoiceV2("History", ReadingChoiceV2.History)}
-                {this.renderReadingChoiceV2("Biography / Autobiographies", ReadingChoiceV2.Biology)}
+                {this.renderReadingChoiceV2("Biography / Autobiographies", ReadingChoiceV2.Biography)}
                 {this.renderReadingChoiceV2("Art, Design and Architecture", ReadingChoiceV2.Art)}
                 {this.renderReadingChoiceV2("Power, Money, Government & Politics", ReadingChoiceV2.Power)}
-                {this.renderReadingChoiceV2("Religion, Philosophy Self Improvement", ReadingChoiceV2.Religion)}
+                {this.renderReadingChoiceV2("Religion, Philosophy & Self Improvement", ReadingChoiceV2.Religion)}
                 {this.renderReadingChoiceV2("Other", ReadingChoiceV2.Other)}
               </div>
             </Grid>
           </Grid>
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixA })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({
-              subStep: SixthSubStep.second
-            });
+            this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SixthSubStep.second });
           }}>Continue</button>
         </div>
       );
@@ -801,9 +839,9 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({
-              subStep: SixthSubStep.sixB
-            });
+            console.log('save answer');
+            this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SixthSubStep.sixB });
           }}>Continue</button>
         </div>
       );
@@ -823,11 +861,9 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           Each of your answers in this final part helps us to evaluate your interests and instincts, the type of intelligence you possess and your character.
         </div>
         <SpriteIcon name="sixthform-sixth-description" className="big-svg-description" />
-        <BackButtonSix onClick={() => this.props.moveBack({})} />
+        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.setState({
-            subStep: SixthSubStep.sixA
-          });
+          this.setState({ subStep: SixthSubStep.sixA });
         }}>Let’s start!</button>
       </div>
     );

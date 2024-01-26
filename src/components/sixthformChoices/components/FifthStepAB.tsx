@@ -61,6 +61,8 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
 
     subjects = shuffle(subjects);
 
+    console.log(this.props.abAnswer);
+
     if (this.props.abAnswer) {
       const abAnswer = this.props.abAnswer;
       if (abAnswer.abSubjects) {
