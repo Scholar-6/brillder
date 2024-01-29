@@ -1,0 +1,135 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.SixthformOutcomePage {
+  $placeholder-color: #4C608A;
+  $font-scale: 1.14;
+  background: var(--theme-dark-blue);
+  height: 100%;
+
+  .top-left-logo-container {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    width: 12vw;
+    height: 5.834vw;
+    border-bottom-right-radius: 2vw;
+    background: var(--theme-light-blue);
+
+    .logo-container-r23 {
+      position: relative;
+
+      svg {
+        position: absolute;
+        top: 0;
+      }
+
+      .white-logo-r23 {
+        z-index: 2;
+        top: 0.5vw;
+        height: 5.334vw;
+        left: 1vw;
+        width: 8.5vw;
+      }
+
+      .red-shape-r23 {
+        width: 3.6vw;
+        height: 5vw;
+        left: 3.5vw;
+      }
+    }
+
+    .course-select-label {
+      height: 5.834vw;
+      display: flex;
+      align-items: center;
+      color: white;
+      margin-left: 11.4vw;
+    }
+  }
+
+  .logo-top-container {
+    z-index: 2;
+    position: absolute;
+    top: 0 !important;
+  }
+
+  .white-blue {
+    color: #4C608A;
+  }
+
+  .logout-container {
+    background: var(--theme-light-blue);
+    margin-left: 14.434vw;
+    height: 5.834vw;
+    border-bottom-left-radius: 2vw;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 2vw;
+    width: calc(100vw - 14.434vw);
+  }
+
+  .header-top {
+    height: 5.834vw;
+  }
+
+  .dashboard-page {
+    background: var(--theme-dark-blue);
+  }
+
+  .sorted-row {
+    display: flex;
+  }
+
+  .bold {
+    font-family: 'Brandon Grotesque Bold';
+  }
+
+  ::-webkit-scrollbar {
+    margin-left: 2vw;
+    width: 0.5vw;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: inherit;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #475F92;
+    border-radius: 0.2vw;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #475F92;
+  }
+
+  .tab-container-e354 {
+    display: flex;
+    width: 100%;
+    .tab-e354 {
+      text-align: center;
+      color: white;
+      width: 33%;
+      background: #193266;
+
+      &.active {
+        background: #4C608A;
+      }
+    }
+  }
+
+  .content-container-e354 {
+    margin-top: 2vw;
+    width: 100vw;
+  }
+}
+
+.SixthformChoicesPage~.beta-text {
+  display: none;
+}
