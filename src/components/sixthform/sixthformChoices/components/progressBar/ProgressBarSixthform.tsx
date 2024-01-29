@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProgressBarSixthform.scss';
-import { Pages } from 'components/sixthformChoices/SixthformChoices';
+import { Pages } from '../../SixthformChoices';
 
 interface Props {
   step: Pages;
