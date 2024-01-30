@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 
 import "./SixthformOutcome.scss";
 import { User } from "model/user";
 import {
   SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects
 } from "services/axios/sixthformChoices";
+
+import { ReduxCombinedState } from 'redux/reducers';
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/ProgressBarSixthformV2";
@@ -186,7 +189,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 <div className="tab-content-e354">
                   <div className="top-header-e354 font-32">
                     <SpriteIcon name="hand-icon" />
-                    Welcome back, Joan!
+                    Welcome back, {this.props.user ? this.props.user.firstName : 'User'}!
                   </div>
                   <div className="font-16">
                     Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
@@ -247,4 +250,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 }
 
-export default SixthformChoices;
+
+const mapState = (state: ReduxCombinedState) => ({
+  user: state.user.user,
+});
+
+export default connect(mapState)(SixthformChoices);
