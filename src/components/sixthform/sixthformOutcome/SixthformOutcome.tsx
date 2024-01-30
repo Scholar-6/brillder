@@ -7,6 +7,8 @@ import {
 } from "services/axios/sixthformChoices";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/ProgressBarSixthformV2";
+import map from "components/map";
 
 
 interface UserProfileProps {
@@ -22,30 +24,10 @@ enum SixActiveTab {
   Outcome
 }
 
-export enum Pages {
-  Welcome = 0,
-  Question1,
-  Question2,
-  Question3,
-  Question4,
-  Question5,
-  Question6
-}
-
-enum SubjectType {
-  ALevels = 1,
-  VocationalSubjects,
-  AllSubjects
-}
-
 interface UserProfileState {
-  subjectType: SubjectType;
   allSubjects: SixthformSubject[];
   subjects: SixthformSubject[];
-  popupSubject: SixthformSubject | null;
-  popupTimeout: number | NodeJS.Timeout;
   answers: any[];
-  page: Pages;
   activeTab: SixActiveTab;
 }
 
@@ -54,14 +36,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     super(props);
 
     this.state = {
-      subjectType: SubjectType.AllSubjects,
       allSubjects: [],
       subjects: [],
       answers: [],
       activeTab: SixActiveTab.Outcome,
-      popupTimeout: -1,
-      popupSubject: null,
-      page: Pages.Welcome,
     }
 
     this.loadSubjects();
@@ -87,14 +65,19 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer.answer = JSON.parse(answer.answer);
       }
 
-      const firstAnswer = answers.find(a => a.step === Pages.Question1);
 
-      let subjectType = SubjectType.AllSubjects;
-      if (firstAnswer) {
-        subjectType = firstAnswer.answer.choice;
+      let steps = 0;
+
+      for (let answer of answers) {
+        if (answer.answer) {
+          steps += 1;
+        }
       }
 
-      this.setState({ answers: [], subjectType });
+      console.log('res', answers)
+
+
+      this.setState({ answers });
     }
   }
 
@@ -108,6 +91,51 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return 0;
     });
     return subjects;
+  }
+
+  renderStepBox() {
+    let answers = this.state.answers;
+    console.log(answers);
+    if (answers.length > 0) {
+      let lastStep = 0;
+      for (let answer of answers) {
+        if (answer.step > lastStep) {
+          lastStep = answer.step;
+        }
+      }
+      return (
+        <div className="box-box box-second">
+          <div className="font-16 second-box-top-text">
+            <div className="opacity-04">SIXTH FORM COURSE SELECTOR:</div>
+            <div className="flex-end">
+              <span className="flex-center opacity-04">PROGRESS:</span>
+              <span className="font-40">50%</span>
+            </div>
+          </div>
+          <ProgressBarSixthformV2 step={lastStep} />
+          <div className="flex-end">
+            <div className="survey-button font-20" onClick={() => this.props.history.push(map.SixthformChoices)}>Continue Survey</div>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="box-box box-second">
+          <div className="opacity-04 font-16">SIXTH FORM COURSE SELECTOR:</div>
+          <div className="opacity-04 font-15 flex-center not-started-label m-t-2-e3">
+            <SpriteIcon name="alert-triangle" />
+            NOT STARTED
+          </div>
+          <div className="flex-center">
+            <div className="survey-button font-20" onClick={() => {
+              this.props.history.push(map.SixthformChoices);
+            }}>
+              Take the Survey
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -125,18 +153,91 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
             <div className="logout-container">
               <div className="search-container font-32">
+                Joan’s Dashboard
               </div>
             </div>
           </div>
           <div className="content-container-e354">
             <div>
               <div className="tab-container-e354">
-                <div className="tab-e354">Six Step Survey</div>
-                <div className="tab-e354">Subject Tasters</div>
-                <div className="tab-e354">My Outcomes</div>
+                <div
+                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Survey ? "active" : "not-active"}`}
+                >
+                  Six Step Survey
+                </div>
+                <div
+                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active" : "not-active"}`}
+                  onClick={() => {
+
+                  }}
+                >
+                  Subject Tasters
+                </div>
+                <div
+                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Outcome ? "active" : "not-active"}`}
+                  onClick={() => {
+
+                  }}
+                >
+                  My Outcomes
+                </div>
               </div>
-              <div>
-                content
+              <div className="top-part-e354">
+                <div className="tab-content-e354">
+                  <div className="top-header-e354 font-32">
+                    <SpriteIcon name="hand-icon" />
+                    Welcome back, Joan!
+                  </div>
+                  <div className="font-16">
+                    Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
+                  </div>
+                  <div className="boxes-e354">
+                    <div className="box-box box-first">
+                      <SpriteIcon name="edit-icon-sixthform" />
+                      <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
+                      <div className="font-20">Joan Doe</div>
+                      <div className="font-20">joandoe@email.com</div>
+                      <div className="opacity-07 font-16 m-t-1-e3">INSTITUTIONAL PROVIDER:</div>
+                      <div className="font-20">Hereford Sixth Form College</div>
+                    </div>
+                    {this.renderStepBox()}
+                  </div>
+                  <div className="box-e354-big">
+                    <div className="box-box box-first">
+                      <div className="font-16 top-text-cotainer opacity-04">
+                        <div className="first-box">MY SUBJECT RANKINGS (8)</div>
+                        <div className="second-box">Click and drag to rearrange your subjects</div>
+                      </div>
+                      <div>
+                        <div className="font-20">DEFINITES</div>
+                        <div className="line-e354"></div>
+                        <div className="cards-drop empty">
+                          <SpriteIcon name="empty-category-e354" className="first" />
+                          <SpriteIcon name="empty-category-e354" />
+                          <SpriteIcon name="empty-category-e354" className="last" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-20">PROBABLES</div>
+                        <div className="line-e354"></div>
+                        <div className="cards-drop empty">
+                          <SpriteIcon name="empty-category-e354" className="first" />
+                          <SpriteIcon name="empty-category-e354" />
+                          <SpriteIcon name="empty-category-e354" className="last" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-20">POSSIBLES</div>
+                        <div className="line-e354"></div>
+                        <div className="cards-drop empty">
+                          <SpriteIcon name="empty-category-e354" className="first" />
+                          <SpriteIcon name="empty-category-e354" />
+                          <SpriteIcon name="empty-category-e354" className="last" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
