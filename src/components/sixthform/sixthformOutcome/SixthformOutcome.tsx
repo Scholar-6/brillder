@@ -38,8 +38,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
 
-    console.log(props);
-
     this.state = {
       allSubjects: [],
       subjects: [],
@@ -70,7 +68,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer.answer = JSON.parse(answer.answer);
       }
 
-
       let steps = 0;
 
       for (let answer of answers) {
@@ -100,7 +97,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderStepBox() {
     let answers = this.state.answers;
-    console.log(answers);
+
     if (answers.length > 0) {
       let lastStep = 0;
       for (let answer of answers) {
@@ -108,21 +105,24 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           lastStep = answer.step;
         }
       }
+      
       if (lastStep === 6) {
         return (
           <div className="box-box box-second">
             <div className="font-16 second-box-top-text">
               <div className="opacity-04">SIXTH FORM COURSE SELECTOR:</div>
+              <SpriteIcon name="check-green-six" className="absolute-icon" />
             </div>
-            <div className="flex-center">
-              <span className="font-64">100%</span>
+            <div className="flex-center font-32 bold">
+              <span className="font-64 line-height-1">100%</span>
             </div>
-            <div className="flex-center">
-              <div className="font-36">COMPLETED</div>
+            <div className="flex-center bold">
+              <div className="font-36 line-height-1">COMPLETED</div>
             </div>
           </div>
         );
       }
+
       return (
         <div className="box-box box-second">
           <div className="font-16 second-box-top-text">

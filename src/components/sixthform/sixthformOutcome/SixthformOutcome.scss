@@ -251,6 +251,14 @@
             > div {
               width: 50%;
             }
+
+            .absolute-icon {
+              position: absolute;
+              width: 2vw;
+              height: 2vw;
+              top: 0.5vw;
+              right: 0.5vw;
+            }
           }
 
           .flex-end {
@@ -387,6 +395,10 @@
 
   .font-64 {
     font-size: calc(4vw * $font-scale);
+  }
+
+  .line-height-1 {
+    line-height: 1;
   }
 }
 
