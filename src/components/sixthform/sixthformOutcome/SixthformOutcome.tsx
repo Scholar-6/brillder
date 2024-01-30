@@ -38,6 +38,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
 
+    console.log(props);
+
     this.state = {
       allSubjects: [],
       subjects: [],
@@ -105,6 +107,21 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         if (answer.step > lastStep) {
           lastStep = answer.step;
         }
+      }
+      if (lastStep === 6) {
+        return (
+          <div className="box-box box-second">
+            <div className="font-16 second-box-top-text">
+              <div className="opacity-04">SIXTH FORM COURSE SELECTOR:</div>
+            </div>
+            <div className="flex-center">
+              <span className="font-64">100%</span>
+            </div>
+            <div className="flex-center">
+              <div className="font-36">COMPLETED</div>
+            </div>
+          </div>
+        );
       }
       return (
         <div className="box-box box-second">
@@ -198,8 +215,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     <div className="box-box box-first">
                       <SpriteIcon name="edit-icon-sixthform" />
                       <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
-                      <div className="font-20">Joan Doe</div>
-                      <div className="font-20">joandoe@email.com</div>
+                      <div className="font-20">{this.props.user.firstName} {this.props.user.lastName}</div>
+                      <div className="font-20">{this.props.user.email}</div>
                       <div className="opacity-07 font-16 m-t-1-e3">INSTITUTIONAL PROVIDER:</div>
                       <div className="font-20">Hereford Sixth Form College</div>
                     </div>

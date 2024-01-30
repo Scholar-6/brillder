@@ -377,8 +377,16 @@
     font-size: calc(2vw * $font-scale);
   }
 
+  .font-36 {
+    font-size: calc(2.25vw * $font-scale);
+  }
+
   .font-40 {
     font-size: calc(2.5vw * $font-scale);
+  }
+
+  .font-64 {
+    font-size: calc(4vw * $font-scale);
   }
 }
 
