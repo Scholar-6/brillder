@@ -481,6 +481,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     } else if (this.state.page === Pages.Question6) {
       return <SixthStep
         answer={this.state.answers.find(a => a.step === Pages.Question6)}
+        history={this.props.history}
         saveAnswer={answer => this.saveSixthAnswer(answer)}
         moveNext={answer => {
           this.saveSixthAnswer(answer);

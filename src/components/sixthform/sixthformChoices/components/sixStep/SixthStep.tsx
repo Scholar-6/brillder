@@ -10,9 +10,11 @@ import FifthBTable from "./FifthBTable";
 import FourthTable from "./FourthTable";
 import ThirdTable from "./ThirdTable";
 import SecondTable from "./SecondTable";
+import map from "components/map";
 
 interface FirstQuestionProps {
   answer: any;
+  history: any;
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
   moveBack(answer: any): void;
@@ -654,6 +656,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             </div>
             <button className="absolute-contunue-btn font-24" onClick={() => {
               // exit
+              this.props.history.push(map.SixthformOutcome);
             }}>Exit</button>
           </div>
         </div>
