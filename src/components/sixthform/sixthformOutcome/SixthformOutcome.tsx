@@ -105,7 +105,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           lastStep = answer.step;
         }
       }
-      
+
       if (lastStep === 6) {
         return (
           <div className="box-box box-second">
@@ -159,6 +159,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   render() {
+    let lastStep = 0;
+    let answers = this.state.answers;
+
+    if (answers.length > 0) {
+      for (let answer of answers) {
+        if (answer.step > lastStep) {
+          lastStep = answer.step;
+        }
+      }
+    }
+
     return (
       <React.Suspense fallback={<></>}>
         <div className="SixthformOutcomePage">
@@ -173,7 +184,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
             <div className="logout-container">
               <div className="search-container font-32">
-                Joan’s Dashboard
+                {this.props.user.firstName} Dashboard
               </div>
             </div>
           </div>
@@ -231,29 +242,86 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                       <div>
                         <div className="font-20">DEFINITES</div>
                         <div className="line-e354"></div>
-                        <div className="cards-drop empty">
-                          <SpriteIcon name="empty-category-e354" className="first" />
-                          <SpriteIcon name="empty-category-e354" />
-                          <SpriteIcon name="empty-category-e354" className="last" />
-                        </div>
+                        {lastStep === 6 ?
+                          <div className="cards-drop real font-20">
+                            <div className="subject-group first">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                            <div className="subject-group">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                            <div className="subject-group third">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                          </div> :
+                          <div className="cards-drop empty">
+                            <SpriteIcon name="empty-category-e354" className="first" />
+                            <SpriteIcon name="empty-category-e354" />
+                            <SpriteIcon name="empty-category-e354" className="last" />
+                          </div>
+                        }
                       </div>
                       <div>
                         <div className="font-20">PROBABLES</div>
                         <div className="line-e354"></div>
-                        <div className="cards-drop empty">
-                          <SpriteIcon name="empty-category-e354" className="first" />
-                          <SpriteIcon name="empty-category-e354" />
-                          <SpriteIcon name="empty-category-e354" className="last" />
-                        </div>
+                        {lastStep === 6 ?
+                          <div className="cards-drop real font-20">
+                            <div className="subject-group first">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                            <div className="subject-group">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                            <div className="subject-group third">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                          </div> :
+                          <div className="cards-drop empty">
+                            <SpriteIcon name="empty-category-e354" className="first" />
+                            <SpriteIcon name="empty-category-e354" />
+                            <SpriteIcon name="empty-category-e354" className="last" />
+                          </div>
+                        }
                       </div>
                       <div>
                         <div className="font-20">POSSIBLES</div>
                         <div className="line-e354"></div>
-                        <div className="cards-drop empty">
-                          <SpriteIcon name="empty-category-e354" className="first" />
-                          <SpriteIcon name="empty-category-e354" />
-                          <SpriteIcon name="empty-category-e354" className="last" />
-                        </div>
+                        {lastStep === 6 ?
+                          <div className="cards-drop real font-20">
+                            <div className="subject-group first">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                            <div className="subject-group">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                            <div className="subject-group third">
+                              Select and drag from the<br />
+                              subject cards below to choose<br />
+                              your Definites.
+                            </div>
+                          </div> :
+                          <div className="cards-drop empty">
+                            <SpriteIcon name="empty-category-e354" className="first" />
+                            <SpriteIcon name="empty-category-e354" />
+                            <SpriteIcon name="empty-category-e354" className="last" />
+                          </div>
+                        }
                       </div>
                     </div>
                   </div>

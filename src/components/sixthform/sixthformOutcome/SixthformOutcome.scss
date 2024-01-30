@@ -327,6 +327,29 @@
               }
             }
           }
+
+          &.real {
+            margin-top: 0.5vw;
+            display: flex;
+            .subject-group {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              width: 34%;
+              background: #193266B2;
+              border: 2px solid #E5E6ED66;
+              border-radius: 0.5vw;
+              color: #FFFFFFB2;
+              &.first {
+                margin-right: 1vw;
+              }
+
+              &.third {
+                margin-left: 1vw;
+              }
+            }
+          }
         }
       }
     }
