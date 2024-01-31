@@ -62,10 +62,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
-      let subjectCuts = this.sortByScore(subjects).slice(0, 8);
-      let definetlyList: any[] = [];
-      let probableList = subjectCuts.slice(0, 2);
-      let possibleList = subjectCuts.slice(2, 5);
+      let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
+      let subjectsR1 = subjects.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
+      let subjectCuts = this.sortByScore(subjectsR1).slice(0, 8);
+      let probableList = subjectCuts.slice(0, 3);
+      let possibleList = subjectCuts.slice(3, 6);
       if (definetlyList.length === 0) {
         definetlyList.push({ isEmpty: true });
         definetlyList.push({ isEmpty: true });
@@ -265,6 +266,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCard(subject: SixthformSubject, i: number) {
+    if (subject.isEmpty) {
+      return (
+        <div className="subject-group first font-20">
+          Select and drag from the<br />
+          subject cards below to choose<br />
+          your Definites.
+        </div>
+      )
+    }
     return (
       <div className="subject-sixth-card" key={i}>
         {subject.facilitatingSubject &&
@@ -332,10 +342,34 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           className="cards-drop real"
           group={{ name: "cloning-group-name" }}
           setList={definetlyList => {
+            let emptyCount = 0;
+            for (let subject of definetlyList) {
+              if (subject.isEmpty) {
+                emptyCount += 1;
+              }
+            }
+            if (definetlyList.length > 3) {
+              definetlyList = definetlyList.filter(s => !s.isEmpty);
+            } 
+            
+            if (definetlyList.length === 2) {
+              definetlyList.push({ isEmpty: true } as any);
+            }
+
+            if (definetlyList.length === 1) {
+              definetlyList.push({ isEmpty: true } as any);
+              definetlyList.push({ isEmpty: true } as any);
+            }
+
+            if (definetlyList.length === 0) {
+              definetlyList.push({ isEmpty: true } as any);
+              definetlyList.push({ isEmpty: true } as any);
+              definetlyList.push({ isEmpty: true } as any);
+            }
             this.setState({ definetlyList });
           }}
         >
-          {this.state.definetlyList.map((subject, i) => this.state.renderCard)}
+          {this.state.definetlyList.map(this.renderCard.bind(this))}
         </ReactSortable>
       );
     } else {
@@ -373,63 +407,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           key={1}
           className="cards-drop real"
           group={{ name: "cloning-group-name" }}
-          setList={possibleList => {
-            this.setState({ possibleList });
-          }}
+          setList={possibleList => this.setState({ possibleList })}
         >
-          {this.state.possibleList.map((subject, i) => <div className="subject-sixth-card">
-            {subject.facilitatingSubject &&
-              <div className="facilitation-container font-12">
-                <div>
-                  <SpriteIcon name="facilitating-badge" />
-                  <span>Facilitating Subject</span>
-                </div>
-              </div>}
-            <div className="subject-name font-24 bold">
-              {this.renderCircle(subject)}
-              <span className="subject-name-only">
-                {subject.name} {subject.score}
-              </span>
-            </div>
-            <div className="font-14">
-              {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
-            </div>
-            <div className="second-row">
-              <div className="box-v32 m-r">
-                <div>
-                  <SpriteIcon name="user-custom-v3" />
-                </div>
-                <div className="font-12">Candidates</div>
-                <div className="bold font-15">{subject.candidates > 0 ? subject.candidates : 1000}</div>
-              </div>
-              <div className="box-v32">
-                <div>
-                  <SpriteIcon name="facility-icon-hat" />
-                </div>
-                <div className="font-12">Subject Group</div>
-                <div className="bold font-12">{subject.subjectGroup ? subject.subjectGroup : 'STEM'}</div>
-              </div>
-              <div className="box-v32 m-l">
-                <div>
-                  <SpriteIcon name="bricks-icon-v3" />
-                </div>
-                <div className="font-12">Often taken with</div>
-                <div className="bold font-11">{subject.oftenWith ? subject.oftenWith : 'Accounting, Business'}</div>
-              </div>
-            </div>
-            {this.renderSwitchButton(subject)}
-            <div className="taste-container">
-              <div className="label-container">
-                <div>
-                  <div className="bold font-18">Try a taster topic</div>
-                  <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
-                </div>
-              </div>
-              <div>
-                {this.renderBrick(subject)}
-              </div>
-            </div>
-          </div>)}
+          {this.state.possibleList.map(this.renderCard.bind(this))}
         </ReactSortable>
       );
     } else {

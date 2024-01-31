@@ -35,6 +35,8 @@ export interface SixthformSubject {
   score: number;
   name: string;
   brick: Brick;
+
+  isEmpty?: boolean;
 }
 
 export interface KeyStage4Subject {
