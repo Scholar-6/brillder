@@ -329,8 +329,9 @@
           }
 
           &.real {
-            margin-top: 0.5vw;
+            margin-top: 1.5vw;
             display: flex;
+            margin-bottom: 1.5vw;
             .subject-group {
               display: flex;
               align-items: center;
@@ -422,6 +423,215 @@
 
   .line-height-1 {
     line-height: 1;
+  }
+
+
+
+
+  .subject-sixth-card {
+    color: var(--theme-dark-blue);
+    width: 33%;
+    background: white;
+    border-radius: 0.5vw;
+    padding: 2vh 1.2vw;
+
+    &:nth-child(1) {
+      margin-right: 1vw;
+    }
+
+    &:nth-child(3) {
+      margin-left: 1vw;
+    }
+
+    .facilitation-container {
+      width: 100%;
+      position: relative;
+      > div {
+        position: absolute;
+        top: 0.3vw;
+        right: 0;
+        display: flex;
+        align-items: center;
+      }
+
+      svg {
+        width: 1vw;
+        height: 1vw;
+      }
+    }
+
+    .subject-name {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 20vw !important;
+
+      padding-bottom: 1vh;
+
+      .subject-name-only {
+        width: 20vw;
+      }
+
+      .subject-circle {
+        margin-right: 0.3vw;
+        width: 0.8vw;
+        height: 0.8vw;
+      }
+
+      .yellow-circle {
+        color: var(--theme-yellow);
+      }
+
+      .green-circle {
+        color: var(--theme-green);
+      }
+
+      .red-circle {
+        color: var(--theme-orange);
+      }
+    }
+
+    .second-row {
+      display: flex;
+
+      .box-v32 {
+        margin-top: 2vh;
+        border-radius: 0.3vw;
+        width: 33.3%;
+        background: #4C608A1A;
+        padding-bottom: 0.5vh;
+
+        text-align: center;
+
+        div {
+          padding-top: 0.2vh;
+          padding-bottom: 0.2vh;
+        }
+
+        svg {
+          padding-top: 0.5vw;
+          width: 2vw;
+          height: 2vw;
+        }
+
+        &.m-r {
+          margin-right: 0.5vw;
+        }
+
+        &.m-l {
+          margin-left: 0.5vw;
+        }
+
+        >div {
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+
+    .switch-button {
+      border-radius: 0.5vw;
+      margin-top: 2vh;
+      background: #EEF0F4;
+      color: #181B20;
+      display: flex;
+      padding-top: 0.22vw;
+      padding-bottom: 0.22vw;
+      padding-left: 0.22vw;
+      padding-right: 0.22vw;
+
+      >div {
+        cursor: pointer;
+        text-align: center;
+        width: 33.4%;
+        padding-top: 0.6vh;
+        padding-bottom: 0.6vh;
+      }
+
+      .active {
+        border-radius: 0.5vw;
+      }
+
+      .active-yellow {
+        color: white;
+        background: var(--theme-yellow);
+      }
+
+      .active-green {
+        color: white;
+        background: var(--theme-green);
+      }
+
+      .active-red {
+        color: white;
+        background: var(--theme-orange);
+      }
+    }
+
+    .taste-container {
+      margin-top: 2vh;
+      display: flex;
+      background: #4C608A1A;
+      border-radius: 0.5vw;
+      padding: 0 0.6vw;
+
+      >div {
+        width: 48%;
+      }
+
+      .label-container {
+        display: flex;
+        align-items: center;
+        padding-right: 0;
+        width: 52%;
+
+        .font-18 {
+          margin-bottom: 1vh;
+        }
+      }
+
+      .brick-container {
+        position: relative;
+
+        .scroll-block {
+          margin-top: 2vh;
+          margin-bottom: 2vh;
+          width: 9.5vw;
+          height: 6.4vw;
+          border-radius: 1vw;
+          background-size: cover;
+          background-position: center center;
+
+          flex-flow: column nowrap;
+          background-repeat: no-repeat;
+          position: relative;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .bottom-description,
+        .bottom-description-color {
+          position: absolute;
+          bottom: 0;
+          text-align: center;
+          height: 1.8vw;
+          width: 100%;
+        }
+
+        .bottom-description-color {
+          opacity: 0.8;
+          background: var(--tab-gray);
+          z-index: 10;
+        }
+
+        .bottom-description {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 11;
+        }
+      }
+    }
   }
 }
 

@@ -557,9 +557,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderBrick(subject: SixthformSubject) {
-    if (subject.name === 'Accounting') {
-      console.log(subject)
-    }
     if (subject.brick) {
       return (
         <div className="brick-container">
