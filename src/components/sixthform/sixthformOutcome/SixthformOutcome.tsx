@@ -12,6 +12,8 @@ import { ReduxCombinedState } from 'redux/reducers';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/ProgressBarSixthformV2";
 import map from "components/map";
+import { ReactSortable } from "react-sortablejs";
+import { fileUrl } from "components/services/uploadFile";
 
 
 interface UserProfileProps {
@@ -28,9 +30,10 @@ enum SixActiveTab {
 }
 
 interface UserProfileState {
-  allSubjects: SixthformSubject[];
-  subjects: SixthformSubject[];
   answers: any[];
+  definetlyList: SixthformSubject[];
+  probableList: SixthformSubject[];
+  possibleList: SixthformSubject[];
   activeTab: SixActiveTab;
 }
 
@@ -39,9 +42,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     super(props);
 
     this.state = {
-      allSubjects: [],
-      subjects: [],
       answers: [],
+      definetlyList: [],
+      probableList: [],
+      possibleList: [],
       activeTab: SixActiveTab.Outcome,
     }
 
@@ -58,7 +62,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
-      this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
+      let subjectCuts = this.sortByScore(subjects).slice(0, 8);
+      let definetlyList: any[] = [];
+      let probableList = subjectCuts.slice(0, 2);
+      let possibleList = subjectCuts.slice(2, 5);
+      if (definetlyList.length === 0) {
+        definetlyList.push({ isEmpty: true });
+        definetlyList.push({ isEmpty: true });
+        definetlyList.push({ isEmpty: true });
+      }
+      this.setState({ definetlyList, probableList, possibleList });
     }
 
     const answers = await getSixthformAnswers();
@@ -76,9 +89,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }
       }
 
-      console.log('res', answers)
-
-
       this.setState({ answers });
     }
   }
@@ -93,6 +103,92 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return 0;
     });
     return subjects;
+  }
+
+  renderCircle(subject: SixthformSubject) {
+    let colorClass = 'subject-circle yellow-circle';
+    if (subject.userChoice === UserSubjectChoice.Definetly) {
+      colorClass = 'subject-circle green-circle';
+    } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
+      colorClass = 'subject-circle red-circle';
+    }
+    return <SpriteIcon name="circle-filled" className={colorClass} />
+  }
+
+  renderSwitchButton(subject: SixthformSubject) {
+    return (
+      <div className="switch-button font-12 bold">
+        <div
+          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`}
+          onClick={() => {
+            if (!subject.score) {
+              subject.score = 0;
+            }
+            if (subject.userChoice === UserSubjectChoice.Maybe) {
+              subject.score += 2;
+            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
+              subject.score += 15;
+            } else {
+              subject.score += 5;
+            }
+            subject.userChoice = UserSubjectChoice.Definetly;
+            //this.updateSubject(subject);
+          }}>Definitely!</div>
+        <div
+          className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow' : ''}`}
+          onClick={() => {
+            if (!subject.score) {
+              subject.score = 0;
+            }
+
+            if (subject.userChoice === UserSubjectChoice.Definetly) {
+              subject.score -= 2;
+            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
+              subject.score += 13;
+            } else {
+              subject.score += 3;
+            }
+            subject.userChoice = UserSubjectChoice.Maybe;
+            //this.updateSubject(subject);
+          }}>Maybe</div>
+        <div
+          className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red' : ''}`}
+          onClick={() => {
+            if (!subject.score) {
+              subject.score = 0;
+            }
+
+            if (subject.userChoice === UserSubjectChoice.Definetly) {
+              subject.score -= 15;
+            } else if (subject.userChoice === UserSubjectChoice.Maybe) {
+              subject.score -= 13;
+            } else {
+              subject.score -= 10;
+            }
+            subject.userChoice = UserSubjectChoice.NotForMe;
+            //this.updateSubject(subject);
+          }}>Not for me</div>
+      </div>
+    );
+  }
+
+  renderBrick(subject: SixthformSubject) {
+    if (subject.brick) {
+      return (
+        <div className="brick-container">
+          <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
+          <div className="bottom-description-color" />
+          <div className="bottom-description font-8 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
+        </div>
+      );
+    }
+    return (
+      <div className="brick-container">
+        <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)` }}></div>
+        <div className="bottom-description-color" />
+        <div className="bottom-description font-8 bold">Introduction to Advanced Mathemathics</div>
+      </div>
+    );
   }
 
   renderStepBox() {
@@ -155,6 +251,189 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           </div>
         </div>
       );
+    }
+  }
+
+  renderEmpty() {
+    return (
+      <div className="cards-drop empty">
+        <SpriteIcon name="empty-category-e354" className="first" />
+        <SpriteIcon name="empty-category-e354" />
+        <SpriteIcon name="empty-category-e354" className="last" />
+      </div>
+    );
+  }
+
+  renderCard(subject: SixthformSubject, i: number) {
+    return (
+      <div className="subject-sixth-card" key={i}>
+        {subject.facilitatingSubject &&
+          <div className="facilitation-container font-12">
+            <div>
+              <SpriteIcon name="facilitating-badge" />
+              <span>Facilitating Subject</span>
+            </div>
+          </div>}
+        <div className="subject-name font-24 bold">
+          {this.renderCircle(subject)}
+          <span className="subject-name-only">
+            {subject.name} {subject.score}
+          </span>
+        </div>
+        <div className="font-14">
+          {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
+        </div>
+        <div className="second-row">
+          <div className="box-v32 m-r">
+            <div>
+              <SpriteIcon name="user-custom-v3" />
+            </div>
+            <div className="font-12">Candidates</div>
+            <div className="bold font-15">{subject.candidates > 0 ? subject.candidates : 1000}</div>
+          </div>
+          <div className="box-v32">
+            <div>
+              <SpriteIcon name="facility-icon-hat" />
+            </div>
+            <div className="font-12">Subject Group</div>
+            <div className="bold font-12">{subject.subjectGroup ? subject.subjectGroup : 'STEM'}</div>
+          </div>
+          <div className="box-v32 m-l">
+            <div>
+              <SpriteIcon name="bricks-icon-v3" />
+            </div>
+            <div className="font-12">Often taken with</div>
+            <div className="bold font-11">{subject.oftenWith ? subject.oftenWith : 'Accounting, Business'}</div>
+          </div>
+        </div>
+        {this.renderSwitchButton(subject)}
+        <div className="taste-container">
+          <div className="label-container">
+            <div>
+              <div className="bold font-18">Try a taster topic</div>
+              <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
+            </div>
+          </div>
+          <div>
+            {this.renderBrick(subject)}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderDefinities(lastStep: number) {
+    if (lastStep === 6) {
+      return (
+        <ReactSortable
+          list={this.state.definetlyList}
+          animation={150}
+          key={1}
+          className="cards-drop real"
+          group={{ name: "cloning-group-name" }}
+          setList={definetlyList => {
+            this.setState({ definetlyList });
+          }}
+        >
+          {this.state.definetlyList.map((subject, i) => this.state.renderCard)}
+        </ReactSortable>
+      );
+    } else {
+      return this.renderEmpty();
+    }
+  }
+
+  renderProbables(lastStep: number) {
+    if (lastStep === 6) {
+      return (
+        <ReactSortable
+          list={this.state.probableList}
+          animation={150}
+          key={1}
+          className="cards-drop real"
+          group={{ name: "cloning-group-name" }}
+          setList={probableList => {
+            this.setState({ probableList });
+          }}
+        >
+          {this.state.probableList.map(this.renderCard.bind(this))}
+        </ReactSortable>
+      );
+    } else {
+      return this.renderEmpty();
+    }
+  }
+
+  renderPossibles(lastStep: number) {
+    if (lastStep === 6) {
+      return (
+        <ReactSortable
+          list={this.state.possibleList}
+          animation={150}
+          key={1}
+          className="cards-drop real"
+          group={{ name: "cloning-group-name" }}
+          setList={possibleList => {
+            this.setState({ possibleList });
+          }}
+        >
+          {this.state.possibleList.map((subject, i) => <div className="subject-sixth-card">
+            {subject.facilitatingSubject &&
+              <div className="facilitation-container font-12">
+                <div>
+                  <SpriteIcon name="facilitating-badge" />
+                  <span>Facilitating Subject</span>
+                </div>
+              </div>}
+            <div className="subject-name font-24 bold">
+              {this.renderCircle(subject)}
+              <span className="subject-name-only">
+                {subject.name} {subject.score}
+              </span>
+            </div>
+            <div className="font-14">
+              {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
+            </div>
+            <div className="second-row">
+              <div className="box-v32 m-r">
+                <div>
+                  <SpriteIcon name="user-custom-v3" />
+                </div>
+                <div className="font-12">Candidates</div>
+                <div className="bold font-15">{subject.candidates > 0 ? subject.candidates : 1000}</div>
+              </div>
+              <div className="box-v32">
+                <div>
+                  <SpriteIcon name="facility-icon-hat" />
+                </div>
+                <div className="font-12">Subject Group</div>
+                <div className="bold font-12">{subject.subjectGroup ? subject.subjectGroup : 'STEM'}</div>
+              </div>
+              <div className="box-v32 m-l">
+                <div>
+                  <SpriteIcon name="bricks-icon-v3" />
+                </div>
+                <div className="font-12">Often taken with</div>
+                <div className="bold font-11">{subject.oftenWith ? subject.oftenWith : 'Accounting, Business'}</div>
+              </div>
+            </div>
+            {this.renderSwitchButton(subject)}
+            <div className="taste-container">
+              <div className="label-container">
+                <div>
+                  <div className="bold font-18">Try a taster topic</div>
+                  <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
+                </div>
+              </div>
+              <div>
+                {this.renderBrick(subject)}
+              </div>
+            </div>
+          </div>)}
+        </ReactSortable>
+      );
+    } else {
+      return this.renderEmpty();
     }
   }
 
@@ -236,92 +515,25 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   <div className="box-e354-big">
                     <div className="box-box box-first">
                       <div className="font-16 top-text-cotainer opacity-04">
-                        <div className="first-box">MY SUBJECT RANKINGS (8)</div>
+                        <div className="first-box">
+                          MY SUBJECT RANKINGS ({this.state.definetlyList.length + this.state.possibleList.length + this.state.probableList.length})
+                        </div>
                         <div className="second-box">Click and drag to rearrange your subjects</div>
                       </div>
                       <div>
                         <div className="font-20">DEFINITES</div>
                         <div className="line-e354"></div>
-                        {lastStep === 6 ?
-                          <div className="cards-drop real font-20">
-                            <div className="subject-group first">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                            <div className="subject-group">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                            <div className="subject-group third">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                          </div> :
-                          <div className="cards-drop empty">
-                            <SpriteIcon name="empty-category-e354" className="first" />
-                            <SpriteIcon name="empty-category-e354" />
-                            <SpriteIcon name="empty-category-e354" className="last" />
-                          </div>
-                        }
+                        {this.renderDefinities(lastStep)}
                       </div>
                       <div>
                         <div className="font-20">PROBABLES</div>
                         <div className="line-e354"></div>
-                        {lastStep === 6 ?
-                          <div className="cards-drop real font-20">
-                            <div className="subject-group first">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                            <div className="subject-group">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                            <div className="subject-group third">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                          </div> :
-                          <div className="cards-drop empty">
-                            <SpriteIcon name="empty-category-e354" className="first" />
-                            <SpriteIcon name="empty-category-e354" />
-                            <SpriteIcon name="empty-category-e354" className="last" />
-                          </div>
-                        }
+                        {this.renderProbables(lastStep)}
                       </div>
                       <div>
                         <div className="font-20">POSSIBLES</div>
                         <div className="line-e354"></div>
-                        {lastStep === 6 ?
-                          <div className="cards-drop real font-20">
-                            <div className="subject-group first">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                            <div className="subject-group">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                            <div className="subject-group third">
-                              Select and drag from the<br />
-                              subject cards below to choose<br />
-                              your Definites.
-                            </div>
-                          </div> :
-                          <div className="cards-drop empty">
-                            <SpriteIcon name="empty-category-e354" className="first" />
-                            <SpriteIcon name="empty-category-e354" />
-                            <SpriteIcon name="empty-category-e354" className="last" />
-                          </div>
-                        }
+                        {this.renderPossibles(lastStep)}
                       </div>
                     </div>
                   </div>
