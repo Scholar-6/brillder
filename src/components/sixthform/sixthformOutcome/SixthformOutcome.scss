@@ -311,6 +311,7 @@
         }
 
         .cards-drop {
+          overflow-x: scroll;
           min-height: 12vw;
 
           &.empty {
@@ -332,6 +333,17 @@
             margin-top: 1.5vw;
             display: flex;
             margin-bottom: 1.5vw;
+
+            > div {
+              &.first {
+                margin-right: 1vw;
+              }
+
+              &.third {
+                margin-left: 1vw;
+              }
+            }
+
             .subject-group {
               display: flex;
               align-items: center;
@@ -342,13 +354,6 @@
               border: 2px solid #E5E6ED66;
               border-radius: 0.5vw;
               color: #FFFFFFB2;
-              &.first {
-                margin-right: 1vw;
-              }
-
-              &.third {
-                margin-left: 1vw;
-              }
             }
           }
         }
