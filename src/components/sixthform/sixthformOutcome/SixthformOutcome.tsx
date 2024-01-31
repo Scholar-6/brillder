@@ -350,8 +350,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             }
             if (definetlyList.length > 3) {
               definetlyList = definetlyList.filter(s => !s.isEmpty);
-            } 
-            
+            }
+
             if (definetlyList.length === 2) {
               definetlyList.push({ isEmpty: true } as any);
             }
@@ -417,7 +417,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
   }
 
-  render() {
+  renderOutcomeTabContent() {
     let lastStep = 0;
     let answers = this.state.answers;
 
@@ -429,6 +429,86 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
     }
 
+    return (
+      <div className="top-part-e354">
+        <div className="tab-content-e354">
+          <div className="top-header-e354 font-32">
+            <SpriteIcon name="hand-icon" />
+            Welcome back, {this.props.user ? this.props.user.firstName : 'User'}!
+          </div>
+          <div className="font-16">
+            Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
+          </div>
+          <div className="boxes-e354">
+            <div className="box-box box-first">
+              <SpriteIcon name="edit-icon-sixthform" />
+              <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
+              <div className="font-20">{this.props.user.firstName} {this.props.user.lastName}</div>
+              <div className="font-20">{this.props.user.email}</div>
+              <div className="opacity-07 font-16 m-t-1-e3">INSTITUTIONAL PROVIDER:</div>
+              <div className="font-20">Hereford Sixth Form College</div>
+            </div>
+            {this.renderStepBox()}
+          </div>
+          <div className="box-e354-big">
+            <div className="box-box box-first">
+              <div className="font-16 top-text-cotainer opacity-04">
+                <div className="first-box">
+                  MY SUBJECT RANKINGS ({this.state.definetlyList.length + this.state.possibleList.length + this.state.probableList.length})
+                </div>
+                <div className="second-box">Click and drag to rearrange your subjects</div>
+              </div>
+              <div>
+                <div className="font-20">DEFINITES</div>
+                <div className="line-e354"></div>
+                {this.renderDefinities(lastStep)}
+              </div>
+              <div>
+                <div className="font-20">PROBABLES</div>
+                <div className="line-e354"></div>
+                {this.renderProbables(lastStep)}
+              </div>
+              <div>
+                <div className="font-20">POSSIBLES</div>
+                <div className="line-e354"></div>
+                {this.renderPossibles(lastStep)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderTsatersTabContent() {
+    return (
+      <div className="top-part-e354">
+        <div className="tab-content-e354">
+        </div>
+      </div>
+    );
+  }
+
+  renderSurveyTabContent() {
+    return (
+      <div className="top-part-e354">
+        <div className="tab-content-e354">
+        </div>
+      </div>
+    );
+  }
+
+  renderTabContent() {
+    if (this.state.activeTab === SixActiveTab.SubjectTasters) {
+      return this.renderTsatersTabContent();
+    } else if (this.state.activeTab === SixActiveTab.Survey) {
+      return this.renderSurveyTabContent();
+    } else if (this.state.activeTab === SixActiveTab.Outcome) {
+      return this.renderOutcomeTabContent();
+    }
+  }
+
+  render() {
     return (
       <React.Suspense fallback={<></>}>
         <div className="SixthformOutcomePage">
@@ -452,13 +532,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div className="tab-container-e354">
                 <div
                   className={`tab-e354 ${this.state.activeTab === SixActiveTab.Survey ? "active" : "not-active"}`}
+                  onClick={() => {
+                    this.setState({ activeTab: SixActiveTab.Survey });
+                  }}
                 >
                   Six Step Survey
                 </div>
                 <div
                   className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active" : "not-active"}`}
                   onClick={() => {
-
+                    this.setState({ activeTab: SixActiveTab.SubjectTasters });
                   }}
                 >
                   Subject Tasters
@@ -466,59 +549,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 <div
                   className={`tab-e354 ${this.state.activeTab === SixActiveTab.Outcome ? "active" : "not-active"}`}
                   onClick={() => {
-
+                    this.setState({ activeTab: SixActiveTab.Outcome });
                   }}
                 >
                   My Outcomes
                 </div>
               </div>
-              <div className="top-part-e354">
-                <div className="tab-content-e354">
-                  <div className="top-header-e354 font-32">
-                    <SpriteIcon name="hand-icon" />
-                    Welcome back, {this.props.user ? this.props.user.firstName : 'User'}!
-                  </div>
-                  <div className="font-16">
-                    Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
-                  </div>
-                  <div className="boxes-e354">
-                    <div className="box-box box-first">
-                      <SpriteIcon name="edit-icon-sixthform" />
-                      <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
-                      <div className="font-20">{this.props.user.firstName} {this.props.user.lastName}</div>
-                      <div className="font-20">{this.props.user.email}</div>
-                      <div className="opacity-07 font-16 m-t-1-e3">INSTITUTIONAL PROVIDER:</div>
-                      <div className="font-20">Hereford Sixth Form College</div>
-                    </div>
-                    {this.renderStepBox()}
-                  </div>
-                  <div className="box-e354-big">
-                    <div className="box-box box-first">
-                      <div className="font-16 top-text-cotainer opacity-04">
-                        <div className="first-box">
-                          MY SUBJECT RANKINGS ({this.state.definetlyList.length + this.state.possibleList.length + this.state.probableList.length})
-                        </div>
-                        <div className="second-box">Click and drag to rearrange your subjects</div>
-                      </div>
-                      <div>
-                        <div className="font-20">DEFINITES</div>
-                        <div className="line-e354"></div>
-                        {this.renderDefinities(lastStep)}
-                      </div>
-                      <div>
-                        <div className="font-20">PROBABLES</div>
-                        <div className="line-e354"></div>
-                        {this.renderProbables(lastStep)}
-                      </div>
-                      <div>
-                        <div className="font-20">POSSIBLES</div>
-                        <div className="line-e354"></div>
-                        {this.renderPossibles(lastStep)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {this.renderTabContent()}
             </div>
           </div>
         </div>
