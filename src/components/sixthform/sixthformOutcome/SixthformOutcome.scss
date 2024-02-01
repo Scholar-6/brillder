@@ -354,6 +354,19 @@
         }
       }
     }
+
+    .tab-content-survey {
+      img {
+        margin-top: 4vh;
+        height: 30vh;
+      }
+      .btn-orange {
+        margin-top: 3vh;
+        border-radius: 0.5vw;
+        padding: 0.6vw 1.4vw;
+        background: var(--theme-orange);
+      }
+    }
   }
 
   /* fonts */
@@ -405,6 +418,10 @@
     font-size: calc(1.56vw * $font-scale);
   }
 
+  .font-30 {
+    font-size: calc(1.8vw * $font-scale);
+  }
+
   .font-32 {
     font-size: calc(2vw * $font-scale);
   }
@@ -415,6 +432,10 @@
 
   .font-40 {
     font-size: calc(2.5vw * $font-scale);
+  }
+
+  .font-48 {
+    font-size: calc(3vw * $font-scale);
   }
 
   .font-64 {
