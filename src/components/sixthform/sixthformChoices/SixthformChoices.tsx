@@ -395,7 +395,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <div className="smaller-text-box text-box-number3 font-20">
             Let’s start by identifying the type of study you are interested in.
           </div>
-          <button className="absolute-contunue-btn font-24" onClick={() => this.setState({ page: Pages.Question1 })}>Continue</button>
+          <button className="absolute-contunue-btn font-24" onClick={() => this.setState({ page: Pages.Question1 })}>Let's start</button>
         </div>
       );
     } else if (this.state.page === Pages.Question1) {

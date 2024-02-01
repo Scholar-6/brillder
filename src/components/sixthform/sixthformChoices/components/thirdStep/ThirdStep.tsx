@@ -412,9 +412,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    console.log(444, this.props.secondAnswer);
     if (this.state.subStep === ThirdSubStep.ThirdF) {
-      console.log('coursesF', this.state.coursesF)
       return (
         <div className="question question-3d">
           <ThirdStepF
@@ -422,8 +420,12 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             answer={this.state.coursesF}
             moveBack={coursesF => {
               this.setState({ coursesF });
-              let thirdDChoice = this.state.coursesD.choice;
-              if (thirdDChoice === ThirdStepDChoice.Second || thirdDChoice === ThirdStepDChoice.Third) {
+              if (
+                this.state.coursesD &&
+                this.state.coursesD.choice && (
+                this.state.coursesD.choice === ThirdStepDChoice.Second ||
+                this.state.coursesD.choice === ThirdStepDChoice.Third)
+              ) {
                 this.setState({ subStep: ThirdSubStep.ThirdD });
               } else {
                 this.setState({ subStep: ThirdSubStep.ThirdE });
@@ -447,7 +449,18 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ ePairResults });
             }}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.ThirdD })} />
+          <BackButtonSix onClick={() => {
+            if (
+              this.props.secondAnswer &&
+              this.props.secondAnswer.answer &&
+              this.props.secondAnswer.answer.databaseSchool &&
+              this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+            ) {
+              this.setState({ subStep: ThirdSubStep.ThirdC4 });
+            } else {
+              this.setState({ subStep: ThirdSubStep.ThirdD })
+            }
+          }} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: ThirdSubStep.ThirdF });
@@ -491,7 +504,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.ThirdC4) {
-      console.log(666, this.props.firstAnswer)
       return (
         <div className="question question-c4">
           <ThirdStepC4
@@ -503,7 +515,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
                 this.moveNext()
               } else {
-                console.log('move next', this.props.firstAnswer, this.props.secondAnswer);
                 if (
                   this.props.secondAnswer &&
                   this.props.secondAnswer.answer &&
@@ -511,7 +522,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                   this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
                 ) {
                   this.setState({ subStep: ThirdSubStep.ThirdE });
-                  console.log('move next')
                 } else {
                   this.setState({ subStep: ThirdSubStep.ThirdD });
                 }
