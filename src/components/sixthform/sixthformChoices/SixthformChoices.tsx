@@ -384,7 +384,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <SpriteIcon name="ios-library" className="ionLibrary" />
           <div className="bold big-text-q1 font-32">Welcome to our Sixth Form Course Selector!</div>
           <div className="smaller-text-box text-box-number1 font-20">
-            We take you through a ten step process which helps you identify the right courses for<br />
+            We take you through a six step process which helps you identify the right courses for<br />
             you. Numerous factors have a bearing, from current subjects and interests to your<br />
             thinking about degree courses and careers.
           </div>

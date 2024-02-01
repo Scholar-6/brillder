@@ -489,6 +489,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.ThirdC4) {
+      console.log(this.props.firstAnswer)
       return (
         <div className="question question-c4">
           <ThirdStepC4
