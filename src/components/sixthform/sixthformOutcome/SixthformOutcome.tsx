@@ -187,7 +187,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return (
       //https://app.brillder.com/play/brick/683/cover/general-topical/how-to-think-like-sherlock-holmes
       <div className="brick-container">
-        <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)` }}></div>
+        <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/f55fdf9f-2aa5-4d20-845b-c4ecbb6dc476.jpg)` }}></div>
         <div className="bottom-description-color" />
         <div className="bottom-description font-8 bold">How to Think Like Sherlock Holmes</div>
       </div>
