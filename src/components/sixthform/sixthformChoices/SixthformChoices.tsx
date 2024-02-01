@@ -102,6 +102,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   sortByScore(subjects: SixthformSubject[]) {
     subjects.sort((a, b) => {
+      let aName = a.name.toLowerCase();
+      let bName = b.name.toLowerCase()
+      if (aName < bName) {
+        return -1;
+      } else if (aName > bName) {
+        return 1;
+      }
+      return 0;
+    });
+    subjects.sort((a, b) => {
       if (a.score > b.score) {
         return -1;
       } else if (a.score < b.score) {
@@ -109,6 +119,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       return 0;
     });
+    console.log('sorting')
     return subjects;
   }
 
