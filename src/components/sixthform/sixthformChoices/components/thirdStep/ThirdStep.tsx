@@ -491,7 +491,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.ThirdC4) {
-      console.log(this.props.firstAnswer)
+      console.log(666, this.props.firstAnswer)
       return (
         <div className="question question-c4">
           <ThirdStepC4
@@ -503,12 +503,16 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
                 this.moveNext()
               } else {
+                console.log('move next', this.props.firstAnswer, this.props.secondAnswer);
                 if (
                   this.props.secondAnswer &&
                   this.props.secondAnswer.answer &&
                   this.props.secondAnswer.answer.databaseSchool &&
                   this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
                 ) {
+                  this.setState({ subStep: ThirdSubStep.ThirdE });
+                  console.log('move next')
+                } else {
                   this.setState({ subStep: ThirdSubStep.ThirdD });
                 }
               }
@@ -520,7 +524,17 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
               this.moveNext()
             } else {
-              this.setState({ subStep: ThirdSubStep.ThirdD });
+              if (
+                this.props.secondAnswer &&
+                this.props.secondAnswer.answer &&
+                this.props.secondAnswer.answer.databaseSchool &&
+                this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+              ) {
+                this.setState({ subStep: ThirdSubStep.ThirdE });
+                console.log('move next')
+              } else {
+                this.setState({ subStep: ThirdSubStep.ThirdD });
+              }
             }
           }}>Continue</button>
         </div>
