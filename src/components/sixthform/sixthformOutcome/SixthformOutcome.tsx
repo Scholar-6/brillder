@@ -286,7 +286,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         <div className="subject-name font-24 bold">
           {this.renderCircle(subject)}
           <span className="subject-name-only">
-            {subject.name} {subject.score}
+            {subject.name} {/*subject.score*/}
           </span>
         </div>
         <div className="font-14">
