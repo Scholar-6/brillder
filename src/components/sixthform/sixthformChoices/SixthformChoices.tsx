@@ -590,7 +590,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <div className="subject-name font-24 bold">
             {this.renderCircle(subject)}
             <span className="subject-name-only">
-              {popupSubject.name} {popupSubject.score}
+              {popupSubject.name} {/*popupSubject.score*/}
             </span>
           </div>
           <div className="font-14">
@@ -681,7 +681,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div className="font-18 ranking-label">Your subject rankings</div>
               <div className={`subjects-scrollbar font-16 ${this.state.page >= Pages.Question2 ? 'big-subjects-sidebar' : ''}`}>
                 {this.state.subjects.map((subject, i) => {
-                  return <div key={i} onMouseEnter={() => {
+                  return <div key={i} className="subject-box-r1" onMouseEnter={() => {
                     if (this.state.popupTimeout) {
                       clearTimeout(this.state.popupTimeout);
                     }

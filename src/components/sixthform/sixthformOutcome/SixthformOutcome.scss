@@ -333,15 +333,10 @@
             margin-top: 1.5vw;
             display: flex;
             margin-bottom: 1.5vw;
+            overflow-x: scroll;
 
             > div {
-              &.first {
-                margin-right: 1vw;
-              }
-
-              &.third {
-                margin-left: 1vw;
-              }
+              margin-right: 1vw;
             }
 
             .subject-group {
@@ -435,18 +430,11 @@
 
   .subject-sixth-card {
     color: var(--theme-dark-blue);
-    width: 33%;
+    width: 29.3vw;
+    min-width: 29vw;
     background: white;
     border-radius: 0.5vw;
     padding: 2vh 1.2vw;
-
-    &:nth-child(1) {
-      margin-right: 1vw;
-    }
-
-    &:nth-child(3) {
-      margin-left: 1vw;
-    }
 
     .facilitation-container {
       width: 100%;
