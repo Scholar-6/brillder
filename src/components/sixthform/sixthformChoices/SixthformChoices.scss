@@ -596,10 +596,10 @@
 
   .subject-sixth-popup {
     box-shadow: 0 1em 3em 0 #00000040;
+    color: var(--theme-dark-blue);
+    bottom: calc(5vw);
     position: fixed;
     z-index: 9;
-    color: var(--theme-dark-blue);
-    top: calc(50vh - 13vw);
     left: 21vw;
     width: 24.4vw;
     background: white;
@@ -796,12 +796,6 @@
       }
     }
   }
-
-
-
-
-
-
 
 
   /* fonts */

@@ -491,8 +491,21 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderSurveyTabContent() {
     return (
       <div className="top-part-e354">
-        <div className="tab-content-e354">
-          <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
+        <div className="tab-content-e354 tab-content-survey">
+          <div className="flex-center">
+            <img alt="brill" className="brills-icon" src="/images/SixthformSurvey.png" />
+          </div>
+          <div className="flex-center font-36 bold">
+            Take our Six-Step Course Selector Survey
+          </div>
+          <div className="flex-center font-20">
+            Rank and score the options you are considering with a comprehensive assessment.
+          </div>
+          <div className="flex-center">
+            <div className="btn-orange font-20">
+              Take the Survey
+            </div>
+          </div>
         </div>
       </div>
     );
