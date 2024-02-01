@@ -34,6 +34,7 @@ interface UserProfileState {
   definetlyList: SixthformSubject[];
   probableList: SixthformSubject[];
   possibleList: SixthformSubject[];
+  subjects: SixthformSubject[];
   activeTab: SixActiveTab;
 }
 
@@ -46,6 +47,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       definetlyList: [],
       probableList: [],
       possibleList: [],
+      subjects: [],
       activeTab: SixActiveTab.Outcome,
     }
 
@@ -71,7 +73,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         definetlyList.push({ isEmpty: true });
         definetlyList.push({ isEmpty: true });
       }
-      this.setState({ definetlyList, probableList, possibleList });
+      this.setState({ definetlyList, subjects, probableList, possibleList });
     }
 
     const answers = await getSixthformAnswers();
@@ -480,9 +482,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderTatersTabContent() {
+    let subjects = this.state.subjects.filter(s => s.brick && s.brick.id !== 0);
     return (
       <div className="top-part-e354">
-        <div className="tab-content-e354">
+        <div className="tab-content-e354 font-32">
+          Try a new subject or test yourself against<br/>
+          sixth form content and concepts in subjects you know.
+        </div>
+        <div>
+          {subjects.map(s => this.renderBrick(s))}
         </div>
       </div>
     );
