@@ -537,6 +537,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return <ThirdStep
         subjects={this.state.allSubjects}
         firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
+        secondAnswer={this.state.answers.find(a => a.step === Pages.Question2)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         saveThirdAnswer={async (answer: any) => {
           console.log('save answer', answer);

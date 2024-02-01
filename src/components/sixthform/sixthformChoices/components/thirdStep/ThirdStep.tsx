@@ -36,6 +36,7 @@ export enum ThirdSubStep {
 
 interface ThirdProps {
   firstAnswer: any;
+  secondAnswer: any;
   answer: any;
   subjects: SixthformSubject[];
   saveThirdAnswer(answer: any): void;
@@ -83,7 +84,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     let coursesF: any = null;
 
     if (this.props.answer) {
-      const {answer} = props.answer;
+      const { answer } = props.answer;
       console.log('third answer subStep', answer.subStep);
       subStep = answer.subStep;
 
@@ -164,7 +165,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     const subjects = await getKeyStage4Subjects();
     if (subjects) {
       let subjectSelections: KeyStage4Subject[] = [];
-      
+
       for (let subject of subjects) {
         subject.predicedStrength = 0;
       }
@@ -242,7 +243,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         this.props.saveThirdAnswer(this.getAnswer());
         // all courses and A-levels can go to C1 else D
         if (this.props.firstAnswer && this.props.firstAnswer.answer) {
-        let choice = this.props.firstAnswer.answer.choice;
+          let choice = this.props.firstAnswer.answer.choice;
           if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
             this.setState({ subStep: ThirdSubStep.ThirdC1 });
           } else {
@@ -411,6 +412,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
+    console.log(444, this.props.secondAnswer);
     if (this.state.subStep === ThirdSubStep.ThirdF) {
       console.log('coursesF', this.state.coursesF)
       return (
@@ -501,7 +503,14 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
                 this.moveNext()
               } else {
-                this.setState({ subStep: ThirdSubStep.ThirdD });
+                if (
+                  this.props.secondAnswer &&
+                  this.props.secondAnswer.answer &&
+                  this.props.secondAnswer.answer.databaseSchool &&
+                  this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+                ) {
+                  this.setState({ subStep: ThirdSubStep.ThirdD });
+                }
               }
             }}
           />
