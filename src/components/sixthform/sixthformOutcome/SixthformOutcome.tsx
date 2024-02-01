@@ -502,7 +502,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             Rank and score the options you are considering with a comprehensive assessment.
           </div>
           <div className="flex-center">
-            <div className="btn-orange font-20">
+            <div className="btn-orange font-20" onClick={() => {
+              this.props.history.push(map.SixthformChoices);
+            }}>
               Take the Survey
             </div>
           </div>
