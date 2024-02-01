@@ -80,13 +80,13 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       }, {
         name: "Chemistry",
         selected: false,
-      },{
+      }, {
         name: "Data Science",
         selected: false,
-      },{
+      }, {
         name: "Dentistry",
         selected: false,
-      },{
+      }, {
         name: "Ecology",
         selected: false,
       }, {
@@ -508,7 +508,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     if (props.answer) {
-      const {answer} = props.answer;
+      const { answer } = props.answer;
       console.log('answer4', answer);
       if (answer.subStep) {
         subStep = answer.subStep;
@@ -547,10 +547,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       tVocCoursesE1Part2,
     }
   }
-  
+
   getAnswer() {
     const { categories4bc } = this.state;
-    const categories4c:any[] = [];
+    const categories4c: any[] = [];
     for (let category4b of categories4bc) {
       const category = this.state.cetegoriesData[category4b];
       categories4c.push(category);
@@ -592,7 +592,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       categories4bc = categories4bc.filter(c => c !== category);
     } else {
       //if (categories4bc.length < 3) {
-        categories4bc.push(category);
+      categories4bc.push(category);
       //}
     }
     this.setState({ categories4bc });
@@ -1031,7 +1031,13 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
-            this.setState({ subStep: SubStep.sub4e1 });
+            let choice = this.props.firstAnswer.answer.choice;
+            if (choice === FirstChoice.ALevel) {
+              this.props.moveNext(this.getAnswer());
+              //this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
+            } else {
+              this.setState({ subStep: SubStep.sub4e1 });
+            }
           }}>Continue</button>
         </div>
       );
