@@ -58,13 +58,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (subjects) {
       for (let subject of subjects) {
         if (!subject.userChoice) {
-          subject.score = 3;
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
       let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
       let subjectsR1 = subjects.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
+      let sortedR1 = this.sortByScore(subjectsR1);
       let subjectCuts = this.sortByScore(subjectsR1).slice(0, 8);
+      console.log(subjectCuts, sortedR1)
       let probableList = subjectCuts.slice(0, 3);
       let possibleList = subjectCuts.slice(3, 6);
       if (definetlyList.length === 0) {
@@ -480,7 +481,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
-  renderTsatersTabContent() {
+  renderTatersTabContent() {
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354">
@@ -493,6 +494,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354">
+          <img alt="brill" className="brills-icon" src="/images/Brill.svg" />
         </div>
       </div>
     );
@@ -500,7 +502,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderTabContent() {
     if (this.state.activeTab === SixActiveTab.SubjectTasters) {
-      return this.renderTsatersTabContent();
+      return this.renderTatersTabContent();
     } else if (this.state.activeTab === SixActiveTab.Survey) {
       return this.renderSurveyTabContent();
     } else if (this.state.activeTab === SixActiveTab.Outcome) {
