@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import "./SixthformOutcome.scss";
 import { User } from "model/user";
 import {
-  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects
+  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects2
 } from "services/axios/sixthformChoices";
 
 import { ReduxCombinedState } from 'redux/reducers';
@@ -53,7 +53,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   async loadSubjects() {
-    const subjects = await getSixthformSubjects();
+    const subjects = await getSixthformSubjects2();
 
     if (subjects) {
       for (let subject of subjects) {
@@ -63,9 +63,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
       let subjectsR1 = subjects.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-      let sortedR1 = this.sortByScore(subjectsR1);
       let subjectCuts = this.sortByScore(subjectsR1).slice(0, 8);
-      console.log(subjectCuts, sortedR1)
       let probableList = subjectCuts.slice(0, 3);
       let possibleList = subjectCuts.slice(3, 6);
       if (definetlyList.length === 0) {
