@@ -59,6 +59,14 @@ export const getSixthformSubjects = async () => {
   }
 }
 
+export const getSixthformSubjects2 = async () => {
+  try {
+    return await get<SixthformSubject[]>(`/sixth-form-choices/suggested-subjects2`);
+  } catch {
+    return null;
+  }
+}
+
 export const saveSixthformAnswer = async (answer: string, step: number) => {
   try {
     return await post<SixthformCalcResult>(`/sixth-form-choices/answer`, { answer: { answer, step }});
