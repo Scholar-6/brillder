@@ -185,10 +185,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       );
     }
     return (
+      //https://app.brillder.com/play/brick/683/cover/general-topical/how-to-think-like-sherlock-holmes
       <div className="brick-container">
         <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)` }}></div>
         <div className="bottom-description-color" />
-        <div className="bottom-description font-8 bold">Introduction to Advanced Mathemathics</div>
+        <div className="bottom-description font-8 bold">How to Think Like Sherlock Holmes</div>
       </div>
     );
   }
@@ -482,14 +483,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderTatersTabContent() {
-    let subjects = this.state.subjects.filter(s => s.brick && s.brick.id !== 0);
+    let subjects = this.state.subjects;
+    subjects.map(s => {
+    })
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354 font-32">
           Try a new subject or test yourself against<br/>
           sixth form content and concepts in subjects you know.
         </div>
-        <div>
+        <div className="bricks-container">
           {subjects.map(s => this.renderBrick(s))}
         </div>
       </div>
