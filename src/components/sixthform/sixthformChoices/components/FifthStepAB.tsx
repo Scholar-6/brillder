@@ -59,7 +59,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(e.g. nursing, social work, uniformed services)"
     }];
 
-    subjects = shuffle(subjects);
+    //subjects = shuffle(subjects);
 
     console.log(this.props.abAnswer);
 
@@ -121,7 +121,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     return (
-      <button className={className} disabled={disabled} onClick={() => {
+      <button className={className} onClick={() => {
         this.setState({ subStep: SubStep.subStepB });
       }}>Done matching!</button>
     );
