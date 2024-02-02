@@ -413,6 +413,7 @@ const App: React.FC<AppProps> = props => {
             <Route path={`/${map.QuickassignPrefix}/:code`} component={QuickAssign} />
             <Route path={map.SixthformChoices} component={SixthFormChoices} />
             <AllUsersRoute path={map.SixthformOutcome} component={SixthformOutcome} />
+            <AllUsersRoute path={map.SixthformTaster} component={SixthformOutcome} />
             <Route component={AuthRedirectRoute} />
           </Switch>
           <VersionLabel />

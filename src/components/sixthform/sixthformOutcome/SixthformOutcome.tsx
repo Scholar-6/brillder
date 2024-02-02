@@ -42,13 +42,21 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
 
+    let activeTab = SixActiveTab.Outcome;
+
+    console.log(props.match)
+
+    if (props.match.path === map.SixthformTaster) {
+      activeTab = SixActiveTab.SubjectTasters;
+    }
+
     this.state = {
       answers: [],
       definetlyList: [],
       probableList: [],
       possibleList: [],
       subjects: [],
-      activeTab: SixActiveTab.Outcome,
+      activeTab,
     }
 
     this.loadSubjects();

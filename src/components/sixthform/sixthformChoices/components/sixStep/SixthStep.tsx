@@ -494,10 +494,6 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         label: 'work on a major science or engineering project (e.g. Cern, NASA, Human Genome)',
         choice: null
       }, {
-        type: SixStepSeventhChoices.IPreferPractical,
-        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more solid answers.',
-        choice: null
-      }, {
         type: SixStepSeventhChoices.WriteANovel,
         label: 'write a novel, a play or a film script',
         choice: null
