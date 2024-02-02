@@ -181,7 +181,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         <div className="brick-container">
           <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
           <div className="bottom-description-color" />
-          <div className="bottom-description font-8 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
+          <div className="bottom-description font-12 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
+          <div className="subjectName font-12">{subject.name}</div>
         </div>
       );
     }
