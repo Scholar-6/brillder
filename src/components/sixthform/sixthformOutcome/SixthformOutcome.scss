@@ -370,6 +370,10 @@
     }
 
     .taster-content {
+      padding-left: 5.8vw;
+      .title-above {
+        margin-left: 1vw;
+      }
       .bricks-container {
         display: flex;
         flex-wrap: wrap;
