@@ -4,6 +4,7 @@ import { Pages } from '../../SixthformChoices';
 
 interface Props {
   step: Pages;
+  exit(): void;
 }
 
 const ProgressBarSixthform: React.FC<Props> = (props) => {
@@ -46,7 +47,7 @@ const ProgressBarSixthform: React.FC<Props> = (props) => {
         {renderStep(6, step === Pages.Question6, false)}
         <div className="font-12 progress-label-s6">YOU</div>
       </div>
-      <div className="bold font-16 exit-btn">Exit</div>
+      <div className="bold font-16 exit-btn" onClick={props.exit}>Exit</div>
     </div>
   );
 }

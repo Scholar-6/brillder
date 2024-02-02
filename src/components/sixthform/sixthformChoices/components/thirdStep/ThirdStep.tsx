@@ -85,7 +85,6 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
     if (this.props.answer) {
       const { answer } = props.answer;
-      console.log('third answer subStep', answer.subStep);
       subStep = answer.subStep;
 
       if (answer.firstPairResults) {
@@ -195,12 +194,17 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         }
       }
 
+
+      const sortByName = (a: KeyStage4Subject, b: KeyStage4Subject) => {
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      }
+
       this.setState({
         allSubjects: subjects,
         subjectSelections: realSubjectSelections,
-        GCSESubjects: subjects.filter(s => s.isGCSE && s.isPopular),
-        vocationalSubjects: subjects.filter(s => s.isVocational && s.isPopular),
-        otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular)
+        GCSESubjects: subjects.filter(s => s.isGCSE && s.isPopular).sort(sortByName).sort(sortByName),
+        vocationalSubjects: subjects.filter(s => s.isVocational && s.isPopular).sort(sortByName),
+        otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular).sort(sortByName)
       });
     }
   }
@@ -423,8 +427,8 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               if (
                 this.state.coursesD &&
                 this.state.coursesD.choice && (
-                this.state.coursesD.choice === ThirdStepDChoice.Second ||
-                this.state.coursesD.choice === ThirdStepDChoice.Third)
+                  this.state.coursesD.choice === ThirdStepDChoice.Second ||
+                  this.state.coursesD.choice === ThirdStepDChoice.Third)
               ) {
                 this.setState({ subStep: ThirdSubStep.ThirdD });
               } else {
@@ -623,7 +627,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                   className={this.state.subjectGroup === SubjectGroupR21.GCSE ? "active" : ""}
                   onClick={() => this.activateSubjectGroup(SubjectGroupR21.GCSE)}
                 >
-                  GCSE’s
+                  GCSEs
                 </div>
                 <div
                   className={this.state.subjectGroup === SubjectGroupR21.PracticalVocational ? "active" : ""}

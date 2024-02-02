@@ -59,9 +59,9 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(e.g. nursing, social work, uniformed services)"
     }];
 
+    // don`t shuffle for faster showing to clients
     //subjects = shuffle(subjects);
-
-    console.log(this.props.abAnswer);
+    //console.log(this.props.abAnswer);
 
     if (this.props.abAnswer) {
       const abAnswer = this.props.abAnswer;
