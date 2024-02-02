@@ -17,6 +17,7 @@ import FifthStep from "./components/FifthStep";
 import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
 import SixthStep from "./components/sixStep/SixthStep";
+import map from "components/map";
 
 
 interface UserProfileProps {
@@ -787,7 +788,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
             <div className="logout-container">
               <div className="search-container font-32">
-                <ProgressBarSixthform step={this.state.page} />
+                <ProgressBarSixthform step={this.state.page} exit={() => {
+                  this.props.history.push(map.SixthformOutcome);
+                }} />
               </div>
             </div>
           </div>

@@ -502,8 +502,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderTatersTabContent() {
     let subjects = this.state.subjects;
+    
     subjects.map(s => {
-    })
+      let brick = {
+        coverImage: "9f514d49-79ee-41ae-b238-46b752c80908.png",
+        id: 3127,
+        title: "<p>Introduction to Dance</p>"
+      } as any;
+      s.brick = brick
+    });
+
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354 font-32">
