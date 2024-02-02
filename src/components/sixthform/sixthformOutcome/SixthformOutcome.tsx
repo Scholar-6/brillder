@@ -423,7 +423,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (answer2) {
       console.log('step2', answer2);
 
-      if (answer2.answer && answer2.answer.databaseSchool && ) {
+      if (answer2.answer && answer2.answer.databaseSchool && answer2.answer.databaseSchool.name) {
         return (
           <div>
             <div className="opacity-07 font-16 m-t-1-e3">INSTITUTIONAL PROVIDER:</div>
