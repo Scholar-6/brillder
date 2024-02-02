@@ -176,7 +176,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderBrick(subject: SixthformSubject) {
     if (subject.brick) {
-      console.log(subject.brick);
       return (
         <div className="brick-container">
           <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
@@ -493,8 +492,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderTatersTabContent() {
-    let subjects = this.state.subjects;
+    let subjects = this.state.subjects.filter(s => s.brick);
 
+    /*
     subjects.map(s => {
       let brick = {
         coverImage: "9f514d49-79ee-41ae-b238-46b752c80908.png",
@@ -502,13 +502,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         title: "<p>Introduction to Dance</p>"
       } as any;
       s.brick = brick
-    });
+    });*/
 
     return (
       <div className="top-part-e354">
-        <div className="tab-content-e354 taster-content font-32">
-          Try a new subject or test yourself against<br />
-          sixth form content and concepts in subjects you know.
+        <div className="tab-content-e354 taster-content font-30">
+          <div className="bold title-above">
+            Try a new subject or test yourself against<br />
+            sixth form content and concepts in subjects you know.
+          </div>
           <div className="bricks-container">
             {subjects.map(s => this.renderBrick(s))}
           </div>
