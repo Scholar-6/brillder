@@ -57,6 +57,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
 
+    let subjectType = SubjectType.AllSubjects;
+
     this.state = {
       subjectType: SubjectType.AllSubjects,
       allSubjects: [],
@@ -67,10 +69,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       page: Pages.Welcome,
     }
 
-    this.loadSubjects();
+    this.loadSubjects(subjectType);
   }
 
-  async loadSubjects() {
+  async loadSubjects(subjectType: any) {
     const subjects = await getSixthformSubjects();
 
     if (subjects) {
@@ -80,7 +82,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
-      this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
+      await this.saveFirstAnswer({ choice: subjectType });
+      //this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
     }
 
     const answers = await getSixthformAnswers();
@@ -113,6 +116,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return 0;
     });
     subjects.sort((a, b) => {
+      if (a.candidates > b.candidates) {
+        return -1;
+      } else if (a.candidates < b.candidates) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log('sorting', JSON.parse(JSON.stringify(subjects)));
+    subjects.sort((a, b) => {
       if (a.score > b.score) {
         return -1;
       } else if (a.score < b.score) {
@@ -120,7 +132,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       return 0;
     });
-    console.log('sorting')
+    console.log('sorting', JSON.parse(JSON.stringify(subjects)));
     return subjects;
   }
 
@@ -260,7 +272,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.subStep = answer.subStep;
         //answerR1.answer.abAnswer = answer.abAnswer;
         //answerR1.answer.careers = answer.careers;
-        console.log('parsedAnswer6', answerR1, answer)
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -296,7 +307,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     } else if (currentSubjectType === SubjectType.AllSubjects) {
       subjects = subjectsR4;
     }
-    return subjects;
+    return this.sortByScore(subjects);
   }
 
   renderSidebarCheckbox(currentSubjectType: SubjectType, label: string) {

@@ -368,6 +368,52 @@
         background: var(--theme-orange);
       }
     }
+
+    .taster-content {
+      .bricks-container {
+        .brick-container {
+          position: relative;
+  
+          .scroll-block {
+            margin-top: 2vh;
+            margin-bottom: 2vh;
+            width: 9.5vw;
+            height: 6.4vw;
+            border-radius: 1vw;
+            background-size: cover;
+            background-position: center center;
+  
+            flex-flow: column nowrap;
+            background-repeat: no-repeat;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+          }
+  
+          .bottom-description,
+          .bottom-description-color {
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            height: 1.8vw;
+            width: 100%;
+          }
+  
+          .bottom-description-color {
+            opacity: 0.8;
+            background: var(--tab-gray);
+            z-index: 10;
+          }
+  
+          .bottom-description {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 11;
+          }
+        }
+      }
+    }
   }
 
   /* fonts */

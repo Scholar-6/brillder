@@ -176,6 +176,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderBrick(subject: SixthformSubject) {
     if (subject.brick) {
+      console.log(subject.brick);
       return (
         <div className="brick-container">
           <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
@@ -184,14 +185,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         </div>
       );
     }
-    return (
-      //https://app.brillder.com/play/brick/683/cover/general-topical/how-to-think-like-sherlock-holmes
-      <div className="brick-container">
-        <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/f55fdf9f-2aa5-4d20-845b-c4ecbb6dc476.jpg)` }}></div>
-        <div className="bottom-description-color" />
-        <div className="bottom-description font-8 bold">How to Think Like Sherlock Holmes</div>
-      </div>
-    );
   }
 
   renderStepBox() {
@@ -421,8 +414,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderCollegeName(answer2: any) {
     if (answer2) {
-      console.log('step2', answer2);
-
       if (answer2.answer && answer2.answer.databaseSchool && answer2.answer.databaseSchool.name) {
         return (
           <div>
@@ -502,7 +493,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderTatersTabContent() {
     let subjects = this.state.subjects;
-    
+
     subjects.map(s => {
       let brick = {
         coverImage: "9f514d49-79ee-41ae-b238-46b752c80908.png",
@@ -514,12 +505,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     return (
       <div className="top-part-e354">
-        <div className="tab-content-e354 font-32">
+        <div className="tab-content-e354 taster-content font-32">
           Try a new subject or test yourself against<br />
           sixth form content and concepts in subjects you know.
-        </div>
-        <div className="bricks-container">
-          {subjects.map(s => this.renderBrick(s))}
+          <div className="bricks-container">
+            {subjects.map(s => this.renderBrick(s))}
+          </div>
         </div>
       </div>
     );
