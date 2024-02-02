@@ -213,14 +213,14 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     this.setState({ subjectGroup: group });
   }
 
-  renderSubjectLozenges(subjects: KeyStage4Subject[], canDelete: boolean, onClick: Function, onDelete?: Function) {
+  renderSubjectLozenges(subjects: KeyStage4Subject[], canDelete: boolean, onClick: Function) {
     return (
       <div className="subjects-lozenges bold font-12">
         {subjects.map((subject, index) => {
           return (
             <div className={`subject-lozenge ${subject.selected ? 'active' : ''}`} key={index} onClick={() => onClick(subject)}>
               <div className="subject-name">{subject.name}</div>
-              {canDelete && (<SpriteIcon name="cancel" className="subject-delete" onClick={() => onDelete?.(subject)} />)}
+              {canDelete && (<SpriteIcon name="cancel" className="subject-delete" />)}
             </div>
           )
         })}
@@ -651,6 +651,10 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                         subject.selected = true;
                         selections.push(subject);
                         this.setState({ subjectSelections: selections });
+                      } else {
+                        subject.selected = false;
+                        let selected = selections.filter(s => s.name !== subject.name);
+                        this.setState({ subjectSelections: selected });
                       }
                     })}
                 </div>
@@ -683,7 +687,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <div className="second-box-R21">
             <div className="bold font-16 second-box-title">Your Subject Selections</div>
-            {this.renderSubjectLozenges(this.state.subjectSelections, true, () => { }, (subject: KeyStage4Subject) => {
+            {this.renderSubjectLozenges(this.state.subjectSelections, true, (subject: KeyStage4Subject) => {
               const selections = this.state.subjectSelections;
               const found = selections.find((s: any) => s.name === subject.name);
               if (found) {
