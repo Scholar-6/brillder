@@ -419,7 +419,24 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
   }
 
+  renderCollegeName(answer2: any) {
+    if (answer2) {
+      console.log('step2', answer2);
+
+      if (answer2.answer && answer2.answer.databaseSchool && ) {
+        return (
+          <div>
+            <div className="opacity-07 font-16 m-t-1-e3">INSTITUTIONAL PROVIDER:</div>
+            <div className="font-20">{answer2.answer.databaseSchool.name}</div>
+          </div>
+        );
+      }
+    }
+    return <div />;
+  }
+
   renderOutcomeTabContent() {
+    let answer2 = null;
     let lastStep = 0;
     let answers = this.state.answers;
 
@@ -429,6 +446,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           lastStep = answer.step;
         }
       }
+
+      answer2 = answers.find(a => a.step === 2);
     }
 
     return (
@@ -447,8 +466,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
               <div className="font-20">{this.props.user.firstName} {this.props.user.lastName}</div>
               <div className="font-20">{this.props.user.email}</div>
-              <div className="opacity-07 font-16 m-t-1-e3">INSTITUTIONAL PROVIDER:</div>
-              <div className="font-20">Hereford Sixth Form College</div>
+              {this.renderCollegeName(answer2)}
             </div>
             {this.renderStepBox()}
           </div>
@@ -489,7 +507,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354 font-32">
-          Try a new subject or test yourself against<br/>
+          Try a new subject or test yourself against<br />
           sixth form content and concepts in subjects you know.
         </div>
         <div className="bricks-container">
