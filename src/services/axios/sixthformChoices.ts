@@ -37,6 +37,7 @@ export interface SixthformSubject {
   brick: Brick;
 
   isEmpty?: boolean;
+  expanded?: boolean;
 }
 
 export interface KeyStage4Subject {
