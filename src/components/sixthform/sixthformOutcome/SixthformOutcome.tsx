@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { ReactSortable } from "react-sortablejs";
 
 import "./SixthformOutcome.scss";
 import { User } from "model/user";
@@ -12,7 +13,6 @@ import { ReduxCombinedState } from 'redux/reducers';
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/ProgressBarSixthformV2";
 import map from "components/map";
-import { ReactSortable } from "react-sortablejs";
 import { fileUrl } from "components/services/uploadFile";
 import { playCover } from "components/play/routes";
 
@@ -36,6 +36,8 @@ interface UserProfileState {
   possibleList: SixthformSubject[];
   subjects: SixthformSubject[];
   activeTab: SixActiveTab;
+  canPutDefinites: boolean;
+  definitiesSortKey: number;
 }
 
 class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
@@ -43,8 +45,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     super(props);
 
     let activeTab = SixActiveTab.Outcome;
-
-    console.log(props.match)
 
     if (props.match.path === map.SixthformTaster) {
       activeTab = SixActiveTab.SubjectTasters;
@@ -56,6 +56,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       possibleList: [],
       subjects: [],
       activeTab,
+      canPutDefinites: true,
+      definitiesSortKey: 1,
     }
 
     this.loadSubjects();
@@ -244,13 +246,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     if (subject.isEmpty) {
       return (
-        <div className="subject-group first font-20">
+        <div className="subject-group first font-20" key={i}>
           Select and drag from the<br />
           subject cards below to choose<br />
           your Definites.
         </div>
       )
     }
+
     return (
       <div className={`subject-sixth-card ${subject.expanded ? 'expanded' : ''}`} key={i} onMouseEnter={() => {
         subject.expanded = true;
@@ -326,9 +329,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         <ReactSortable
           list={this.state.definetlyList}
           animation={150}
-          key={1}
+          key={this.state.definitiesSortKey}
           className="cards-drop real"
-          group={{ name: "cloning-group-name" }}
+          group={{ name: "cloning-group-name", put: this.state.canPutDefinites }}
           setList={definetlyList => {
             let emptyCount = 0;
             for (let subject of definetlyList) {
@@ -354,7 +357,25 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               definetlyList.push({ isEmpty: true } as any);
               definetlyList.push({ isEmpty: true } as any);
             }
-            this.setState({ definetlyList });
+
+            // can have 3 A-level or VAPs
+            let canPutDefinites = true;
+            let realCardsCount = definetlyList.filter(d => !d.isEmpty).length;
+            if (realCardsCount >= 3) {
+              canPutDefinites = false;
+            }
+
+            // only one T-level possible
+            let hasTLevel = definetlyList.filter(d => d.isTLevel).length > 0;
+            if (hasTLevel) {
+              canPutDefinites = false;
+            }
+
+            if (canPutDefinites !== this.state.canPutDefinites) {
+              this.setState({ definetlyList, canPutDefinites, definitiesSortKey: this.state.definitiesSortKey + 1});
+            } else {
+              this.setState({ definetlyList, canPutDefinites });
+            }
           }}
         >
           {this.state.definetlyList.map(this.renderCard.bind(this))}
