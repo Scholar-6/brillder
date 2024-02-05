@@ -367,6 +367,36 @@
               border-radius: 0.5vw;
               color: #FFFFFFB2;
             }
+
+            &.definities-list {
+              .T-level {
+                width: 88.5vw;
+
+                .subject-name {
+                  width: 87vw !important;
+
+                  .left-part-e323 {
+                    width: 52vw;
+
+                    .level-round {
+                      margin-left: 1vw;
+                      display: inline;
+                    }
+                  }
+                  .right-part-e323 {
+                    width: 34vw;
+                  }
+                }
+
+                .flex-box-e234 {
+                  display: flex;
+
+                  &:nth-child(1) {
+                    width: 20vw;
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -592,12 +622,12 @@
       position: relative;
       display: flex;
       align-items: center;
-      width: 20vw !important;
+      width: 26vw !important;
 
       padding-bottom: 1vh;
 
       .subject-name-only {
-        width: 20vw;
+        width: 23vw;
       }
 
       .subject-circle {

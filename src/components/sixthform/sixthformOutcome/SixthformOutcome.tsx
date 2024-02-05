@@ -237,7 +237,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return <div className="level-round font-14">{label}</div>
   }
 
-  renderCard(subject: SixthformSubject, i: number) {
+  renderCard(subject: SixthformSubject, i: number, isDefinities: boolean = false) {
     subject.brick = {
       coverImage: "b14cfc0a-1574-4ab7-ae5a-7ac66ea761cd.jpg",
       id: 1006,
@@ -252,6 +252,82 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           your Definites.
         </div>
       )
+    }
+
+    if (isDefinities && subject.isTLevel) {
+      return (
+        <div className="subject-sixth-card T-level" key={i} onMouseEnter={() => {
+          subject.expanded = true;
+          this.setState({});
+        }} onMouseLeave={() => {
+          subject.expanded = false;
+          this.setState({ definetlyList: this.state.definetlyList, possibleList: this.state.possibleList });
+        }}>
+          <div>
+            {subject.facilitatingSubject &&
+              <div className="facilitation-container font-12">
+                <div>
+                  <SpriteIcon name="facilitating-badge" />
+                  <span>Facilitating Subject</span>
+                </div>
+              </div>}
+            <div className="subject-name font-24">
+              <span className="left-part-e323">
+                {this.renderCircle(subject)}
+                <span className="subject-name-only bold">
+                  {subject.name} {/*subject.score*/}
+                </span>
+                {this.renderSubjectTag(subject)}
+              </span>
+              <span className="font-14 right-part-e323">This subject is a T-Level course, meaning you can only select to do this at Sixth Form.</span>
+            </div>
+
+            <div className="flex-box-e234">
+            <div className="font-14">
+              {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
+            </div>
+            <div className="second-row">
+              <div className="box-v32 m-r">
+                <div>
+                  <SpriteIcon name="user-custom-v3" />
+                </div>
+                <div className="font-12">Candidates</div>
+                <div className="bold font-15">{subject.candidates > 0 ? subject.candidates : 1000}</div>
+              </div>
+              <div className="box-v32">
+                <div>
+                  <SpriteIcon name="facility-icon-hat" />
+                </div>
+                <div className="font-12">Subject Group</div>
+                <div className="bold font-12">{subject.subjectGroup ? subject.subjectGroup : 'STEM'}</div>
+              </div>
+              <div className="box-v32 m-l">
+                <div>
+                  <SpriteIcon name="bricks-icon-v3" />
+                </div>
+                <div className="font-12">Often taken with</div>
+                <div className="bold font-11">{subject.oftenWith ? subject.oftenWith : 'Accounting, Business'}</div>
+              </div>
+            </div>
+            {subject.brick &&
+              <div className="taste-container smaller">
+                <div className="label-container">
+                  <div>
+                    <div className="bold font-18 margin-bottom-0">Suggested Taster Topic</div>
+                    <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
+                    <div className="btn-orange font-16" onClick={() => {
+                      this.props.history.push(playCover(subject.brick));
+                    }}>Try it out</div>
+                  </div>
+                </div>
+                <div>
+                  {this.renderCardBrick(subject)}
+                </div>
+              </div>}
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -330,7 +406,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           list={this.state.definetlyList}
           animation={150}
           key={this.state.definitiesSortKey}
-          className="cards-drop real"
+          className="cards-drop real definities-list"
           group={{ name: "cloning-group-name", put: this.state.canPutDefinites }}
           setList={definetlyList => {
             let emptyCount = 0;
@@ -339,6 +415,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 emptyCount += 1;
               }
             }
+
+            // add boxes if less than 3 based on number of items
             if (definetlyList.length > 3) {
               definetlyList = definetlyList.filter(s => !s.isEmpty);
             }
@@ -366,19 +444,41 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             }
 
             // only one T-level possible
+            let possibleList = this.state.possibleList;
             let hasTLevel = definetlyList.filter(d => d.isTLevel).length > 0;
             if (hasTLevel) {
               canPutDefinites = false;
+
+              // T-level selected move other subjects to bottom
+              let otherSubjects = this.state.definetlyList.filter(d => !d.isEmpty).filter(d => !d.isTLevel);
+              if (otherSubjects && otherSubjects.length > 0) {
+                possibleList.push(...otherSubjects);
+              }
+
+              // other subjects except T-level removed
+              let index = definetlyList.findIndex(d => !d.isTLevel);
+              if (index >= 0) {
+                definetlyList.splice(index, 1);
+              }
+
+              let index2 = definetlyList.findIndex(d => !d.isTLevel);
+              if (index2) {
+                definetlyList.splice(index2, 1);
+              }
             }
 
             if (canPutDefinites !== this.state.canPutDefinites) {
-              this.setState({ definetlyList, canPutDefinites, definitiesSortKey: this.state.definitiesSortKey + 1});
+              this.setState({
+                definetlyList, possibleList,
+                canPutDefinites,
+                definitiesSortKey: this.state.definitiesSortKey + 1
+              });
             } else {
-              this.setState({ definetlyList, canPutDefinites });
+              this.setState({ definetlyList, canPutDefinites, possibleList });
             }
           }}
         >
-          {this.state.definetlyList.map(this.renderCard.bind(this))}
+          {this.state.definetlyList.map((s, i) => this.renderCard(s, i, true))}
         </ReactSortable>
       );
     } else {
@@ -397,7 +497,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           group={{ name: "cloning-group-name" }}
           setList={possibleList => this.setState({ possibleList })}
         >
-          {this.state.possibleList.map(this.renderCard.bind(this))}
+          {this.state.possibleList.map((s, i) => this.renderCard(s, i))}
         </ReactSortable>
       );
     } else {
