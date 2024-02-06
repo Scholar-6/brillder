@@ -34,7 +34,9 @@ export interface SixthformSubject {
   candidates: number;
   score: number;
   name: string;
-  brick: Brick;
+
+  brick?: Brick;
+  attempt?: any;
 
   isEmpty?: boolean;
   expanded?: boolean;
