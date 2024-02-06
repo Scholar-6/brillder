@@ -728,7 +728,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </span>
           </div>
           <div className="font-14">
-            {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
+            {subject.description && subject.description}
           </div>
           <div className="second-row">
             <div className="box-v32 m-r">
