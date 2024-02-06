@@ -18,6 +18,8 @@ import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
 import SixthStep from "./components/sixStep/SixthStep";
 import map from "components/map";
+import TasterBrickDialog from "./components/TasterBrickDialog";
+import routes from "components/play/routes";
 
 
 interface UserProfileProps {
@@ -47,10 +49,17 @@ interface UserProfileState {
   subjectType: SubjectType;
   allSubjects: SixthformSubject[];
   subjects: SixthformSubject[];
+
   popupSubject: SixthformSubject | null;
+  subjectPosition: any;
   popupTimeout: number | NodeJS.Timeout;
+
   answers: any[];
   page: Pages;
+  brickPopup: {
+    isOpen: boolean;
+    brick: any;
+  }
 }
 
 class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
@@ -64,9 +73,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       allSubjects: [],
       subjects: [],
       answers: [],
+
       popupTimeout: -1,
       popupSubject: null,
+      subjectPosition: null,
+
       page: Pages.Welcome,
+      brickPopup: {
+        isOpen: false,
+        brick: null
+      }
     }
 
     this.loadSubjects(subjectType);
@@ -123,7 +139,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       return 0;
     });
-    console.log('sorting', JSON.parse(JSON.stringify(subjects)));
     subjects.sort((a, b) => {
       if (a.score > b.score) {
         return -1;
@@ -132,7 +147,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       return 0;
     });
-    console.log('sorting', JSON.parse(JSON.stringify(subjects)));
     return subjects;
   }
 
@@ -224,7 +238,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
         answerR1.answer.categories4c = answer.categories4c;
         answerR1.answer.categories4e = answer.categories4e;
-        console.log('parsedAnswer4', answerR1)
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -248,7 +261,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.subStep = answer.subStep;
         answerR1.answer.abAnswer = answer.abAnswer;
         answerR1.answer.careers = answer.careers;
-        console.log('parsedAnswer5', answerR1, answer)
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -349,7 +361,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   async saveFourthAnswer(answer: any) {
-    console.log('save 4 answer', answer)
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question4);
     if (result) {
       for (let subject of this.state.allSubjects) {
@@ -563,7 +574,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         secondAnswer={this.state.answers.find(a => a.step === Pages.Question2)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
         saveThirdAnswer={async (answer: any) => {
-          console.log('save answer', answer);
           await this.saveThirdAnswer(answer);
         }}
         moveNext={async (answer: any) => {
@@ -588,7 +598,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.saveFourthAnswer(answer);
         }}
         moveNext={answer => {
-          console.log('save 4 answer', answer)
           this.saveFourthAnswer(answer);
           this.setState({ page: Pages.Question5 });
         }}
@@ -711,9 +720,23 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderSubjectPopup(subject: SixthformSubject) {
     if (this.state.popupSubject && this.state.popupSubject === subject) {
-      const { popupSubject } = this.state;
+      const { popupSubject, subjectPosition } = this.state;
+      const windowHeight = window.innerHeight;
+      let style = { top: '11vw', bottom: 'unset' };
+
+      console.log('positions', this.state.subjectPosition.bottom, windowHeight / 1.3);
+
+      if (subjectPosition && (subjectPosition.bottom > (windowHeight / 1.5))) {
+        // popup should be based on bottom
+        style.top = 'unset';
+        style.bottom = '5vw';
+      } else if (subjectPosition && (subjectPosition.bottom > (windowHeight / 1.7))) {
+        // popup should be based on bottom
+        style.top = 'unset';
+        style.bottom = '11vw';
+      }
       return (
-        <div className="subject-sixth-popup">
+        <div style={style} className={`subject-sixth-popup ${subject.isTLevel ? 'big-T-level' : ''}`}>
           {subject.facilitatingSubject &&
             <div className="facilitation-container font-12">
               <div>
@@ -754,17 +777,22 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
           </div>
           {this.renderSwitchButton(subject)}
-          <div className="taste-container">
-            <div className="label-container">
-              <div>
-                <div className="bold font-18">Try a taster topic</div>
-                <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
+          {subject.brick &&
+            <div className="taste-container" onClick={() => {
+              if (subject.brick) {
+                this.setState({ brickPopup: { isOpen: true, brick: subject.brick } });
+              }
+            }}>
+              <div className="label-container">
+                <div>
+                  <div className="bold font-18">Try a taster topic</div>
+                  <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
+                </div>
               </div>
-            </div>
-            <div>
-              {this.renderBrick(subject)}
-            </div>
-          </div>
+              <div>
+                {this.renderBrick(subject)}
+              </div>
+            </div>}
         </div>
       );
     }
@@ -817,17 +845,19 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div className="font-18 ranking-label">Your subject rankings</div>
               <div className={`subjects-scrollbar font-16 ${this.state.page >= Pages.Question2 ? 'big-subjects-sidebar' : ''}`}>
                 {this.state.subjects.map((subject, i) => {
-                  return <div key={i} className="subject-box-r1" onMouseEnter={() => {
+                  return <div key={i} className="subject-box-r1" onMouseEnter={(event) => {
                     if (this.state.popupTimeout) {
                       clearTimeout(this.state.popupTimeout);
                     }
+                    // get position of the element and calculate where to show the popup
+                    const subjectPosition = (event.target as any).getBoundingClientRect();
                     let popupTimeout = setTimeout(() => {
-                      this.setState({ popupSubject: subject });
+                      this.setState({ popupSubject: subject, subjectPosition });
                     }, 1000);
                     this.setState({ popupTimeout });
                   }} onMouseLeave={(e) => {
                     clearTimeout(this.state.popupTimeout);
-                    this.setState({ popupSubject: null });
+                    this.setState({ popupSubject: null, subjectPosition: null });
                   }}>
                     {this.renderCircle(subject)}
                     <div className="subject-name">{subject.name}</div>
@@ -843,6 +873,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
           </div>
         </div>
+        <TasterBrickDialog isOpen={this.state.brickPopup.isOpen} moveToBrick={() => {
+          this.props.history.push(routes.playCover(this.state.brickPopup.brick) + '');
+        }} close={() => {
+          this.setState({ brickPopup: { isOpen: false, brick: null } })
+        }} />
       </React.Suspense>
     );
   }

@@ -597,7 +597,6 @@
   .subject-sixth-popup {
     box-shadow: 0 1em 3em 0 #00000040;
     color: var(--theme-dark-blue);
-    top: calc(11vw);
     position: fixed;
     z-index: 9;
     left: 21vw;
@@ -732,6 +731,7 @@
     }
 
     .taste-container {
+      cursor: pointer;
       margin-top: 2vh;
       display: flex;
       background: #4C608A1A;
@@ -795,6 +795,10 @@
         }
       }
     }
+
+    &.big-T-level {
+      width: 32vw;
+    }
   }
 
 
@@ -849,6 +853,10 @@
 
   .font-32 {
     font-size: calc(2vw * $font-scale);
+  }
+
+  .font-36 {
+    font-size: calc(2.25vw * $font-scale);
   }
 
   .font-40 {
@@ -2654,4 +2662,51 @@
 
 .SixthformChoicesPage~.beta-text {
   display: none;
+}
+
+.taster-brick-popup {
+  $font-scale: 1;
+
+  .MuiPaper-root {
+    color: white;
+    background: var(--theme-light-blue);
+
+    .font-25 {
+      font-size: calc(1.56vw * $font-scale);
+    }
+
+    .font-36 {
+      font-size: calc(2.25vw * $font-scale);
+    }
+
+    .title-e234 {
+      margin-bottom: 2vh;
+    }
+  
+    svg {
+      width: 5vw;
+      height: 5vw;
+    }
+
+    .dialog-footer {
+      margin-top: 5vh;
+
+      .bg-custom-blue {
+        color: white;
+        background: #4C608A;
+
+        &:hover {
+          background: var(--theme-dark-blue);
+        }
+      }
+
+      .bg-theme-green:hover {
+        background: var(--theme-dark-blue) !important;
+      }
+
+      button {
+        width: 14vw;
+      }
+    }
+  }
 }
