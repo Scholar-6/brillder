@@ -851,8 +851,10 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
+          text-transform: uppercase;
 
           >p {
+            text-transform: uppercase;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
