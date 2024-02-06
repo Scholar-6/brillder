@@ -394,6 +394,17 @@
                   &:nth-child(1) {
                     width: 20vw;
                   }
+
+                  .box-v32 {
+                    margin-top: 0;
+                    padding-top: 1vw;
+                    width: 8vw;
+                    height: 8.4vw;
+                  }
+
+                  .taste-container {
+                    margin-left: 0.5vw;
+                  }
                 }
               }
             }
@@ -758,6 +769,11 @@
 
         .font-18 {
           margin-bottom: 1vh;
+        }
+
+        .percentages {
+          line-height: 1.2;
+          color: var(--theme-green);
         }
 
         .btn-orange {

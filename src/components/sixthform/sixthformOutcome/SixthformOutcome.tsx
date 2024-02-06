@@ -238,11 +238,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCard(subject: SixthformSubject, i: number, isDefinities: boolean = false) {
+    /*
     subject.brick = {
       coverImage: "b14cfc0a-1574-4ab7-ae5a-7ac66ea761cd.jpg",
       id: 1006,
       title: "<p>The North Pole wefwef wef wef wef wefwef wefwe f</p>"
-    } as any;
+    } as any;*/
 
     if (subject.isEmpty) {
       return (
@@ -283,10 +284,85 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
 
             <div className="flex-box-e234">
-            <div className="font-14">
-              {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
+              <div className="font-14">
+                {subject.description ? subject.description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
+              </div>
+              <div className="second-row">
+                <div className="box-v32 m-r">
+                  <div>
+                    <SpriteIcon name="user-custom-v3" />
+                  </div>
+                  <div className="font-12">Candidates</div>
+                  <div className="bold font-15">{subject.candidates > 0 ? subject.candidates : 1000}</div>
+                </div>
+                <div className="box-v32">
+                  <div>
+                    <SpriteIcon name="facility-icon-hat" />
+                  </div>
+                  <div className="font-12">Subject Group</div>
+                  <div className="bold font-12">{subject.subjectGroup ? subject.subjectGroup : 'STEM'}</div>
+                </div>
+              </div>
+              {subject.brick &&
+                <div className="taste-container smaller">
+                  <div className="label-container">
+                    <div>
+                      <div className="bold font-18 margin-bottom-0">Suggested Taster Topic</div>
+                      <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
+                      <div className="btn-orange font-16" onClick={() => {
+                        if (subject.brick) {
+                          this.props.history.push(playCover(subject.brick));
+                        }
+                      }}>Try it out</div>
+                    </div>
+                  </div>
+                  <div>
+                    {this.renderCardBrick(subject)}
+                  </div>
+                </div>}
             </div>
-            <div className="second-row">
+          </div>
+        </div>
+      );
+    }
+
+    if (subject.brick && subject.attempt) {
+      const a = subject.attempt;
+      let percentages = 0;
+      if (typeof a.oldScore === null) {
+        percentages = Math.round(a.score * 100 / a.maxScore);
+      } else {
+        const middleScore = (a.score + a.oldScore) / 2;
+        percentages = Math.round(middleScore * 100 / a.maxScore);
+      }
+
+      return (
+        <div className={`subject-sixth-card ${subject.expanded ? 'expanded' : ''}`} key={i} onMouseEnter={() => {
+          subject.expanded = true;
+          this.setState({});
+        }} onMouseLeave={() => {
+          subject.expanded = false;
+          this.setState({ definetlyList: this.state.definetlyList, possibleList: this.state.possibleList });
+        }}>
+          <div>
+            {subject.facilitatingSubject &&
+              <div className="facilitation-container font-12">
+                <div>
+                  <SpriteIcon name="facilitating-badge" />
+                  <span>Facilitating Subject</span>
+                </div>
+              </div>}
+            <div className="subject-name font-24 bold">
+              {this.renderCircle(subject)}
+              <span className="subject-name-only">
+                {subject.name} {/*subject.score*/}
+              </span>
+            </div>
+            {this.renderSubjectTag(subject)}
+            <div className={`font-14 height-transform ${subject.expanded ? 'visible' : 'hidden'}`}>
+              {subject.description && subject.description }
+            </div>
+            <div className={`second-row height-transform ${subject.expanded ? 'visible' : 'hidden'}`}>
               <div className="box-v32 m-r">
                 <div>
                   <SpriteIcon name="user-custom-v3" />
@@ -313,18 +389,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div className="taste-container smaller">
                 <div className="label-container">
                   <div>
-                    <div className="bold font-18 margin-bottom-0">Suggested Taster Topic</div>
+                    <div className="bold font-18 margin-bottom-0">Completed Taster Topic</div>
                     <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
-                    <div className="btn-orange font-16" onClick={() => {
-                      this.props.history.push(playCover(subject.brick));
-                    }}>Try it out</div>
+                    <div className="font-32 percentages">{percentages}%</div>
                   </div>
                 </div>
                 <div>
                   {this.renderCardBrick(subject)}
                 </div>
               </div>}
-            </div>
           </div>
         </div>
       );
@@ -386,7 +459,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   <div className="bold font-18 margin-bottom-0">Suggested Taster Topic</div>
                   <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
                   <div className="btn-orange font-16" onClick={() => {
-                    this.props.history.push(playCover(subject.brick));
+                    if (subject.brick) {
+                      this.props.history.push(playCover(subject.brick));
+                    }
                   }}>Try it out</div>
                 </div>
               </div>
