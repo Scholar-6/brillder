@@ -729,7 +729,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
           }}
           close={() => { this.setState({ shareClass: null }) }}
         />}
-        {this.state.updateClassId > 0 &&
+        {this.state.updateClassId > 0 && this.state.activeClassroom &&
           <UpdateClassDialog
             isOpen={this.state.updateClassId > 0}
             classroom={this.state.activeClassroom}
