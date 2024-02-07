@@ -491,14 +491,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           key={this.state.definitiesSortKey}
           className="cards-drop real definities-list"
           group={{ name: "cloning-group-name", put: this.state.canPutDefinites }}
-          setList={async (definetlyList) => {
+          setList={definetlyList => {
             // updating server data
             // find subject that don`t have definetly and send request to server
             if (definetlyList.length > this.state.definetlyList.length) {
               for (let subject of definetlyList) {
                 if (!subject.isEmpty && subject.userChoice !== UserSubjectChoice.Definetly) {
                   subject.userChoice = UserSubjectChoice.Definetly;
-                  await setSixthformSubjectChoice(subject);
+                  setSixthformSubjectChoice(subject);
                 }
               }
             }
@@ -589,14 +589,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           key={1}
           className="cards-drop real"
           group={{ name: "cloning-group-name" }}
-          setList={async (possibleList) => {
+          setList={possibleList => {
             // updating server data
             // find subject that have definetly and send request to server
             if (possibleList.length > this.state.possibleList.length) {
               for (let subject of possibleList) {
                 if (!subject.isEmpty && subject.userChoice === UserSubjectChoice.Definetly) {
                   subject.userChoice = UserSubjectChoice.Maybe;
-                  await setSixthformSubjectChoice(subject);
+                  setSixthformSubjectChoice(subject);
                 }
               }
             }
