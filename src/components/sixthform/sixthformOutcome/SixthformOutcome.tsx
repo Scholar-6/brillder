@@ -35,6 +35,7 @@ interface UserProfileState {
   definetlyList: SixthformSubject[];
   possibleList: SixthformSubject[];
   subjects: SixthformSubject[];
+  otherSubjects: SixthformSubject[];
   activeTab: SixActiveTab;
   canPutDefinites: boolean;
   definitiesSortKey: number;
@@ -72,16 +73,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
+      let subjectsSorted = this.sortByScore(subjects);
       let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
       let subjectsR1 = subjects.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-      let subjectCuts = this.sortByScore(subjectsR1).slice(0, 8);
-      let possibleList = subjectCuts.slice(0, 6);
+      let possibleList = subjectsSorted.splice(0, 6);
       if (definetlyList.length === 0) {
         definetlyList.push({ isEmpty: true });
         definetlyList.push({ isEmpty: true });
         definetlyList.push({ isEmpty: true });
       }
-      this.setState({ definetlyList, subjects, possibleList });
+      let otherSubjects = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
+      otherSubjects = subjectsR1.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
+      this.setState({ definetlyList, subjects, otherSubjects, possibleList });
     }
 
     const answers = await getSixthformAnswers();
@@ -250,13 +253,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCard(subject: SixthformSubject, i: number, isDefinities: boolean = false) {
-    /*
-    subject.brick = {
-      coverImage: "b14cfc0a-1574-4ab7-ae5a-7ac66ea761cd.jpg",
-      id: 1006,
-      title: "<p>The North Pole wefwef wef wef wef wefwef wefwe f</p>"
-    } as any;*/
-
     if (subject.isEmpty) {
       return (
         <div className="subject-group first font-20" key={i}>
@@ -582,7 +578,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           key={1}
           className="cards-drop real"
           group={{ name: "cloning-group-name" }}
-          setList={possibleList => this.setState({ possibleList })}
+          setList={possibleList => {
+            let otherSubjects = this.state.otherSubjects;
+            if (possibleList.length < 6) {
+              let subject = otherSubjects.splice(0, 1);
+              possibleList.push(subject[0]);
+            }
+            this.setState({ possibleList, otherSubjects });
+          }}
         >
           {this.state.possibleList.map((s, i) => this.renderCard(s, i))}
         </ReactSortable>
