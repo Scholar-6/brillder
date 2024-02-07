@@ -38,6 +38,9 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       correctIndex: 6,
       name: "History of Art"
+    }, {
+      correctIndex: 7,
+      name: "Environmental Science"
     }];
 
     subjects = shuffle(subjects);
@@ -60,6 +63,8 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
       name: "I was intrigued by the course - the nature of knowledge, the nature of morality and debates around the existence of God. I did RS at GCSE so some of the ideas were familiar, but I think philosophy offers a broader, more objective approach to the big questions of life."
     }, {
       name: "I enjoy analysing poems in English A-level and looking at a painting closely requires a similar approach. I also did GCSE Art, so I feel it complements both and plays to my creative and essay-writing strengths."
+    }, {
+      name: "Having done Geography and Combined Science at GCSE, I love the depth and breadth of this course, from physical, chemical and biological processes to political, economic and cultural context. Save the planet!"
     }];
 
     this.state = {

@@ -32,9 +32,6 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       correctIndex: 4,
       name: "Politics"
-    }, {
-      correctIndex: 5,
-      name: "Criminology"
     }];
 
     subjects = shuffle(subjects);
@@ -53,9 +50,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
       name: "examines data and statistics around resources, the production of goods and services, and the trends affecting the cost of living, inflation, taxation etc."
     }, {
       name: "explores ideologies, policies, constitutions, elections, the legislative process, interest groups and how governments conduct diplomacy, trade and conflict"
-    }, {
-      name: "a multi-disciplinary field which draws on psychology, sociology and statistics to evaluate criminal behaviour and the policing, justice and penal systems"
-    }]
+    }];
 
     this.state = {
       subjects,
@@ -75,7 +70,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <div className="font-16">
           Some popular and highly regarded subjects are often not studied before the sixth form. It’s important you understand what they involve and reflect on whether any could be a fit for you.<br />
-          Here are six subjects which most students begin for the first time in the sixth form. First of all, can you work out what these subjects consist of? Match the subject description to the correct subject.
+          Here are five subjects which most students begin for the first time in the sixth form. First of all, can you work out what these subjects consist of? Match the subject description to the correct subject.
         </div>
         <div className="drag-container-r22">
           <div className="title-r22 bold font-16">
