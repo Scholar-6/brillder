@@ -129,7 +129,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (subject.brick) {
       return (
         <div className="brick-container-23">
-          <div className="brick-container">
+          <div className="brick-container" onClick={() => {
+            if (subject.brick) {
+              this.props.history.push(playCover(subject.brick));
+            }
+          }}>
             <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
             <div className="bottom-description-color" />
             <div className="bottom-description font-12 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
@@ -144,7 +148,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (subject.brick) {
       return (
         <div className="brick-container">
-          <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
+          <div
+            className="scroll-block"
+            style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}
+            onClick={() => {
+              if (subject.brick) {
+                this.props.history.push(playCover(subject.brick));
+              }
+            }}
+          ></div>
         </div>
       );
     }
@@ -360,7 +372,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
             {this.renderSubjectTag(subject)}
             <div className={`font-14 height-transform ${subject.expanded ? 'visible' : 'hidden'}`}>
-              {subject.description && subject.description }
+              {subject.description && subject.description}
             </div>
             <div className={`second-row height-transform ${subject.expanded ? 'visible' : 'hidden'}`}>
               <div className="box-v32 m-r">

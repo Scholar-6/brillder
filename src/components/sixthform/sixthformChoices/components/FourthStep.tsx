@@ -326,7 +326,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let tVocCoursesE1Part1 = [{
       icon: 'six-frame2',
-      name: 'Design, Craftsmanship & Visual Arts',
+      name: 'Design, Craft & Visual Arts',
       active: false,
       subjects: [
         { name: 'Photography' },
@@ -1045,7 +1045,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question question-step-4d1">
           <div className="bold font-32 question-text-4">
-            Prestige & Facilitating Subjects
+            Are some A levels better than others?
           </div>
           <div className="font-16 margin-bottom-1">
             Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any A-level or sixth form qualification, but it has previously argued that certain subjects, often considered more academically rigorous, can be viewed as facilitating subjects. This means subjects which open doors onto a wide variety of degree courses.

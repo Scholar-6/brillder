@@ -194,6 +194,9 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         label: 'Quiz & Puzzle Shows',
         choice: null
       }, {
+        label: 'History, Ancient History & Anthropology',
+        choice: null
+      }, {
         label: 'Vehicles & Motorsport',
         choice: null
       }, {
@@ -237,10 +240,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         label: 'Mainstream Music (Rock, Rap, Pop & Chart)',
         choice: null
       }, {
-        label: 'Music, Folk',
-        choice: null
-      }, {
-        label: 'Music, Jazz & Big Band',
+        label: 'Music, Folk or Jazz',
         choice: null
       }, {
         label: 'Music, Classical ',
@@ -399,7 +399,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         choice: null
       }, {
         type: SixStepSixthChoices.PerformingInAShow,
-        label: 'performing in a show',
+        label: 'performing in or creating a show',
         choice: null
       }, {
         type: SixStepSixthChoices.TrueCrime,

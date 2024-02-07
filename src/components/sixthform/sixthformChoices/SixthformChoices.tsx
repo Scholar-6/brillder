@@ -724,8 +724,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       const windowHeight = window.innerHeight;
       let style = { top: '11vw', bottom: 'unset' };
 
-      console.log('positions', this.state.subjectPosition.bottom, windowHeight / 1.3);
-
       if (subjectPosition && (subjectPosition.bottom > (windowHeight / 1.5))) {
         // popup should be based on bottom
         style.top = 'unset';
