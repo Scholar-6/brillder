@@ -5,7 +5,7 @@ import { ReactSortable } from "react-sortablejs";
 import "./SixthformOutcome.scss";
 import { User } from "model/user";
 import {
-  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects2
+  SixthformSubject, UserSubjectChoice, getSixthformAnswers, getSixthformSubjects2, setSixthformSubjectChoice
 } from "services/axios/sixthformChoices";
 
 import { ReduxCombinedState } from 'redux/reducers';
@@ -56,6 +56,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       definetlyList: [],
       possibleList: [],
       subjects: [],
+      otherSubjects: [],
       activeTab,
       canPutDefinites: true,
       definitiesSortKey: 1,
@@ -75,16 +76,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       let subjectsSorted = this.sortByScore(subjects);
       let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
-      let subjectsR1 = subjects.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-      let possibleList = subjectsSorted.splice(0, 6);
+      let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
+      let possibleList = subjectsR1.splice(0, 6);
       if (definetlyList.length === 0) {
         definetlyList.push({ isEmpty: true });
         definetlyList.push({ isEmpty: true });
         definetlyList.push({ isEmpty: true });
       }
-      let otherSubjects = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-      otherSubjects = subjectsR1.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-      this.setState({ definetlyList, subjects, otherSubjects, possibleList });
+      console.log('definetlyList', definetlyList);
+      this.setState({ definetlyList, subjects, otherSubjects: subjectsR1, possibleList });
     }
 
     const answers = await getSixthformAnswers();
@@ -491,7 +491,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           key={this.state.definitiesSortKey}
           className="cards-drop real definities-list"
           group={{ name: "cloning-group-name", put: this.state.canPutDefinites }}
-          setList={definetlyList => {
+          setList={async (definetlyList) => {
+            // updating server data
+            // find subject that don`t have definetly and send request to server
+            if (definetlyList.length > this.state.definetlyList.length) {
+              for (let subject of definetlyList) {
+                if (!subject.isEmpty && subject.userChoice !== UserSubjectChoice.Definetly) {
+                  subject.userChoice = UserSubjectChoice.Definetly;
+                  await setSixthformSubjectChoice(subject);
+                }
+              }
+            }
+
             let emptyCount = 0;
             for (let subject of definetlyList) {
               if (subject.isEmpty) {
@@ -578,7 +589,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           key={1}
           className="cards-drop real"
           group={{ name: "cloning-group-name" }}
-          setList={possibleList => {
+          setList={async (possibleList) => {
+            // updating server data
+            // find subject that have definetly and send request to server
+            if (possibleList.length > this.state.possibleList.length) {
+              for (let subject of possibleList) {
+                if (!subject.isEmpty && subject.userChoice === UserSubjectChoice.Definetly) {
+                  subject.userChoice = UserSubjectChoice.Maybe;
+                  await setSixthformSubjectChoice(subject);
+                }
+              }
+            }
+
             let otherSubjects = this.state.otherSubjects;
             if (possibleList.length < 6) {
               let subject = otherSubjects.splice(0, 1);
