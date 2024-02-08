@@ -429,7 +429,8 @@
     }
 
     .taster-content {
-      padding-left: 5.8vw;
+      padding-left: 2vw;
+      padding-right: 2vw;
 
       .title-above {
         margin-left: 1vw;
@@ -448,10 +449,11 @@
             cursor: pointer;
 
             .scroll-block {
+              position: relative;
               margin-top: 2.5vw;
               margin-bottom: 2.5vw;
-              width: 20vw;
-              height: 11vw;
+              width: 21.5vw;
+              height: 11.4vw;
               border-radius: 1vw;
               background-size: cover;
               background-position: center center;
@@ -461,37 +463,94 @@
               position: relative;
               margin-left: auto;
               margin-right: auto;
+
+              .level-and-length {
+                position: absolute;
+                border-radius: 12vh;
+                z-index: 10;
+                top: 1vh;
+                right: 1vh;
+                width: 4.2vh;
+                height: 4.2vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba($color: #FFF, $alpha: 0.8);
+                color: var(--theme-dark-blue);
+                font-size: 2.1vh;
+            
+                .before-alternative {
+                  position: relative;
+                  z-index: unset;
+                  top: unset;
+                  right: unset;
+                  > div {
+                    border-radius: 50%;
+                    height: 4.2vh;
+                    width: 4.2vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .level {
+                      right: 0.6vh;
+                      top: 0.6vh;
+                      > div {
+                        color: white;
+                        border-radius: 50%;
+                        width: 3vh;
+                        height: 3vh;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+            
+                        font-size: 2.1vh;
+            
+                        svg {
+                          width: 2.4vh;
+                          height: 2.4vh;
+                        }
+                      }
+                    }
+                  }
+                }
+                .length-text-r3 {
+                  color: var(--theme-dark-blue);
+                  font-size: 2.1vh;
+                  margin-left: 0.5vh;
+                }
+              }
             }
 
             .bottom-description,
             .bottom-description-color {
               position: absolute;
               bottom: 2.5vw;
-              text-align: center;
-              height: 4vw;
+              height: 3vw;
               width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-bottom-left-radius: 0.9vw;
+              border-bottom-right-radius: 0.9vw;
+              color: var(--theme-dark-blue);
+              font-size: .93vw;
+              letter-spacing: 1;
             }
-
             .bottom-description-color {
               opacity: 1;
-              background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+              background: var(--tab-gray);
               z-index: 10;
-              border-bottom-right-radius: 1vw;
-              border-bottom-left-radius: 1vw;
             }
 
             .bottom-description {
-              display: flex;
-              align-items: center;
-              justify-content: center;
               z-index: 11;
-              text-transform: uppercase;
             }
           }
 
           .subjectName {
             bottom: 1vw;
             position: absolute;
+            text-transform: uppercase;
           }
         }
       }
