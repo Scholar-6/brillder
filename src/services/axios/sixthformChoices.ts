@@ -78,25 +78,9 @@ export const saveSixthformAnswer = async (answer: string, step: number) => {
   }
 }
 
-export const getSixthformAnswers = async () => {
-  try {
-    return await get<SixthformAnswer[]>(`/sixth-form-choices/answers`);
-  } catch {
-    return null;
-  }
-}
-
 export const getSixthformSchools = async () => {
   try {
     return await get<any[]>(`/sixth-form-choices/schools`);
-  } catch {
-    return null;
-  }
-}
-
-export const setSixthformSubjectChoice = async (subject: any) => {
-  try {
-    return await post<any[]>(`/sixth-form-choices/userSubject`, { subject });
   } catch {
     return null;
   }
