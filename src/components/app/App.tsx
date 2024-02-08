@@ -35,7 +35,7 @@ const App: React.FC<AppProps> = props => {
     [],
   );
 
-  setupZendesk(zendeskCreated, setZendesk);
+  //setupZendesk(zendeskCreated, setZendesk);
 
   return (
     <div className={isSafari ? 'root-safari browser-type-container' : 'browser-type-container'}>
