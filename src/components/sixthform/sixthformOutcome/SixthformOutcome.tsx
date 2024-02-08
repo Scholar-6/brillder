@@ -15,6 +15,7 @@ import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/P
 import map from "components/map";
 import { fileUrl } from "components/services/uploadFile";
 import { playCover } from "components/play/routes";
+import { AcademicLevelLabels } from "model/brick";
 
 
 interface UserProfileProps {
@@ -128,6 +129,28 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return <SpriteIcon name="circle-filled" className={colorClass} />
   }
 
+  renderSubjectCircle(subject: SixthformSubject) {
+    let brick = subject.brick;
+    if (brick) {
+      let subjectColor = brick.subject ? brick.subject.color : '';
+      let alternateColor = brick.alternateSubject ? brick.alternateSubject.color : subjectColor;
+      return (
+        <div className="level-and-length">
+          <div className="level before-alternative">
+            <div style={{ background: alternateColor }}>
+              <div className="level">
+                <div style={{ background: subjectColor }}>
+                  {AcademicLevelLabels[brick.academicLevel]}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return '';
+  }
+
   renderBrick(subject: SixthformSubject) {
     if (subject.brick) {
       return (
@@ -137,7 +160,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               this.props.history.push(playCover(subject.brick));
             }
           }}>
-            <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
+            <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}>
+              {this.renderSubjectCircle(subject)}
+            </div>
             <div className="bottom-description-color" />
             <div className="bottom-description font-12 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
           </div>
@@ -695,16 +720,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderTatersTabContent() {
     let subjects = this.state.subjects.filter(s => s.brick);
-
-    /*
-    subjects.map(s => {
-      let brick = {
-        coverImage: "9f514d49-79ee-41ae-b238-46b752c80908.png",
-        id: 3127,
-        title: "<p>Introduction to Dance</p>"
-      } as any;
-      s.brick = brick
-    });*/
 
     return (
       <div className="top-part-e354">
