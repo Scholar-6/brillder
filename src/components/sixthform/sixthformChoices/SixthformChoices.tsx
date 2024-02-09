@@ -20,6 +20,7 @@ import SixthStep from "./components/sixStep/SixthStep";
 import map from "components/map";
 import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
+import LoginDialog from "./login/LoginDialog";
 
 
 interface UserProfileProps {
@@ -54,6 +55,8 @@ interface UserProfileState {
   subjectPosition: any;
   popupTimeout: number | NodeJS.Timeout;
 
+  isLoginPopupOpen: boolean;
+
   answers: any[];
   page: Pages;
   brickPopup: {
@@ -78,6 +81,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       popupSubject: null,
       subjectPosition: null,
 
+      isLoginPopupOpen: false,
+
       page: Pages.Welcome,
       brickPopup: {
         isOpen: false,
@@ -100,6 +105,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       await this.saveFirstAnswer({ choice: subjectType });
       //this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
+    } else {
+      // probably user not logged in
+      this.setState({ isLoginPopupOpen: true });
     }
 
     const answers = await getSixthformAnswers();
@@ -115,6 +123,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (firstAnswer) {
         subjectType = firstAnswer.answer.choice;
       }
+
+
 
       this.setState({ answers: [], subjectType });
     }
@@ -875,6 +885,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.props.history.push(routes.playCover(this.state.brickPopup.brick) + '');
         }} close={() => {
           this.setState({ brickPopup: { isOpen: false, brick: null } })
+        }} />
+        <LoginDialog isOpen={this.state.isLoginPopupOpen} loginSuccess={() => {
+          // on login success reload data.
+          this.setState({ isLoginPopupOpen: false });
+          this.loadSubjects(this.state.subjectType);
         }} />
       </React.Suspense>
     );
