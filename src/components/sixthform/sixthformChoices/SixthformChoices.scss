@@ -230,13 +230,13 @@
     overflow-y: scroll;
     transition: all 300ms ease-in-out;
 
-    > div {
+    >div {
       position: relative;
 
       .subject-name {
         width: calc(100% - 5vw);
       }
-      
+
       .level-round {
         position: absolute;
         top: 0.3vw;
@@ -608,7 +608,8 @@
     .facilitation-container {
       width: 100%;
       position: relative;
-      > div {
+
+      >div {
         position: absolute;
         top: 0.3vw;
         right: 0;
@@ -1183,7 +1184,7 @@
           color: white;
           transition: all 200ms ease-in-out;
           background: #4C608A !important;
-    
+
           &:hover {
             opacity: 0.8;
           }
@@ -1240,11 +1241,13 @@
         margin-top: 1.4vh;
         margin-bottom: 1.4vh;
         color: #919EAB;
+
         .line-r21 {
           height: 2px;
           width: 18vw;
           background: #BAC2D1;
         }
+
         .expanded-text {
           margin-left: 0.5vw;
           margin-right: 0.5vw;
@@ -1839,6 +1842,7 @@
       }
     }
   }
+
   .question .question-step-3f {
     .d3-table-scroll-container {
       height: calc(100vh - 5.834vw - 21vh - 7.6vw);
@@ -2181,12 +2185,14 @@
   }
 
   .question .drag-container-5a {
+    height: auto;
+
+    .container-r22 {
       height: auto;
-      .container-r22 {
-        height: auto;
-        max-height: calc(100vh - 5.834vw - 22vh - 12.5vw);
-      }
+      max-height: calc(100vh - 5.834vw - 22vh - 12.5vw);
+    }
   }
+
   .question .drag-container-5a .container-r22 {
     .left-part-r22 {
       width: 20vw;
@@ -2272,7 +2278,7 @@
   .question .subjects-table-5c {
     height: auto;
     //height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 9vw - 3vh - 4.4vh);
-    background:#4C608A1A;
+    background: #4C608A1A;
 
     .checkbox-column {
       width: 4vw;
@@ -2306,7 +2312,7 @@
       padding-bottom: 1vh;
       height: calc(100vh - 5.834vw - 4vh - 2vh - 9vh - 2vh - 9vw - 3vh - 4.4vh - 2vh - 1.5vw);
       overflow-y: scroll;
-  
+
       svg {
         width: 1vw;
         height: 1vw;
@@ -2328,6 +2334,7 @@
           border-top-left-radius: 0.5vw;
           border-bottom-left-radius: 0.5vw;
         }
+
         &.last {
           border-top-right-radius: 0.5vw;
           border-bottom-right-radius: 0.5vw;
@@ -2445,6 +2452,7 @@
         padding-top: 1vh;
         padding-bottom: 1vh;
         width: 20vw;
+
         .blue-background-s6 {
           border-radius: 2vw;
           padding: 0.7vh 0.7vw;
@@ -2453,7 +2461,9 @@
         }
       }
 
-      .second-column, .third-column, .fourth-column {
+      .second-column,
+      .third-column,
+      .fourth-column {
         width: 17vw;
       }
 
@@ -2476,11 +2486,13 @@
         top: 1.2vw !important;
       }
     }
+
     .subjects-table {
       .first-column {
         padding-top: 1vh;
         padding-bottom: 1vh;
         width: 38vw;
+
         .blue-background-s6 {
           border-radius: 2vw;
           padding: 0.7vh 0.7vw;
@@ -2496,6 +2508,7 @@
       .check-box-container {
         padding-right: 0 !important;
       }
+
       .table-body {
         max-height: calc(100vh - 5.834vw - 23vh - 9vw);
       }
@@ -2682,7 +2695,7 @@
     .title-e234 {
       margin-bottom: 2vh;
     }
-  
+
     svg {
       width: 5vw;
       height: 5vw;
