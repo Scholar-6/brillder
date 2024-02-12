@@ -24,6 +24,7 @@ import BackToWorkPagePublished from '../backToWorkPagePublished/BackToWork';
 import AssignmentsPage from '../assignmentsPage/AssignmentsPage';
 import UsersListPage from '../userManagement/UsersList';
 import LoginPage from '../loginPage/loginPage';
+import SixthformLoginPage from '../sixthform/login/SixthformLoginPage';
 import ResetPasswordPage from '../resetPasswordPage/ResetPasswordPage';
 import ActivateAccountPage from '../activateAccountPage/activateAccountPage';
 import PostPlay from 'components/postPlay/PostPlay';
@@ -414,6 +415,8 @@ const App: React.FC<AppProps> = props => {
             <Route path={map.SixthformChoices} component={SixthFormChoices} />
             <AllUsersRoute path={map.SixthformOutcome} component={SixthformOutcome} />
             <AllUsersRoute path={map.SixthformTaster} component={SixthformOutcome} />
+
+            <AuthRoute path={map.SixthformLogin} component={SixthformLoginPage} />
             <Route component={AuthRedirectRoute} />
           </Switch>
           <VersionLabel />
