@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import queryString from 'query-string';
 
 import "./SixthformChoices.scss";
 import { User } from "model/user";
@@ -21,6 +22,7 @@ import map from "components/map";
 import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
 import LoginDialog from "./login/LoginDialog";
+import { SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl } from 'localStorage/login';
 
 
 interface UserProfileProps {

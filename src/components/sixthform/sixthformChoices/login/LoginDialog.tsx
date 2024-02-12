@@ -91,7 +91,7 @@ const LoginDialog: React.FC<Props> = (props) => {
       setAlertMessage("An account with this email address already exists. Please return to the homepage and use the Login button, or use click Help to send us a message.");
     });
   };
-  
+
   const validateForm = () => {
     if (email.length > 0 && password.length > 0) {
       return true;
@@ -124,17 +124,19 @@ const LoginDialog: React.FC<Props> = (props) => {
           <SpriteIcon name="red-shape-icon-r1" className="red-shape-r23" />
           <img src="/images/login-background.png" />
           <div className="study-text font-30">
-            What will you study in<br/> the sixth form?
+            What will you study in<br /> the sixth form?
           </div>
         </div>
         <form onSubmit={handleSubmit} className="content-box second-column">
           <div className="abolute-form-container">
-            <div className="font-40 text-center bold">Hey there!</div>
-            <div className="font-24 text-center">Register with Email</div>
-            <input className="font-28" placeholder='Full name' />
-            <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
-            <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
-            <button className="font-30 btn">Sign Up</button>
+            <div>
+              <div className="font-40 text-center bold">Hey there!</div>
+              <div className="font-24 text-center">Register with Email</div>
+              <input className="font-28" placeholder='Full name' />
+              <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
+              <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
+              <button className="font-30 btn">Sign Up</button>
+            </div>
           </div>
         </form>
       </div>
