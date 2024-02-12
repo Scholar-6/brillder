@@ -21,11 +21,11 @@ const SixthformSignUp: React.FC<any> = () => {
             Welcome to Scholar 6.<br />
             Sign up for an account to get started
           </div>
-          <a className="google-button-desktop font-25 bold" href={""}>
+          <a className="google-button-desktop font-25 bold" href={`${process.env.REACT_APP_BACKEND_HOST}/auth/google/login/sixthform-choices`}>
             <SpriteIcon name="gmail" className="active" />
             <span>Register with Google</span>
           </a>
-          <a className="microsoft-button-v5 font-25 bold" href={`${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login`}>
+          <a className="microsoft-button-v5 font-25 bold" href={`${process.env.REACT_APP_BACKEND_HOST}/auth/microsoft/login/sixthform-choices`}>
             <img alt="" src="/images/microsoft.png" />
             <span>School or Institution (Microsoft)</span>
           </a>
