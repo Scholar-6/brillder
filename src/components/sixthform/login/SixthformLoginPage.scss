@@ -56,6 +56,10 @@
     font-size: calc(1.5vw * $font-scale);
   }
 
+  .font-25 {
+    font-size: calc(1.56vw * $font-scale);
+  }
+
   .font-28 {
     font-size: calc(1.75vw * $font-scale);
   }
@@ -183,6 +187,58 @@
             background: var(--theme-light-blue);
           }
         }
+      }
+    }
+    
+    .google-button-desktop, .microsoft-button-v5 {
+      display: block;
+      background: var(--white);
+      border-radius: 0.6vw;
+      width: 100%;
+      padding-top: 3vh;
+      padding-bottom: 3vh;
+      position: relative;
+      text-align: center;
+      margin-top: 1.4vh;
+      margin-bottom: 1.4vh;
+  
+      svg {
+        position: absolute;
+        top: calc(2.75vh);
+        left: 0.9vw;
+        width: calc(1.8vw + 0.5vh);
+        height: calc(1.8vw + 0.5vh);
+      }
+  
+      span {
+        padding-left: 2vw;
+        text-align: center;
+        width: 100%;
+        color: var(--theme-dark-blue) !important;
+      }
+    }
+
+    .google-button-desktop {
+      margin-top: 4vh;
+    }
+
+    .microsoft-button-v5 img {
+      position: absolute;
+      top: calc(3vh);
+      left: 0.9vw;
+      width: 1.8vw;
+      height: 1.8vw;
+    }
+
+    .line-container {
+      margin-top: 4vh;
+      .line {
+        opacity: 0.3;
+        margin-left: 1vw;
+        margin-right: 1vw;
+        width: 9vw;
+        height: 2px;
+        background: white;
       }
     }
   }

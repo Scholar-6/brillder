@@ -12,11 +12,10 @@ import { User } from 'model/user';
 
 
 interface Props {
-  loginSuccess(user: User): void;
   getUser(): Promise<User>;
 }
 
-const LoginDialog: React.FC<Props> = (props) => {
+const SixthformLoginPage: React.FC<Props> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,7 +28,7 @@ const LoginDialog: React.FC<Props> = (props) => {
     if (!data.isError) {
       if (data === "OK") {
         const user = await props.getUser();
-        props.loginSuccess(user);
+        //props.loginSuccess(user);
         return;
       }
       let { msg } = data;
@@ -112,43 +111,31 @@ const LoginDialog: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="LoginSixthformPage">
-      <div>
-        <div className="popup-container">
-          <div className="first-column relative">
-            <SpriteIcon name="scholar6-white-logo" className="white-logo-r23" />
-            <SpriteIcon name="red-shape-icon-r1" className="red-shape-r23" />
-            <img src="/images/login-background.png" />
-            <div className="study-text font-30">
-              What will you study in<br /> the sixth form?
+    <div>
+      <form onSubmit={handleSubmit} className="content-box second-column">
+        <div className="abolute-form-container">
+          <div>
+            <div className="font-40 flex-center title-container bold">
+              <SpriteIcon name='sixth-login-hand' className="sixth-login-hand" />
+              <div>Hey there!</div>
             </div>
+            <div className="font-24 text-center">Register with Email</div>
+            <input className="font-28 full-name-input" placeholder='Full name' />
+            <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
+            <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
+            <button className="font-30 btn">Sign Up</button>
           </div>
-          <form onSubmit={handleSubmit} className="content-box second-column">
-            <div className="abolute-form-container">
-              <div>
-                <div className="font-40 flex-center title-container bold">
-                  <SpriteIcon name='sixth-login-hand' className="sixth-login-hand" />
-                  <div>Hey there!</div>
-                </div>
-                <div className="font-24 text-center">Register with Email</div>
-                <input className="font-28 full-name-input" placeholder='Full name' />
-                <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
-                <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
-                <button className="font-30 btn">Sign Up</button>
-              </div>
-            </div>
-          </form>
         </div>
-        <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
-        <Snackbar
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          open={alertShown}
-          autoHideDuration={1500}
-          onClose={() => toggleAlertMessage(false)}
-          message={alertMessage}
-          action={<React.Fragment></React.Fragment>}
-        />
-      </div>
+      </form>
+      <WrongLoginDialog isOpen={isLoginWrong} submit={() => register(email, password)} close={() => setLoginWrong(false)} />
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={alertShown}
+        autoHideDuration={1500}
+        onClose={() => toggleAlertMessage(false)}
+        message={alertMessage}
+        action={<React.Fragment></React.Fragment>}
+      />
     </div>
   );
 }
@@ -159,4 +146,4 @@ const mapDispatch = (dispatch: any) => ({
 
 const connector = connect(null, mapDispatch)
 
-export default connector(LoginDialog);
+export default connector(SixthformLoginPage);
