@@ -1,5 +1,6 @@
 .login-sixthform-dialog {
   .MuiPaper-root {
+    max-height: 90vh;
     border-radius: 0 !important;
     padding: 0 !important;
     background: var(--theme-dark-blue);
@@ -80,6 +81,7 @@
         top: 5.7vw;
         left: 3vw;
         width: 24vw;
+        height: 8vw;
         position: absolute;
       }
 
@@ -88,6 +90,7 @@
         position: absolute;
         top: 0;
         left: 7.6vw;
+        width: 13vw;
         height: 14vw;
       }
 
@@ -98,6 +101,8 @@
         left: 0;
         width: 41vw;
         height: auto;
+        max-height: 30vw;
+        overflow-y: hidden;
       }
       .study-text {
         position: absolute;
@@ -111,8 +116,8 @@
     }
 
     .second-column {
-      width: 20vw;
-      padding-right: 4vw;
+      width: 23vw;
+      padding-right: 1vw;
       color: white;
       position: relative;
       .abolute-form-container {
@@ -120,6 +125,13 @@
         top: 0;
         left: 0;
         z-index: 4;
+
+        display: flex;
+        align-items: center;
+        height: 30vw;
+        max-height: 30vw;
+        overflow-y:scroll;
+        padding-bottom: 2vw;
       }
 
       input {
