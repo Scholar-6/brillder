@@ -125,6 +125,10 @@
     position: relative;
     line-height: 1;
 
+    .line-height-1-3 {
+      line-height: 1.3;
+    }
+
     .abolute-form-container {
       position: absolute;
       top: 4vw;
@@ -172,7 +176,8 @@
           margin-top: 4vh;
         }
 
-        button {
+        .btn {
+          cursor: pointer;
           line-height: 1;
           padding-top: 3vh;
           padding-bottom: 3vh;
@@ -180,11 +185,55 @@
           color: white;
           outline: none;
           border: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           width: 100%;
+          position: relative;
           background: var(--theme-orange);
+
+          svg {
+            position: absolute;
+            top: 2.5vh;
+            left: 0.9vw;
+            width: calc(1.8vw + 1vh);
+            height: calc(1.8vw + 1vh);
+          }
 
           &:hover {
             background: var(--theme-light-blue);
+          }
+        }
+
+        .text-box {
+          padding-left: 4.5vw;
+          margin-top: 3vh;
+          position: relative;
+          display: flex;
+          color: var(--white);
+          letter-spacing: 0.1vw;
+          font-size: 1.3vw;
+    
+          .join-button {
+            cursor: pointer;
+            position: absolute;
+            top: -0.2vw;
+            left: 17vw;
+            display: flex;
+            align-items: center;
+    
+            svg {
+              margin-top: -0.2vw;
+              transition: all 300ms ease-out;
+              width: 2vw;
+              height: 2vw;
+            }
+
+            &:hover {
+              svg {
+                margin-left: -1vw;
+              }
+            }
           }
         }
       }
@@ -199,8 +248,8 @@
       padding-bottom: 3vh;
       position: relative;
       text-align: center;
-      margin-top: 1.4vh;
-      margin-bottom: 1.4vh;
+      margin-top: 1.8vh;
+      margin-bottom: 1.8vh;
   
       svg {
         position: absolute;
