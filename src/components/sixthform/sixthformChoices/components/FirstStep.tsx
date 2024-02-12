@@ -51,8 +51,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
             About 5,000 students take IB International Baccalaureate in the UK each year (six subjects). About 6,000 take Scottish Highers (four to six subjects). If you’re an IB or Highers student this process may help you identify your strengths, but it won’t give an exact fit.
           </div>
           <div className="green-btn font-25" onClick={() => {
-            this.setState({ popup: false });
-            this.props.moveNext();
+            this.setState({ popup: false, choice: FirstChoice.Other });
           }}>GOT IT</div>
         </div>
       </div>
