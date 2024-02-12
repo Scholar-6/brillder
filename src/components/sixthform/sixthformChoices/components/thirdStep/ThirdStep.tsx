@@ -648,9 +648,36 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                       const selections = this.state.subjectSelections;
                       const found = selections.find((s: any) => s.name === subject.name);
                       if (!found) {
-                        subject.selected = true;
-                        selections.push(subject);
-                        this.setState({ subjectSelections: selections });
+                        let passedValidation = true;
+
+                        if (subject.name === "Combined Science (Single Award)") {
+                          const found2 = selections.find((s: any) => 
+                            s.name === "Combined Science (Double Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
+                          );
+                          if (found2) {
+                            passedValidation = false;
+                          }
+                        } else if (subject.name === "Combined Science (Double Award)") {
+                          const found2 = selections.find((s: any) => 
+                            s.name === "Combined Science (Single Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
+                          );
+                          if (found2) {
+                            passedValidation = false;
+                          }
+                        } else if (subject.name === "Biology" || subject.name === "Chemistry" || subject.name === "Physics") {
+                          const found2 = selections.find((s: any) => 
+                            s.name === "Combined Science (Single Award)" || s.name === "Combined Science (Double Award)"
+                          );
+                          if (found2) {
+                            passedValidation = false;
+                          }
+                        }
+
+                        if (passedValidation) {
+                          subject.selected = true;
+                          selections.push(subject);
+                          this.setState({ subjectSelections: selections });
+                        }
                       } else {
                         subject.selected = false;
                         let selected = selections.filter(s => s.name !== subject.name);
