@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import queryString from 'query-string';
 
 import "./SixthformChoices.scss";
 import { User } from "model/user";
@@ -21,7 +20,7 @@ import SixthStep from "./components/sixStep/SixthStep";
 import map from "components/map";
 import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
-import { SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl } from 'localStorage/login';
+import authRoutes from "../login/routes";
 
 
 interface UserProfileProps {
@@ -56,8 +55,6 @@ interface UserProfileState {
   subjectPosition: any;
   popupTimeout: number | NodeJS.Timeout;
 
-  isLoginPopupOpen: boolean;
-
   answers: any[];
   page: Pages;
   brickPopup: {
@@ -82,8 +79,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       popupSubject: null,
       subjectPosition: null,
 
-      isLoginPopupOpen: false,
-
       page: Pages.Welcome,
       brickPopup: {
         isOpen: false,
@@ -107,8 +102,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       await this.saveFirstAnswer({ choice: subjectType });
       //this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
     } else {
-      // probably user not logged in
-      this.setState({ isLoginPopupOpen: true });
+      this.props.history.push(authRoutes.SignUp);
     }
 
     const answers = await getSixthformAnswers();
