@@ -165,7 +165,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <div className="font-16">
           Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br />
-          Sort them into one of the three categories:
+          Sort them into one of the two categories:
         </div>
         <div className="drag-container-r23">
           <div className="container-r23 first font-12 bold">

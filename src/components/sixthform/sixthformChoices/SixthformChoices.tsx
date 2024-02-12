@@ -21,7 +21,6 @@ import SixthStep from "./components/sixStep/SixthStep";
 import map from "components/map";
 import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
-import LoginDialog from "./login/LoginDialog";
 import { SetFinishRedirectUrl, SetHeartOfMerciaUser, SetLoginRedirectUrl } from 'localStorage/login';
 
 
@@ -887,11 +886,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.props.history.push(routes.playCover(this.state.brickPopup.brick) + '');
         }} close={() => {
           this.setState({ brickPopup: { isOpen: false, brick: null } })
-        }} />
-        <LoginDialog isOpen={this.state.isLoginPopupOpen} loginSuccess={() => {
-          // on login success reload data.
-          this.setState({ isLoginPopupOpen: false });
-          this.loadSubjects(this.state.subjectType);
         }} />
       </React.Suspense>
     );
