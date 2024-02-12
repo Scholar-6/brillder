@@ -9,7 +9,7 @@ export const ClassesEvents = Admin + '/classes-events';
 export const AssignmentEvents = Admin + '/assignment-events';
 
 export const Login = '/login';
-export const SixthformLogin = '/sixthform-login';
+export const SixthformAuth = '/sixthform-auth';
 export const ActivateAccount = '/activateAccount';
 export const SixthformChoices = '/sixthform-choices';
 export const SixthformOutcome = '/sixthform-outcome';
@@ -201,7 +201,7 @@ export default {
   SelectSubjectPage,
   UserPreferencePage,
 
-  SixthformLogin,
+  SixthformAuth,
   SixthformChoices,
   SixthformOutcome,
   SixthformTaster,
