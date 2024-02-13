@@ -87,11 +87,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderFilter() {
+    const activeFilters = this.state.filters.filter(f => f.selected === true);
     return (
       <div className="filter-box">
-        <div className={`filter-btn font-20 ${this.state.filterPopupOpen ? '' : ''}`} onClick={() => {
+        <div className={`filter-btn font-20 ${this.state.filterPopupOpen ? 'active' : ''}`} onClick={() => {
           this.setState({ filterPopupOpen: !this.state.filterPopupOpen });
-        }}>Filter</div>
+        }}>
+          Filter
+          {activeFilters.length > 0 ? <SpriteIcon name="circle-filled" /> : ''}
+        </div>
         <SpriteIcon name="filter-tasters" />
         {this.state.filterPopupOpen &&
           <div className="filter-popup font-16">
@@ -162,7 +166,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     return (
       <div className="top-part-e354">
-        <div className="tab-content-e354 taster-content font-30">
+        <div className="tab-content-e354 taster-content font-24">
           <div className="flex-center">
             <div className="bold title-above">
               Try a new subject or test yourself against<br />
