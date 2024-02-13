@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { ReactSortable } from "react-sortablejs";
-import { MenuItem, Select } from "@material-ui/core";
 
 import "./SixthformOutcome.scss";
 import { User } from "model/user";
@@ -16,8 +15,7 @@ import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/P
 import map from "components/map";
 import { fileUrl } from "components/services/uploadFile";
 import { playCover } from "components/play/routes";
-import { AcademicLevelLabels, SubjectGroup } from "model/brick";
-import { Subject } from "@material-ui/icons";
+import SubjectTasters from "./subjectTasters/SubjectTasters";
 
 
 interface UserProfileProps {
@@ -133,49 +131,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       colorClass = 'subject-circle red-circle';
     }
     return <SpriteIcon name="circle-filled" className={colorClass} />
-  }
-
-  renderSubjectCircle(subject: SixthformSubject) {
-    let brick = subject.brick;
-    if (brick) {
-      let subjectColor = brick.subject ? brick.subject.color : '';
-      let alternateColor = brick.alternateSubject ? brick.alternateSubject.color : subjectColor;
-      return (
-        <div className="level-and-length">
-          <div className="level before-alternative">
-            <div style={{ background: alternateColor }}>
-              <div className="level">
-                <div style={{ background: subjectColor }}>
-                  {AcademicLevelLabels[brick.academicLevel]}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return '';
-  }
-
-  renderBrick(subject: SixthformSubject, i: number) {
-    if (subject.brick) {
-      return (
-        <div className="brick-container-23" key={i}>
-          <div className="brick-container" onClick={() => {
-            if (subject.brick) {
-              this.props.history.push(playCover(subject.brick));
-            }
-          }}>
-            <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}>
-              {this.renderSubjectCircle(subject)}
-            </div>
-            <div className="bottom-description-color" />
-            <div className="bottom-description font-12 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
-          </div>
-          <div className="subjectName font-12">{subject.name}</div>
-        </div>
-      );
-    }
   }
 
   renderCardBrick(subject: SixthformSubject) {
@@ -721,87 +676,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderTatersTabContent() {
-    let subjects = this.state.subjects.filter(s => s.brick);
-
-    let filters = ["Arts", "Languages", "Humanities", "STEM"];
-
-    let finalSubjects = subjects;
-    if (this.state.filters.length > 0) {
-      finalSubjects = subjects.filter(s => {
-        if (s.brick && s.brick.subject) {
-          let group = s.brick.subject.group;
-
-          if (group === SubjectGroup.Arts && this.state.filters.includes("Arts")) {
-            return true;
-          }
-          if (group === SubjectGroup.Languages && this.state.filters.includes("Languages")) {
-            return true;
-          }
-          if (group === SubjectGroup.HumanitiesAndSocialSciences && this.state.filters.includes("Humanities")) {
-            return true;
-          }
-          if (group === SubjectGroup.Science && this.state.filters.includes("STEM")) {
-            return true;
-          }
-          if (group === SubjectGroup.MathsAndComputing && this.state.filters.includes("STEM")) {
-            return true;
-          }
-        }
-      });
-    }
-
-    let finalFinalSubjects = finalSubjects;
-    if (this.state.searchString && this.state.searchString.length >= 3) {
-      finalFinalSubjects = finalSubjects.filter(s => {
-        if (s.brick) {
-          return s.brick.title.toLowerCase().includes(this.state.searchString.toLowerCase()) || s.name.toLowerCase().includes(this.state.searchString.toLowerCase());
-        }
-        return false;
-      });
-    }
-
     return (
-      <div className="top-part-e354">
-        <div className="tab-content-e354 taster-content font-30">
-          <div className="flex-center">
-            <div className="bold title-above">
-              Try a new subject or test yourself against<br />
-              sixth form content and concepts in subjects you know.
-            </div>
-            <div className="search-box">
-              <SpriteIcon name="search-tasters" />
-              <input className="font-20" placeholder="Search" value={this.state.searchString} onChange={e => this.setState({searchString: e.target.value})} />
-            </div>
-            <div className="filter-box">
-              <div className="label font-20">Filter</div>
-              <SpriteIcon name="filter-tasters" />
-              <Select
-                className="select-multiple-subject font-20"
-                style={{ width: '100%' }}
-                multiple
-                MenuProps={{ classes: { paper: 'select-classes-list' } }}
-                value={this.state.filters}
-                renderValue={(e) => {
-                  return '';
-                }}
-                onChange={(e: any) => {
-                  console.log('set ', e.target.value)
-                  this.setState({filters: e.target.value})
-                }}
-              >
-                {filters.map((s: any, i) =>
-                  <MenuItem value={s} key={i}>
-                    {s}
-                  </MenuItem>
-                )}
-              </Select>
-            </div>
-          </div>
-          <div className="bricks-container">
-            {finalFinalSubjects.map((s, i) => this.renderBrick(s, i))}
-          </div>
-        </div>
-      </div>
+      <SubjectTasters subjects={this.state.subjects} history={this.props.history} />
     );
   }
 

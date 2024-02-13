@@ -449,11 +449,14 @@
         }
 
         input {
+          top: 0;
           color: white;
           border: 2px solid #FFFFFFee;
           background: #FFFFFF1A;
           padding-left: 3vw;
           padding-top: 0.4vw;
+          height: 2.5vw !important;
+          line-height: 1.5;
           padding-bottom: 0.4vw;
           border-radius: 0.7vw;
 
@@ -475,33 +478,76 @@
           height: 2vw;
         }
 
-        .label {
-          position: absolute;
-          top: 0.7vw;
-          left: 1.2vw;
-        }
-
-        .MuiInputBase-root {
-          padding-top: 0.4vw;
-          padding-bottom: 0.4vw;
-          padding-left: 0 !important;
-          width: 8vw !important;
+        .filter-btn {
+          cursor: pointer;
+          line-height: 1.5;
+          height: 3.404vw;
+          padding-top: 0.58vw;
+          padding-right: 1vw;
+          width: 8vw;
           color: white;
           border: 2px solid #FFFFFFee;
           background: #FFFFFF1A;
-          padding-left: 3vw;
           border-radius: 0.7vw;
+          text-align: center;
+        }
 
-          .MuiSelect-root {
-            text-align: center;
+        .filter-popup-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 19;
+          width: 100vw;
+          height: 100%;
+          min-height: 100vh;
+        }
+
+        .filter-popup {
+          border-radius: 0.4vw;
+          z-index: 20;
+          position: absolute;
+          top: 4vw;
+          padding: 0.9vw 1vw 0.7vw 1vw;
+          right: 0;
+          width: 20vw;
+          background: var(--theme-light-blue);
+
+          .label-container {
+            padding-left: 0.3vw;
+            display: flex;
+            align-items: center;
           }
 
           svg {
-            display: none;
+            position: relative;
+            top: unset;
+            left: unset;
+            width: 1.3vw;
+            height: 1.3vw;
           }
 
-          &::after, &::before {
-            display: none;
+          .filter-option {
+            position: relative;
+            cursor: pointer;
+            padding-left: 0.7vw;
+            border-radius: 0.5vw;
+            margin-top: 0.5vw;
+            margin-bottom: 0.5vw;
+            padding-top: 0.4vw;
+            padding-bottom: 0.4vw;
+            text-transform: uppercase;
+            border: 2px solid #FFFFFF66;
+            transition: all 200ms ease-in-out;
+
+            &.selected {
+              background:  #4C5F89;
+            }
+
+            svg {
+              position: absolute;
+              top: 0.4vw;
+              right: 0.4vw;
+            }
           }
         }
       }
