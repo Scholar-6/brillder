@@ -12,6 +12,7 @@ import SixthformSignUp from './SixthformSignUp';
 import { ReduxCombinedState } from 'redux/reducers';
 import map from 'components/map';
 import { isAuthenticated } from 'model/brick';
+import SixthformSignIn from './SixthformSignIn';
 
 
 interface Props {
@@ -41,6 +42,9 @@ const SixthformAuth: React.FC<Props> = (props) => {
               </Route>
               <Route path={routes.EmailSignUp}>
                 <SixthformSignUpEmail />
+              </Route>
+              <Route path={routes.SignIn}>
+                <SixthformSignIn />
               </Route>
             </Switch>
           </div>
