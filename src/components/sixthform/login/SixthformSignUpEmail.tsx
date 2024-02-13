@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Snackbar } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import './SixthformLoginPage.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
@@ -9,6 +10,7 @@ import { login } from "services/axios/auth";
 import WrongLoginDialog from 'components/loginPage/components/WrongLoginDialog';
 import userActions from 'redux/actions/user';
 import { User } from 'model/user';
+import map from 'components/map';
 
 
 interface Props {
@@ -16,6 +18,8 @@ interface Props {
 }
 
 const SixthformLoginPage: React.FC<Props> = (props) => {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,8 +31,7 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
-        const user = await props.getUser();
-        //props.loginSuccess(user);
+        history.push(map.SixthformChoices);
         return;
       }
       let { msg } = data;

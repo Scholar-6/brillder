@@ -416,7 +416,7 @@ const App: React.FC<AppProps> = props => {
             <AllUsersRoute path={map.SixthformOutcome} component={SixthformOutcome} />
             <AllUsersRoute path={map.SixthformTaster} component={SixthformOutcome} />
 
-            <AuthRoute path={map.SixthformAuth} component={SixthformAuth} />
+            <Route path={map.SixthformAuth} component={SixthformAuth} />
             <Route component={AuthRedirectRoute} />
           </Switch>
           <VersionLabel />
