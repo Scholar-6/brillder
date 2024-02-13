@@ -63,7 +63,6 @@ export enum WritingChoice {
   third,
   fourth,
   fifth,
-  sixth
 }
 
 export enum SixStepFourthChoices {
@@ -773,11 +772,6 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             />
             <CheckBoxV2
               currentChoice={WritingChoice.fifth} choice={this.state.writingChoice}
-              label="Travel, Geography and Other Cultures"
-              setChoice={this.setWritingChoice.bind(this)}
-            />
-            <CheckBoxV2
-              currentChoice={WritingChoice.sixth} choice={this.state.writingChoice}
               label="I hate writing and much prefer subjects have little or no need for it."
               setChoice={this.setWritingChoice.bind(this)}
             />

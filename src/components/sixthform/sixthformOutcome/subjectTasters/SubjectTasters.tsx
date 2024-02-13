@@ -106,9 +106,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             {this.state.filters.map(f => {
               return <div key={f} className={`font-14 filter-option ${f.selected ? 'selected' : ''}`} onClick={() => {
                 f.selected = !f.selected;
-                this.setState({ filters: this.state.filters});
+                this.setState({ filters: this.state.filters });
               }}>
-                {f.name} 
+                {f.name}
                 {f.selected ? <SpriteIcon name="check-icon" /> : ''}
               </div>
             })}
@@ -166,20 +166,22 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     return (
       <div className="top-part-e354">
-        <div className="tab-content-e354 taster-content font-24">
-          <div className="flex-center">
-            <div className="bold title-above">
-              Try a new subject or test yourself against<br />
-              sixth form content and concepts in subjects you know.
+        <div className="tab-content-e354-container">
+          <div className="tab-content-e354 taster-content font-28">
+            <div className="flex-center">
+              <div className="bold title-above">
+                Try a new subject or test yourself against<br />
+                sixth form content and concepts in subjects you know.
+              </div>
+              <div className="search-box">
+                <SpriteIcon name="search-tasters" />
+                <input className="font-20" placeholder="Search" value={this.state.searchString} onChange={e => this.setState({ searchString: e.target.value })} />
+              </div>
+              {this.renderFilter()}
             </div>
-            <div className="search-box">
-              <SpriteIcon name="search-tasters" />
-              <input className="font-20" placeholder="Search" value={this.state.searchString} onChange={e => this.setState({ searchString: e.target.value })} />
+            <div className="bricks-container">
+              {finalFinalSubjects.map((s, i) => this.renderBrick(s, i))}
             </div>
-            {this.renderFilter()}
-          </div>
-          <div className="bricks-container">
-            {finalFinalSubjects.map((s, i) => this.renderBrick(s, i))}
           </div>
         </div>
       </div>

@@ -253,6 +253,8 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
           } else {
             this.setState({ subStep: ThirdSubStep.ThirdD });
           }
+        } else {
+          this.setState({ subStep: ThirdSubStep.ThirdD });
         }
       }}>Continue</button>
     );
