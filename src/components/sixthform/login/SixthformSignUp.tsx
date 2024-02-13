@@ -1,9 +1,9 @@
 import React from 'react';
+import routes from './routes';
+import { useHistory } from 'react-router-dom';
 
 import './SixthformLoginPage.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
-import { useHistory } from 'react-router-dom';
-import routes from './routes';
 
 
 const SixthformSignUp: React.FC<any> = () => {
