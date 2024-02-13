@@ -635,37 +635,39 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     return (
       <div className="top-part-e354">
-        <div className="tab-content-e354">
-          <div className="font-16">
-            Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
-          </div>
-          <div className="boxes-e354">
-            <div className="box-box box-first">
-              <SpriteIcon name="edit-icon-sixthform" />
-              <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
-              <div className="font-16">{this.props.user.firstName} {this.props.user.lastName}</div>
-              <div className="font-16">{this.props.user.email}</div>
-              {this.renderCollegeName(answer2)}
+        <div className="tab-content-e354-container">
+          <div className="tab-content-e354">
+            <div className="font-16">
+              Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
             </div>
-            {this.renderStepBox()}
-          </div>
-          <div className="box-e354-big">
-            <div className="box-box box-first">
-              <div className="font-16 top-text-cotainer opacity-04">
-                <div className="first-box">
-                  MY SUBJECT RANKINGS ({realCardsCount})
+            <div className="boxes-e354">
+              <div className="box-box box-first">
+                <SpriteIcon name="edit-icon-sixthform" />
+                <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
+                <div className="font-16">{this.props.user.firstName} {this.props.user.lastName}</div>
+                <div className="font-16">{this.props.user.email}</div>
+                {this.renderCollegeName(answer2)}
+              </div>
+              {this.renderStepBox()}
+            </div>
+            <div className="box-e354-big">
+              <div className="box-box box-first">
+                <div className="font-16 top-text-cotainer opacity-04">
+                  <div className="first-box">
+                    MY SUBJECT RANKINGS ({realCardsCount})
+                  </div>
+                  <div className="second-box">Click and drag to rearrange your subjects</div>
                 </div>
-                <div className="second-box">Click and drag to rearrange your subjects</div>
-              </div>
-              <div>
-                <div className="font-20">DEFINITES</div>
-                <div className="line-e354"></div>
-                {this.renderDefinities(lastStep)}
-              </div>
-              <div>
-                <div className="font-20">POSSIBLES</div>
-                <div className="line-e354"></div>
-                {this.renderPossibles(lastStep)}
+                <div>
+                  <div className="font-20">DEFINITES</div>
+                  <div className="line-e354"></div>
+                  {this.renderDefinities(lastStep)}
+                </div>
+                <div>
+                  <div className="font-20">POSSIBLES</div>
+                  <div className="line-e354"></div>
+                  {this.renderPossibles(lastStep)}
+                </div>
               </div>
             </div>
           </div>

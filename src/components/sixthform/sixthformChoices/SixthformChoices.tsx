@@ -417,6 +417,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCourseContent() {
+    console.log('answers', this.state.answers);
+
     if (this.state.page === Pages.Welcome) {
       return (
         <div>

@@ -88,25 +88,33 @@
     font-family: 'Brandon Grotesque Bold';
   }
 
+  // SCROLLBAR
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb {
+    display: initial !important;
+  }
+
   ::-webkit-scrollbar {
-    margin-left: 2vw;
     width: 0.5vw;
+    display: initial !important;
   }
 
   /* Track */
   ::-webkit-scrollbar-track {
     background: inherit;
+    display: initial !important;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #475F92;
+    display: block !important;
+    background: #6981B3;
     border-radius: 0.2vw;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #475F92;
+    &:hover {
+      cursor: pointer;
+      display: block !important;
+      background: #6981B3;
+    }
   }
 
   .tab-container-e354 {
@@ -165,13 +173,18 @@
       height: calc(100vh - 5.834vw - 2vw - 2vh - 3vw);
     }
 
+    .tab-content-e354-container {
+      padding-right: 0.4vw;
+      background: #526AA5;
+    }
+
     .tab-content-e354 {
       overflow-y: auto;
       padding-bottom: 6vh;
       padding-top: 3vh;
       color: white;
       padding-left: 4vw;
-      padding-right: 4vw;
+      padding-right: 3vw;
       height: calc(100vh - 5.834vw - 2vw - 2vh - 3vw);
       background: #526AA5;
 
@@ -429,7 +442,7 @@
 
     .taster-content {
       padding-left: 2vw;
-      padding-right: 2vw;
+      padding-right: 1vw;
 
       .title-above {
         width: 64vw;
@@ -456,7 +469,7 @@
           padding-top: 0.4vw;
           height: 2.5vw !important;
           line-height: 1.5;
-          width: 20vw;
+          width: 22vw;
           padding-bottom: 0.4vw;
           border-radius: 0.7vw;
 
@@ -468,7 +481,7 @@
 
       .filter-box {
         margin-left: 1.4vw;
-        margin-right: 1vw;
+        margin-right: 1.1vw;
         position: relative;
 
         svg {
@@ -736,6 +749,10 @@
 
   .font-25 {
     font-size: calc(1.56vw * $font-scale);
+  }
+
+  .font-28 {
+    font-size: calc(1.7vw * $font-scale);
   }
 
   .font-30 {
