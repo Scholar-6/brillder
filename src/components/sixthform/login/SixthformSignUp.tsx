@@ -44,7 +44,7 @@ const SixthformSignUp: React.FC<any> = () => {
             <div className="text-box gg-text-box font-25">
               <span>Already a member?</span>
               <div className="join-button fe-sign-in bold" onClick={() => {
-                // move to sign in page
+                history.push(routes.SignIn);
               }}>
                 <SpriteIcon name="arrow-left" />
                 Sign in

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { ReactSortable } from "react-sortablejs";
+import { MenuItem, Select } from "@material-ui/core";
 
 import "./SixthformOutcome.scss";
 import { User } from "model/user";
@@ -15,7 +16,8 @@ import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/P
 import map from "components/map";
 import { fileUrl } from "components/services/uploadFile";
 import { playCover } from "components/play/routes";
-import { AcademicLevelLabels } from "model/brick";
+import { AcademicLevelLabels, SubjectGroup } from "model/brick";
+import { Subject } from "@material-ui/icons";
 
 
 interface UserProfileProps {
@@ -32,6 +34,8 @@ enum SixActiveTab {
 }
 
 interface UserProfileState {
+  searchString: string;
+  filters: any[];
   answers: any[];
   definetlyList: SixthformSubject[];
   possibleList: SixthformSubject[];
@@ -53,6 +57,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
 
     this.state = {
+      searchString: '',
+      filters: [],
       answers: [],
       definetlyList: [],
       possibleList: [],
@@ -151,10 +157,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return '';
   }
 
-  renderBrick(subject: SixthformSubject) {
+  renderBrick(subject: SixthformSubject, i: number) {
     if (subject.brick) {
       return (
-        <div className="brick-container-23">
+        <div className="brick-container-23" key={i}>
           <div className="brick-container" onClick={() => {
             if (subject.brick) {
               this.props.history.push(playCover(subject.brick));
@@ -676,10 +682,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354">
-          <div className="top-header-e354 font-32">
-            <SpriteIcon name="hand-icon" />
-            Welcome back, {this.props.user ? this.props.user.firstName : 'User'}!
-          </div>
           <div className="font-16">
             Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
           </div>
@@ -721,15 +723,82 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderTatersTabContent() {
     let subjects = this.state.subjects.filter(s => s.brick);
 
+    let filters = ["Arts", "Languages", "Humanities", "STEM"];
+
+    let finalSubjects = subjects;
+    if (this.state.filters.length > 0) {
+      finalSubjects = subjects.filter(s => {
+        if (s.brick && s.brick.subject) {
+          let group = s.brick.subject.group;
+
+          if (group === SubjectGroup.Arts && this.state.filters.includes("Arts")) {
+            return true;
+          }
+          if (group === SubjectGroup.Languages && this.state.filters.includes("Languages")) {
+            return true;
+          }
+          if (group === SubjectGroup.HumanitiesAndSocialSciences && this.state.filters.includes("Humanities")) {
+            return true;
+          }
+          if (group === SubjectGroup.Science && this.state.filters.includes("STEM")) {
+            return true;
+          }
+          if (group === SubjectGroup.MathsAndComputing && this.state.filters.includes("STEM")) {
+            return true;
+          }
+        }
+      });
+    }
+
+    let finalFinalSubjects = finalSubjects;
+    if (this.state.searchString && this.state.searchString.length >= 3) {
+      finalFinalSubjects = finalSubjects.filter(s => {
+        if (s.brick) {
+          return s.brick.title.toLowerCase().includes(this.state.searchString.toLowerCase()) || s.name.toLowerCase().includes(this.state.searchString.toLowerCase());
+        }
+        return false;
+      });
+    }
+
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354 taster-content font-30">
-          <div className="bold title-above">
-            Try a new subject or test yourself against<br />
-            sixth form content and concepts in subjects you know.
+          <div className="flex-center">
+            <div className="bold title-above">
+              Try a new subject or test yourself against<br />
+              sixth form content and concepts in subjects you know.
+            </div>
+            <div className="search-box">
+              <SpriteIcon name="search-tasters" />
+              <input className="font-20" placeholder="Search" value={this.state.searchString} onChange={e => this.setState({searchString: e.target.value})} />
+            </div>
+            <div className="filter-box">
+              <div className="label font-20">Filter</div>
+              <SpriteIcon name="filter-tasters" />
+              <Select
+                className="select-multiple-subject font-20"
+                style={{ width: '100%' }}
+                multiple
+                MenuProps={{ classes: { paper: 'select-classes-list' } }}
+                value={this.state.filters}
+                renderValue={(e) => {
+                  return '';
+                }}
+                onChange={(e: any) => {
+                  console.log('set ', e.target.value)
+                  this.setState({filters: e.target.value})
+                }}
+              >
+                {filters.map((s: any, i) =>
+                  <MenuItem value={s} key={i}>
+                    {s}
+                  </MenuItem>
+                )}
+              </Select>
+            </div>
           </div>
           <div className="bricks-container">
-            {subjects.map(s => this.renderBrick(s))}
+            {finalFinalSubjects.map((s, i) => this.renderBrick(s, i))}
           </div>
         </div>
       </div>

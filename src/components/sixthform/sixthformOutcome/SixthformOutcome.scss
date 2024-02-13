@@ -433,7 +433,77 @@
       padding-right: 2vw;
 
       .title-above {
+        width: 64vw;
         margin-left: 1vw;
+      }
+
+      .search-box {
+        position: relative;
+
+        svg {
+          position: absolute;
+          top: 0.7vw;
+          left: 0.4vw;
+          width: 2vw;
+          height: 2vw;
+        }
+
+        input {
+          color: white;
+          border: 2px solid #FFFFFFee;
+          background: #FFFFFF1A;
+          padding-left: 3vw;
+          padding-top: 0.4vw;
+          padding-bottom: 0.4vw;
+          border-radius: 0.7vw;
+
+          &::placeholder {
+            color: #BBBBBB;
+          }
+        }
+      }
+
+      .filter-box {
+        margin-left: 1.4vw;
+        position: relative;
+
+        svg {
+          position: absolute;
+          top: 0.7vw;
+          right: 0.4vw;
+          width: 2vw;
+          height: 2vw;
+        }
+
+        .label {
+          position: absolute;
+          top: 0.7vw;
+          left: 1.2vw;
+        }
+
+        .MuiInputBase-root {
+          padding-top: 0.4vw;
+          padding-bottom: 0.4vw;
+          padding-left: 0 !important;
+          width: 8vw !important;
+          color: white;
+          border: 2px solid #FFFFFFee;
+          background: #FFFFFF1A;
+          padding-left: 3vw;
+          border-radius: 0.7vw;
+
+          .MuiSelect-root {
+            text-align: center;
+          }
+
+          svg {
+            display: none;
+          }
+
+          &::after, &::before {
+            display: none;
+          }
+        }
       }
 
       .bricks-container {
@@ -453,7 +523,7 @@
               margin-top: 2.5vw;
               margin-bottom: 2.5vw;
               width: 21.5vw;
-              height: 11.4vw;
+              height: 12vw;
               border-radius: 1vw;
               background-size: cover;
               background-position: center center;
