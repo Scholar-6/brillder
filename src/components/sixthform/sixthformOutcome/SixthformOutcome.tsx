@@ -88,7 +88,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         definetlyList.push({ isEmpty: true });
         definetlyList.push({ isEmpty: true });
       }
-      console.log('definetlyList', definetlyList);
       this.setState({ definetlyList, subjects, otherSubjects: subjectsR1, possibleList });
     }
 
@@ -737,9 +736,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           </div>
           <div className="content-container-e354">
             <div>
-              <div className="tab-container-e354">
+              <div className="tab-container-e354 font-24">
                 <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Survey ? "active" : "not-active"}`}
+                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Survey ? "active bold" : "not-active"}`}
                   onClick={() => {
                     this.setState({ activeTab: SixActiveTab.Survey });
                   }}
@@ -747,7 +746,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   Six Step Survey
                 </div>
                 <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active" : "not-active"}`}
+                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active bold" : "not-active"}`}
                   onClick={() => {
                     this.setState({ activeTab: SixActiveTab.SubjectTasters });
                   }}
@@ -755,7 +754,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   Subject Tasters
                 </div>
                 <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Outcome ? "active" : "not-active"}`}
+                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Outcome ? "active bold" : "not-active"}`}
                   onClick={() => {
                     this.setState({ activeTab: SixActiveTab.Outcome });
                   }}

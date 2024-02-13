@@ -114,7 +114,7 @@
     width: 100%;
 
     .tab-e354 {
-      $tab-size: 2vw;
+      $tab-size: 3vw;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -123,14 +123,13 @@
       width: 34%;
       background: #193266;
       height: $tab-size;
-      font-size: 1.3vw;
-      border-top-left-radius: 0.5vw;
-      border-top-right-radius: 0.5vw;
-      border: 2px solid #4C608A;
+      border-top-left-radius: 1.2vw;
+      border-top-right-radius: 1.2vw;
+      border: 2px solid #526AA5;
 
       &.active {
         height: calc(#{$tab-size} + 2vh);
-        background: #4C608A;
+        background: #526AA5;
       }
 
       &.not-active {
@@ -160,10 +159,10 @@
     margin-top: 2vw;
     width: 100vw;
     color: white;
-    height: calc(100vh - 5.834vw - 2vw - 2vh - 2vw);
+    height: calc(100vh - 5.834vw - 2vw - 2vh - 3vw);
 
     >div {
-      height: calc(100vh - 5.834vw - 2vw - 2vh - 2vw);
+      height: calc(100vh - 5.834vw - 2vw - 2vh - 3vw);
     }
 
     .tab-content-e354 {
@@ -173,8 +172,8 @@
       color: white;
       padding-left: 4vw;
       padding-right: 4vw;
-      height: calc(100vh - 5.834vw - 2vw - 2vh - 2vw);
-      background: #4C608A;
+      height: calc(100vh - 5.834vw - 2vw - 2vh - 3vw);
+      background: #526AA5;
 
       .top-header-e354 {
         position: relative;
@@ -457,6 +456,7 @@
           padding-top: 0.4vw;
           height: 2.5vw !important;
           line-height: 1.5;
+          width: 20vw;
           padding-bottom: 0.4vw;
           border-radius: 0.7vw;
 
@@ -468,6 +468,7 @@
 
       .filter-box {
         margin-left: 1.4vw;
+        margin-right: 1vw;
         position: relative;
 
         svg {
@@ -490,6 +491,21 @@
           background: #FFFFFF1A;
           border-radius: 0.7vw;
           text-align: center;
+          transition: all 200ms ease-in-out;
+
+          &.active {
+            background: var(--theme-dark-blue);
+          }
+          svg {
+            border-radius: 50%;
+            border: 2px solid white;
+            position: absolute;
+            top: -0.35vw;
+            right: -0.35vw;
+            width: 1vw;
+            height: 1vw;
+            color: var(--theme-orange);
+          }
         }
 
         .filter-popup-container {
@@ -568,8 +584,8 @@
               position: relative;
               margin-top: 2.5vw;
               margin-bottom: 2.5vw;
-              width: 21.5vw;
-              height: 12vw;
+              width: 22vw;
+              height: 13vw;
               border-radius: 1vw;
               background-size: cover;
               background-position: center center;
