@@ -283,8 +283,24 @@
         color: white;
       }
       svg, input {
-        width: 1.5vw;
+        width: 1.5vw !important;
         height: 1.5vw;
+      }
+
+      .MuiButtonBase-root {
+        padding: 0.4vw !important;
+      }
+
+      input {
+        margin: 0 !important;
+        margin-left: 0.7vw !important;
+        padding: 0.4vw !important;
+      }
+
+      &.highlighted {
+        svg {
+          color: var(--theme-orange);
+        }
       }
     }
 
