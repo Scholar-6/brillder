@@ -21,6 +21,9 @@ interface Props {
 const SixthformLoginPage: React.FC<Props> = (props) => {
   const history = useHistory();
 
+  const [highlightedTerms, setHighlightedTerms] = useState(false);
+
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -104,15 +107,20 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
-    let res = validateForm();
-    if (res !== true) {
-      toggleAlertMessage(true);
-      setAlertMessage(res);
-      return;
+    if (termsAccepted) {
+      setHighlightedTerms(false);
+  
+      const res = validateForm();
+      if (res !== true) {
+        toggleAlertMessage(true);
+        setAlertMessage(res);
+        return;
+      }
+  
+      sendLogin(email, password);
+    } else {
+      setHighlightedTerms(true);
     }
-
-    sendLogin(email, password);
   }
 
   return (
@@ -128,9 +136,9 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
             <input className="font-28 full-name-input" placeholder='Full name' onChange={e => setFullName(e.target.value)} />
             <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
             <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
-            <div className="terms-checkbox-container">
-              <Checkbox />
-              <div className="font-16">
+            <div className={`terms-checkbox-container`}>
+              <Checkbox required value={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} />
+              <div className="font-15">
                 By signing up, I agree to the Scholar6 <span className="text-underline">Terms and Conditions</span>
               </div>
             </div>
