@@ -164,19 +164,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (lastStep === 6) {
         return (
           <div className="box-box box-second">
-            <div className="font-16 second-box-top-text">
-              <div className="opacity-04">SIXTH FORM COURSE SELECTOR:</div>
-              <SpriteIcon name="check-green-six" className="absolute-icon" />
-            </div>
-            <div className="flex-center percentage-final">
-              <div>
-                <div className="flex-center font-32 bold">
-                  <span className="font-36 line-height-1m15">100%</span>
-                </div>
-                <div className="flex-center bold">
-                  <div className="font-24 line-height-1m15">COMPLETED</div>
-                </div>
+            <div className="second-box-top-text">
+              <div className="opacity-04 font-16">SIXTH FORM COURSE SELECTOR:</div>
+              <div className="absolute-result-box">
+                <SpriteIcon name="check-green-six" className="absolute-icon" />
+                <span className="font-24 bold">100%</span>
               </div>
+            </div>
+            <div className="completed-progress-bar">
+              <ProgressBarSixthformV2 step={lastStep} />
+            </div>
+            <div className="survey-btn-container">
+              <div className="btn survey-btn font-16">View Survey</div>
             </div>
           </div>
         );
@@ -240,10 +239,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderCard(subject: SixthformSubject, i: number, isDefinities: boolean = false) {
     if (subject.isEmpty) {
       return (
-        <div className="subject-group first font-20" key={i}>
-          Select and drag from the<br />
-          subject cards below to choose<br />
-          your Definites.
+        <div className="subject-group first font-16" key={i}>
+          Select and drag from the subject cards below to<br />
+          choose your Definites.
         </div>
       )
     }
@@ -631,13 +629,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       answer2 = answers.find(a => a.step === 2);
     }
 
-    const realCardsCount = this.state.definetlyList.filter(d => !d.isEmpty).length + this.state.possibleList.length;
-
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354-container">
           <div className="tab-content-e354">
-            <div className="font-16">
+            <div className="font-16 light">
               Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
             </div>
             <div className="boxes-e354">
@@ -652,19 +648,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
             <div className="box-e354-big">
               <div className="box-box box-first">
-                <div className="font-16 top-text-cotainer opacity-04">
-                  <div className="first-box">
-                    MY SUBJECT RANKINGS ({realCardsCount})
-                  </div>
-                  <div className="second-box">Click and drag to rearrange your subjects</div>
-                </div>
                 <div>
-                  <div className="font-20">DEFINITES</div>
+                  <div className="font-20 definity-label-container">
+                    <span className="font-20">MY DEFINITES</span>
+                    <span className="font-16 grey-text">You can always change your mind later</span>
+                  </div>
                   <div className="line-e354"></div>
                   {this.renderDefinities(lastStep)}
                 </div>
                 <div>
-                  <div className="font-20">POSSIBLES</div>
+                  <div className="font-20">MY POSSIBLES</div>
                   <div className="line-e354"></div>
                   {this.renderPossibles(lastStep)}
                 </div>
