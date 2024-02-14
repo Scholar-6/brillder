@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Snackbar } from '@material-ui/core';
+import { Checkbox, Snackbar } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 import './SixthformLoginPage.scss';
@@ -11,6 +11,7 @@ import WrongLoginDialog from 'components/loginPage/components/WrongLoginDialog';
 import userActions from 'redux/actions/user';
 import { User } from 'model/user';
 import map from 'components/map';
+import routes from './routes';
 
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
 const SixthformLoginPage: React.FC<Props> = (props) => {
   const history = useHistory();
 
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -123,10 +125,24 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
               <div>Hey there!</div>
             </div>
             <div className="font-24 text-center">Register with Email</div>
-            <input className="font-28 full-name-input" placeholder='Full name' />
+            <input className="font-28 full-name-input" placeholder='Full name' onChange={e => setFullName(e.target.value)} />
             <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
             <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
+            <div className="terms-checkbox-container">
+              <Checkbox />
+              <div className="font-16">
+                By signing up, I agree to the Scholar6 <span className="text-underline">Terms and Conditions</span>
+              </div>
+            </div>
             <button className="font-30 btn">Sign Up</button>
+            <div className="button-box-v2">
+              <div className="back-button font-25 bold" onClick={() => {
+                history.push(routes.SignUp);
+              }}>
+                <SpriteIcon name="arrow-left" />
+                Back
+              </div>
+            </div>
           </div>
         </div>
       </form>

@@ -91,6 +91,7 @@ const SixthformSignInPage: React.FC<Props> = (props) => {
             <div className="font-24 text-center">Sign in to your account</div>
             <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
             <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
+            <button className="font-30 btn sign-in-btn">Sign In</button>
             <div className="line-container flex-center">
               <div className="line" />
               <div className="font-20">OR</div>
@@ -104,14 +105,8 @@ const SixthformSignInPage: React.FC<Props> = (props) => {
               <img alt="" src="/images/microsoft.png" />
               <span>School or Institution (Microsoft)</span>
             </a>
-            <button className="font-30 btn">Sign In</button>
-            <div className="button-box-v2">
-              <div className="back-button font-25 bold" onClick={() => {
-                history.push(routes.SignUp);
-              }}>
-                <SpriteIcon name="arrow-left" />
-                Back
-              </div>
+            <div className="sign-up-link font-20" onClick={() => history.push(routes.SignUp)}>
+              Don’t have an account yet? <span className="text-underline">Sign up here</span>
             </div>
           </div>
         </div>

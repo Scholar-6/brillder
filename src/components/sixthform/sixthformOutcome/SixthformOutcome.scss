@@ -231,7 +231,7 @@
         }
 
         .box-second {
-          padding-top: 0.4vw;
+          padding-top: 0.6vw;
           padding-right: 1vw;
           padding-left: 1vw;
           position: relative;
@@ -253,12 +253,34 @@
             height: 7.5vw;
           }
 
+          .survey-btn-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            .survey-btn {
+              cursor: pointer;
+              margin-top: 1.1vw;
+              padding: 0.2vw 2vw;
+              border-radius: 1vw;
+              background: #526AA5;
+              transition: opacity 200ms ease-in-out;
+
+              &:hover {
+                opacity: 0.8;
+              }
+            }
+          }
+
           .survey-button {
             margin-top: 0.4vw;
             padding: 0.2vw 2vw;
             border-radius: 1vw;
             background: var(--theme-orange);
             cursor: pointer;
+          }
+
+          .completed-progress-bar {
+            margin-top: 1vw;
           }
 
           .progress-bar-sixthform {
@@ -274,12 +296,21 @@
               width: 50%;
             }
 
-            .absolute-icon {
+            .absolute-result-box {
               position: absolute;
-              width: 2vw;
-              height: 2vw;
-              top: 0.5vw;
+              top: 0.3vw;
               right: 0.5vw;
+              display: flex;
+              width: 7vw;
+              align-items: center;
+              justify-content: flex-start;
+              color: var(--theme-green);
+
+              .absolute-icon {
+                margin-right: 0.4vw;
+                width: 1.8vw;
+                height: 1.8vw;
+              }
             }
           }
 
@@ -292,6 +323,17 @@
               margin-top: 0.8vw;
             }
           }
+        }
+      }
+
+      .definity-label-container {
+        margin-top: 2.5vh;
+        display: flex;
+        align-items: center;
+
+        .grey-text {
+          margin-left: 1.3vw;
+          opacity: 0.6;
         }
       }
 
@@ -310,22 +352,6 @@
           width: 100%;
         }
 
-        .top-text-cotainer {
-          margin-bottom: 3vh;
-          width: 100%;
-          padding-top: 0.3vw;
-          display: flex;
-
-          .first-box {
-            width: 50%;
-          }
-
-          .second-box {
-            width: 50%;
-            text-align: right;
-          }
-        }
-
         .line-e354 {
           margin-top: 0.8vh;
           background: #FFFFFF66;
@@ -340,7 +366,7 @@
           flex-wrap: wrap;
 
           >div {
-            margin-bottom: 1vw;
+            margin-bottom: 2vh;
           }
 
           &.empty {
@@ -359,9 +385,9 @@
           }
 
           &.real {
-            margin-top: 1.5vw;
+            margin-top: 4vh;
             display: flex;
-            margin-bottom: 1.5vw;
+            margin-bottom: 0vh;
             overflow-x: scroll;
 
             >div {
@@ -416,6 +442,17 @@
 
                   .taste-container {
                     margin-left: 0.5vw;
+                  }
+                }
+              }
+              .subject-sixth-card > {
+                border-radius: 0.5vw;
+                background: white;
+                div {
+                  background: linear-gradient(255.62deg, #30C474 -138.07%, #FFFFFF 98.24%);
+
+                  .box-v32 {
+                    background: white;
                   }
                 }
               }
@@ -782,13 +819,6 @@
   .line-height-1 {
     line-height: 1;
   }
-
-  .line-height-1m15 {
-    line-height: 1.15;
-  }
-
-
-
 
   .subject-sixth-card {
     width: 28.8vw;

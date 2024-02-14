@@ -209,6 +209,10 @@
           }
         }
 
+        .sign-in-btn {
+          margin-top: 2vh;
+        }
+
         .text-box {
           padding-left: 4.5vw;
           margin-top: 2vh;
@@ -270,6 +274,24 @@
       }
     }
 
+    .terms-checkbox-container {
+      display: flex;
+      align-items: center;
+      margin-top: 2vh;
+
+      svg {
+        color: white;
+      }
+      svg, input {
+        width: 1.5vw;
+        height: 1.5vw;
+      }
+    }
+
+    .text-underline {
+      text-decoration: underline;
+    }
+
     .google-button-desktop,
     .microsoft-button-v5 {
       display: block;
@@ -299,8 +321,13 @@
       }
     }
 
+    .sign-up-link {
+      cursor: pointer;
+      text-align: center;
+    }
+
     .google-button-desktop {
-      margin-top: 4vh;
+      margin-top: 2vh;
 
       span {
         padding-left: 0;
@@ -316,7 +343,7 @@
     }
 
     .line-container {
-      margin-top: 4vh;
+      margin-top: 2vh;
 
       .line {
         opacity: 0.3;
