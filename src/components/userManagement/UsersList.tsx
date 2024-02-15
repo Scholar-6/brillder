@@ -573,7 +573,7 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                         <span
                           className="btn"
                           style={{ cursor: "pointer", borderRadius: "50%", backgroundColor: "#800080", width: "1.8vw", height: "1.8vw", display: "inline-block", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                          onClick={() => this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=teacher:${user.email}` })}
+                          onClick={() => this.props.history.push(map.TeachAssignedTab + '?teacherId=' + user.id)}
                         >
                           <SpriteIcon name="glasses" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
                         </span>
@@ -591,7 +591,10 @@ class UsersListPage extends Component<UsersListProps, UsersListState> {
                             //this.props.history.push({ pathname: map.TeachAssignedTab, search: `?search=student:${user.email}` })
                           }}
                         >
-                          <SpriteIcon name="student-back-to-work" style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                          <SpriteIcon
+                            name="student-back-to-work"
+                            style={{ color: "white", width: "1.5vw", height: "1.5vw", position: "absolute", margin: "auto", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                          />
                         </span>
                       </Tooltip>
                     }
