@@ -8,14 +8,19 @@
   background: #061C54;
 
   .page-1-r332 {
-    height: calc(53vh + 9vh + 4vh + 23vw);
+    height: calc(53vh + 2vh + 20vw);
     top: 0;
     position: relative;
 
-    .background-r322 {
+    .background-image-container {
       position: absolute;
       top: 0;
       left: 0;
+      width: 100%;
+      max-height: calc(53vh + 2vh + 20vw);
+      overflow:hidden;
+    }
+    .background-r322 {
       width: 100%;
     }
 
@@ -51,6 +56,23 @@
           margin-top: 2vh;
           margin-left: 3vw;
         }
+
+        .menu-item {
+          margin-top: calc(2vh + 0.48vw);
+        }
+
+        .absolute-partner-btn {
+          position: absolute;
+          top: 0;
+          right: 2.5vw;
+          display: flex;
+          align-items: center;
+    
+          img {
+            margin-left: 1.3vw;
+            width: 10vw;
+          }
+        }
       }
 
       .page-content-r322 {
@@ -74,11 +96,6 @@
           background: white;
         }
       }
-
-      .partner-image {
-        margin-top: 4vh;
-        width: 18vw;
-      }
     }
   }
 
@@ -101,7 +118,7 @@
       height: auto;
 
       .tab-e354 {
-        $tab-size: 2vw;
+        $tab-size: 3.5vw;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -110,18 +127,17 @@
         width: 34%;
         background: #193266;
         height: $tab-size;
-        font-size: 1.3vw;
-        border-top-left-radius: 0.5vw;
-        border-top-right-radius: 0.5vw;
-        border: 2px solid #4C608A;
+        border-top-left-radius: 1.2vw;
+        border-top-right-radius: 1.2vw;
+        border: 2px solid #526AA5;
 
         &.active {
-          height: calc(#{$tab-size} + 2vh);
-          background: #4C608A;
+          height: calc(#{$tab-size} + 1.3vw);
+          background: #526AA5;
         }
 
         &.not-active {
-          margin-top: 2vh;
+          margin-top: 1.3vw;
           height: $tab-size;
         }
       }
@@ -132,12 +148,12 @@
       padding-bottom: 6vh;
       padding-top: 3vh;
       color: white;
-      border-bottom-left-radius: 1vw;
-      border-bottom-right-radius: 1vw;
+      border-bottom-left-radius: 1.2vw;
+      border-bottom-right-radius: 1.2vw;
       padding-left: 4vw;
       padding-right: 4vw;
       height: calc(100vh - 5.834vw - 2vw - 2vh - 2vw);
-      background: #4C608A;
+      background: #526AA5;
 
       .content-title {
         margin-bottom: 2vh;

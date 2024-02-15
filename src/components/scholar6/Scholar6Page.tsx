@@ -5,7 +5,6 @@ import { SixthformSubject, getSixthformSubjects2 } from "services/axios/sixthfor
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import Partners from "./Partners";
-import SubjectsTagsIcon from "./SubjectTagsIcon";
 
 
 interface UserProfileProps {
@@ -149,14 +148,20 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
       <React.Suspense fallback={<></>}>
         <div className="SixthformOutcomePage">
           <div className='page-1-r332'>
-            <img className="background-r322" src="/images/Top-background.png" />
+            <div className="background-image-container">
+              <img className="background-r322" src="/images/Top-background.png" />
+            </div>
             <SpriteIcon className="red-shape-icon-r1" name="red-shape-icon-r1" />
             <SpriteIcon className="scholar6-svg" name="scholar6-svg" />
             <div className="abolute-page-content">
               <div className="top-menu font-18">
-                <div>About</div>
-                <div>The principles of choosing A-levels</div>
-                <div>Academic Catalogue</div>
+                <div className="menu-item">About</div>
+                <div className="menu-item">The principles of choosing A-levels</div>
+                <div className="menu-item">Academic Catalogue</div>
+                <div className="absolute-partner-btn font-16">
+                  <div>OUR KEY PARTNER</div>
+                  <img className="partner-image" src="/images/main-partner.png" />
+                </div>
               </div>
               <div className="page-content-r322">
                 <div className="font-40">
@@ -167,21 +172,14 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                   Uniquely, we can assess both your current aptitude and your future potential across a wide range of<br />
                   academic subjects, including many which are not normally studied before the sixth form.
                 </div>
-                <div className="box-with-lines-r322">
-                  <div className="line" />
-                  <div className="font-24">OUR KEY PARTNER</div>
-                  <div className="line" />
-                </div>
-                <img className="partner-image" src="/images/main-partner.png" />
               </div>
             </div>
           </div>
-          <SubjectsTagsIcon />
           <div className="content-container-e354">
             <div>
               <div className="tab-container-e354">
                 <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Survey ? "active" : "not-active"}`}
+                  className={`tab-e354 font-30 ${this.state.activeTab === SixActiveTab.Survey ? "active bold" : "not-active"}`}
                   onClick={() => {
                     this.setState({ activeTab: SixActiveTab.Survey });
                   }}
@@ -189,7 +187,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                   Six Step Survey
                 </div>
                 <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active" : "not-active"}`}
+                  className={`tab-e354 font-30 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active bold" : "not-active"}`}
                   onClick={() => {
                     this.setState({ activeTab: SixActiveTab.SubjectTasters });
                   }}
@@ -197,7 +195,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                   Subject Tasters
                 </div>
                 <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Outcome ? "active" : "not-active"}`}
+                  className={`tab-e354 font-30 ${this.state.activeTab === SixActiveTab.Outcome ? "active bold" : "not-active"}`}
                   onClick={() => {
                     this.setState({ activeTab: SixActiveTab.Outcome });
                   }}
