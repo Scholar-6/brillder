@@ -78,3 +78,26 @@
     }
   }
 }
+
+
+.assignments-list-r-32343 {
+  color: var(--theme-dark-blue);
+  max-height: 80vh;
+  overflow-y: scroll;
+  padding: 0.5vw;
+  font-size: 1vw;
+
+  tr {
+    text-align: left;
+
+    th {
+      padding-left: 0.3vw;
+      padding-right: 0.3vw;
+    }
+  }
+
+  td {
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
+  }
+}

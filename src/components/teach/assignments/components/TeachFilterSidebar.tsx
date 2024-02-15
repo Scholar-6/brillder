@@ -265,10 +265,11 @@ class TeachFilterSidebar extends Component<
             </div>
           </div>
           <div className="sort-box">
-            <div className={"index-box m-view-all flex-center " + (!this.props.activeClassroom ? "active" : "")}>
+            <div className="index-box m-view-all flex-center active" onClick={this.props.viewAll}>
               <div>Show:</div>
               <Select
                 className="selected-class-group"
+                onClick={e => e.stopPropagation()}
                 value={this.state.selectedChoice}
                 MenuProps={{ classes: { paper: 'select-time-list' } }}
                 onChange={e => {
@@ -279,7 +280,7 @@ class TeachFilterSidebar extends Component<
               >
                 {this.state.classroomChoices.map((c, i) => <MenuItem value={c as any} key={i}>{c.value}</MenuItem>)}
               </Select>
-              <SortButton sortBy={this.state.sort} sort={(sort: SortClassroom) => {
+              <SortButton onClick={e => e.stopPropagation()} sortBy={this.state.sort} sort={(sort: SortClassroom) => {
                 this.setState({ sort });
                 this.props.sortClassrooms(sort);
               }} />

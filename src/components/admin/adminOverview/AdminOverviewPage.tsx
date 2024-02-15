@@ -25,6 +25,7 @@ import { getInstitutionOverviewData, getOverviewAssignedData, getOverviewCompeti
 import map from "components/map";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { checkRealInstitution } from "components/services/brickService";
+import AssignedBricks from "./AssignedBricks";
 
 
 ChartJS.register(
@@ -326,7 +327,7 @@ class AdminOverviewPage extends Component<Props, OverviewState> {
                 })}
               </div>
               <div className="boxes-d103">
-                {this.renderBox(this.state.data.assignedBricks, 'Assigned Bricks', false)}
+                <AssignedBricks isLoading={this.state.isLoading} count={this.state.data.assignedBricks} dateFilter={this.state.dateFilter} />
                 {this.renderBox(this.state.data.newSignups, 'New Signups', true, () => {
                   history.push(map.UsersEvents + '?dateFilter=' + this.state.dateFilter);
                 })}

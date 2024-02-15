@@ -173,6 +173,14 @@ export const getOverviewAssignedData = async (dateFilter: PDateFilter) => {
   }
 }
 
+export const getOverviewAssignedDetailedData = async (dateFilter: PDateFilter) => {
+  try {
+    return await get<any>(`/admin/getOverviewAssignedDetailedData/` + dateFilter);
+  } catch {
+    return false;
+  }
+}
+
 export const getAdminBricksPublished = async (dateFilter: PDateFilter) => {
   try {
     return await get<Brick[]>(`/admin/getAdminBricksPublished/` + dateFilter);

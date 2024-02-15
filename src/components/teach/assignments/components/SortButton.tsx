@@ -8,13 +8,14 @@ import { SetSortSidebarClassroom } from 'localStorage/assigningClass';
 interface Props {
   sortBy: SortClassroom;
   classroom?: string;
+  onClick?(e: any): void;
   sort(sort: SortClassroom): void;
 }
 
 const SortButton: React.FC<Props> = ({ sortBy, sort, ...props }) => {
   const [clicked, setClicked] = React.useState(false);
   return (
-    <div className="sort-v4y4">
+    <div className="sort-v4y4" onClick={props.onClick}>
       <SpriteIcon
         name="hero-sort-descending"
         onClick={() => setClicked(true)}
