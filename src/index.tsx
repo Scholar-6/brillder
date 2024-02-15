@@ -6,31 +6,10 @@ import * as serviceWorker from './serviceWorker';
 import App from './components/app/App';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-
-import moment from 'moment';
-
 import { isIPad13, isTablet } from 'react-device-detect';
 import { isPhone } from 'services/phone';
 
-moment.updateLocale('en', {
-  relativeTime: {
-    future: "in %s",
-    past: "%s ago",
-    s: 'a few seconds',
-    ss: '%d seconds',
-    m: "1 min",
-    mm: "%d mins",
-    h: "an hour",
-    hh: "%d hours",
-    d: "a day",
-    dd: "%d days",
-    w: "a week",
-    M: "a month",
-    MM: "%d months",
-    y: "a year",
-    yy: "%d years"
-  }
-});
+
 
 const MobileTheme = React.lazy(() => import('components/app/MobileTheme'));
 const TabletTheme = React.lazy(() => import('components/app/TabletTheme'));
