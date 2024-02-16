@@ -110,6 +110,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
   }
 
+  moveToStep(step: number) {
+    this.props.history.push(map.SixthformChoices + '/' + step);
+  }
+
+  renderStepper(lastStep: number) {
+    return <ProgressBarSixthformV2 step={lastStep} moveToStep={this.moveToStep} />;
+  }
+
   sortByScore(subjects: SixthformSubject[]) {
     subjects.sort((a, b) => {
       if (a.score > b.score) {
@@ -172,11 +180,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               </div>
             </div>
             <div className="completed-progress-bar">
-              <ProgressBarSixthformV2 step={lastStep} />
+              {this.renderStepper(lastStep)}
             </div>
+            {/*
             <div className="survey-btn-container">
-              <div className="btn survey-btn font-16">View Survey</div>
-            </div>
+              <div className="btn survey-btn font-16" onClick={() => {
+                //this.props.history.push()
+              }}>View Survey</div>
+            </div>*/}
           </div>
         );
       }
@@ -186,13 +197,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           <div className="font-16 second-box-top-text">
             <div className="opacity-04">SIXTH FORM COURSE SELECTOR:</div>
             <div className="flex-end">
-              <span className="flex-center opacity-04">PROGRESS:</span>
-              <span className="font-40">50%</span>
+              <span className="flex-center opacity-04 progress-label">PROGRESS:</span>
+              <span className="font-24 percentage-label">50%</span>
             </div>
           </div>
-          <ProgressBarSixthformV2 step={lastStep} />
+          <div className="uncompleted-progress-bar">
+            {this.renderStepper(lastStep)}
+          </div>
           <div className="flex-end">
-            <div className="survey-button font-20" onClick={() => this.props.history.push(map.SixthformChoices)}>Continue Survey</div>
+            <div className="survey-button font-20" onClick={() => this.moveToStep(lastStep)}>
+              Continue Survey
+            </div>
           </div>
         </div>
       );

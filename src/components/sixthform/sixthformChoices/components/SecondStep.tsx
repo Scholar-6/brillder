@@ -59,6 +59,8 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
     let subStep = SubStep.First;
 
+    console.log('second step', props.answer);
+
     if (props.answer) {
       choice = props.answer.answer.choice;
       otherChoice = props.answer.answer.otherChoice;

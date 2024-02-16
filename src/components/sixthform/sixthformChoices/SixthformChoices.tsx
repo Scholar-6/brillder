@@ -21,6 +21,7 @@ import map from "components/map";
 import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
 import authRoutes from "../login/routes";
+import PageLoader from "components/baseComponents/loaders/pageLoader";
 
 
 interface UserProfileProps {
@@ -47,6 +48,7 @@ enum SubjectType {
 }
 
 interface UserProfileState {
+  isLoading: boolean;
   subjectType: SubjectType;
   allSubjects: SixthformSubject[];
   subjects: SixthformSubject[];
@@ -69,7 +71,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     let subjectType = SubjectType.AllSubjects;
 
+    let page = Pages.Welcome;
+
+    // if step in params load from cash
+    if (this.props.match.params.step) {
+      page = parseInt(this.props.match.params.step);
+    }
+
     this.state = {
+      isLoading: true,
       subjectType: SubjectType.AllSubjects,
       allSubjects: [],
       subjects: [],
@@ -79,7 +89,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       popupSubject: null,
       subjectPosition: null,
 
-      page: Pages.Welcome,
+      page,
       brickPopup: {
         isOpen: false,
         brick: null
@@ -109,6 +119,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     if (answers) {
       for (let answer of answers) {
+        console.log('parse', answer);
         answer.answer = JSON.parse(answer.answer);
       }
 
@@ -119,10 +130,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         subjectType = firstAnswer.answer.choice;
       }
 
+      let answeRs:any[] = [];
 
+      // if step in params load from cash
+      if (this.props.match.params.step) {
+        answeRs = answers;
+      }
 
-      this.setState({ answers: [], subjectType });
+      console.log('answer from server', answers);
+
+      this.setState({ answers, subjectType });
     }
+    this.setState({isLoading: false});
   }
 
   sortByScore(subjects: SixthformSubject[]) {
@@ -287,8 +306,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.subStep = answer.subStep;
-        //answerR1.answer.abAnswer = answer.abAnswer;
-        //answerR1.answer.careers = answer.careers;
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -417,8 +434,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCourseContent() {
-    console.log('answers', this.state.answers);
-
     if (this.state.page === Pages.Welcome) {
       return (
         <div>
@@ -815,6 +830,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return <PageLoader content="...Loading Choices..." />;
+    }
+    console.log('render answers: ', this.state.answers);
     return (
       <React.Suspense fallback={<></>}>
         <div className="page1 dashboard-page SixthformChoicesPage">
