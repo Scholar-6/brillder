@@ -80,10 +80,8 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
             Your results will yield important insights on the courses you’re considering.
           </div>
           <div className="flex-center">
-            <div className="btn-orange font-20" onClick={() => {
-              window.location.href = 'https://app.brillder.com/sixthform-choices';
-            }}>
-              Take the Survey
+            <div className="btn-orange font-20" onClick={() => window.location.href = 'https://app.brillder.com/sixthform-auth/signup'}>
+              Log in to start
             </div>
           </div>
         </div>
