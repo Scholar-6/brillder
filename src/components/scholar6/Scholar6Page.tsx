@@ -5,6 +5,7 @@ import { SixthformSubject, getSixthformSubjects2 } from "services/axios/sixthfor
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import Partners from "./Partners";
+import Scholar6Tasters from "./Scholar6Tasters";
 
 
 interface UserProfileProps {
@@ -93,19 +94,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
   renderTatersTabContent() {
     let subjects = this.state.subjects.filter(s => s.brick);
 
-    return (
-      <div className="top-part-e354">
-        <div className="tab-content-e354 taster-content font-30">
-          <div className="bold title-above">
-            Try a new subject or test yourself against<br />
-            sixth form content and concepts in subjects you know.
-          </div>
-          <div className="bricks-container">
-            {subjects.map(s => this.renderBrick(s))}
-          </div>
-        </div>
-      </div>
-    );
+    return <Scholar6Tasters subjects={subjects} />;
   }
 
   renderSurveyTabContent() {
@@ -156,10 +145,9 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
             <div className="abolute-page-content">
               <div className="top-menu font-18">
                 <div className="menu-item">About</div>
-                <div className="menu-item">The principles of choosing A-levels</div>
-                <div className="menu-item">Academic Catalogue</div>
-                <div className="absolute-partner-btn font-16">
-                  <div>OUR KEY PARTNER</div>
+                <div className="menu-item clickable" onClick={() => window.location.href = 'https://brillder.com'}>Academic Catalogue</div>
+                <div className="absolute-partner-btn font-16" onClick={() => window.location.href = 'https://www.sixthformcolleges.org/'}>
+                  <div>OUR KEY PARTNERS</div>
                   <img className="partner-image" src="/images/main-partner.png" />
                 </div>
               </div>
