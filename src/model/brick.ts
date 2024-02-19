@@ -1,5 +1,4 @@
 
-import { Question } from "./question";
 import { UserBase, UserType } from "./user";
 import { Assignment } from "./classroom";
 import { Competition } from "./competition";
@@ -118,7 +117,7 @@ export interface Brick {
   datePublished?: string;
   brickLength: BrickLengthEnum;
   type: number;
-  questions: Question[];
+  questions: any[];
   author: Author;
   editors?: Editor[];
   publisher?: Editor;

@@ -1,6 +1,5 @@
 import { User, UserBase } from "./user";
 import { Brick, Subject } from "./brick";
-import { AssignmentStudent } from "./stats";
 import { AssignmentBrick } from "./assignment";
 
 export enum ClassroomStatus {
@@ -47,20 +46,12 @@ export interface Assignment {
   }
 }
 
-export interface TeachStudent extends UserBase {
-  studentResult: AssignmentStudent | undefined;
-  studentStatus: StudentStatus | undefined;
-  remindersCounter?: number;
-  completedCount: number;
-}
-
 export interface Classroom {
   id: number;
   name: string;
   created: Date;
   updated: Date;
   status: ClassroomStatus;
-  students: TeachStudent[];
   teachers: UserBase[];
   teacher: UserBase;
   creator: UserBase;

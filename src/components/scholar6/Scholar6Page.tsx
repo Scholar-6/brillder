@@ -73,10 +73,10 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
           <div className="flex-center">
             <img alt="brill" className="brills-icon" src="/images/SixthformSurvey.png" />
           </div>
-          <div className="flex-center content-title font-36 bold">
+          <div className="flex-center content-title font-30 bold">
             View your outcomes after taking the Survey
           </div>
-          <div className="flex-center font-20">
+          <div className="flex-center font-28">
             Your results will yield important insights on the courses you’re considering.
           </div>
           <div className="flex-center">

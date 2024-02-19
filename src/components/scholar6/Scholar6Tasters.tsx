@@ -171,13 +171,13 @@ class SixthformTasters extends Component<UserProfileProps, UserProfileState> {
         <div className="tab-content-e354-container">
           <div className="tab-content-e354 taster-content">
             <div className="flex-center">
-              <div className="bold title-above font-28">
+              <div className="bold title-above font-30">
                 Try a new subject or test yourself against<br />
                 sixth form content and concepts in subjects you know.
               </div>
               <div className="search-box">
                 <SpriteIcon name="search-tasters" />
-                <input className="font-20" placeholder="Search" value={this.state.searchString} onChange={e => this.setState({ searchString: e.target.value })} />
+                <input className="font-28" placeholder="Search" value={this.state.searchString} onChange={e => this.setState({ searchString: e.target.value })} />
               </div>
               {this.renderFilter()}
             </div>
