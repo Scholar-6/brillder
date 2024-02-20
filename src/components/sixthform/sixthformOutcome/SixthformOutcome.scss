@@ -8,6 +8,12 @@
   background: var(--theme-dark-blue);
   height: 100%;
 
+  .progress-bar-sixthform {
+    .active, .completed {
+      cursor: pointer;
+    }
+  }
+
   .top-left-logo-container {
     position: absolute;
     z-index: 5;

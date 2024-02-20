@@ -41,7 +41,7 @@ export enum Pages {
   Question6
 }
 
-enum SubjectType {
+export enum SubjectType {
   ALevels = 1,
   VocationalSubjects,
   AllSubjects

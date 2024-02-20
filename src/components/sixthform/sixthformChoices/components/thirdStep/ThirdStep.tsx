@@ -619,7 +619,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
           What qualifications are you studying for at present?
         </div>
         <div className="font-16">
-          Select from the lists and sections below: academic subjects (usually GCSEs) and subjects which are more of a practical or vocational nature. If you have already achieved the qualification, select it also. If you are formally studying an instrument, you should look at practical and vocational too.
+          Academic subjects (usually GCSEs) and subjects which are more of a practical or vocational nature. If you have already achieved the qualification, select it also. If you are formally studying an instrument, you should look at practical and vocational too.
         </div>
         <div className="main-subjects-container">
           <div className="first-box-R21">

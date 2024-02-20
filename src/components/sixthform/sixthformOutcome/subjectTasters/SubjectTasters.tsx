@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { MenuItem, Select } from "@material-ui/core";
 
 import { SixthformSubject } from "services/axios/sixthformChoices";
 
@@ -20,7 +19,7 @@ interface UserProfileState {
   filterPopupOpen: boolean;
 }
 
-class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
+class SixthformTasters extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
 
@@ -71,7 +70,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         <div className="brick-container-23" key={i}>
           <div className="brick-container" onClick={() => {
             if (subject.brick) {
-              this.props.history.push(playCover(subject.brick));
+              window.location.href = 'https://app.brillder.com/play/brick/' + subject.brick.id + '/cover';
             }
           }}>
             <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}>
@@ -189,4 +188,4 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 }
 
-export default SixthformChoices;
+export default SixthformTasters;
