@@ -542,7 +542,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             // can have 3 A-level or VAPs
             let canPutDefinites = true;
             let realCardsCount = definetlyList.filter(d => !d.isEmpty).length;
-            if (realCardsCount >= 3) {
+            if (realCardsCount >= 4) {
               canPutDefinites = false;
             }
 
