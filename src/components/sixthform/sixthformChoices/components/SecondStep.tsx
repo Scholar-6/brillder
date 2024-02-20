@@ -42,8 +42,8 @@ interface SecondQuestionState {
   otherChoice: null | OtherChoice;
   currentSchool: string;
   subStep: SubStep;
-  databaseSchool: any;
   schools: any[];
+  schoolName: string;
   sixthformChoice: any;
 }
 
@@ -54,19 +54,17 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     let choice = null;
     let otherChoice = null;
     let currentSchool = '';
-    let databaseSchool = null;
     let sixthformChoice = null;
+    let schoolName = '';
 
     let subStep = SubStep.First;
-
-    console.log('second step', props.answer);
 
     if (props.answer) {
       choice = props.answer.answer.choice;
       otherChoice = props.answer.answer.otherChoice;
       currentSchool = props.answer.answer.currentSchool;
-      databaseSchool = props.answer.answer.databaseSchool;
       sixthformChoice = props.answer.answer.sixthformChoice;
+      schoolName = props.answer.answer.schoolName,
       subStep = props.answer.answer.subStep;
     }
 
@@ -76,7 +74,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       subStep,
       currentSchool,
       sixthformChoice,
-      databaseSchool,
+      schoolName,
       schools: []
     };
 
@@ -99,9 +97,11 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
         </div>
         <div className="current-school-autocomplete font-24">
           <Autocomplete
-            value={this.state.databaseSchool}
+            freeSolo
             options={this.state.schools}
-            onChange={(e: any, v: any) => this.setState({ databaseSchool: v })}
+            onChange={(e: any, v: any) => {
+              this.setState({ schoolName: v.name })
+            }}
             noOptionsText="Sorry, try typing something else"
             className="subject-autocomplete"
             getOptionLabel={(option: any) => option.name}
@@ -109,7 +109,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               <React.Fragment>
                 <MenuItem >
                   <ListItemText>
-                    {loopSchool.name} 
+                    {loopSchool.name}
                   </ListItemText>
                 </MenuItem>
               </React.Fragment>
@@ -119,6 +119,11 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
                 {...params}
                 variant="standard"
                 label=""
+                value={this.state.schoolName}
+                onChange={(e) => {
+                  console.log(e);
+                  this.setState({ schoolName: e.target.value });
+                }}
                 placeholder="Type to start browsing our database"
               />
             )}
@@ -179,8 +184,8 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       subStep: this.state.subStep,
       otherChoice: this.state.otherChoice,
       currentSchool: this.state.currentSchool,
-      databaseSchool: this.state.databaseSchool,
       sixthformChoice: this.state.sixthformChoice,
+      schoolName: this.state.schoolName
     });
   }
 
@@ -190,8 +195,8 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       subStep: this.state.subStep,
       otherChoice: this.state.otherChoice,
       currentSchool: this.state.currentSchool,
-      databaseSchool: this.state.databaseSchool,
       sixthformChoice: this.state.sixthformChoice,
+      schoolName: this.state.schoolName
     });
   }
 
@@ -204,7 +209,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       }
 
       if (this.state.sixthformChoice === SixthformChoice.SixthForm) {
-        if (!this.state.databaseSchool) {
+        if (!this.state.schoolName || this.state.schoolName === '') {
           disabled = true;
         }
       }
