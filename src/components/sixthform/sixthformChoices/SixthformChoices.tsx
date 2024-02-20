@@ -193,7 +193,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.otherChoice = answer.otherChoice;
         answerR1.answer.subStep = answer.subStep;
         answerR1.answer.currentSchool = answer.currentSchool;
-        answerR1.answer.databaseSchool = answer.databaseSchool;
+        answerR1.answer.schoolName = answer.schoolName;
         answerR1.answer.sixthformChoice = answer.sixthformChoice;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
@@ -466,8 +466,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
           if (result) {
             let subjects = this.state.subjects;
-            if (answer && answer.databaseSchool) {
-              let name = answer.databaseSchool.name;
+            if (answer && answer.schoolName) {
+              let name = answer.schoolName;
               if (name === "Hereford Sixth Form College") {
                 subjects = subjects.filter(s =>
                   s.name === 'Biology' ||
@@ -572,7 +572,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
                   s.name === 'Education & Early Years' ||
                   s.name === 'Health & Science'
-                )
+                );
               }
             }
             console.log(answer);

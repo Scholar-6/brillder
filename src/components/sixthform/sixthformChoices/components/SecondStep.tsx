@@ -99,8 +99,11 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           <Autocomplete
             freeSolo
             options={this.state.schools}
+            inputValue={this.state.schoolName}
             onChange={(e: any, v: any) => {
-              this.setState({ schoolName: v.name })
+              if (v && v.name) {
+                this.setState({ schoolName: v.name })
+              }
             }}
             noOptionsText="Sorry, try typing something else"
             className="subject-autocomplete"
@@ -114,19 +117,21 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
                 </MenuItem>
               </React.Fragment>
             )}
-            renderInput={(params: any) => (
+            renderInput={(params: any) => {
+              console.log('params', this.state.schoolName);
+
+              return (
               <TextField
                 {...params}
                 variant="standard"
                 label=""
                 value={this.state.schoolName}
                 onChange={(e) => {
-                  console.log(e);
                   this.setState({ schoolName: e.target.value });
                 }}
                 placeholder="Type to start browsing our database"
-              />
-            )}
+              />);
+            }}
           />
         </div>
       </div>
