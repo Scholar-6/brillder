@@ -88,7 +88,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }
       }
     }
-    
+
     if (subjects) {
       for (let subject of subjects) {
         if (!subject.userChoice) {
@@ -98,7 +98,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       let subjectsSorted = this.sortByScore(subjects);
       let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
       let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-      
+
       let possibleList = subjectsR1.splice(0, 6);
 
       if (answers) {
@@ -262,6 +262,23 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return <div className="level-round font-14">{label}</div>
   }
 
+  renderCardDescription(subject: SixthformSubject) {
+    let visible = false;
+    if (subject.expanded) {
+      visible = true;
+    }
+    if (!subject.brick) {
+      visible = true;
+    }
+    
+    console.log(subject, visible);
+    return (
+      <div className={`font-14 height-transform ${visible ? 'visible' : 'hidden'}`}>
+        {subject.description && subject.description}
+      </div>
+    );
+  }
+
   renderCard(subject: SixthformSubject, i: number, isDefinities: boolean = false) {
     if (subject.isEmpty) {
       return (
@@ -376,9 +393,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               </span>
             </div>
             {this.renderSubjectTag(subject)}
-            <div className={`font-14 height-transform ${subject.expanded ? 'visible' : 'hidden'}`}>
-              {subject.description && subject.description}
-            </div>
+            {this.renderCardDescription(subject)}
             <div className={`second-row height-transform ${subject.expanded ? 'visible' : 'hidden'}`}>
               <div className="box-v32 m-r">
                 <div>
