@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListItemText, MenuItem, TextField } from '@material-ui/core';
+import { Dialog, ListItemText, MenuItem, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import CheckBoxV2 from "./CheckBox";
@@ -45,6 +45,7 @@ interface SecondQuestionState {
   schools: any[];
   schoolName: string;
   sixthformChoice: any;
+  newSchoolOpen: boolean;
 }
 
 class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState> {
@@ -65,7 +66,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       currentSchool = props.answer.answer.currentSchool;
       sixthformChoice = props.answer.answer.sixthformChoice;
       schoolName = props.answer.answer.schoolName,
-      subStep = props.answer.answer.subStep;
+        subStep = props.answer.answer.subStep;
     }
 
     this.state = {
@@ -75,7 +76,9 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       currentSchool,
       sixthformChoice,
       schoolName,
-      schools: []
+      schools: [],
+
+      newSchoolOpen: false
     };
 
     this.loadSchools();
@@ -121,16 +124,16 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               console.log('params', this.state.schoolName);
 
               return (
-              <TextField
-                {...params}
-                variant="standard"
-                label=""
-                value={this.state.schoolName}
-                onChange={(e) => {
-                  this.setState({ schoolName: e.target.value });
-                }}
-                placeholder="Type to start browsing our database"
-              />);
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label=""
+                  value={this.state.schoolName}
+                  onChange={(e) => {
+                    this.setState({ schoolName: e.target.value });
+                  }}
+                  placeholder="Type to start browsing our database"
+                />);
             }}
           />
         </div>
@@ -205,6 +208,12 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     });
   }
 
+  showNewSchoolPopup() {
+    if (this.state.schoolName === '') {
+      return;
+    }
+  }
+
   render() {
     let disabled = false;
 
@@ -250,9 +259,22 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
             disabled={disabled}
             onClick={() => {
-              this.moveNext();
+              let name = this.state.schoolName;
+              let found = this.state.schools.find(s => s.name == name);
+              if (found) {
+                this.moveNext();
+              } else {
+                this.showNewSchoolPopup();
+              }
             }}
           >Continue</button>
+          {this.state.newSchoolOpen &&
+            <Dialog open={true} onClose={() => {
+              this.moveNext();
+            }}>
+              {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose
+            </Dialog>
+          }
         </div>
       );
     }
