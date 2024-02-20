@@ -575,6 +575,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 )
               }
             }
+            console.log(answer);
             this.parseAnswer2(result, answer, Pages.Question2);
             this.setState({ page: Pages.Question3, subjects: subjects });
           }
