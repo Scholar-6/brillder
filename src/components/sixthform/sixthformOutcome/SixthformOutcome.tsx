@@ -104,7 +104,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (answers) {
         var firstAnswer = answers.find(a => a.step === Pages.Question1);
         if (firstAnswer && firstAnswer.answer) {
-          console.log('first answer', firstAnswer.answer.choice);
           if (firstAnswer.answer.choice === SubjectType.ALevels) {
             possibleList = subjectsR1.filter(s => s.isALevel).splice(0, 6);
           } else if (firstAnswer.answer.choice === SubjectType.VocationalSubjects) {

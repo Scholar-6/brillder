@@ -42,6 +42,7 @@ export enum Pages {
 }
 
 export enum SubjectType {
+  None = 0,
   ALevels = 1,
   VocationalSubjects,
   AllSubjects
@@ -80,7 +81,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     this.state = {
       isLoading: true,
-      subjectType: SubjectType.AllSubjects,
+      subjectType: SubjectType.None,
       allSubjects: [],
       subjects: [],
       answers: [],
@@ -101,6 +102,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   async loadSubjects(subjectType: any) {
     const subjects = await getSixthformSubjects();
+    const answers = await getSixthformAnswers();
+
+    let firstAnswer = null;
+    if (answers) {
+      for (let answer of answers) {
+        answer.answer = JSON.parse(answer.answer);
+      }
+      firstAnswer = answers.find(a => a.step === Pages.Question1);
+      if (firstAnswer) {
+        subjectType = firstAnswer.answer.choice;
+      }
+    }
 
     if (subjects) {
       for (let subject of subjects) {
@@ -109,35 +122,20 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
+
       await this.saveFirstAnswer({ choice: subjectType });
       //this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
     } else {
       this.props.history.push(authRoutes.SignUp);
     }
 
-    const answers = await getSixthformAnswers();
-
     if (answers) {
-      for (let answer of answers) {
-        console.log('parse', answer);
-        answer.answer = JSON.parse(answer.answer);
-      }
-
-      const firstAnswer = answers.find(a => a.step === Pages.Question1);
-
-      let subjectType = SubjectType.AllSubjects;
-      if (firstAnswer) {
-        subjectType = firstAnswer.answer.choice;
-      }
-
       let answeRs:any[] = [];
 
       // if step in params load from cash
       if (this.props.match.params.step) {
         answeRs = answers;
       }
-
-      console.log('answer from server', answers);
 
       this.setState({ answers, subjectType });
     }
