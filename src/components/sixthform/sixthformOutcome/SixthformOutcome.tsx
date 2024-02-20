@@ -16,6 +16,7 @@ import map from "components/map";
 import { fileUrl } from "components/services/uploadFile";
 import { playCover } from "components/play/routes";
 import SubjectTasters from "./subjectTasters/SubjectTasters";
+import { Pages, SubjectType } from "../sixthformChoices/SixthformChoices";
 
 
 interface UserProfileProps {
@@ -72,26 +73,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   async loadSubjects() {
     const subjects = await getSixthformSubjects2();
-
-    if (subjects) {
-      for (let subject of subjects) {
-        if (!subject.userChoice) {
-          subject.userChoice = UserSubjectChoice.Maybe;
-        }
-      }
-      let subjectsSorted = this.sortByScore(subjects);
-      let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
-      let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-      let possibleList = subjectsR1.splice(0, 6);
-      if (definetlyList.length === 0) {
-        definetlyList.push({ isEmpty: true });
-        definetlyList.push({ isEmpty: true });
-        definetlyList.push({ isEmpty: true });
-      }
-      this.setState({ definetlyList, subjects, otherSubjects: subjectsR1, possibleList });
-    }
-
-    const answers = await getSixthformAnswers();
+    const answers = await getSixthformAnswers() || [];
 
     if (answers) {
       for (let answer of answers) {
@@ -105,8 +87,38 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           steps += 1;
         }
       }
+    }
+    
+    if (subjects) {
+      for (let subject of subjects) {
+        if (!subject.userChoice) {
+          subject.userChoice = UserSubjectChoice.Maybe;
+        }
+      }
+      let subjectsSorted = this.sortByScore(subjects);
+      let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
+      let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
+      
+      let possibleList = subjectsR1.splice(0, 6);
 
-      this.setState({ answers });
+      if (answers) {
+        var firstAnswer = answers.find(a => a.step === Pages.Question1);
+        if (firstAnswer && firstAnswer.answer) {
+          console.log('first answer', firstAnswer.answer.choice);
+          if (firstAnswer.answer.choice === SubjectType.ALevels) {
+            possibleList = subjectsR1.filter(s => s.isALevel).splice(0, 6);
+          } else if (firstAnswer.answer.choice === SubjectType.VocationalSubjects) {
+            possibleList = subjectsR1.filter(s => s.isVocational).splice(0, 6);
+          }
+        }
+      }
+
+      if (definetlyList.length === 0) {
+        definetlyList.push({ isEmpty: true });
+        definetlyList.push({ isEmpty: true });
+        definetlyList.push({ isEmpty: true });
+      }
+      this.setState({ definetlyList, answers, subjects, otherSubjects: subjectsR1, possibleList });
     }
   }
 
@@ -115,7 +127,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderStepper(lastStep: number) {
-    return <ProgressBarSixthformV2 step={lastStep} moveToStep={this.moveToStep} />;
+    return <ProgressBarSixthformV2 step={lastStep} moveToStep={this.moveToStep.bind(this)} />;
   }
 
   sortByScore(subjects: SixthformSubject[]) {
