@@ -2723,3 +2723,27 @@
     }
   }
 }
+
+.new-school-popup {
+  .MuiPaper-root {
+    padding: 2vw;
+    max-width: 30vw !important;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+    color: var(--theme-dark-blue);
+
+    .btn {
+      margin-top: 2vh;
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+      color: white;
+      background: var(--theme-green);
+      transition: opacity 200ms ease-in-out;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
