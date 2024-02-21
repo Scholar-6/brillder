@@ -67,7 +67,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
     return (
       <div className="question">
         <div className="bold font-32 question-text">
-          What type of course or courses are you considering for the sixth form?
+          What type of courses are you considering for the sixth form?
         </div>
         <div className="boxes-container font-24">
           <CheckBoxV2
@@ -80,7 +80,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
           />
           <CheckBoxV2
             currentChoice={FirstChoice.ShowMeAll} choice={this.state.choice}
-            label="Show me all types of course" setChoice={choice => this.setChoice(choice)}
+            label="A-levels and vocational courses" setChoice={choice => this.setChoice(choice)}
           />
           <CheckBoxV2
             currentChoice={FirstChoice.Other} choice={this.state.choice}

@@ -290,6 +290,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderSubjectsBox() {
     if (this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded) {
+      console.log('rendering subjects box input');
       let subjects = [...this.state.otherGCSESubjects, ...this.state.GCSESubjects];
       return (
         <div className="subjects-typer-r21 font-14">
@@ -353,67 +354,69 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       );
     } else {
-      return (
-        <div className="subjects-typer-r21 font-14">
-          <Autocomplete
-            multiple={true}
-            value={this.state.selectedGSCESubjects}
-            options={this.state.vocationalSubjects}
-            onChange={(e: any, vv: any) => {
-              let v = vv[0];
-              if (v) {
-                const subjects = this.state.GCSESubjects;
-                const found = subjects.find(s => s.name === v.name);
-                const selected = this.state.subjectSelections;
-                if (!found) {
-                  v.selected = true;
-                  subjects.push(v);
-                  selected.push(v);
-                  this.setState({ GCSESubjects: subjects, subjectSelections: selected, selectedGSCESubjects: [], typedSubject: '' });
-                  return;
-                }
-              }
-              this.setState({ selectedGSCESubjects: [], typedSubject: '' });
-            }}
-            noOptionsText="Sorry, try typing something else"
-            className="subject-autocomplete font-14"
-            getOptionLabel={(option: any) => option.name}
-            renderOption={(loopSchool: any) => (
-              <React.Fragment>
-                <MenuItem>
-                  {loopSchool.name}
-                </MenuItem>
-              </React.Fragment>
-            )}
-            renderInput={(params: any) => (
-              <TextField
-                {...params}
-                variant="standard"
-                label=""
-                className="font-14"
-                value={this.state.typedSubject}
-                onKeyDown={(e: any) => {
-                  let pressed = enterPressed(e);
-                  if (pressed) {
-                    const value = e.target.value;
-                    this.state.subjectSelections.push({
-                      id: -1,
-                      name: value,
-                      isGCSE: false,
-                      isVocational: true,
-                      isPopular: false,
-                      selected: true,
-                    } as any);
-                    this.setState({ subjectSelections: this.state.subjectSelections, typedSubject: '' });
+      if (this.state.subjectGroup === SubjectGroupR21.PracticalVocational) {
+        return (
+          <div className="subjects-typer-r21 font-14">
+            <Autocomplete
+              multiple={true}
+              value={this.state.selectedGSCESubjects}
+              options={this.state.vocationalSubjects}
+              onChange={(e: any, vv: any) => {
+                let v = vv[0];
+                if (v) {
+                  const subjects = this.state.GCSESubjects;
+                  const found = subjects.find(s => s.name === v.name);
+                  const selected = this.state.subjectSelections;
+                  if (!found) {
+                    v.selected = true;
+                    subjects.push(v);
+                    selected.push(v);
+                    this.setState({ GCSESubjects: subjects, subjectSelections: selected, selectedGSCESubjects: [], typedSubject: '' });
+                    return;
                   }
-                }}
-                onChange={() => this.setState({ typedSubject: params.inputProps.value })}
-                placeholder="If you are doing any other, rarer practical and vocational subjects, please add them here"
-              />
-            )}
-          />
-        </div>
-      );
+                }
+                this.setState({ selectedGSCESubjects: [], typedSubject: '' });
+              }}
+              noOptionsText="Sorry, try typing something else"
+              className="subject-autocomplete font-14"
+              getOptionLabel={(option: any) => option.name}
+              renderOption={(loopSchool: any) => (
+                <React.Fragment>
+                  <MenuItem>
+                    {loopSchool.name}
+                  </MenuItem>
+                </React.Fragment>
+              )}
+              renderInput={(params: any) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label=""
+                  className="font-14"
+                  value={this.state.typedSubject}
+                  onKeyDown={(e: any) => {
+                    let pressed = enterPressed(e);
+                    if (pressed) {
+                      const value = e.target.value;
+                      this.state.subjectSelections.push({
+                        id: -1,
+                        name: value,
+                        isGCSE: false,
+                        isVocational: true,
+                        isPopular: false,
+                        selected: true,
+                      } as any);
+                      this.setState({ subjectSelections: this.state.subjectSelections, typedSubject: '' });
+                    }
+                  }}
+                  onChange={() => this.setState({ typedSubject: params.inputProps.value })}
+                  placeholder="If you are doing any other, rarer practical and vocational subjects, please add them here"
+                />
+              )}
+            />
+          </div>
+        );
+      }
     }
   }
 
@@ -616,10 +619,11 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div className="question question3-first">
         <div className="bold font-32 question-text-3">
-          What qualifications are you studying for at present?
+          What qualifications are you currently doing?
         </div>
         <div className="font-16">
-          Academic subjects (usually GCSEs) and subjects which are more of a practical or vocational nature. If you have already achieved the qualification, select it also. If you are formally studying an instrument, you should look at practical and vocational too.
+          Choose your GCSEs below, including ones in which you’ve already gained a qualification.<br />
+          Then choose any Vocational and Practical qualifications (e.g. musical performance).
         </div>
         <div className="main-subjects-container">
           <div className="first-box-R21">
@@ -653,21 +657,21 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                         let passedValidation = true;
 
                         if (subject.name === "Combined Science (Single Award)") {
-                          const found2 = selections.find((s: any) => 
+                          const found2 = selections.find((s: any) =>
                             s.name === "Combined Science (Double Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
                           );
                           if (found2) {
                             passedValidation = false;
                           }
                         } else if (subject.name === "Combined Science (Double Award)") {
-                          const found2 = selections.find((s: any) => 
+                          const found2 = selections.find((s: any) =>
                             s.name === "Combined Science (Single Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
                           );
                           if (found2) {
                             passedValidation = false;
                           }
                         } else if (subject.name === "Biology" || subject.name === "Chemistry" || subject.name === "Physics") {
-                          const found2 = selections.find((s: any) => 
+                          const found2 = selections.find((s: any) =>
                             s.name === "Combined Science (Single Award)" || s.name === "Combined Science (Double Award)"
                           );
                           if (found2) {

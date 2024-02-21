@@ -95,7 +95,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     return (
       <div className={`check-box-container container ${this.state.sixthformChoice === SixthformChoice.SixthForm ? "bold" : ""}`}>
         <div className="main-box" onClick={() => this.setState({ sixthformChoice: SixthformChoice.SixthForm })}>
-          Write the name of the institution into the search box and press enter.
+          Write the name of your chosen institution in the search box and press enter.
           <SpriteIcon name={this.state.sixthformChoice === SixthformChoice.SixthForm ? 'radio-btn-active' : 'radio-btn-blue'} />
         </div>
         <div className="current-school-autocomplete font-24">
@@ -145,7 +145,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     return (
       <div className={`check-box-container container ${this.state.choice === SecondChoice.CurrentSchool ? "bold" : ""}`}>
         <div className="main-box" onClick={() => this.setState({ choice: SecondChoice.CurrentSchool })}>
-          my current school
+          My current school
           <SpriteIcon name={this.state.choice === SecondChoice.CurrentSchool ? 'radio-btn-active' : 'radio-btn-blue'} />
         </div>
         {this.state.choice === SecondChoice.CurrentSchool &&
@@ -164,7 +164,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     return (
       <div className={`check-box-container container ${this.state.choice === SecondChoice.Other ? "bold" : ""}`}>
         <div className="main-box" onClick={() => this.setState({ choice: SecondChoice.Other })}>
-          other
+          Other
           <SpriteIcon name={this.state.choice === SecondChoice.Other ? 'radio-btn-active' : 'radio-btn-blue'} />
         </div>
         {this.state.choice === SecondChoice.Other &&
@@ -238,7 +238,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             <CheckBoxV2
               currentChoice={SixthformChoice.Forbid}
               choice={this.state.sixthformChoice}
-              label="I have not chosen, or don’t wish to disclose, my sixth form"
+              label="I have not chosen, or do not wish to disclose, my sixth form."
               setChoice={choice => this.setState({ sixthformChoice: choice })}
             />
             {this.state.sixthformChoice === SixthformChoice.Forbid &&
@@ -247,7 +247,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
                   <SpriteIcon name="help-without" />
                 </div>
                 <div>
-                  No problem - you can still identify courses you’re suited to by completing this process,<br /> but remember that some may not be offered by the sixth form you eventually choose.
+                  No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose.
                 </div>
               </div>
             }
@@ -272,7 +272,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             <Dialog open={true} className="new-school-popup" onClose={() => {
               this.moveNext();
             }}>
-              {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose
+              {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose.
               <div className="btn" onClick={() => this.moveNext()}>Continue</div>
             </Dialog>
           }
@@ -298,13 +298,13 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           <CheckBoxV2
             currentChoice={SecondChoice.SixthForm}
             choice={this.state.choice}
-            label="a Sixth Form or FE College"
+            label="A Sixth Form College or Further Education College"
             setChoice={choice => this.setState({ choice })}
           />
           <CheckBoxV2
             currentChoice={SecondChoice.NewSchool}
             choice={this.state.choice}
-            label="a new school or a private sixth form college"
+            label="A new school or a private sixth form college"
             setChoice={choice => this.setState({ choice })}
           />
           {this.renderOtherChoice()}

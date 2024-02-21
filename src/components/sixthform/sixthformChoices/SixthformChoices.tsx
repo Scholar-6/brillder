@@ -436,20 +436,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return (
         <div>
           <SpriteIcon name="ios-library" className="ionLibrary" />
-          <div className="bold big-text-q1 font-32">Welcome to our Sixth Form Course Selector!</div>
+          <div className="bold big-text-q1 font-32">Start to shape your future.</div>
           <div className="smaller-text-box text-box-number1 font-20">
-            We take you through a six step process which helps you identify the right courses for<br />
-            you. Numerous factors have a bearing, from current subjects and interests to your<br />
-            thinking about degree courses and careers.
+            Follow our six-step process to identify the right courses for you. <br/>
+            You can also tweak the selection process by hovering over subjects on the sidebar.<br/>
           </div>
-          <div className="smaller-text-box text-box-number2 font-20">
-            At any point, you can also ‘tweak’ the selection process yourself by using the subject<br />
-            column on the left to sort your choices.
-          </div>
-          <div className="smaller-text-box text-box-number3 font-20">
-            Let’s start by identifying the type of study you are interested in.
-          </div>
-          <button className="absolute-contunue-btn font-24" onClick={() => this.setState({ page: Pages.Question1 })}>Let's start</button>
+          <button className="absolute-contunue-btn font-24" onClick={() => this.setState({ page: Pages.Question1 })}>Let’s start</button>
         </div>
       );
     } else if (this.state.page === Pages.Question1) {
