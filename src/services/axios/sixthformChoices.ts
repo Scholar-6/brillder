@@ -1,6 +1,6 @@
 
 import { Brick } from 'model/brick';
-import {get, post} from './index';
+import {get} from './index';
 
 export enum UserSubjectChoice {
   Maybe, // null or 0 or undefined
@@ -55,40 +55,8 @@ export interface KeyStage4Subject {
 
 export const getSixthformSubjects = async () => {
   try {
-    const subjects = await get<SixthformSubject[]>(`/sixth-form-choices/suggested-subjects`);
+    const subjects = await get<SixthformSubject[]>(`/sixth-form-choices/suggested-subjects3`);
     return subjects;
-  } catch {
-    return null;
-  }
-}
-
-export const getSixthformSubjects2 = async () => {
-  try {
-    return await get<SixthformSubject[]>(`/sixth-form-choices/suggested-subjects2`);
-  } catch {
-    return null;
-  }
-}
-
-export const saveSixthformAnswer = async (answer: string, step: number) => {
-  try {
-    return await post<SixthformCalcResult>(`/sixth-form-choices/answer`, { answer: { answer, step }});
-  } catch {
-    return null;
-  }
-}
-
-export const getSixthformSchools = async () => {
-  try {
-    return await get<any[]>(`/sixth-form-choices/schools`);
-  } catch {
-    return null;
-  }
-}
-
-export const getKeyStage4Subjects = async () => {
-  try {
-    return await get<KeyStage4Subject[]>(`/sixth-form-choices/key-stage4-subjects`);
   } catch {
     return null;
   }

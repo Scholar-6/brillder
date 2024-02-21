@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import "./Scholar6Page.scss";
-import { SixthformSubject, getSixthformSubjects2 } from "services/axios/sixthformChoices";
+import { SixthformSubject, getSixthformSubjects } from "services/axios/sixthformChoices";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import Partners from "./Partners";
@@ -37,7 +37,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
   }
 
   async loadSubjects() {
-    const subjects = await getSixthformSubjects2();
+    const subjects = await getSixthformSubjects();
 
     if (subjects) {
       this.setState({ subjects });
