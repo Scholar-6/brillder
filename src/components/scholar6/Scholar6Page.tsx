@@ -144,9 +144,10 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
               <div className="top-menu font-18">
                 <div className="menu-item">About</div>
                 <div className="menu-item clickable" onClick={() => window.location.href = 'https://brillder.com'}>Academic Catalogue</div>
-                <div className="absolute-partner-btn font-16" onClick={() => window.location.href = 'https://www.sixthformcolleges.org/'}>
+                <div className="absolute-partner-btn font-16">
                   <div>OUR KEY PARTNERS</div>
-                  <img className="partner-image" src="/images/main-partner.png" />
+                  <img className="brillder-image" src="/images/brillder-white-logo.png" onClick={() => window.location.href = 'https://brillder.com/'} />
+                  <img className="partner-image" src="/images/main-partner.png" onClick={() => window.location.href = 'https://www.sixthformcolleges.org/'} />
                 </div>
               </div>
               <div className="page-content-r322">

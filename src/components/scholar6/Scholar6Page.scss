@@ -337,6 +337,16 @@
           img {
             margin-left: 1.3vw;
             width: 10vw;
+            transition: all 200ms ease-in-out;
+
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+
+          .brillder-image {
+            padding-top: 0vw;
+            width: 2.2vw;
           }
         }
       }
