@@ -242,12 +242,12 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           <div className="d3-table-scroll-container">
             <div className="button-step-d-r23 button-step-dl4-r23">
               <div onClick={() => this.props.moveToStepE()}>
-                I’d like to see other Vocational, Applied and Practical Courses (not T-levels).
+                Yes, I would.
               </div>
             </div>
             <div className="button-step-d-r23 button-step-dl4-r23">
               <div onClick={() => this.props.moveToStep4()}>
-                If I choose a vocational course, it’ll be a T-level.
+                No - if I do a vocational course, it’ll be a T-level.
               </div>
             </div>
           </div>

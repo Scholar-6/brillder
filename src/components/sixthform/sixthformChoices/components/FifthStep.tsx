@@ -202,7 +202,9 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
                   if (career.jobName === 'None are for me') {
                     return (
                       <div key={i} className="table-5c-body-row font-14" onClick={() => {
-                        career.active = !career.active;
+                        let careerCopy = Object.assign({}, career);
+                        this.state.careers.map(c => c.active = false);
+                        career.active = !careerCopy.active;
                         this.setState({ careers: this.state.careers });
                       }}>
                         <div className="checkbox-column flex-center">
@@ -219,7 +221,13 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
                   }
                   return (
                     <div key={i} className="table-5c-body-row font-14" onClick={() => {
-                      career.active = !career.active;
+                      this.state.careers.find(c => c.jobName === 'None are for me').active = false;
+                      let activeCount = this.state.careers.filter(c => c.active).length;
+                      if (activeCount >= 3 && !career.active) {
+                        // skip
+                      } else {
+                        career.active = !career.active;
+                      }
                       this.setState({ careers: this.state.careers });
                     }}>
                       <div className="checkbox-column flex-center">
