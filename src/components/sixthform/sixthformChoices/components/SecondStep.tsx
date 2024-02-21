@@ -264,15 +264,16 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               if (found) {
                 this.moveNext();
               } else {
-                this.showNewSchoolPopup();
+                this.setState({newSchoolOpen: true})
               }
             }}
           >Continue</button>
           {this.state.newSchoolOpen &&
-            <Dialog open={true} onClose={() => {
+            <Dialog open={true} className="new-school-popup" onClose={() => {
               this.moveNext();
             }}>
               {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose
+              <div className="btn" onClick={() => this.moveNext()}>Continue</div>
             </Dialog>
           }
         </div>
