@@ -289,7 +289,9 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
               <div className="font-32">
                 Rank and score the options you are considering<br /> with a comprehensive assessment.
               </div>
-              <div className="btn-orange font-24">
+              <div className="btn-orange font-24" onClick={() => {
+                window.location.href = 'https://app.brillder.com/sixthform-choices';
+              }}>
                 Take the Survey
               </div>
             </div>
