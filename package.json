@@ -34,7 +34,7 @@
     "@types/redux-mock-store": "^1.0.2",
     "@types/styled-components": "^5.1.4",
     "@types/validator": "^13.6.6",
-    "axios": "^0.25.0",
+    "axios": "^0.28.0",
     "canvas-confetti": "^1.5.1",
     "chart.js": "^4.3.0",
     "desmos": "^1.5.4",
