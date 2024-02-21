@@ -52,11 +52,11 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       icon: 'six-frame0',
       name: 'Agriculture, Environmental & Animal Care',
       subjects: [{ name: 'Agriculture, Land Management & Production' }, { name: 'Animal Care & Management' }],
-    }, {
+    }, /*{
       icon: 'six-frame1',
       name: 'Catering & Hospitality',
       subjects: [{ name: 'Catering' }],
-    }, {
+    },*/ {
       icon: 'six-frame2',
       name: 'Creative & Design',
       subjects: [{ name: 'Craft & Design' }, { name: 'Media Broadcast & Production' }],
@@ -64,21 +64,21 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       icon: 'six-frame3',
       name: 'Education and Early Years',
       subjects: [{ name: 'Education and Early Years' }],
-    }, {
+    }, /*{
       icon: 'six-frame4',
       name: 'Hair & Beauty',
       subjects: [{ name: 'Hairdressing, Barbering and Beauty Therapy' }],
-    }, {
+    },*/ {
       icon: 'six-frame5',
       name: 'Legal, Finance & Accounting',
       subjects: [{ name: 'Accounting' }, { name: 'Finance' }, { name: 'Legal Services' }],
-    }];
-
-    let tLevelCourses2 = [{
+    }, {
       icon: 'six-frame6',
       name: 'Business & Administration',
       subjects: [{ name: 'Management and Administration' }],
-    }, {
+    }];
+
+    let tLevelCourses2 = [{
       icon: 'six-frame7',
       name: 'Construction',
       subjects: [
@@ -236,21 +236,18 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     if (this.state.subStep === ThirdStepDSubStep.LastStep) {
       return (
         <div className="font-16">
-          <div className="bold font-32 question-text-3">
-            T Levels
-          </div>
           <div className="flex-center top-label-r3-r23 bold">
-            Awesome! How would you like to proceed?
+            Would you like to see other Vocational, Applied and Practical courses?
           </div>
           <div className="d3-table-scroll-container">
             <div className="button-step-d-r23 button-step-dl4-r23">
               <div onClick={() => this.props.moveToStepE()}>
-                Now show me other Vocational, Applied and Practical Courses which are not T-levels.
+                I’d like to see other Vocational, Applied and Practical Courses (not T-levels).
               </div>
             </div>
             <div className="button-step-d-r23 button-step-dl4-r23">
               <div onClick={() => this.props.moveToStep4()}>
-                I’m only interested in T-levels - show me the next step.
+                If I choose a vocational course, it’ll be a T-level.
               </div>
             </div>
           </div>
@@ -261,10 +258,11 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="font-16 question-step-3d-tableleaf">
           <div className="bold font-32 question-text-3">
-            T Levels
+            T-level Courses
           </div>
           <div>
-            Here is a list of current T-level courses. Which courses interest you? If only ONE course which interests you, select it. But Select no more than THREE courses.
+            These are the different T-level categories. Expand them to view different courses.<br/>
+            Which interest you? Select up to three courses.
           </div>
           <div className="d3-table-scroll-container">
             <div className="d3-table-leaf">
@@ -283,7 +281,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                   NOTHING
                 </div>
                 <div className="flex-center nothing-hint">
-                  I like the idea of T-levels but none of these courses really interest me.
+                  Not sure. None of these really interests me.
                 </div>
               </div>
             </div>
@@ -297,11 +295,8 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === ThirdStepDSubStep.Message) {
       return <div>
-        <div className="bold font-32 question-text-3">
-          T Levels
-        </div>
         <div className="font-20 bold text-center text-d3-r23">
-          Well, we’ll show you the T-level courses, then we’ll show you other VAPs. If you give some thought to your preferences, you’ll still get closer to an idea of what might suit you in the sixth form.
+          In that case, we’ll show you T-levels, and then we’ll show you other vocational courses.
         </div>
         <div className="button-step-d-r23 font-24">
           <div onClick={() => {
@@ -319,10 +314,13 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           T Levels
         </div>
         <div className="font-16">
-          A lot of changes are happening within vocational education. For 16-19 year-olds there will be a steady reduction in the availability of BTEC and Diploma courses in Vocational, Applied & Practical subjects (VAPs), and a rapid rolling out of T-levels.
+          These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects. 
         </div>
         <div className="font-16">
-          T-levels focus on the skills required for a particular job. You can only take one. Each T-level requires a time commitment equivalent to 3 A-levels: it’s a fully immersive experience designed to get you ready for the workplace. Doing a T-level therefore requires you to be clear in your own mind that you want to pursue the field you choose as a profession.
+          T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement. 
+        </div>
+        <div className="font-16">
+          Choosing a T-level requires you to be clear in your own mind that you wish to work in this field.
         </div>
         <div className="font-16 bold sub-title-e23">
           Which of the following best applies to you?
@@ -330,19 +328,19 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         <div className="boxes-container font-24">
           <CheckBoxV2
             currentChoice={ThirdStepDChoice.First} choice={this.state.choice}
-            label="If the right T-level for me is available, I’d be interested." setChoice={choice => this.setChoice(choice)}
+            label="If the right T-level is available, I’d be interested." setChoice={choice => this.setChoice(choice)}
           />
           <CheckBoxV2
             currentChoice={ThirdStepDChoice.Second} choice={this.state.choice}
-            label="I’d prefer to do a variety of shorter VAP courses if they were available." setChoice={choice => this.setChoice(choice)}
+            label="I’d prefer to do a combination of shorter vocational courses." setChoice={choice => this.setChoice(choice)}
           />
           <CheckBoxV2
             currentChoice={ThirdStepDChoice.Third} choice={this.state.choice}
-            label="I’d consider a mix of shorter VAPs and A-levels rather than a T-level." setChoice={choice => this.setChoice(choice)}
+            label="I’d prefer to do a mixture of vocational courses and A-levels." setChoice={choice => this.setChoice(choice)}
           />
           <CheckBoxV2
             currentChoice={ThirdStepDChoice.Forth} choice={this.state.choice}
-            label="I’m really not sure what to do yet."
+            label="I’m not really sure yet."
             setChoice={() => this.setState({ choice: ThirdStepDChoice.Forth })}
           />
         </div>

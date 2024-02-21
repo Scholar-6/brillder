@@ -81,15 +81,12 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div className="question-step-3c2">
         <div className="bold font-32 question-text-3">
-          New Subjects
+          New Subjects: Students’ Perspectives
         </div>
         <div className="font-16">
-          Here are a few more subjects which are often new to students who begin them in the sixth form: Match the correct courses to the comments of students who chose them.
+          Here are a few more subjects that are often new to students in the sixth form. 
         </div>
         <div className="drag-container-r22">
-          <div className="title-r22 bold font-16">
-            Drag the subjects to match them with the right description!
-          </div>
           <div className="container-r22">
             <div className="left-part-r22">
               <ReactSortable

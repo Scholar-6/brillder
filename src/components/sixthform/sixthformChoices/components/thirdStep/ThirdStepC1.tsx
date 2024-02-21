@@ -43,7 +43,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     let answers = [{
       name: "the scientific study of the mind and behaviour, including brain function, decision making, gender differences and child development"
     }, {
-      name: "how society is organised and how it changes, including the ways it responds to and manifests, crime, culture, media, politics and identity"
+      name: "the study of how society is organised, including issues such as class, crime, the family, culture, gender and identity"
     }, {
       name: "combines elements of accountancy, finance, marketing, economics, management, human resources, and commercial operations"
     }, {
@@ -69,8 +69,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
           New Subjects
         </div>
         <div className="font-16">
-          Some popular and highly regarded subjects are often not studied before the sixth form. It’s important you understand what they involve and reflect on whether any could be a fit for you.<br />
-          Here are five subjects which most students begin for the first time in the sixth form. First of all, can you work out what these subjects consist of? Match the subject description to the correct subject.
+          Some subjects are rarely studied before the sixth form. See if you understand what they involve - could any be a fit for you?
         </div>
         <div className="drag-container-r22">
           <div className="title-r22 bold font-16">

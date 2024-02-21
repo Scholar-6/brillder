@@ -161,11 +161,10 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div>
         <div className="bold font-32 question-text-3">
-          What YOU think
+          New Subjects - Your Interests
         </div>
         <div className="font-16">
-          Now consider whether you are genuinely interested in taking any of these subjects - all of which can be commenced in the sixth form. (Note that it’s also the case that none of them are absolutely essential in order to apply for a university degrees in the subject.)<br />
-          Sort them into one of the two categories:
+          Now consider whether you are interested in taking any of these subjects. Select those you’re very interested or quite interested in. Leave the others where they are.
         </div>
         <div className="drag-container-r23">
           <div className="container-r23 first font-12 bold">
@@ -229,9 +228,6 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
                 <div className="skip-btn-container font-14"><div onClick={this.props.onSkip}>Skip</div></div>
               </div>
             </div>)}
-        </div>
-        <div className="font-16 bottom-text-r23">
-          You can always try a taster lesson/ topic / brick in any of the above subjects you are interested in.
         </div>
       </div>
     );

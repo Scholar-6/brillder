@@ -31,8 +31,8 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
 
     let categories = [{
       boldText: "English Language",
-      text: " - “The A Level is very unlike GCSE English Language and has much more to do with linguistics than, for example, creative writing or literature.”",
-      helpText: 'The A Level is unlike GCSE English Language and has much more to do with linguistics than, for example, creative writing or literature.',
+      text: " - The A Level is very unlike GCSE English Language and has much more to do with linguistics than, for example, creative writing.”",
+      helpText: 'This is true.',
       status: ThirdC3Status.None,
     }, {
       boldText: "Further Mathematics",
@@ -46,8 +46,8 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
       status: ThirdC3Status.None,
     }, {
       boldText: "Engineering",
-      text: " - “There is no Engineering A-level, Design & Technology has some Engineering content.  A large number of Physics and Maths students opt to do a BTEC in Engineering which is highly regarded by universities and employers.”",
-      helpText: 'This is true. But you can get onto a university Engineering course with good Physics and Maths A Levels if your school or college does not offer an Engineering qualification.',
+      text: " - “There is no Engineering A-level, but Design & Technology has some engineering content.  A large number of Physics and Maths students opt to do a BTEC in Engineering, which is highly regarded by universities and employers.”",
+      helpText: 'This is true. But you can get onto a university engineering course with good Physics and Maths A Levels if your school or college does not offer an engineering qualification.',
       status: ThirdC3Status.None,
     }, {
       boldText: "Sport & Physical Education, Dance, Music, Theatre Studies",
@@ -143,7 +143,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div>
         <div className="bold font-32 question-text-3">
-          Curve Balls
+          Common Misunderstandings
         </div>
         <div className="font-16 margin-text-c3">
           There are a few A Levels which need careful thought because there may be more to them than first meets the eye. Decide whether the statement which follows each of the following subjects is ‘TRUE’, ‘FALSE’ or ‘SOMEWHERE IN BETWEEN’.

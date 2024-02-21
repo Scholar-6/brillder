@@ -236,7 +236,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div className="font-16 question-step-3f">
         <div className="bold font-32 question-text-3">
-          Vocational, Applied and Practical Courses other than T-levels
+          Vocational, Applied and Practical Courses (not T-levels)
         </div>
         <div className="font-16">
           Click on any of the fourteen categories to reveal more than fifty course options. Select a maximum of five courses which interest you (you won’t be able to do them all).
