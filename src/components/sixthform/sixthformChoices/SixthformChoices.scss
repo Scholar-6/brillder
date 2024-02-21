@@ -1017,12 +1017,12 @@
           font-size: 1.2vw;
 
           .MuiSelect-root {
-            width: 2.8vw;
+            width: 6.7vw;
             text-align: center;
-            padding-left: 1vw;
+            padding-left: 0;
             padding-top: 0.3vh;
             padding-bottom: 0.3vh;
-            padding-right: 1.8vw;
+            padding-right: 0.8vw;
 
             font-family: $font-family-regular !important;
           }
@@ -1466,7 +1466,7 @@
 
       .container-r22 {
         height: auto;
-        max-height: calc(100vh - 5.834vw - 25vh - 10.5vw);
+        max-height: calc(100vh - 5.834vw - 25vh - 7vw);
       }
     }
   }
@@ -1477,7 +1477,7 @@
 
       .container-r22 {
         height: auto;
-        max-height: calc(100vh - 5.834vw - 26vh - 8vw);
+        max-height: calc(100vh - 5.834vw - 22vh - 6vw);
       }
     }
   }
@@ -1552,7 +1552,7 @@
         border-radius: 0.5vw;
         width: 17vw;
         overflow-y: scroll;
-        height: calc(100vh - 5.834vw - 25.4vh - 9vw);
+        height: calc(100vh - 5.834vw - 25.4vh - 6vw);
         background: #4C608A1A;
         margin-top: 2vh;
         display: flex;
