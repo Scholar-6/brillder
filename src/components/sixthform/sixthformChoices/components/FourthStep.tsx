@@ -591,9 +591,9 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     if (categories4bc.includes(category)) {
       categories4bc = categories4bc.filter(c => c !== category);
     } else {
-      //if (categories4bc.length < 3) {
-      categories4bc.push(category);
-      //}
+      if (categories4bc.length < 3) {
+        categories4bc.push(category);
+      }
     }
     this.setState({ categories4bc });
   }
@@ -900,7 +900,12 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         {list.map((course, i) => {
           return (
             <div key={i} className={"course-box-r-23 course-box-4e1 " + className + (course.active ? ' active' : "")} onClick={() => {
-              course.active = !course.active;
+              let activeNumber = this.state.tVocCoursesE1Part1.filter(a => a.active == true).length + this.state.tVocCoursesE1Part2.filter(a => a.active == true).length;
+              if (activeNumber >= 3 && !course.active) {
+                // skip
+              } else {
+                course.active = !course.active;
+              }
               onChange();
             }}>
               <div className="font-16 bold flex">
@@ -1008,10 +1013,13 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question question-step-4d2">
           <div className="bold font-32 question-text-4">
-            Non-Facilitating Subjects
+            Other Subjects
           </div>
           <div className="font-16 margin-bottom-1">
-            Note that the Russell Group have been criticised for not including several arts subjects. Now select the three subjects you would choose if you could only choose from non-facilitating subjects.
+            In fact, there are many other subjects which will strongly support your university application.
+          </div>
+          <div className="font-16 margin-bottom-1">
+            Now select the three subjects you would choose if you could only choose from the following.
           </div>
           <div className="categories-container-4c-r23 non-facilitation-category font-16">
             <div className="font-16">
@@ -1021,7 +1029,12 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               <div className="checkbox-container-r23">
                 {this.state.nonFacilitatingSubjects.map((subject: any) => <div>
                   <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                    subject.selected = !subject.selected;
+                    let selectedCount = this.state.nonFacilitatingSubjects.filter(c => c.selected).length;
+                    if (selectedCount >= 3 && !subject.selected) {
+                      // skip
+                    } else {
+                      subject.selected = !subject.selected;
+                    }
                     this.setState({ cetegoriesData: this.state.cetegoriesData });
                   }} />
                 </div>)}
@@ -1045,23 +1058,25 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question question-step-4d1">
           <div className="bold font-32 question-text-4">
-            Are some A levels better than others?
+            Are some A-levels better than others?
           </div>
           <div className="font-16 margin-bottom-1">
-            Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any A-level or sixth form qualification, but it has previously argued that certain subjects, often considered more academically rigorous, can be viewed as facilitating subjects. This means subjects which open doors onto a wide variety of degree courses.
+            Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any sixth-form qualification, but its universities may be more likely to make offers to students taking some of the following subjects.
           </div>
           <div className="font-16 margin-bottom-1">
-            As an experiment, select the three subjects you would be most likely to choose if you could only choose from facilitating subjects.
+            As an experiment, imagine you could only pick from this list. Which three subjects would you choose?
           </div>
           <div className="categories-container-4c-r23 facilitation-category font-16">
             <div className="font-16">
-              <div className="text-4c">
-                <div className="bold">Russell Group’s Facilitating Subjects:</div>
-              </div>
               <div className="checkbox-container-r23">
                 {this.state.facilitatingSubjects.map((subject: any) => <div>
                   <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                    subject.selected = !subject.selected;
+                    let selectedCount = this.state.facilitatingSubjects.filter(c => c.selected).length;
+                    if (selectedCount >= 3 && !subject.selected) {
+                      // skip
+                    } else {
+                      subject.selected = !subject.selected;
+                    }
                     this.setState({ cetegoriesData: this.state.cetegoriesData });
                   }} />
                 </div>)}
@@ -1079,13 +1094,13 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question">
           <div className="bold font-32 question-text-4">
-            A-levels
+            Degree Courses
           </div>
           <div className="font-16 margin-bottom-1">
-            You have suggested that your eventual degree course might come from one of the following (one/ two) categories.
+            You have suggested that your eventual degree course might come from one of the following categories.
           </div>
           <div className="font-16 margin-bottom-1">
-            Now highlight the individual courses which most appeal to you. Choose up to three.
+            Now choose up to five individual courses that particularly appeal to you.
           </div>
           <div className="categories-container-4c-r23 font-16">
             {this.state.categories4bc.map((category, i) => {
@@ -1099,7 +1114,15 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                   <div className="checkbox-container-r23">
                     {catData.subjects.map((subject: any) => <div>
                       <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                        subject.selected = !subject.selected;
+                        let selected:any[] = [];
+                        this.state.cetegoriesData.forEach((c: any) => {
+                          selected.push(...c.subjects.filter((s: any) => s.selected));
+                        });
+                        if (selected.length >= 5 && !subject.selected) {
+                          //skip
+                        } else {
+                          subject.selected = !subject.selected;
+                        }
                         this.setState({ cetegoriesData: this.state.cetegoriesData });
                       }} />
                     </div>)}
@@ -1119,13 +1142,13 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question">
           <div className="bold font-32 question-text-4">
-            A-levels
+            Types of Degree Course
           </div>
           <div className="font-16 margin-bottom-1">
-            Most A-level students go to a university. Nobody expects you to know what degree you are going to do before you have even started the sixth form. However, it makes sense to think about what your strengths, weaknesses and interests are, because you can’t do some degrees without certain A-levels.
+            You probably don’t yet know what degree you are going to do, but it makes sense to think about it. You can’t do some degrees without certain qualifications.
           </div>
           <div className="font-16 margin-bottom-1">
-            First of all, let’s get a general impression of what type of degree you might pursue. Below are five broad categories. Select the ONE, TWO or THREE that you think you are most likely to fall into. “(While Medicine and Architecture, are vocations,  but we class them as academic degrees.)”
+            Below are five broad categories of degree. Select up to three categories that you think you might fall into.
           </div>
           <div className="categories-container font-16">
             <div>
@@ -1150,24 +1173,21 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     return (
       <div className="question">
-        <div className="font-16">
-          What you choose to do in the sixth form invariably affects your options if you want to continue into higher education.
-        </div>
         <div className="bold font-32 question-text-4">
-          From the answer you’ve given us, we think you are . . .
+          Based on your answers, we think you are . . .
         </div>
         <div className="boxes-container font-20">
           <CheckBoxV2 currentChoice={FirstChoice.ALevel} choice={this.props.firstAnswer.answer.choice}
-            label="someone who will only study A-levels and apply to study at university" setChoice={() => { }}
+            label="Someone who will go to university after completing A Levels" setChoice={() => { }}
           />
           <CheckBoxV2 currentChoice={FirstChoice.ShowMeAll || FirstChoice.Other} choice={this.props.firstAnswer.answer.choice}
-            label="someone who may study a combination of A-level and Vocational Courses who may apply to study at university." setChoice={() => { }}
+            label="Someone who may go to university after completing A Levels and/or vocational courses" setChoice={() => { }}
           />
           <CheckBoxV2 currentChoice={FirstChoice.Vocational as any} choice={this.props.firstAnswer.answer.choice}
-            label="someone likely to study Vocational Courses only in the sixth form, who may go directly into work at eighteen, or an apprenticeship." setChoice={() => { }}
+            label="Someone who will go directly into work or an apprenticeship after completing vocational studies" setChoice={() => { }}
           />
         </div>
-        <div className="font-16 white-blue">If you’ve changed your mind click the category above which best applies to you.</div>
+        <div className="font-16 white-blue">If you’ve changed your mind, select the category above that best applies to you.</div>
         <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
           this.setState({ subStep: SubStep.sub4b });
