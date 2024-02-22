@@ -119,7 +119,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
               {this.state.answers.map((answer: any, i: number) => {
                 let correct = false;
                 let subject = this.state.subjects[i];
-                if (subject.correctIndex === i) {
+                if (subject && subject.correctIndex === i) {
                   correct = true;
                 }
                 return (
