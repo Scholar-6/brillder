@@ -144,7 +144,6 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
                     if (activeCount >= 2 && !subject.active) {
                       // skip
                     } else {
-                      console.log('activate');
                       subject.active = !subject.active;
                       this.setState({ subjects: this.state.subjects });
                     }
