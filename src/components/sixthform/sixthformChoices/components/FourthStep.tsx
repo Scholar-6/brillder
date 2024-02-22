@@ -944,12 +944,11 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="question">
           <div className="bold font-32 question-text-3">
-            Your selected categories and courses
+            Vocational Degrees
           </div>
           <div className="font-16">
-            View the courses available for the categories you’ve selected in the previous screen
+            View the courses available for the categories you selected. Select up to five that interest you.
           </div>
-
           <div className="categories-container categories-container-r342">
             {selected.map((course, i) => {
               return (
@@ -981,16 +980,13 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return (
         <div className="font-16 question-4e1">
           <div className="bold font-32 question-text-3">
-            Vocational Options in Higher Education
+            Types of Vocational Degree
           </div>
           <div>
-            Many vocational students go straight into work and apprenticeships after the sixth form. But a large number proceed to vocational courses in higher education.
+            Many students go directly into work or apprenticeships after sixth form. But some begin vocational degrees instead.
           </div>
           <div>
-            Among many options, there are hundreds of courses for Higher National Certificate (1 year undergraduate study) and Higher National Diploma (2 years undergraduate study).
-          </div>
-          <div>
-            It’s hard to know for sure where your thinking will be in a couple of years, but here are 15 broad categories of vocational courses in higher education. Try to Select the ONE, TWO or, at most, THREE categories that interest you most at present.
+            Here are fifteen types of vocational degree. Select up to three that interest you.
           </div>
           <div className="d3-table-scroll-container">
             <div className="d3-table-leaf">
@@ -1006,7 +1002,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
             this.setState({ subStep: SubStep.sub4e2 });
-          }}>Show me courses in the categories  which I have selected</button>
+          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === SubStep.sub4d2) {
@@ -1114,7 +1110,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                   <div className="checkbox-container-r23">
                     {catData.subjects.map((subject: any) => <div>
                       <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                        let selected:any[] = [];
+                        let selected: any[] = [];
                         this.state.cetegoriesData.forEach((c: any) => {
                           selected.push(...c.subjects.filter((s: any) => s.selected));
                         });
