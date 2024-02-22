@@ -139,8 +139,12 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
               {this.state.subjects.map((subject: any, i: number) => {
                 return (
                   <div className={"drag-boxv2-r22 font-13" + (subject.active ? ' active' : '')} key={i} onClick={() => {
-                    let subjects = this.state.subjects.filter(s => s.active === true);
-                    if (subjects.length < 10 || subject.active === true) {
+                    let activeCount = this.state.subjects.filter(s => s.active === true).length;
+                    console.log(activeCount);
+                    if (activeCount >= 2 && !subject.active) {
+                      // skip
+                    } else {
+                      console.log('activate');
                       subject.active = !subject.active;
                       this.setState({ subjects: this.state.subjects });
                     }

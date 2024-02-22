@@ -133,7 +133,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
     }
 
 
-    
+
     this.state = {
       subStep,
       abAnswer,
@@ -214,7 +214,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
                           {career.jobName}
                         </div>
                         <div className="table-5c-column value-column-5c-big font-12">
-                          I could be ruling out, or making very difficult, the above career paths by choosing other A levels, and I’m happy with that. 
+                          I could be ruling out, or making very difficult, the above career paths by choosing other A levels, and I’m happy with that.
                         </div>
                       </div>
                     );
@@ -258,9 +258,9 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
             </div>
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5ab })} />
-            <button className="absolute-contunue-btn font-24" onClick={() => {
-              this.props.moveNext(this.getAnswer());
-            }}>Continue</button>
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.moveNext(this.getAnswer());
+          }}>Continue</button>
         </div >
       );
     }
@@ -271,10 +271,13 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
           Categories of Career
         </div>
         <div className="font-16">
-          For most careers (and most university degrees), you can study almost any combination of subjects and courses in the sixth form without your choices necessarily preventing you from pursuing them. Indeed, it is also true that most careers do not require a particular university degree.
+          For many careers, you can study almost any combination of subjects in sixth form.
         </div>
         <div className="font-16">
-          But different categories of profession have different expectations and requirements for post-16 education. Some really do require careful choices in the sixth form. In this exercise, match the professional categories (on the left) with sixth form expectations on the right.
+          However, a number of professions have specific expectations for post-16 education. Some really do require careful choices in the sixth form.
+        </div>
+        <div className="font-16">
+          Match the professional categories with sixth form expectations on the right.
         </div>
         <FifthStepAB
           abAnswer={this.state.abAnswer}
