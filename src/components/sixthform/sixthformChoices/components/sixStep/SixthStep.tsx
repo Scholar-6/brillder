@@ -151,7 +151,7 @@ export enum FirstChoice {
 }
 
 interface SixStepState {
-  readingChoice: FirstChoice | null;
+  readingChoice: ReadingChoice | null;
   writingChoice: FirstChoice | null;
   readingChoicesV2: ReadingChoiceV2[];
   secondChoices: any[];
@@ -171,7 +171,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     let writingChoice = null;
 
     if (props.answer && props.answer.answer) {
-      const {answer} = props.answer;
+      const { answer } = props.answer;
       readingChoice = answer.readingChoice;
       writingChoice = answer.writingChoice;
     }
@@ -577,7 +577,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     }
   }
 
-  setReadingChoice(readingChoice: FirstChoice) {
+  setReadingChoice(readingChoice: ReadingChoice) {
     this.setState({ readingChoice });
   }
 
@@ -800,7 +800,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             </div>
           </div>
           <div className="font-16">
-            Decide how true the following statements are about the types of conversation you have and the way you use opportunities to speak.
+            Tell us whether the following statements are true of you.
           </div>
           <FourthTable seventhChoices={this.state.fourthChoices} onChoiceChange={() => {
             this.setState({ fourthChoices: this.state.fourthChoices });
@@ -846,7 +846,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         <div className="question question-6 question-6-second">
           <div className="bold font-32 question-text">
             <div>
-              Watching TV, Video & Social Media
+              TV, Video & Social Media
             </div>
             <div className="hover-area font-14">
               <SpriteIcon name="help-circle-r1" className="info-icon" />
@@ -859,12 +859,18 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             </div>
           </div>
           <div className="font-16">
-            There is all sorts of content out there, and all sorts of ways to watch it. How often do you watch the following:
+            There is all sorts of content out there. How often do you watch the following?
           </div>
           <SecondTable seventhChoices={this.state.secondChoices} onChoiceChange={() => {
-            this.setState({ secondChoices: this.state.secondChoices });
+             this.setState({ secondChoices: this.state.secondChoices });
           }} />
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixB })} />
+          <BackButtonSix onClick={() => {
+            if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
+              this.setState({ subStep: SixthSubStep.sixB });
+            } else {
+              this.setState({ subStep: SixthSubStep.sixA });
+            }
+          }} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.third });
@@ -889,7 +895,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             </div>
           </div>
           <div className="font-16">
-            What sort of reading do you enjoy most?	Select up to FOUR
+            What sort of reading do you enjoy most? Select up to four.
           </div>
           <Grid container direction="row">
             <Grid item xs={6}>
@@ -938,7 +944,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             </div>
           </div>
           <div className="font-16">
-            Which of the following statements best describes your attitude to reading?”
+            Which of the following statements best describes your attitude to reading?
           </div>
           <div className="boxes-container font-16">
             <CheckBoxV2
@@ -967,9 +973,16 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            console.log('save answer');
             this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.sixB });
+            if (this.state.readingChoice) {
+              if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
+                this.setState({ subStep: SixthSubStep.sixB });
+              } else {
+                this.setState({ subStep: SixthSubStep.second });
+              }
+            } else {
+              this.setState({ subStep: SixthSubStep.second });
+            }
           }}>Continue</button>
         </div>
       );
@@ -977,16 +990,13 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     return (
       <div className="question question-6">
         <div className="bold font-32 question-text">
-          This part is about YOU
+          YOU
         </div>
         <div className="font-16">
-          It’s the most fun and, in many ways, the most important part of the process.
+          This is the most fun and, in many ways, the most important part of the process.
         </div>
         <div className="font-16">
-          We do not pretend that we can ask a few questions and know all about you just because we use an algorithm and some AI. But taking your interests and how you think and feel about a variety of questions is relevant to the courses you choose. Success in the sixth form certainly comes more easily if your courses fit your character, your strengths and weaknesses and your natural preferences.
-        </div>
-        <div className="font-16">
-          Each of your answers in this final part helps us to evaluate your interests and instincts, the type of intelligence you possess and your character.
+          It is important to choose courses that you will enjoy. Your answers in this final stage will help us evaluate your interests.
         </div>
         <SpriteIcon name="sixthform-sixth-description" className="big-svg-description" />
         <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />

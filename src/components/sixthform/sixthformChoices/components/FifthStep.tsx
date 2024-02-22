@@ -159,15 +159,15 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       return (
         <div className="question">
           <div className="bold font-32 question-text-4">
-            Careers with A-level Expectations
+            Careers with A-level Requirements
           </div>
           <div className="font-16">
-            The following careers favour specific A levels, usually because relevant degree courses require them. Most of you will probably tick the “None are for me” box at the bottom. But be aware of what you might be ruling out.
+            The following careers favour specific A-levels, usually because relevant degree courses require them. Most of you will probably select “None are for me”, but be aware of what you might be ruling out.
           </div>
           <div className="drag-container-5c">
             <div className="subjects-table subjects-table-5c">
               <div className="top-row title-r22 bold font-16">
-                Check up to THREE careers you are currently interested in.
+                Choose up to three careers you’re currently interested in.
               </div>
               <div className="table-head bold font-16">
                 <div className="checkbox-column" />

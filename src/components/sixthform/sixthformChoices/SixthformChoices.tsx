@@ -604,8 +604,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           }
         }} />
     } else if (this.state.page === Pages.Question4) {
+      let firstAnswer = this.state.answers.find(a => a.step === Pages.Question1);
+      console.log('firstAnswer: ', firstAnswer);
       return <FourthStep
-        firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
+        firstAnswer={firstAnswer}
         answer={this.state.answers.find(a => a.step === Pages.Question4)}
         saveAnswer={answer => {
           this.saveFourthAnswer(answer);
@@ -618,6 +620,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.saveFourthAnswer(answer);
           this.setState({ page: Pages.Question3 });
         }}
+        saveFirstAnswer={choice => this.saveFirstAnswer({choice})}
       />
     } else if (this.state.page === Pages.Question5) {
       return <FifthStep

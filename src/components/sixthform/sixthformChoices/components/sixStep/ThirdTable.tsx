@@ -19,13 +19,13 @@ class ThirdTable extends Component<FirstQuestionProps> {
         <div className="table-head bold font-16">
           <div className="first-column center-y bold"></div>
           <div className="second-column center-column">
-            <div>never or hardly ever</div>
+            <div>Never or hardly ever</div>
           </div>
           <div className="third-column center-column">
-            <div>sometimes</div>
+            <div>Sometimes</div>
           </div>
           <div className="fourth-column center-column">
-            <div>a lot</div>
+            <div>A lot</div>
           </div>
         </div>
         <div className="table-body">

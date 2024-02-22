@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { SixthformSubject } from "services/axios/sixthformChoices";
 import CheckBoxV2 from "./CheckBox";
 import BackButtonSix from "./BackButtonSix";
 import { FirstChoice } from "./FirstStep";
 import CheckBoxB from "./CheckBoxB";
+import FourthStepA from "./FourthStepA";
 
 enum SubStep {
   sub4a,
@@ -40,6 +40,7 @@ interface ThirdProps {
   moveNext(answer: any): void;
   moveBack(answer: any): void;
   saveAnswer(answer: any): void;
+  saveFirstAnswer(choice: FirstChoice): void;
 }
 
 interface ThirdQuestionState {
@@ -509,7 +510,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     if (props.answer) {
       const { answer } = props.answer;
-      console.log('answer4', answer);
       if (answer.subStep) {
         subStep = answer.subStep;
       }
@@ -1167,29 +1167,21 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     }
 
-    return (
-      <div className="question">
-        <div className="bold font-32 question-text-4">
-          Based on your answers, we think you are . . .
-        </div>
-        <div className="boxes-container font-20">
-          <CheckBoxV2 currentChoice={FirstChoice.ALevel} choice={this.props.firstAnswer.answer.choice}
-            label="Someone who will go to university after completing A Levels" setChoice={() => { }}
-          />
-          <CheckBoxV2 currentChoice={FirstChoice.ShowMeAll || FirstChoice.Other} choice={this.props.firstAnswer.answer.choice}
-            label="Someone who may go to university after completing A Levels and/or vocational courses" setChoice={() => { }}
-          />
-          <CheckBoxV2 currentChoice={FirstChoice.Vocational as any} choice={this.props.firstAnswer.answer.choice}
-            label="Someone who will go directly into work or an apprenticeship after completing vocational studies" setChoice={() => { }}
-          />
-        </div>
-        <div className="font-16 white-blue">If you’ve changed your mind, select the category above that best applies to you.</div>
-        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.setState({ subStep: SubStep.sub4b });
-        }}>Continue</button>
-      </div>
-    );
+    let choice = FirstChoice.ShowMeAll;
+    if (this.props.firstAnswer && this.props.firstAnswer.answer && this.props.firstAnswer.answer.choice) {
+      choice = this.props.firstAnswer.answer.choice;
+    }
+
+    return <FourthStepA 
+      moveBack={() => this.props.moveBack(this.getAnswer())}
+      moveNext={() => {
+        this.setState({ subStep: SubStep.sub4b });
+      }}
+      choice={choice}
+      onChoiceChanged={choice => {
+        this.props.saveFirstAnswer(choice);
+      }}
+    />;
   }
 }
 
