@@ -22,7 +22,7 @@ import { GENERAL_SUBJECT } from "components/services/subject";
 import { AcademicLevelLabels, Brick } from "model/brick";
 import { CreateByEmailRes } from "services/axios/user";
 import { SubscriptionState, User } from "model/user";
-import { checkAdmin, checkPublisher, isAorP } from "components/services/brickService";
+import { checkPublisher, isAorP } from "components/services/brickService";
 import QuickClassInvitationDialog, { QuickAssigment } from "components/baseComponents/classInvitationDialog/QuickClassInvitationDialog";
 import { ReduxCombinedState } from "redux/reducers";
 import { GetQuickAssignment } from "localStorage/play";
@@ -323,7 +323,12 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                   <CoverImage
                     locked={!isPublisher && ((brick.isCore ?? false) || brick.author.id !== user?.id)}
                     brickId={brick.id}
-                    data={{ value: brick.coverImage, imageSource: brick.coverImageSource, imageCaption: brick.coverImageCaption, imagePermision: false }}
+                    data={{
+                      value: brick.coverImage,
+                      imageSource: brick.coverImageSource,
+                      imageCaption: brick.coverImageCaption,
+                      imagePermision: false 
+                    }}
                   />
                   <div className="cover-info-row">
                     {renderBrickCircle()}
@@ -372,7 +377,7 @@ const CoverPage: React.FC<Props> = ({ brick, ...props }) => {
                         props.history.push(map.ViewAllPageB + '&searchString=' + keyword.name);
                       }
                     }} />
-                    {!isMobile && user && checkAdmin(user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
+                    {!isMobile && user && isAorP(user.roles) && <div className="btn b-green text-white" onClick={() => props.history.push(map.Proposal(brick.id))}>Edit</div>}
                   </div>
                   <CoverTimer brickLength={brick.brickLength} />
                 </div>

@@ -221,7 +221,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
 
   const applyDiff = (diff: any) => {
     const brick = applyBrickDiff(currentBrick, diff);
-    console.log(currentBrick, diff, brick);
     let parsedQuestions: Question[] = questions;
 
 
@@ -231,7 +230,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           parseQuestion(brick.questions[questionKey as any], parsedQuestions as Question[]);
         } catch (e) {
           parsedQuestions[questionKey as any] = null as any;
-          console.log(e);
         }
       }
       parsedQuestions = parsedQuestions.filter(q => q !== null)
@@ -278,7 +276,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const redo = () => {
     const diff = undoRedoService.redo();
     if (diff) {
-      console.log(diff);
       applyDiff(diff);
       prepareBrickToSave(brick, questions, synthesis);
       props.saveBrick(brick).then(resV3 => {
@@ -365,7 +362,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           setSaveError(false);
         }
       }).catch((err: any) => {
-        console.log("Error saving synthesis.");
         setSaveError(true);
       });
     }
@@ -452,6 +448,7 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     return <PageLoader content="...Loading..." />;
   }
 
+
   locked = canEdit ? locked : true;
 
   if (isSynthesisPage === true || isPlanPage === true) {
@@ -462,7 +459,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
       return <PageLoader content="...Loading..." />;
     }
   } else if (!activeQuestion) {
-    console.log("Can`t find active question");
     activeQuestion = {} as Question;
   }
 
@@ -596,7 +592,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
     if (resQuestion) {
       if (callback) { callback(resQuestion); }
     } else {
-      console.log("Error creation question.");
       setSaveError(true);
     }
   }
@@ -621,8 +616,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
             if (callback) { callback(res); }
             setSavingStatus(false);
           }).catch((err: any) => {
-            console.log(err);
-            console.log("Error saving brick.");
             setSaveError(true);
           });
         }, 2500);
@@ -652,17 +645,14 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
           return;
         }
         const time = Date.now();
-        console.log(`${new Date(time)} -> ${res.updated}`);
         const timeDifference = Math.abs(time - new Date(res.updated).valueOf());
         if (timeDifference > 10000) {
-          console.log("Not updated properly!!");
           setSaveError(true);
         } else {
           setSavingStatus(false);
           setSaveError(false);
         }
       }).catch((err: any) => {
-        console.log("Error saving brick.");
         setSaveError(true);
       });
     }
@@ -671,11 +661,8 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
   const updateComponents = (components: any[]): Question | undefined => {
     if (currentQuestionIndex < 0) return;
     if (locked) { return activeQuestion!; }
-    console.log('before updated components', JSON.parse(JSON.stringify(questions)));
     const updatedQuestions = questions.slice();
-    console.log('before updated components 4', JSON.parse(JSON.stringify(updatedQuestions)));
     updatedQuestions[currentQuestionIndex].components = components;
-    console.log('updated components', JSON.parse(JSON.stringify(updatedQuestions)));
     setQuestions(update(questions, { $set: updatedQuestions }));
     return updatedQuestions[currentQuestionIndex];
   }
@@ -844,8 +831,6 @@ const InvestigationBuildPage: React.FC<InvestigationBuildProps> = props => {
         }
         setSavingStatus(false);
       }).catch((err: any) => {
-        console.log(err);
-        console.log("Error saving brick.");
         setSaveError(true);
       });
     }

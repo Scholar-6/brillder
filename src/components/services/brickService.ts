@@ -190,7 +190,7 @@ export function isAorPorE(brick: Brick, user: User) {
 }
 
 export function canEditBrick(brick: Brick, user: User) {
-  let isAdmin = checkAdmin(user.roles);
+  let isAdmin = isAorP(user.roles);
   let isPublisher = checkPublisher(user, brick);
   switch(brick.status) {
     case BrickStatus.Draft:
