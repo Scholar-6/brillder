@@ -22,6 +22,7 @@ import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
 import authRoutes from "../login/routes";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import WelcomePage from "./components/welcomePage/WelcomePage";
 
 
 interface UserProfileProps {
@@ -130,7 +131,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     }
 
     if (answers) {
-      let answeRs:any[] = [];
+      let answeRs: any[] = [];
 
       // if step in params load from cash
       if (this.props.match.params.step) {
@@ -139,7 +140,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
       this.setState({ answers, subjectType });
     }
-    this.setState({isLoading: false});
+    this.setState({ isLoading: false });
   }
 
   sortByScore(subjects: SixthformSubject[]) {
@@ -434,15 +435,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderCourseContent() {
     if (this.state.page === Pages.Welcome) {
       return (
-        <div>
-          <SpriteIcon name="ios-library" className="ionLibrary" />
-          <div className="bold big-text-q1 font-32">Start to shape your future.</div>
-          <div className="smaller-text-box text-box-number1 font-20">
-            Follow our six-step process to identify the right courses for you. <br/>
-            You can also tweak the selection process by hovering over subjects on the sidebar.<br/>
-          </div>
-          <button className="absolute-contunue-btn font-24" onClick={() => this.setState({ page: Pages.Question1 })}>Let’s start</button>
-        </div>
+        <WelcomePage moveNext={() => this.setState({ page: Pages.Question1 })} />
       );
     } else if (this.state.page === Pages.Question1) {
       return <FirstStep
@@ -620,7 +613,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.saveFourthAnswer(answer);
           this.setState({ page: Pages.Question3 });
         }}
-        saveFirstAnswer={choice => this.saveFirstAnswer({choice})}
+        saveFirstAnswer={choice => this.saveFirstAnswer({ choice })}
       />
     } else if (this.state.page === Pages.Question5) {
       return <FifthStep
