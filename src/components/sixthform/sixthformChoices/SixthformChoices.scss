@@ -114,10 +114,6 @@
     .smaller-text-box {
       line-height: 1.45;
     }
-
-    .big-text-q1 {
-      padding-bottom: 2vh;
-    }
   }
 
   .bold {
@@ -862,6 +858,10 @@
 
   .font-40 {
     font-size: calc(2.5vw * $font-scale);
+  }
+
+  .font-58 {
+    font-size: calc(3.48vw * $font-scale);
   }
 
 
