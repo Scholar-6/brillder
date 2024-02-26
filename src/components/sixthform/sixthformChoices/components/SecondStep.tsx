@@ -9,6 +9,7 @@ import BackButtonSix from "./BackButtonSix";
 
 
 enum SubStep {
+  Intro,
   First,
   Second
 }
@@ -58,7 +59,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     let sixthformChoice = null;
     let schoolName = '';
 
-    let subStep = SubStep.First;
+    let subStep = SubStep.Intro;
 
     if (props.answer) {
       choice = props.answer.answer.choice;
@@ -217,6 +218,32 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
   render() {
     let disabled = false;
 
+    if (this.state.subStep === SubStep.Intro) {
+      return (
+        <div className="question">
+          <img src="/images/choicesTool/Step2background.png" className="step2background-img" />
+          <div className="text-container-5432">
+            <div>
+              <div className="font-20">You’ve completed Step One, now let’s look at:</div>
+              <div className="font-24">Step 2</div>
+              <div className="font-48 bold">INSTITUTIONS</div>
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.moveBack()} />
+          <button
+            className="absolute-contunue-btn font-24"
+            onClick={() => {
+              if (this.state.choice === SecondChoice.SixthForm || this.state.choice === SecondChoice.NewSchool || this.state.choice === SecondChoice.CurrentSchool) {
+                this.setState({ subStep: SubStep.First });
+              } else {
+                this.moveNext();
+              }
+            }}
+          >Begin step 2</button>
+        </div>
+      );
+    }
+
     if (this.state.subStep === SubStep.Second) {
       if (this.state.sixthformChoice === null) {
         disabled = true;
@@ -230,8 +257,9 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
       return (
         <div className="question">
+          <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
           <div className="bold font-32 question-text">
-            Some schools and colleges share the courses they offer with our database.
+            Some schools and colleges share the courses they offer<br/> with our database.
           </div>
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
@@ -264,7 +292,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               if (found) {
                 this.moveNext();
               } else {
-                this.setState({newSchoolOpen: true})
+                this.setState({ newSchoolOpen: true })
               }
             }}
           >Continue</button>
@@ -290,6 +318,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
     return (
       <div className="question">
+        <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
         <div className="bold font-32 question-text">
           Where are you planning to do your sixth form studies?
         </div>
@@ -321,7 +350,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             <a href="mailto: admin@scholar6.org">admin@scholar6.org</a>
           </div>
         </div>}
-        <BackButtonSix onClick={() => this.moveBack()} />
+        <BackButtonSix onClick={() => this.setState({subStep: SubStep.Intro})} />
         <button
           className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
           disabled={disabled}
