@@ -29,28 +29,27 @@ class ThirdStepBTable extends Component<ThirdProps> {
 
   renderVocationalValue(subject: KeyStage4Subject) {
     return <Select
-    className="selected-date"
-    value={subject.predicedStrength}
-    MenuProps={{ classes: { paper: 'select-time-list' } }}
-    onChange={e => {
-      subject.predicedStrength = e.target.value as any;
-      this.props.setSubjectSelections(this.props.subjectSelections);
-    }}
-  >
-    {[0, 'fail', 'pass', 'merit' ,'distinction'].map((c, i) => <MenuItem value={c as any} key={i}>{c === 0 ? 'Value' : c}</MenuItem>)}
-  </Select>
+      className="selected-date"
+      value={subject.predicedStrength}
+      MenuProps={{ classes: { paper: 'select-time-list' } }}
+      onChange={e => {
+        subject.predicedStrength = e.target.value as any;
+        this.props.setSubjectSelections(this.props.subjectSelections);
+      }}
+    >
+      {[0, 'fail', 'pass', 'merit', 'distinction'].map((c, i) => <MenuItem value={c as any} key={i}>{c === 0 ? 'Value' : c}</MenuItem>)}
+    </Select>
   }
 
   render() {
     return (
       <div>
-        <div className="flex-center">
-          <div className="bold font-32 question-text-3 question-title-sub-second">
-            What are your strengths?
-          </div>
-          <div className="font-16 question-text-sub-second">
-            Now tell us whether you are likely to do very well, well, okay, or not so well in each of your current subjects. Alternatively, for GCSEs, you can input your predicted grades.
-          </div>
+        <div className="bold font-32 question-text-3">
+          What are your strengths?
+        </div>
+        <div className="font-16">
+          Now tell us whether you are likely to do very well, well, okay, or not so well in each of your <br/>
+          current subjects. Alternatively, for GCSEs, you can input your predicted grades.
         </div>
         <div className="subjects-table">
           <div className="table-head bold font-16">

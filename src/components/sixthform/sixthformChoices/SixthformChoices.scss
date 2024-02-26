@@ -59,6 +59,30 @@
     color: #4C608A;
   }
 
+  .step2background-img {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .third-step-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: calc(2vw + 4vh + 7vh + 2vh);
+  }
+
+  .text-container-5432 {
+    position: absolute;
+    left: 3.2vw;
+    top: 0;
+    height: 30vw;
+    display: flex;
+    align-items: flex-end;
+    max-height: calc(100vh - 7.834vw - 5vh - 3.4vh - 5vw);
+  }
+
   .logout-container {
     background: var(--theme-light-blue);
     margin-left: 25.434vw;
@@ -865,6 +889,10 @@
 
   .font-40 {
     font-size: calc(2.5vw * $font-scale);
+  }
+
+  .font-48 {
+    font-size: calc(2.99vw * $font-scale);
   }
 
   .font-58 {
