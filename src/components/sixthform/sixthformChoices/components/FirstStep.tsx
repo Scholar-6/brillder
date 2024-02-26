@@ -66,6 +66,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
   render() {
     return (
       <div className="question">
+        <img src="/images/choicesTool/MaskGroup.png" alt="step1" className="mask-step-img" />
         <div className="bold font-32 question-text">
           What type of courses are you considering for the sixth form?
         </div>
