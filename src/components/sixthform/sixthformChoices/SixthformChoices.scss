@@ -433,7 +433,7 @@
   .boxes-container .check-box-container .checkmark {
     margin-left: 0.8vw;
     top: calc(1vh + 0.2vw);
-    border: 0.15vw solid var(--theme-dark-blue);
+    border: 0.15vw solid var(--theme-dark-blue)3
   }
 
   .boxes-container .check-box-container .checkmark.checked {
@@ -446,6 +446,13 @@
 
   .question {
     width: 100%;
+
+    .mask-step-img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: calc(18vw);
+    }
 
     .home-absolute-help-box {
       display: flex;
