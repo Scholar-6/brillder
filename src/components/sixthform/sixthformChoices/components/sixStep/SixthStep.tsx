@@ -620,7 +620,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             if (choices.length <= 3) {
               choices.push(choice);
             } else {
-              this.setState({overflowOpen: true});
+              this.setState({ overflowOpen: true });
             }
           }
           this.setState({ readingChoicesV2: this.state.readingChoicesV2 });
@@ -867,7 +867,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             There is all sorts of content out there. How often do you watch the following?
           </div>
           <SecondTable seventhChoices={this.state.secondChoices} onChoiceChange={() => {
-             this.setState({ secondChoices: this.state.secondChoices });
+            this.setState({ secondChoices: this.state.secondChoices });
           }} />
           <BackButtonSix onClick={() => {
             if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
@@ -924,9 +924,9 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
               </div>
             </Grid>
           </Grid>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
             Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixA })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
@@ -981,18 +981,21 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             />
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveAnswer(this.getAnswer());
-            if (this.state.readingChoice) {
-              if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
-                this.setState({ subStep: SixthSubStep.sixB });
+          <button
+            className={`absolute-contunue-btn font-24 ${this.state.readingChoice === null ? 'disabled' : ''}`}
+            disabled={this.state.readingChoice === null}
+            onClick={() => {
+              this.props.saveAnswer(this.getAnswer());
+              if (this.state.readingChoice) {
+                if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
+                  this.setState({ subStep: SixthSubStep.sixB });
+                } else {
+                  this.setState({ subStep: SixthSubStep.second });
+                }
               } else {
                 this.setState({ subStep: SixthSubStep.second });
               }
-            } else {
-              this.setState({ subStep: SixthSubStep.second });
-            }
-          }}>Continue</button>
+            }}>Continue</button>
         </div>
       );
     }
