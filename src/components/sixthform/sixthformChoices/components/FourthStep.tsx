@@ -6,6 +6,7 @@ import BackButtonSix from "./BackButtonSix";
 import { FirstChoice } from "./FirstStep";
 import CheckBoxB from "./CheckBoxB";
 import FourthStepA from "./FourthStepA";
+import { Dialog } from "@material-ui/core";
 
 enum SubStep {
   sub4a,
@@ -53,6 +54,8 @@ interface ThirdQuestionState {
 
   tVocCoursesE1Part1: TLevelCourse[];
   tVocCoursesE1Part2: TLevelCourse[];
+
+  overflowOpen: boolean;
 }
 
 class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
@@ -67,7 +70,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       name: "none",
       subjects: []
     }, {
-      name: "Traditional STEM degrees",
+      name: "Traditional STEM",
       description: "For many science courses there is an expectation that you will have done A-level Maths.",
       subjects: [{
         name: "Astronomy",
@@ -545,6 +548,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
       tVocCoursesE1Part1,
       tVocCoursesE1Part2,
+
+      overflowOpen: false,
     }
   }
 
@@ -593,6 +598,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     } else {
       if (categories4bc.length < 3) {
         categories4bc.push(category);
+      } else {
+        this.setState({ overflowOpen: true });
       }
     }
     this.setState({ categories4bc });
@@ -900,9 +907,9 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         {list.map((course, i) => {
           return (
             <div key={i} className={"course-box-r-23 course-box-4e1 " + className + (course.active ? ' active' : "")} onClick={() => {
-              let activeNumber = this.state.tVocCoursesE1Part1.filter(a => a.active == true).length + this.state.tVocCoursesE1Part2.filter(a => a.active == true).length;
+              const activeNumber = this.state.tVocCoursesE1Part1.filter(a => a.active == true).length + this.state.tVocCoursesE1Part2.filter(a => a.active == true).length;
               if (activeNumber >= 3 && !course.active) {
-                // skip
+                this.setState({overflowOpen: true});
               } else {
                 course.active = !course.active;
               }
@@ -998,6 +1005,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               })}
             </div>
           </div>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+            Oops! You’ve tried to pick too many.
+            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
@@ -1027,7 +1038,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                   <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
                     let selectedCount = this.state.nonFacilitatingSubjects.filter(c => c.selected).length;
                     if (selectedCount >= 3 && !subject.selected) {
-                      // skip
+                      this.setState({overflowOpen: true});
                     } else {
                       subject.selected = !subject.selected;
                     }
@@ -1037,6 +1048,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               </div>
             </div>
           </div>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+            Oops! You’ve tried to pick too many.
+            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
@@ -1069,7 +1084,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                   <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
                     let selectedCount = this.state.facilitatingSubjects.filter(c => c.selected).length;
                     if (selectedCount >= 3 && !subject.selected) {
-                      // skip
+                      this.setState({overflowOpen: true});
                     } else {
                       subject.selected = !subject.selected;
                     }
@@ -1079,6 +1094,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               </div>
             </div>
           </div>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+            Oops! You’ve tried to pick too many.
+            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
@@ -1115,6 +1134,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                           selected.push(...c.subjects.filter((s: any) => s.selected));
                         });
                         if (selected.length >= 5 && !subject.selected) {
+                          this.setState({overflowOpen: true});
                           //skip
                         } else {
                           subject.selected = !subject.selected;
@@ -1127,6 +1147,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               );
             })}
           </div>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+            Oops! You’ve tried to pick too many.
+            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
@@ -1158,6 +1182,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               {this.renderVocationalCategory()}
             </div>
           </div>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+            Oops! You’ve tried to pick too many
+            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4a })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();

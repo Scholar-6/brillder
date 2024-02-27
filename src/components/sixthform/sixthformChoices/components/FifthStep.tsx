@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Dialog } from "@material-ui/core";
 
 import BackButtonSix from "./BackButtonSix";
 import FifthStepAB from "./FifthStepAB";
@@ -20,6 +21,7 @@ interface FifthStepState {
   subStep: SubStep;
   abAnswer: any;
   careers: any[];
+  overflowOpen: boolean;
 }
 
 class FifthStep extends Component<FifthProps, FifthStepState> {
@@ -137,7 +139,8 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
     this.state = {
       subStep,
       abAnswer,
-      careers
+      careers,
+      overflowOpen: false
     }
   }
 
@@ -224,7 +227,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
                       this.state.careers.find(c => c.jobName === 'None are for me').active = false;
                       let activeCount = this.state.careers.filter(c => c.active).length;
                       if (activeCount >= 3 && !career.active) {
-                        // skip
+                        this.setState({overflowOpen: true});
                       } else {
                         career.active = !career.active;
                       }
@@ -257,6 +260,10 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
               </div>
             </div>
           </div>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+            Oops! You’ve tried to pick too many.
+            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5ab })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.moveNext(this.getAnswer());
