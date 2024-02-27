@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { SixthformSubject } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { Dialog } from "@material-ui/core";
 
 export enum ThirdStepDSubStep {
   Start = 1,
@@ -27,6 +28,7 @@ interface TLevelCourse {
 interface ThirdQuestionState {
   tLevelCoursesPart1: TLevelCourse[];
   tLevelCoursesPart2: TLevelCourse[];
+  overflowOpen: boolean;
 }
 
 class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
@@ -67,7 +69,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
         { name: 'Dance' },
         { name: 'Performing Arts (Acting)' },
         { name: 'Musical Theatre' },
-        { name: 'Music Performance'},
+        { name: 'Music Performance' },
         { name: 'Music' },
         { name: 'Production Arts' },
       ],
@@ -156,7 +158,6 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
       ]
     }];
 
-    console.log(props)
     if (
       props.answer && props.answer.tLevelCoursesPart1 && props.answer.tLevelCoursesPart1.length > 0 &&
       props.answer.tLevelCoursesPart2 && props.answer.tLevelCoursesPart2.length > 0
@@ -167,7 +168,8 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
 
     this.state = {
       tLevelCoursesPart1,
-      tLevelCoursesPart2
+      tLevelCoursesPart2,
+      overflowOpen: false,
     }
   }
 
@@ -195,9 +197,17 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
                   {course.name}
                 </div>
                 <div className="flex-center coursor-pointer" onClick={() => {
-                  course.expanded = !course.expanded;
-                  onChange();
-                  this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] })
+                  const checked = course.subjects.find(s => s.checked);
+
+                  if (!course.expanded) {
+                    course.expanded = !course.expanded;
+                    onChange();
+                  } else if (!checked) {
+                    course.expanded = !course.expanded;
+                    onChange();
+                  }
+
+                  this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] });
                 }}>
                   <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
                 </div>
@@ -211,6 +221,8 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
                       this.addSelectedSubject(selected, this.state.tLevelCoursesPart2);
                       if (selected.length < 5) {
                         subject.checked = true;
+                      } else {
+                        this.setState({ overflowOpen: true });
                       }
                     } else {
                       subject.checked = false;
@@ -257,6 +269,10 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
             tLevelCoursesPart2: this.state.tLevelCoursesPart2
           })
         }} />
+        {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+          You can’t select more than five courses.<br /> Deselect another course before selecting a new one.
+          <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+        </Dialog>}
         <button className="absolute-contunue-btn font-24" onClick={() => {
           this.props.moveToStep4({
             tLevelCoursesPart1: this.state.tLevelCoursesPart1,

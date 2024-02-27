@@ -2782,3 +2782,23 @@
     }
   }
 }
+
+.too-many-dialog {
+  font-size: 1.3vw;
+
+  .MuiPaper-root {
+    padding: 1vw;
+    color: var(--theme-dark-blue);
+
+    .btn {
+      cursor: pointer;
+      color: white;
+      text-align: center;
+      background: var(--theme-green);
+  
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

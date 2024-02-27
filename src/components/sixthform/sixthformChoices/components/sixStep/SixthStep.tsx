@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 
 import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -161,6 +162,7 @@ interface SixStepState {
   sixthChoices: any[];
   seventhChoices: any[];
   subStep: SixthSubStep;
+  overflowOpen: boolean;
 }
 
 class SixthStep extends Component<FirstQuestionProps, SixStepState> {
@@ -574,6 +576,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       seventhChoices,
       sixthChoices,
       subStep: SixthSubStep.Start,
+      overflowOpen: false
     }
   }
 
@@ -616,6 +619,8 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           } else {
             if (choices.length <= 3) {
               choices.push(choice);
+            } else {
+              this.setState({overflowOpen: true});
             }
           }
           this.setState({ readingChoicesV2: this.state.readingChoicesV2 });
@@ -829,7 +834,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
             </div>
           </div>
           <div className="font-16">
-            How often do you listen to the following?
+            There is all sorts of content out there. How often do you watch the following?
           </div>
           <ThirdTable seventhChoices={this.state.thirdChoices} onChoiceChange={() => {
             this.setState({ thirdChoices: this.state.thirdChoices });
@@ -919,6 +924,10 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
               </div>
             </Grid>
           </Grid>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+            Oops! You’ve tried to pick too many.
+            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixA })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveAnswer(this.getAnswer());

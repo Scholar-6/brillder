@@ -207,6 +207,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
       setTimeout(() => {
         this.setState({ userAnswers: ulist, animation: false });
       }, duration);
+      this.props.onAttempted();
     } else {
       answer.swapping = true;
       this.setState({ userAnswers: this.state.userAnswers });
