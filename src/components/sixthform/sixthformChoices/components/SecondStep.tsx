@@ -45,6 +45,7 @@ interface SecondQuestionState {
   subStep: SubStep;
   schools: any[];
   schoolName: string;
+  schoolId: number;
   sixthformChoice: any;
   newSchoolOpen: boolean;
 }
@@ -74,6 +75,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       choice,
       otherChoice,
       subStep,
+      schoolId: 0,
       currentSchool,
       sixthformChoice,
       schoolName,
@@ -106,7 +108,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             inputValue={this.state.schoolName}
             onChange={(e: any, v: any) => {
               if (v && v.name) {
-                this.setState({ schoolName: v.name })
+                this.setState({ schoolName: v.name, schoolId: v.id })
               }
             }}
             noOptionsText="Sorry, try typing something else"
@@ -131,7 +133,15 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
                   label=""
                   value={this.state.schoolName}
                   onChange={(e) => {
-                    this.setState({ schoolName: e.target.value });
+                    // check if name is in the list
+                    let schoolId = 0;
+                    for (let s of this.state.schools) {
+                      if (s.name === e.target.value) {
+                        schoolId = s.id;
+                        break;
+                      }
+                    }
+                    this.setState({ schoolName: e.target.value, schoolId });
                   }}
                   placeholder="Type to start browsing our database"
                 />);
@@ -259,7 +269,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
         <div className="question">
           <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
           <div className="bold font-32 question-text">
-            Some schools and colleges share the courses they offer<br/> with our database.
+            Some schools and colleges share the courses they offer<br /> with our database.
           </div>
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
@@ -276,6 +286,29 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
                 </div>
                 <div>
                   No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose.
+                </div>
+              </div>
+            }
+            {
+              this.state.sixthformChoice === SixthformChoice.SixthForm
+              && this.state.schoolId > 0 
+              && (this.state.schoolName === 'Hereford Sixth Form College' || this.state.schoolName === 'Worcester Sixth Form College') &&
+              <div className="help-without font-16">
+                <div>
+                  <SpriteIcon name="help-without" />
+                </div>
+                <div>
+                  Your subject choices have been narrowed to the courses offered by {this.state.schoolName} 
+                </div>
+              </div>
+            }
+            {this.state.sixthformChoice === SixthformChoice.SixthForm && this.state.schoolName !== 'Hereford Sixth Form College' && this.state.schoolName !== 'Worcester Sixth Form College' &&
+              <div className="help-without font-16">
+                <div>
+                  <SpriteIcon name="help-without" />
+                </div>
+                <div>
+                  {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify courses you’re suited to by completing this process, but remember that some may not be offered by your chosen sixth form.
                 </div>
               </div>
             }
@@ -350,7 +383,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             <a href="mailto: admin@scholar6.org">admin@scholar6.org</a>
           </div>
         </div>}
-        <BackButtonSix onClick={() => this.setState({subStep: SubStep.Intro})} />
+        <BackButtonSix onClick={() => this.setState({ subStep: SubStep.Intro })} />
         <button
           className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
           disabled={disabled}
