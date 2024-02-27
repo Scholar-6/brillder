@@ -242,13 +242,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           <BackButtonSix onClick={() => this.moveBack()} />
           <button
             className="absolute-contunue-btn font-24"
-            onClick={() => {
-              if (this.state.choice === SecondChoice.SixthForm || this.state.choice === SecondChoice.NewSchool || this.state.choice === SecondChoice.CurrentSchool) {
-                this.setState({ subStep: SubStep.First });
-              } else {
-                this.moveNext();
-              }
-            }}
+            onClick={() => this.setState({ subStep: SubStep.First })}
           >Begin step 2</button>
         </div>
       );
@@ -302,7 +296,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
                 </div>
               </div>
             }
-            {this.state.sixthformChoice === SixthformChoice.SixthForm && this.state.schoolName !== 'Hereford Sixth Form College' && this.state.schoolName !== 'Worcester Sixth Form College' &&
+            {this.state.sixthformChoice === SixthformChoice.SixthForm 
+              && this.state.schoolName !== 'Hereford Sixth Form College' 
+              && this.state.schoolName !== 'Worcester Sixth Form College' 
+              && this.state.schoolName !== '' &&
               <div className="help-without font-16">
                 <div>
                   <SpriteIcon name="help-without" />
@@ -325,7 +322,11 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               if (found) {
                 this.moveNext();
               } else {
-                this.setState({ newSchoolOpen: true })
+                if (this.state.sixthformChoice === SixthformChoice.Forbid) {
+                  this.moveNext();
+                } else {
+                  this.setState({ newSchoolOpen: true })
+                }
               }
             }}
           >Continue</button>
