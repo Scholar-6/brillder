@@ -2587,3 +2587,18 @@
   font-size: 5vw;
   padding-left: 2vw;
 }
+
+.bottom-description-color {
+  opacity: 0.85;
+  background: var(--tab-gray);
+  z-index: 10;
+}
+
+.bottom-description {
+  z-index: 13;
+  color: var(--theme-dark-blue);
+  font-family: $font-family-bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
