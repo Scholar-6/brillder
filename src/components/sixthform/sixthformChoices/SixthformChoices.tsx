@@ -560,7 +560,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 );
               }
             }
-            console.log(answer);
             this.parseAnswer2(result, answer, Pages.Question2);
             this.setState({ page: Pages.Question3, subjects: subjects });
           }
@@ -598,7 +597,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }} />
     } else if (this.state.page === Pages.Question4) {
       let firstAnswer = this.state.answers.find(a => a.step === Pages.Question1);
-      console.log('firstAnswer: ', firstAnswer);
       return <FourthStep
         firstAnswer={firstAnswer}
         answer={this.state.answers.find(a => a.step === Pages.Question4)}
@@ -820,7 +818,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (this.state.isLoading) {
       return <PageLoader content="...Loading Choices..." />;
     }
-    console.log('render answers: ', this.state.answers);
     return (
       <React.Suspense fallback={<></>}>
         <div className="page1 dashboard-page SixthformChoicesPage">
@@ -846,7 +843,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           </div>
           <div className="sorted-row">
             <div className="sort-and-filter-container">
-              {this.state.page < Pages.Question2 &&
+              {this.state.page < Pages.Question1 &&
                 <div className="subjects-select-box">
                   <div className="bold sidebar-title font-18">Show me:</div>
                   {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-Levels Only')}
@@ -854,7 +851,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
                 </div>}
               <div className="font-18 ranking-label">Your subject rankings</div>
-              <div className={`subjects-scrollbar font-16 ${this.state.page >= Pages.Question2 ? 'big-subjects-sidebar' : ''}`}>
+              <div className={`subjects-scrollbar font-16 ${this.state.page >= Pages.Question1 ? 'big-subjects-sidebar' : ''}`}>
                 {this.state.subjects.map((subject, i) => {
                   return <div key={i} className="subject-box-r1" onMouseEnter={(event) => {
                     if (this.state.popupTimeout) {
