@@ -744,15 +744,6 @@
               font-size: .93vw;
               letter-spacing: 1;
             }
-            .bottom-description-color {
-              opacity: 1;
-              background: var(--tab-gray);
-              z-index: 10;
-            }
-
-            .bottom-description {
-              z-index: 11;
-            }
           }
 
           .subjectName {
@@ -1085,17 +1076,10 @@
           width: 100%;
         }
 
-        .bottom-description-color {
-          opacity: 0.8;
-          background: var(--tab-gray);
-          z-index: 10;
-        }
-
         .bottom-description {
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 11;
         }
       }
 

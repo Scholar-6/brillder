@@ -520,19 +520,12 @@
         width: 100%;
       }
 
-      .bottom-description-color {
-        opacity: 0.8;
-        background: var(--tab-gray);
-        z-index: 10;
-      }
-
       .bottom-description {
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 13;
       }
     }
   }
@@ -628,12 +621,6 @@
         width: 100%;
       }
 
-      .bottom-description-color {
-        opacity: 0.8;
-        background: var(--tab-gray);
-        z-index: 10;
-      }
-
       .bottom-description {
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
@@ -641,7 +628,6 @@
         font-size: 4vw;
         align-items: center;
         justify-content: center;
-        z-index: 13;
 
         .brick-inline {
           padding-left: 1vw;
@@ -965,12 +951,6 @@
           width: 100%;
         }
 
-        .bottom-description-color {
-          opacity: 0.8;
-          background: var(--tab-gray);
-          z-index: 10;
-        }
-
         .bottom-description {
           color: var(--theme-dark-blue);
           font-family: $font-family-bold;
@@ -1187,12 +1167,6 @@
         width: 100%;
       }
 
-      .bottom-description-color {
-        opacity: 0.8;
-        background: var(--tab-gray);
-        z-index: 10;
-      }
-
       .bottom-description {
         color: var(--theme-dark-blue);
         font-family: $font-family-bold;
@@ -1200,7 +1174,6 @@
         font-size: 4vw;
         align-items: center;
         justify-content: center;
-        z-index: 13;
 
         .brick-inline {
           padding-left: 1vw;
