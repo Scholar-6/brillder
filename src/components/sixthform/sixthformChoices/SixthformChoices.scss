@@ -1158,6 +1158,29 @@
       margin-top: 2vh;
       display: flex;
 
+      ::-webkit-scrollbar {
+        margin-right: 1vw;
+        width: 0.5vw;
+        display: block !important;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        display: block !important;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #BAC2D1;
+        display: block !important;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #BAC2D1;
+        display: block !important;
+      }
+
       .first-box-R21 {
         position: relative;
         border-radius: 0.7vw;
@@ -1200,7 +1223,7 @@
         .subjects-box-s6-r21 {
           position: relative;
           overflow-y: scroll;
-          width: 100%;
+          width: calc(100% - 0.3vw);
           height: calc(100vh - 5.834vw - 22vh - 1vh - 1.4vh - 7vw - 0.6vw - 0.9vw);
         }
 
@@ -1292,10 +1315,18 @@
         background: #4C608A1A;
         width: 20.5vw;
         height: calc(100vh - 5.834vw - 22vh - 7vw);
-        overflow-y: scroll;
+        overflow-y: auto;
 
         .second-box-title {
           padding-left: 1vw;
+        }
+
+        .second-box-text {
+          justify-content: flex-start;
+
+          .max-label {
+            margin-left: 2vw;
+          }
         }
       }
 
@@ -1414,14 +1445,38 @@
 
   // step3 c3
   .question {
+    ::-webkit-scrollbar {
+      margin-right: 1vw;
+      width: 0.5vw;
+      display: block !important;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      display: block !important;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #BAC2D1;
+      display: block !important;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #BAC2D1;
+      display: block !important;
+    }
     .tick-container-c3-r23 {
       border-radius: 0.4vw;
       padding: 1vw;
+      padding-right: 0.5vw;
       padding-top: 0.5vw;
       padding-bottom: 0;
       background: #4C608A1A;
 
       .scrollbox-c3-r23 {
+        padding-right: 0.5vw;
         overflow-y: scroll;
         height: calc(80vh - 20vw);
       }
@@ -1580,7 +1635,7 @@
         margin-right: 0.7vw;
         border-radius: 0.5vw;
         width: 17vw;
-        overflow-y: scroll;
+        overflow-y: auto;
         height: calc(100vh - 5.834vw - 25.4vh - 6vw);
         background: #4C608A1A;
         margin-top: 2vh;
@@ -2789,7 +2844,7 @@
       color: white;
       text-align: center;
       background: var(--theme-green);
-  
+
       &:hover {
         opacity: 0.8;
       }

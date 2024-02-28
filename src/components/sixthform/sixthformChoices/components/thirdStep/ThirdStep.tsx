@@ -122,7 +122,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       subjectGroup: SubjectGroupR21.GCSE,
       GCSESubjects: [],
       GCSESexpanded: false,
-      limit: 1300,
+      limit: 16,
       vocationalSubjects: [],
       subjectSelections: [],
       allSubjects: [],
@@ -723,7 +723,10 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               </div>
             </div>
             <div className="second-box-R21">
-              <div className="bold font-16 second-box-title">Your Subject Selections</div>
+              <div className="flex-center second-box-text">
+                <div className="bold font-16 second-box-title">Your Subject Selections</div>
+                <div className="max-label font-12">Max: 16 subjects</div>
+              </div>
               {this.renderSubjectLozenges(this.state.subjectSelections, true, (subject: KeyStage4Subject) => {
                 const selections = this.state.subjectSelections;
                 const found = selections.find((s: any) => s.name === subject.name);
