@@ -1,43 +1,59 @@
 import React, { Component } from "react";
-import { ReactSortable } from "react-sortablejs";
-import { shuffle } from "../../services/shuffle";
-
+import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import BackButtonSix from "../BackButtonSix";
 
 interface ThirdProps {
   pairAnswers: any[];
   onChange(pairAnswers: any[]): void;
+  moveBack(): void;
+  moveNext(): void
 }
 
 interface ThirdQuestionState {
-  subjects: any[];
+  subjectsR1: any[];
+  subjectsR2: any[];
   answers: any[];
+  step: number;
+}
+
+enum AnswerStatus {
+  None,
+  Correct,
+  Incorrect,
 }
 
 class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-    let subjects = [{
+
+    let subjectsR1 = [{
+      icon: 'psychology-3c1',
       correctIndex: 0,
       name: "Psychology"
     }, {
-      correctIndex: 1,
-      name: "Sociology"
-    }, {
+      icon: 'business-3c1',
       correctIndex: 2,
       name: "Business"
     }, {
-      correctIndex: 3,
-      name: "Economics"
-    }, {
+      icon: 'politics-3c1',
       correctIndex: 4,
       name: "Politics"
     }];
 
-    subjects = shuffle(subjects);
+    let subjectsR2 = [{
+      icon: 'sociology-3c1',
+      correctIndex: 1,
+      name: "Sociology"
+    }, {
+      icon: 'economics-3c1',
+      correctIndex: 3,
+      name: "Economics"
+    }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      subjects = this.props.pairAnswers;
+      //subjects = this.props.pairAnswers;
     }
 
     let answers = [{
@@ -53,73 +69,77 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     this.state = {
-      subjects,
-      answers
+      subjectsR1,
+      subjectsR2,
+      answers,
+      step: 0
     }
   }
 
-  setSubjects(subjects: any[]) {
-    this.setState({ subjects });
+  renderSubjectBox(subject: any, currentAnswer: any) {
+    let answerStatus = AnswerStatus.None;
+
+    if (currentAnswer.subject) {
+      if (currentAnswer.subject.correctIndex === this.state.step && currentAnswer.subject.name === subject.name) {
+        answerStatus = AnswerStatus.Correct;
+      } else if (currentAnswer.subject.name === subject.name) {
+        answerStatus = AnswerStatus.Incorrect;
+      }
+    }
+
+    return (
+      <div>
+        <div className={`container-3c1 font-16 ${answerStatus === AnswerStatus.Correct ? 'correct' : answerStatus === AnswerStatus.Incorrect ? 'incorrect' : ''}`} onClick={() => {
+          const { answers } = this.state;
+          currentAnswer.subject = subject;
+          this.setState({ answers });
+          this.props.onChange(answers);
+        }}>
+          <SpriteIcon name={subject.icon} />
+          {subject.name}
+          {answerStatus === AnswerStatus.Incorrect && <SpriteIcon className="absolute-svg-3c1" name="bad-answer-3c1" />}
+          {answerStatus === AnswerStatus.Correct && <SpriteIcon className="absolute-svg-3c1" name="good-answer-3c1" />}
+        </div>
+        <div className="font-16 help-text-3c1 text-orange">{answerStatus === AnswerStatus.Incorrect ? 'Incorrect, please try again' : ''}</div>
+        <div className="font-16 help-text-3c1 text-theme-green">{answerStatus === AnswerStatus.Correct ? 'That’s correct!' : ''}</div>
+      </div>
+    );
   }
 
   render() {
+    let currentAnswer = this.state.answers[this.state.step];
     return (
       <div className="question-step-3c1">
         <div className="bold font-32 question-text-3">
           New Subjects
         </div>
         <div className="font-16">
-          Some subjects are rarely studied before the sixth form. See if you understand what they involve - could any be a fit for you?
+          Some subjects are rarely studied before the sixth form. See if you understand what<br />
+          they involve - could any be a fit for you?
         </div>
-        <div className="drag-container-r22">
-          <div className="title-r22 bold font-16">
-            Drag the subjects to match them with the right description!
+        <ProgressBarStep3C1 step={this.state.step} total={this.state.answers.length} subjectDescription={currentAnswer.name} />
+        <div className="containers-3c1">
+          <div className="right-column-3c1">
+            {this.state.subjectsR1.map(s => this.renderSubjectBox(s, currentAnswer))}
           </div>
-          <div className="container-r22">
-            <div className="left-part-r22">
-              <ReactSortable
-                list={this.state.subjects}
-                animation={150}
-                group={{ name: "cloning-group-name", pull: "clone" }}
-                setList={newSubjects => {
-                  this.props.onChange(newSubjects);
-                  this.setState({ subjects: newSubjects });
-                }}
-              >
-                {this.state.subjects.map((subject: any, i: number) => {
-                  let correct = false;
-                  if (subject.correctIndex === i) {
-                    correct = true;
-                  }
-                  
-                  return (
-                    <div className={`drag-boxv2-r22 drag-boxv3-r22 ${correct ? 'correct' : ''}`} key={i}>
-                      <div className="drag-box-r22">
-                        <div className="drag-item-r22 bold font-12">
-                          {subject.name}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </ReactSortable>
-            </div>
-            <div className="right-part-r22">
-              {this.state.answers.map((answer: any, i: number) => {
-                let correct = false;
-                let subject = this.state.subjects[i];
-                if (subject.correctIndex === i) {
-                  correct = true;
-                }
-                return (
-                  <div className={`answer-item-r22 answer-item-v3r22 font-12 ${correct ? 'correct' : ''}`} key={i + 1}>
-                    {answer.name}
-                  </div>
-                );
-              })}
-            </div>
+          <div className="left-column-3c1">
+            {this.state.subjectsR2.map(s => this.renderSubjectBox(s, currentAnswer))}
           </div>
         </div>
+        <BackButtonSix onClick={() => {
+          if (this.state.step <= 0) {
+            this.props.moveBack();
+          } else {
+            this.setState({ step: this.state.step - 1 });
+          }
+        }} />
+        <button className="absolute-contunue-btn font-24" onClick={() => {
+          if (this.state.step >= 4) {
+            this.props.moveNext();
+          } else {
+            this.setState({ step: this.state.step + 1 });
+          }
+        }}>Next</button>
       </div>
     );
   }
