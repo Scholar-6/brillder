@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
+import { Grid } from "@material-ui/core";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -11,8 +12,7 @@ interface ThirdProps {
 }
 
 interface ThirdQuestionState {
-  subjectsR1: any[];
-  subjectsR2: any[];
+  subjects: any[];
   answers: any[];
   step: number;
 }
@@ -28,28 +28,26 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     super(props);
 
 
-    let subjectsR1 = [{
+    let subjects = [{
       icon: 'psychology-3c1',
       correctIndex: 0,
       name: "Psychology"
+    }, {
+      icon: 'sociology-3c1',
+      correctIndex: 1,
+      name: "Sociology"
     }, {
       icon: 'business-3c1',
       correctIndex: 2,
       name: "Business"
     }, {
-      icon: 'politics-3c1',
-      correctIndex: 4,
-      name: "Politics"
-    }];
-
-    let subjectsR2 = [{
-      icon: 'sociology-3c1',
-      correctIndex: 1,
-      name: "Sociology"
-    }, {
       icon: 'economics-3c1',
       correctIndex: 3,
       name: "Economics"
+    }, {
+      icon: 'politics-3c1',
+      correctIndex: 4,
+      name: "Politics"
     }];
 
     let answers = [{
@@ -69,8 +67,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     this.state = {
-      subjectsR1,
-      subjectsR2,
+      subjects,
       answers,
       step: 0
     }
@@ -88,7 +85,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     return (
-      <div>
+      <Grid item xs={6}>
         <div className={`container-3c1 font-16 ${answerStatus === AnswerStatus.Correct ? 'correct' : answerStatus === AnswerStatus.Incorrect ? 'incorrect' : ''}`} onClick={() => {
           const { answers } = this.state;
           currentAnswer.subject = subject;
@@ -102,12 +99,12 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <div className="font-16 help-text-3c1 text-orange">{answerStatus === AnswerStatus.Incorrect ? 'Incorrect, please try again' : ''}</div>
         <div className="font-16 help-text-3c1 text-theme-green">{answerStatus === AnswerStatus.Correct ? 'That’s correct!' : ''}</div>
-      </div>
+      </Grid>
     );
   }
 
   render() {
-    let currentAnswer = this.state.answers[this.state.step];
+    const currentAnswer = this.state.answers[this.state.step];
     return (
       <div className="question-step-3c1">
         <div className="bold font-32 question-text-3">
@@ -118,14 +115,9 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
           they involve - could any be a fit for you?
         </div>
         <ProgressBarStep3C1 step={this.state.step} total={this.state.answers.length} subjectDescription={currentAnswer.name} />
-        <div className="containers-3c1">
-          <div className="right-column-3c1">
-            {this.state.subjectsR1.map(s => this.renderSubjectBox(s, currentAnswer))}
-          </div>
-          <div className="left-column-3c1">
-            {this.state.subjectsR2.map(s => this.renderSubjectBox(s, currentAnswer))}
-          </div>
-        </div>
+        <Grid container direction="row" className="containers-3c1">
+          {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
+        </Grid>
         <BackButtonSix onClick={() => {
           if (this.state.step <= 0) {
             this.props.moveBack();

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { ReactSortable } from "react-sortablejs";
 import { shuffle } from "../../services/shuffle";
 import BackButtonSix from "../BackButtonSix";
 import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
+import { Grid } from "@material-ui/core";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 
 interface ThirdProps {
@@ -18,41 +19,51 @@ interface ThirdQuestionState {
   step: number;
 }
 
+enum AnswerStatus {
+  None,
+  Correct,
+  Incorrect,
+}
+
 class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
     let subjects = [{
+      icon: 'AncientHistory-3c2',
       correctIndex: 0,
       name: "Ancient History"
     }, {
+      icon: "Law-3c2",
       correctIndex: 1,
       name: "Law"
     }, {
+      icon: 'FilmStudies-3c2',
       correctIndex: 2,
       name: "Film Studies"
     }, {
+      icon: "",
       correctIndex: 3,
       name: "Media Studies"
     }, {
+      icon: "ClassicalCivilisation-3c2",
       correctIndex: 4,
       name: "Classical Civilisation"
     }, {
+      icon: "Philosophy-3c2",
       correctIndex: 5,
       name: "Philosophy"
     }, {
+      icon: "HistoryofArt-3c2",
       correctIndex: 6,
       name: "History of Art"
     }, {
+      icon: "EnvironmentalScience-3c2",
       correctIndex: 7,
       name: "Environmental Science"
     }];
 
     subjects = shuffle(subjects);
-
-    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      subjects = this.props.pairAnswers;
-    }
 
     let answers = [{
       name: "I did History GCSE and considered A-level but I’ve always been drawn to the distant pre-Christian era. I loved studying Roman Britain and visited several sites. It made me interested in archaeology as a degree course."
@@ -72,6 +83,10 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
       name: "Having done Geography and Combined Science at GCSE, I love the depth and breadth of this course, from physical, chemical and biological processes to political, economic and cultural context. Save the planet!"
     }];
 
+    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
+      answers = this.props.pairAnswers;
+    }
+
     this.state = {
       subjects,
       answers,
@@ -79,11 +94,38 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  setSubjects(subjects: any[]) {
-    this.setState({ subjects });
+  renderSubjectBox(subject: any, currentAnswer: any) {
+    let answerStatus = AnswerStatus.None;
+
+    if (currentAnswer.subject) {
+      if (currentAnswer.subject.correctIndex === this.state.step && currentAnswer.subject.name === subject.name) {
+        answerStatus = AnswerStatus.Correct;
+      } else if (currentAnswer.subject.name === subject.name) {
+        answerStatus = AnswerStatus.Incorrect;
+      }
+    }
+
+    return (
+      <Grid item xs={6}>
+        <div className={`container-3c1 font-16 ${answerStatus === AnswerStatus.Correct ? 'correct' : answerStatus === AnswerStatus.Incorrect ? 'incorrect' : ''}`} onClick={() => {
+          const { answers } = this.state;
+          currentAnswer.subject = subject;
+          this.setState({ answers });
+          this.props.onChange(answers);
+        }}>
+          <SpriteIcon name={subject.icon} />
+          {subject.name}
+          {answerStatus === AnswerStatus.Incorrect && <SpriteIcon className="absolute-svg-3c1" name="bad-answer-3c1" />}
+          {answerStatus === AnswerStatus.Correct && <SpriteIcon className="absolute-svg-3c1" name="good-answer-3c1" />}
+        </div>
+        <div className="font-16 help-text-3c1 text-orange">{answerStatus === AnswerStatus.Incorrect ? 'Incorrect, please try again' : ''}</div>
+        <div className="font-16 help-text-3c1 text-theme-green">{answerStatus === AnswerStatus.Correct ? 'That’s correct!' : ''}</div>
+      </Grid>
+    );
   }
 
   render() {
+    const currentAnswer = this.state.answers[this.state.step];
     return (
       <div className="question-step-3c2">
         <div className="bold font-32 question-text-3">
@@ -92,57 +134,23 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-16">
           Here are a few more subjects that are often new to students in the sixth form.
         </div>
-        <ProgressBarStep3C1 step={1} total={7} subjectDescription="test is test"/>
-        <div className="drag-container-r22">
-          <div className="container-r22">
-            <div className="left-part-r22">
-              <ReactSortable
-                list={this.state.subjects}
-                animation={150}
-                group={{ name: "cloning-group-name", pull: "clone" }}
-                setList={newSubjects => {
-                  this.props.onChange(newSubjects);
-                  this.setState({ subjects: newSubjects });
-                }}
-              >
-                {this.state.subjects.map((subject: any, i: number) => {
-                  let correct = false;
-                  if (subject.correctIndex === i) {
-                    correct = true;
-                  }
-                  return (
-                    <div className={`drag-boxv2-r22 drag-boxv3-r22 ${correct ? 'correct' : ''}`} key={i}>
-                      <div className="drag-box-r22">
-                        <div className="drag-item-r22 bold font-12" key={i + 1}>
-                          {subject.name}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </ReactSortable>
-            </div>
-            <div className="right-part-r22">
-              {this.state.answers.map((answer: any, i: number) => {
-                let correct = false;
-                let subject = this.state.subjects[i];
-                if (subject && subject.correctIndex === i) {
-                  correct = true;
-                }
-                return (
-                  <div className={`answer-item-r22 answer-item-v3r22 font-12 ${correct ? 'correct' : ''}`} key={i + 1}>
-                    {answer.name}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <BackButtonSix onClick={() => { 
-          this.props.moveBack() 
+        <ProgressBarStep3C1 step={this.state.step} total={this.state.answers.length} subjectDescription={currentAnswer.name} />
+        <Grid container direction="row" className="containers-3c1">
+          {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
+        </Grid>
+        <BackButtonSix onClick={() => {
+          if (this.state.step <= 0) {
+            this.props.moveBack();
+          } else {
+            this.setState({ step: this.state.step - 1 });
+          }
         }} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.props.moveNext();
+          if (this.state.step >= 7) {
+            this.props.moveNext();
+          } else {
+            this.setState({ step: this.state.step + 1 });
+          }
         }}>Continue</button>
       </div>
     );
