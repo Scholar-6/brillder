@@ -52,10 +52,6 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
       name: "Economics"
     }];
 
-    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      //subjects = this.props.pairAnswers;
-    }
-
     let answers = [{
       name: "the scientific study of the mind and behaviour, including brain function, decision making, gender differences and child development"
     }, {
@@ -67,6 +63,10 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       name: "explores ideologies, policies, constitutions, elections, the legislative process, interest groups and how governments conduct diplomacy, trade and conflict"
     }];
+
+    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
+      answers = this.props.pairAnswers;
+    }
 
     this.state = {
       subjectsR1,

@@ -13,7 +13,6 @@ const ProgressBarStep3C1: React.FC<Props> = (props) => {
   let renderLine = (isActive: boolean) => {
     return <div className={`line-r23 ${isActive ? 'active' : ''}`} />
   }
-  console.log(subjectDescription);
   return (
     <div className="progress-description-container-r3234">
       <div className="progress-bar-sixthform">
