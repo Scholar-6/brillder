@@ -1545,6 +1545,7 @@
     }
   }
 
+  .question-step-3c2,
   .question-step-3c1 {
     .containers-3c1 {
       margin-top: 1vh;
@@ -1558,9 +1559,11 @@
         position: relative;
         margin-top: 1vh;
         height: 8vh;
+        margin-left: 0.5vw;
+        margin-right: 0.5vw;
         border-radius: 0.5vw;
         background: #4C608A1A;
-        width: 100%;
+        width: calc(100% - 0.5vw);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1594,13 +1597,6 @@
       }
       .help-text-3c1 {
         margin-top: 0.5vh;
-      }
-      .right-column-3c1 {
-        width: calc(50% - 0.3vw);
-        margin-right: 0.3vw;
-      }
-      .left-column-3c1 {
-        width: calc(50% - 0.3vw);
       }
     }
   }

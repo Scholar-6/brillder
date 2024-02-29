@@ -59,6 +59,7 @@
 
 .progress-description-container-r3234 {
   margin-top: 2vh;
+  margin-left: 0.5vw;
   border-radius: 0.5vw;
   box-shadow: 0px 2px 13px 0px #4C608A26;
   position: relative;
@@ -92,9 +93,14 @@
   }
 
   .subject-description-3c1 {
-    padding-left: 15vw;
-    padding-right: 15vw;
+    padding-left: 12vw;
+    padding-right: 12vw;
     padding-top: 1vh;
     padding-bottom: 2vh;
   }
+}
+
+.step3question5 .subject-description-3c1 {
+  padding-left: 4vw;
+  padding-right: 4vw;
 }
