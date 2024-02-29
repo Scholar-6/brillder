@@ -1,16 +1,21 @@
 import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { shuffle } from "../../services/shuffle";
+import BackButtonSix from "../BackButtonSix";
+import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 
 
 interface ThirdProps {
   pairAnswers: any[];
   onChange(pairAnswers: any[]): void;
+  moveBack(): void;
+  moveNext(): void;
 }
 
 interface ThirdQuestionState {
   subjects: any[];
   answers: any[];
+  step: number;
 }
 
 class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
@@ -69,7 +74,8 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
 
     this.state = {
       subjects,
-      answers
+      answers,
+      step: 0,
     }
   }
 
@@ -84,8 +90,9 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
           New Subjects: Students’ Perspectives
         </div>
         <div className="font-16">
-          Here are a few more subjects that are often new to students in the sixth form. 
+          Here are a few more subjects that are often new to students in the sixth form.
         </div>
+        <ProgressBarStep3C1 step={1} total={7} subjectDescription="test is test"/>
         <div className="drag-container-r22">
           <div className="container-r22">
             <div className="left-part-r22">
@@ -131,6 +138,12 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
             </div>
           </div>
         </div>
+        <BackButtonSix onClick={() => { 
+          this.props.moveBack() 
+        }} />
+        <button className="absolute-contunue-btn font-24" onClick={() => {
+          this.props.moveNext();
+        }}>Continue</button>
       </div>
     );
   }

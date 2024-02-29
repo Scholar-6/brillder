@@ -577,22 +577,26 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === ThirdSubStep.ThirdC2) {
       return (
         <div className="question step3question5">
+          <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
           <ThirdStepC2
             pairAnswers={this.state.secondPairResults}
             onChange={(secondPairResults: any[]) => {
               this.setState({ secondPairResults });
             }}
-          />
-          <BackButtonSix onClick={() => { this.setState({ subStep: ThirdSubStep.ThirdC1 }) }} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveThirdAnswer(this.getAnswer());
+            moveBack={() => {
+              this.setState({ subStep: ThirdSubStep.ThirdC1 })
+            }}
+            moveNext={() => {
+ this.props.saveThirdAnswer(this.getAnswer());
             this.setState({ subStep: ThirdSubStep.ThirdC3 });
-          }}>Continue</button>
+            }}
+          />
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.ThirdC1) {
       return (
         <div className="question">
+          <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
           <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
             onChange={(firstPairResults: any[]) => {
