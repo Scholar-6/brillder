@@ -227,20 +227,22 @@ class TeachFilterSidebar extends Component<
     if (this.props.isSearching) {
       return '';
     }
-    let lastPage = (this.props.page + 1) * 100;
-    let endLimit = this.props.totalCount > (this.props.page + 1) * 100;
+    const lastPage = (this.props.page + 1) * 100;
+    const endLimit = this.props.totalCount > (this.props.page + 1) * 100;
+
+    console.log('render pagination')
     
     return (
       <div className="sort-box">
         <div className="index-box m-view-all flex-center pagination">
           {this.props.page >= 1 &&
-            <span onClick={() => {
+            <span className="arrow-r342" onClick={() => {
               if (this.props.page >= 1) {
                 this.props.moveToPage(this.props.page - 1);
               }
             }}>&lt;</span>
           } {1 + (this.props.page * 100)}-{lastPage < this.props.totalCount ? lastPage : this.props.totalCount} | {this.props.totalCount} {endLimit &&
-            <span onClick={() => {
+            <span className="arrow-r342" onClick={() => {
               if (endLimit) {
                 this.props.moveToPage(this.props.page + 1);
               }

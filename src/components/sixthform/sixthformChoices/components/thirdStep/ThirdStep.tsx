@@ -566,12 +566,14 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
           <ThirdStepC3
             answer={this.state.categoriesC3}
             onChange={categoriesC3 => this.setState({ categoriesC3 })}
+            moveNext={() => {
+              this.props.saveThirdAnswer(this.getAnswer());
+              this.setState({ subStep: ThirdSubStep.ThirdC4 });
+            }}
+            moveBack={() => {
+              this.setState({ subStep: ThirdSubStep.ThirdC2 });
+            }}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.ThirdC2 })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: ThirdSubStep.ThirdC4 });
-          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.ThirdC2) {
