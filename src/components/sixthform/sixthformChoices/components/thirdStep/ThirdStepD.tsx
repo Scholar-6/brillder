@@ -320,13 +320,14 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         <div className="bold font-32 question-text-3">
           T Levels
         </div>
-        <div className="font-16">
+        <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
+        <div className="font-16 line-d3">
           These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects. 
         </div>
-        <div className="font-16">
+        <div className="font-16 line-d3">
           T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement. 
         </div>
-        <div className="font-16">
+        <div className="font-16 line-d3">
           Choosing a T-level requires you to be clear in your own mind that you wish to work in this field.
         </div>
         <div className="font-16 bold sub-title-e23">

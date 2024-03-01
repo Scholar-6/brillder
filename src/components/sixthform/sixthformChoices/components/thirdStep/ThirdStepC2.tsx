@@ -42,7 +42,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
       correctIndex: 2,
       name: "Film Studies"
     }, {
-      icon: "",
+      icon: "MediaStudies-3c2",
       correctIndex: 3,
       name: "Media Studies"
     }, {

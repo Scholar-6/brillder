@@ -163,8 +163,10 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
         <div className="bold font-32 question-text-3">
           New Subjects - Your Interests
         </div>
+        <img src="/images/choicesTool/ThirdStepR4.png" className="third-step-img third-step-img-r4"></img>
         <div className="font-16">
-          Now consider whether you are interested in taking any of these subjects. Select those you’re very interested or quite interested in. Leave the others where they are.
+          Now consider whether you are interested in taking any of these subjects. Select those you’re very<br/>
+          interested or quite interested in. Leave the others where they are.
         </div>
         <div className="drag-container-r23">
           <div className="container-r23 first font-12 bold">
