@@ -11,7 +11,6 @@ interface Props {
 const ProgressBarStep3C1: React.FC<Props> = (props) => {
   const { step, total, subjectDescription } = props;
   let renderLine = (isActive: boolean) => {
-    console.log(3);
     return <div className={`line-r23 ${isActive ? 'active' : ''}`} />
   }
   return (

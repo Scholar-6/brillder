@@ -127,11 +127,21 @@
   }
 
   &.pagination {
+    cursor: initial;
     background: var(--theme-light-blue) !important;
     display: flex;
     justify-content: flex-end;
     padding-right: 1vw;
     border-top: 2px solid rgba(222, 222, 222, 0.2);
+
+    .arrow-r342 {
+      cursor: pointer;
+      padding-left: 0.2vw;
+      padding-right: 0.2vw;
+      &:hover {
+        font-family: $font-family-bold;
+      }
+    }
   }
 }
 
