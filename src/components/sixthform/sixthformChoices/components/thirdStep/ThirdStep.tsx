@@ -587,8 +587,8 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ subStep: ThirdSubStep.ThirdC1 })
             }}
             moveNext={() => {
- this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: ThirdSubStep.ThirdC3 });
+              this.props.saveThirdAnswer(this.getAnswer());
+              this.setState({ subStep: ThirdSubStep.ThirdC3 });
             }}
           />
         </div>
@@ -665,7 +665,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                         const found = selections.find((s: any) => s.name === subject.name);
                         if (!found) {
                           let passedValidation = true;
-  
+
                           if (subject.name === "Combined Science (Single Award)") {
                             const found2 = selections.find((s: any) =>
                               s.name === "Combined Science (Double Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
@@ -688,7 +688,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
                               passedValidation = false;
                             }
                           }
-  
+
                           if (passedValidation) {
                             subject.selected = true;
                             selections.push(subject);
@@ -744,14 +744,14 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
               })}
             </div>
           </div>
-          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.Welcome})} />
+          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.Welcome })} />
           {this.renderThirdStepAButton()}
         </div>
       );
     }
 
     return <ThirdStepWelcome
-      moveNext={() => this.setState({ subStep: ThirdSubStep.First})}
+      moveNext={() => this.setState({ subStep: ThirdSubStep.First })}
       moveBack={() => this.props.moveBack(this.getAnswer())}
     />
   }
