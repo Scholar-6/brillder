@@ -4,6 +4,7 @@ import { SixthformSubject } from "services/axios/sixthformChoices";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { AcademicLevelLabels, SubjectGroup } from "model/brick";
+import { isPhone } from "services/phone";
 
 
 function fileUrl(fileName: string) {
@@ -69,6 +70,22 @@ class SixthformTasters extends Component<UserProfileProps, UserProfileState> {
 
   renderBrick(subject: SixthformSubject, i: number) {
     if (subject.brick) {
+      if (isPhone()) {
+        return (
+          <div className="brick-container-23" key={i}>
+            <div className="brick-container" onClick={() => {
+              if (subject.brick) {
+                window.location.href = 'https://app.brillder.com/play/brick/' + subject.brick.id + '/cover';
+              }
+            }}>
+              <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
+              <div className="bottom-description-color" />
+              <div className="bottom-description font-10 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
+            </div>
+            <div className="subjectName bold font-10">{subject.name}</div>
+          </div>
+        );
+      }
       return (
         <div className="brick-container-23" key={i}>
           <div className="brick-container" onClick={() => {
@@ -82,7 +99,7 @@ class SixthformTasters extends Component<UserProfileProps, UserProfileState> {
             <div className="bottom-description-color" />
             <div className="bottom-description font-12 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
           </div>
-          <div className="subjectName font-12">{subject.name}</div>
+          <div className="subjectName bold font-12">{subject.name}</div>
         </div>
       );
     }
@@ -164,6 +181,26 @@ class SixthformTasters extends Component<UserProfileProps, UserProfileState> {
         }
         return false;
       });
+    }
+
+    if (isPhone()) {
+      return (
+        <div className="top-part-e354">
+          <div className="tab-content-e354-container">
+            <div className="tab-content-e354 taster-content">
+              <div className="flex-center">
+                <div className="bold title-above font-14">
+                  Try a new subject or test yourself against sixth form<br />
+                  content and concepts in subjects you know.
+                </div>
+              </div>
+              <div className="bricks-container">
+                {finalFinalSubjects.map((s, i) => this.renderBrick(s, i))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return (
