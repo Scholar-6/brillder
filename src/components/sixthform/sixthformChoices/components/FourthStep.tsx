@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import CheckBoxV2 from "./CheckBox";
 import BackButtonSix from "./BackButtonSix";
 import { FirstChoice } from "./FirstStep";
 import CheckBoxB from "./CheckBoxB";

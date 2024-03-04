@@ -196,6 +196,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.currentSchool = answer.currentSchool;
         answerR1.answer.schoolName = answer.schoolName;
         answerR1.answer.sixthformChoice = answer.sixthformChoice;
+        answerR1.answer.readingChoice = answer.readingChoice;
+        answerR1.answer.readingChoicesV2 = answer.readingChoicesV2;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
         this.state.answers.push(result.result);
@@ -234,6 +236,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }
         if (answer.subStep) {
           answerR1.answer.subStep = answer.subStep;
+        }
+        if (answer.watchingChoices) {
+          answerR1.answer.watchingChoices = answer.watchingChoices;
         }
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
