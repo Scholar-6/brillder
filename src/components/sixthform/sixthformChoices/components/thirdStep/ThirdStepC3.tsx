@@ -67,7 +67,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     if (props.answer && props.answer.categories && props.answer.categories.length > 0) {
-      //categories = props.answer.categories;
+      categories = props.answer.categories;
     }
 
     this.state = {

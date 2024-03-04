@@ -866,9 +866,12 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           <div className="font-16">
             There is all sorts of content out there. How often do you watch the following?
           </div>
-          <SecondTable seventhChoices={this.state.secondChoices} onChoiceChange={() => {
-            this.setState({ secondChoices: this.state.secondChoices });
-          }} />
+          <SecondTable
+            seventhChoices={this.state.secondChoices}
+            onChoiceChange={() => {
+              this.setState({ secondChoices: this.state.secondChoices });
+            }}
+          />
           <BackButtonSix onClick={() => {
             if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
               this.setState({ subStep: SixthSubStep.sixB });

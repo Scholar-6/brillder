@@ -6,12 +6,16 @@ import CheckBoxV2 from "./CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getSixthformSchools } from "services/axios/sixthformChoices";
 import BackButtonSix from "./BackButtonSix";
+import ReadingV1, { ReadingChoice } from "./ReadingV1";
+import ReadingV2, { ReadingChoiceV2 } from "./ReadingV2";
 
 
 enum SubStep {
   Intro,
   First,
-  Second
+  Second,
+  Reading,
+  ReadingV2
 }
 
 enum SecondChoice {
@@ -48,6 +52,8 @@ interface SecondQuestionState {
   schoolId: number;
   sixthformChoice: any;
   newSchoolOpen: boolean;
+  readingChoice: null | ReadingChoice;
+  readingChoicesV2: ReadingChoiceV2[];
 }
 
 class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState> {
@@ -62,13 +68,19 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
     let subStep = SubStep.Intro;
 
+    let readingChoice = null;
+    let readingChoicesV2 = [];
+
     if (props.answer) {
-      choice = props.answer.answer.choice;
-      otherChoice = props.answer.answer.otherChoice;
-      currentSchool = props.answer.answer.currentSchool;
-      sixthformChoice = props.answer.answer.sixthformChoice;
-      schoolName = props.answer.answer.schoolName,
-        subStep = props.answer.answer.subStep;
+      let answer = props.answer.answer;
+      choice = answer.choice;
+      otherChoice = answer.otherChoice;
+      currentSchool = answer.currentSchool;
+      sixthformChoice = answer.sixthformChoice;
+      schoolName = answer.schoolName,
+        subStep = answer.subStep;
+      readingChoice = answer.readingChoice;
+      readingChoicesV2 = answer.readingChoicesV2;
     }
 
     this.state = {
@@ -80,8 +92,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       sixthformChoice,
       schoolName,
       schools: [],
+      newSchoolOpen: false,
 
-      newSchoolOpen: false
+      readingChoice,
+      readingChoicesV2
     };
 
     this.loadSchools();
@@ -204,7 +218,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       otherChoice: this.state.otherChoice,
       currentSchool: this.state.currentSchool,
       sixthformChoice: this.state.sixthformChoice,
-      schoolName: this.state.schoolName
+      schoolName: this.state.schoolName,
+
+      readingChoice: this.state.readingChoice,
+      readingChoicesV2: this.state.readingChoicesV2
     });
   }
 
@@ -215,7 +232,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       otherChoice: this.state.otherChoice,
       currentSchool: this.state.currentSchool,
       sixthformChoice: this.state.sixthformChoice,
-      schoolName: this.state.schoolName
+      schoolName: this.state.schoolName,
+
+      readingChoice: this.state.readingChoice,
+      readingChoicesV2: this.state.readingChoicesV2
     });
   }
 
@@ -248,7 +268,31 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       );
     }
 
-    if (this.state.subStep === SubStep.Second) {
+    if (this.state.subStep === SubStep.ReadingV2) {
+      return (
+        <ReadingV2
+          readingChoicesV2={this.state.readingChoicesV2}
+          onChange={readingChoicesV2 => this.setState({ readingChoicesV2 })}
+          moveBack={() => this.setState({ subStep: SubStep.Reading })}
+          moveNext={() => this.moveNext()}
+        />
+      );
+    } else if (this.state.subStep === SubStep.Reading) {
+      return (
+        <ReadingV1
+          readingChoice={this.state.readingChoice}
+          onChange={readingChoice => this.setState({ readingChoice })}
+          moveBack={() => this.setState({ subStep: SubStep.First })}
+          moveNext={() => {
+            if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
+              this.setState({ subStep: SubStep.ReadingV2 })
+            } else {
+              this.moveNext();
+            }
+          }}
+        />
+      );
+    } else if (this.state.subStep === SubStep.Second) {
       if (this.state.sixthformChoice === null) {
         disabled = true;
       }
@@ -285,20 +329,20 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             }
             {
               this.state.sixthformChoice === SixthformChoice.SixthForm
-              && this.state.schoolId > 0 
+              && this.state.schoolId > 0
               && (this.state.schoolName === 'Hereford Sixth Form College' || this.state.schoolName === 'Worcester Sixth Form College') &&
               <div className="help-without font-16">
                 <div>
                   <SpriteIcon name="help-without" />
                 </div>
                 <div>
-                  Your subject choices have been narrowed to the courses offered by {this.state.schoolName} 
+                  Your subject choices have been narrowed to the courses offered by {this.state.schoolName}
                 </div>
               </div>
             }
-            {this.state.sixthformChoice === SixthformChoice.SixthForm 
-              && this.state.schoolName !== 'Hereford Sixth Form College' 
-              && this.state.schoolName !== 'Worcester Sixth Form College' 
+            {this.state.sixthformChoice === SixthformChoice.SixthForm
+              && this.state.schoolName !== 'Hereford Sixth Form College'
+              && this.state.schoolName !== 'Worcester Sixth Form College'
               && this.state.schoolName !== '' &&
               <div className="help-without font-16">
                 <div>
@@ -320,10 +364,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               let name = this.state.schoolName;
               let found = this.state.schools.find(s => s.name == name);
               if (found) {
-                this.moveNext();
+                this.setState({ subStep: SubStep.Reading });
               } else {
                 if (this.state.sixthformChoice === SixthformChoice.Forbid) {
-                  this.moveNext();
+                  this.setState({ subStep: SubStep.Reading });
                 } else {
                   this.setState({ newSchoolOpen: true })
                 }
@@ -331,11 +375,9 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
             }}
           >Continue</button>
           {this.state.newSchoolOpen &&
-            <Dialog open={true} className="new-school-popup" onClose={() => {
-              this.moveNext();
-            }}>
+            <Dialog open={true} className="new-school-popup" onClose={() => this.setState({ subStep: SubStep.Reading })}>
               {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose.
-              <div className="btn" onClick={() => this.moveNext()}>Continue</div>
+              <div className="btn" onClick={() => this.setState({ subStep: SubStep.Reading })}>Continue</div>
             </Dialog>
           }
         </div>

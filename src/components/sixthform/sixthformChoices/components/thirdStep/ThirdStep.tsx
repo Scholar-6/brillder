@@ -16,6 +16,8 @@ import ThirdStepBTable from "./ThirdStepBTable";
 import BackButtonSix from "../BackButtonSix";
 import { enterPressed } from "components/services/key";
 import ThirdStepWelcome from "./ThirdStepWelcome";
+import SecondTable from "../sixStep/SecondTable";
+import ThirdStepWatching from "./ThirdStepWatching";
 
 
 enum SubjectGroupR21 {
@@ -33,7 +35,8 @@ export enum ThirdSubStep {
   ThirdC4,
   ThirdD,
   ThirdE,
-  ThirdF
+  ThirdF,
+  Watching,
 }
 
 interface ThirdProps {
@@ -66,6 +69,8 @@ interface ThirdQuestionState {
   coursesD: any | null;
   ePairResults: any[];
   coursesF: any;
+
+  watchingChoices: any[];
 }
 
 class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
@@ -84,6 +89,49 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let coursesD: any = null;
     let coursesF: any = null;
+
+    let watchingChoices = [
+      {
+        label: 'News & Current Affairs',
+        choice: null
+      }, {
+        label: 'Nature, Farming & Environment',
+        choice: null
+      }, {
+        label: 'Other Science (e.g. Astronomy, Technology)',
+        choice: null
+      }, {
+        label: 'Art, Architecture & Design',
+        choice: null
+      }, {
+        label: 'Quiz & Puzzle Shows',
+        choice: null
+      }, {
+        label: 'History, Ancient History & Anthropology',
+        choice: null
+      }, {
+        label: 'Vehicles & Motorsport',
+        choice: null
+      }, {
+        label: 'Classic Old Films',
+        choice: null
+      }, {
+        label: 'Sit-coms, Stand-Ups and Funny Stuff',
+        choice: null
+      }, {
+        label: 'Sport',
+        choice: null
+      }, {
+        label: 'Drama & Box Sets',
+        choice: null
+      }, {
+        label: 'Animated Movies',
+        choice: null
+      }, {
+        label: 'Reality Television',
+        choice: null
+      }
+    ];
 
     if (this.props.answer) {
       const { answer } = props.answer;
@@ -114,6 +162,10 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       if (answer.coursesF) {
         coursesF = answer.coursesF;
       }
+
+      if (answer.watchingChoices) {
+        watchingChoices = answer.watchingChoices;
+      }
     }
 
     this.state = {
@@ -138,7 +190,9 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       categoriesC4,
 
       coursesD,
-      coursesF
+      coursesF,
+
+      watchingChoices,
     }
 
     this.loadSubjects();
@@ -159,6 +213,8 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       ePairResults: this.state.ePairResults,
 
       coursesF: this.state.coursesF,
+
+      watchingChoices: this.state.watchingChoices,
     };
   }
 
@@ -423,7 +479,24 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === ThirdSubStep.ThirdF) {
+    if (this.state.subStep === ThirdSubStep.Watching) {
+      return (
+        <ThirdStepWatching
+          watchingChoices={this.state.watchingChoices}
+          onChange={watchingChoices => this.setState({ watchingChoices })}
+          moveBack={() => {
+            if (this.props.firstAnswer && this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
+              this.setState({ subStep: ThirdSubStep.ThirdC4 });
+            } else {
+              this.setState({ subStep: ThirdSubStep.ThirdF });
+            }
+          }}
+          moveNext={async () => {
+            await this.props.saveThirdAnswer(this.getAnswer());
+            this.moveNext();
+          }} />
+      );
+    } else if (this.state.subStep === ThirdSubStep.ThirdF) {
       return (
         <div className="question question-3d">
           <ThirdStepF
@@ -445,8 +518,9 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             moveToStep4={coursesF => {
               let answer = this.getAnswer();
               answer.coursesF = coursesF;
-              this.setState({ coursesF });
-              this.props.moveNext(answer);
+              this.setState({ coursesF, subStep: ThirdSubStep.Watching });
+              //this.setState({  });
+              //this.props.moveNext(answer);
             }}
           />
         </div>
@@ -524,7 +598,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             }}
             onSkip={() => {
               if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
-                this.moveNext()
+                this.setState({subStep: ThirdSubStep.Watching});
               } else {
                 if (
                   this.props.secondAnswer &&
@@ -543,7 +617,7 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
             if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
-              this.moveNext()
+              this.setState({subStep: ThirdSubStep.Watching});
             } else {
               if (
                 this.props.secondAnswer &&
