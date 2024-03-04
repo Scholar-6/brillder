@@ -116,7 +116,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       if (props.answer.choice !== null) {
         choice = props.answer.choice;
       }
-  
+
       if (props.answer.tLevelCoursesPart1 && props.answer.tLevelCoursesPart2) {
         tLevelCourses1 = props.answer.tLevelCoursesPart1;
         tLevelCourses2 = props.answer.tLevelCoursesPart2;
@@ -135,7 +135,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
   setChoice(choice: ThirdStepDChoice) {
     this.setState({ choice });
     this.props.onChange({
-      choice:this.state.choice,
+      choice: this.state.choice,
     });
   }
 
@@ -176,7 +176,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                 </div>
                 <div className="flex-center coursor-pointer" onClick={() => {
                   const checked = course.subjects.find(s => s.checked);
-                  
+
                   if (!course.expanded) {
                     course.expanded = !course.expanded;
                     onChange();
@@ -242,20 +242,27 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
   render() {
     if (this.state.subStep === ThirdStepDSubStep.LastStep) {
       return (
-        <div className="font-16">
-          <div className="flex-center top-label-r3-r23 bold">
-            Would you like to see other Vocational, Applied and Practical courses?
-          </div>
-          <div className="d3-table-scroll-container">
-            <div className="button-step-d-r23 button-step-dl4-r23">
-              <div onClick={() => this.props.moveToStepE()}>
-                Yes, I would.
+        <div className="font-16 question-3d-r8-r1">
+          <img src="/images/choicesTool/ThirdStepR8.png" className="third-step-img-r8"></img>
+          <div className="question-3d-r8 font-20">
+            <div>
+              <div className="flex-center top-label-r3-r23 bold">
+                Would you like to see other Vocational, Applied and Practical courses?
               </div>
-            </div>
-            <div className="button-step-d-r23 button-step-dl4-r23">
-              <div onClick={() => this.props.moveToStep4()}>
-                No - if I do a vocational course, it’ll be a T-level.
-              </div>
+                <div className="flex-center">
+                  <div className="button-step-d-r23 button-step-dl4-r23">
+                    <div onClick={() => this.props.moveToStepE()}>
+                      Yes, I would.
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-center">
+                  <div className="button-step-d-r23 button-step-dl4-r23">
+                    <div onClick={() => this.props.moveToStep4()}>
+                      No - if I do a vocational course, it’ll be a T-level.
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.TableLeaf })} />
@@ -264,11 +271,12 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
       return (
         <div className="font-16 question-step-3d-tableleaf">
+          <img src="/images/choicesTool/ThirdStepR7.png" className="third-step-img"></img>
           <div className="bold font-32 question-text-3">
             T-level Courses
           </div>
           <div>
-            These are the different T-level categories. Expand them to view different courses.<br/>
+            These are the different T-level categories. Expand them to view different courses.<br />
             Which interest you? Select up to three courses.
           </div>
           <div className="d3-table-scroll-container">
@@ -301,10 +309,11 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       );
     } else if (this.state.subStep === ThirdStepDSubStep.Message) {
-      return <div>
+      return <div className="question-3d-r6">
         <div className="font-20 bold text-center text-d3-r23">
           In that case, we’ll show you T-levels, and then we’ll show you other vocational courses.
         </div>
+        <img src="/images/choicesTool/ThirdStepR6.png" className="image-container-r6"></img>
         <div className="button-step-d-r23 font-24">
           <div onClick={() => {
             this.setState({ subStep: ThirdStepDSubStep.TableLeaf })
@@ -322,10 +331,10 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
         <div className="font-16 line-d3">
-          These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects. 
+          These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects.
         </div>
         <div className="font-16 line-d3">
-          T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement. 
+          T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement.
         </div>
         <div className="font-16 line-d3">
           Choosing a T-level requires you to be clear in your own mind that you wish to work in this field.

@@ -459,23 +459,23 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
             onChange={(ePairResults: any[]) => {
               this.setState({ ePairResults });
             }}
+            moveBack={() => {
+              if (
+                this.props.secondAnswer &&
+                this.props.secondAnswer.answer &&
+                this.props.secondAnswer.answer.databaseSchool &&
+                this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+              ) {
+                this.setState({ subStep: ThirdSubStep.ThirdC4 });
+              } else {
+                this.setState({ subStep: ThirdSubStep.ThirdD })
+              }
+            }}
+            moveNext={() => {
+              this.props.saveThirdAnswer(this.getAnswer());
+              this.setState({ subStep: ThirdSubStep.ThirdF });
+            }}
           />
-          <BackButtonSix onClick={() => {
-            if (
-              this.props.secondAnswer &&
-              this.props.secondAnswer.answer &&
-              this.props.secondAnswer.answer.databaseSchool &&
-              this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
-            ) {
-              this.setState({ subStep: ThirdSubStep.ThirdC4 });
-            } else {
-              this.setState({ subStep: ThirdSubStep.ThirdD })
-            }
-          }} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveThirdAnswer(this.getAnswer());
-            this.setState({ subStep: ThirdSubStep.ThirdF });
-          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.ThirdD) {
