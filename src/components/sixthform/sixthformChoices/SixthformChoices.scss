@@ -90,6 +90,14 @@
     width: 100%;
   }
 
+  .fourth-step-img-r11 {
+    height: calc(4vh + 4.5vh + 1.7vh + 1.7vh + 5vw);
+  }
+
+  .fourth-step-img-r12 {
+    height: calc(4vh + 4.5vh + 1.7vh + 1.7vh + 3.2vw);
+  }
+
   .question-3d-r8-r1 {
     .absolute-back-btn {
       z-index: 3;
@@ -1605,6 +1613,7 @@
     }
   }
 
+  .question-step-3e,
   .question-step-3c2,
   .question-step-3c1 {
     .containers-3c1 {
@@ -2966,4 +2975,12 @@
       }
     }
   }
+}
+
+.step-4a-absolute-box {
+  position: absolute;
+  bottom: calc(18vh + 2vw);
+  left: 4vw;
+  width: 100%;
+  z-index: 2;
 }
