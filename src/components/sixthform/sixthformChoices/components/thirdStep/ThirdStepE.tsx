@@ -45,13 +45,9 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
       correctIndex: 4,
       name: "Uniformed Services"
     }];
-
+    
     subjects = shuffle(subjects);
-
-    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      subjects = this.props.pairAnswers;
-    }
-
+    
     let answers = [{
       name: "A multi-disciplinary field which draws on psychology, sociology and statistics to evaluate criminal behaviour and the policing, justice and penal systems."
     }, {
@@ -63,6 +59,11 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       name: "This course instils qualities of leadership, fitness, teamwork under pressure and a taste for adventure. Students often progress to university or into the armed forces, the police, ambulance or fire service as well as roles in private security and border control."
     }];
+
+    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
+      answers = this.props.pairAnswers;
+    }
+
 
     this.state = {
       step: 0,

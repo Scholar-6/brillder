@@ -46,28 +46,31 @@ class FourthStepA extends Component<FourthAProps, FourthAState> {
   render() {
     return (
       <div className="question">
-        <div className="bold font-32 question-text-4">
-          Based on your answers, we think you are . . .
+        <img src="/images/choicesTool/Step4backgroundR1.png" className="step2background-img" alt="step background" />
+        <div className="step-4a-absolute-box">
+          <div className="bold font-32 question-text-4">
+            Based on your answers, we think you are . . .
+          </div>
+          <div className="boxes-container font-20">
+            <CheckBoxV2
+              currentChoice={FirstChoice.ALevel} choice={this.state.choice}
+              label="Someone who will go to university after completing A Levels"
+              setChoice={() => this.onChoiceChanged(FirstChoice.ALevel)}
+            />
+            <CheckBoxV2
+              currentChoice={FirstChoice.ShowMeAll || FirstChoice.Other}
+              choice={this.state.choice}
+              label="Someone who may go to university after completing A Levels and/or vocational courses"
+              setChoice={() => this.onChoiceChanged(FirstChoice.ShowMeAll)}
+            />
+            <CheckBoxV2
+              currentChoice={FirstChoice.Vocational as any} choice={this.state.choice}
+              label="Someone who will go directly into work or an apprenticeship after completing vocational studies"
+              setChoice={() => this.onChoiceChanged(FirstChoice.Vocational)}
+            />
+          </div>
+          <div className="font-16 white-blue">If you’ve changed your mind, select the category above that best applies to you.</div>
         </div>
-        <div className="boxes-container font-20">
-          <CheckBoxV2
-            currentChoice={FirstChoice.ALevel} choice={this.state.choice}
-            label="Someone who will go to university after completing A Levels"
-            setChoice={() => this.onChoiceChanged(FirstChoice.ALevel)}
-          />
-          <CheckBoxV2
-            currentChoice={FirstChoice.ShowMeAll || FirstChoice.Other}
-            choice={this.state.choice}
-            label="Someone who may go to university after completing A Levels and/or vocational courses"
-            setChoice={() => this.onChoiceChanged(FirstChoice.ShowMeAll)}
-          />
-          <CheckBoxV2
-            currentChoice={FirstChoice.Vocational as any} choice={this.state.choice}
-            label="Someone who will go directly into work or an apprenticeship after completing vocational studies"
-            setChoice={() => this.onChoiceChanged(FirstChoice.Vocational)}
-          />
-        </div>
-        <div className="font-16 white-blue">If you’ve changed your mind, select the category above that best applies to you.</div>
         <BackButtonSix onClick={() => this.props.moveBack()} />
         <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>Continue</button>
         {this.state.popupOpen && <Dialog className="new-school-popup" open={true}>
