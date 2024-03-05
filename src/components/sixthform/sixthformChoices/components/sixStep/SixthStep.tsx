@@ -839,166 +839,11 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           <ThirdTable seventhChoices={this.state.thirdChoices} onChoiceChange={() => {
             this.setState({ thirdChoices: this.state.thirdChoices });
           }} />
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.second })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.fourth });
           }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SixthSubStep.second) {
-      return (
-        <div className="question question-6 question-6-second">
-          <div className="bold font-32 question-text">
-            <div>
-              TV, Video & Social Media
-            </div>
-            <div className="hover-area font-14">
-              <SpriteIcon name="help-circle-r1" className="info-icon" />
-              <div className="hover-content regular">
-                <div className="triangle-popup" />
-                What you choose to watch reflects your interests and, to some<br />
-                extent, your capacity to challenge yourself with content which might<br />
-                seek to inform or educate as well as simply entertain.
-              </div>
-            </div>
-          </div>
-          <div className="font-16">
-            There is all sorts of content out there. How often do you watch the following?
-          </div>
-          <SecondTable
-            seventhChoices={this.state.secondChoices}
-            onChoiceChange={() => {
-              this.setState({ secondChoices: this.state.secondChoices });
-            }}
-          />
-          <BackButtonSix onClick={() => {
-            if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
-              this.setState({ subStep: SixthSubStep.sixB });
-            } else {
-              this.setState({ subStep: SixthSubStep.sixA });
-            }
-          }} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.third });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SixthSubStep.sixB) {
-      return (
-        <div className="question question-6">
-          <div className="bold font-32 question-text">
-            <div>
-              Reading
-            </div>
-            <div className="hover-area font-14">
-              <SpriteIcon name="help-circle-r1" className="info-icon" />
-              <div className="hover-content regular">
-                <div className="triangle-popup" />
-                Reading habits can be an indication of what types of subjects you’ll<br />
-                enjoy studying. Some very able students don’t read much, but a deep-<br />
-                rooted love of reading is a good indicator of academic aptitude.
-              </div>
-            </div>
-          </div>
-          <div className="font-16">
-            What sort of reading do you enjoy most? Select up to four.
-          </div>
-          <Grid container direction="row">
-            <Grid item xs={6}>
-              <div className="boxes-container start font-16">
-                {this.renderReadingChoiceV2("Fiction", ReadingChoiceV2.Fiction)}
-                {this.renderReadingChoiceV2("Science & Technology", ReadingChoiceV2.Science)}
-                {this.renderReadingChoiceV2("Sport & Coaching", ReadingChoiceV2.Sport)}
-                {this.renderReadingChoiceV2("Music & Poetry", ReadingChoiceV2.Music)}
-                {this.renderReadingChoiceV2("Travel, Geography and Other Cultures", ReadingChoiceV2.Travel)}
-                {this.renderReadingChoiceV2("Nature & Environment", ReadingChoiceV2.Nature)}
-              </div>
-            </Grid>
-            <Grid item xs={6}>
-              <div className="boxes-container end font-16">
-                {this.renderReadingChoiceV2("History", ReadingChoiceV2.History)}
-                {this.renderReadingChoiceV2("Biography / Autobiographies", ReadingChoiceV2.Biography)}
-                {this.renderReadingChoiceV2("Art, Design and Architecture", ReadingChoiceV2.Art)}
-                {this.renderReadingChoiceV2("Power, Money, Government & Politics", ReadingChoiceV2.Power)}
-                {this.renderReadingChoiceV2("Religion, Philosophy & Self Improvement", ReadingChoiceV2.Religion)}
-                {this.renderReadingChoiceV2("Other", ReadingChoiceV2.Other)}
-              </div>
-            </Grid>
-          </Grid>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-            Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
-          </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixA })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.second });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SixthSubStep.sixA) {
-      return (
-        <div className="question question-6">
-          <div className="bold font-32 question-text">
-            <div>
-              Reading
-            </div>
-            <div className="hover-area font-14">
-              <SpriteIcon name="help-circle-r1" className="info-icon" />
-              <div className="hover-content regular">
-                <div className="triangle-popup" />
-                Reading habits can be an indication of what types of subjects you’ll<br />
-                enjoy studying. Some very able students don’t read much, but a deep-<br />
-                rooted love of reading is a good indicator of academic aptitude.
-              </div>
-            </div>
-          </div>
-          <div className="font-16">
-            Which of the following statements best describes your attitude to reading?
-          </div>
-          <div className="boxes-container font-16">
-            <CheckBoxV2
-              currentChoice={ReadingChoice.first} choice={this.state.readingChoice}
-              label="I absolutely love reading and devour all sorts of books." setChoice={this.setReadingChoice.bind(this)}
-            />
-            <CheckBoxV2
-              currentChoice={ReadingChoice.second} choice={this.state.readingChoice}
-              label="I do read for pleasure and enjoy books if they interest me." setChoice={this.setReadingChoice.bind(this)}
-            />
-            <CheckBoxV2
-              currentChoice={ReadingChoice.third} choice={this.state.readingChoice}
-              label="I read if I have to - if a book is set at school - and usually don’t mind unless the book is really boring."
-              setChoice={this.setReadingChoice.bind(this)}
-            />
-            <CheckBoxV2
-              currentChoice={ReadingChoice.fourth} choice={this.state.readingChoice}
-              label="I get very little pleasure from reading and I don’t enjoy reading for school."
-              setChoice={this.setReadingChoice.bind(this)}
-            />
-            <CheckBoxV2
-              currentChoice={ReadingChoice.fifth} choice={this.state.readingChoice}
-              label="I hate reading and hardly ever touch a book."
-              setChoice={this.setReadingChoice.bind(this)}
-            />
-          </div>
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
-          <button
-            className={`absolute-contunue-btn font-24 ${this.state.readingChoice === null ? 'disabled' : ''}`}
-            disabled={this.state.readingChoice === null}
-            onClick={() => {
-              this.props.saveAnswer(this.getAnswer());
-              if (this.state.readingChoice) {
-                if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
-                  this.setState({ subStep: SixthSubStep.sixB });
-                } else {
-                  this.setState({ subStep: SixthSubStep.second });
-                }
-              } else {
-                this.setState({ subStep: SixthSubStep.second });
-              }
-            }}>Continue</button>
         </div>
       );
     }
@@ -1016,7 +861,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         <SpriteIcon name="sixthform-sixth-description" className="big-svg-description" />
         <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.setState({ subStep: SixthSubStep.sixA });
+          this.setState({ subStep: SixthSubStep.third });
         }}>Let’s start!</button>
       </div>
     );
