@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Dialog, ListItemText, MenuItem, TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-import CheckBoxV2 from "./CheckBox";
+import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getSixthformSchools } from "services/axios/sixthformChoices";
-import BackButtonSix from "./BackButtonSix";
+import BackButtonSix from "../BackButtonSix";
 import ReadingV1, { ReadingChoice } from "./ReadingV1";
 import ReadingV2, { ReadingChoiceV2 } from "./ReadingV2";
 

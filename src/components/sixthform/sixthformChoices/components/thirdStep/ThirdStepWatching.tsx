@@ -2,6 +2,7 @@ import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import SecondTable from "../sixStep/SecondTable";
+import ProgressBarStep6 from "../progressBar/ProgressBarStep6";
 
 interface ThirdProps {
   watchingChoices: any[];
@@ -11,11 +12,14 @@ interface ThirdProps {
 }
 
 const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
+  const [step, setStep] = React.useState(0);
+  let currentStep = props.watchingChoices[step];
+  console.log(currentStep);
   return (
-    <div className="question question-6 question-6-second">
-      <div className="bold font-32 question-text">
+    <div className="question question-6 question-3-watching">
+      <div className="font-16 question-text">
         <div>
-          TV, Video & Social Media
+          How often do you watch the following?
         </div>
         <div className="hover-area font-14">
           <SpriteIcon name="help-circle-r1" className="info-icon" />
@@ -27,17 +31,29 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
           </div>
         </div>
       </div>
-      <div className="font-16">
-        There is all sorts of content out there. How often do you watch the following?
+      <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
+      <ProgressBarStep6 step={step} total={props.watchingChoices.length} subjectDescription={currentStep.label} />
+      <div className="btns-container-r32 font-20 bold flex-center">
+        <div className="btn btn-red">NEVER OR<br/> HARDLY EVER</div>
+        <div className="btn btn-orange">SOMETIMES</div>
+        <div className="btn btn-green">A LOT</div>
       </div>
-      <SecondTable
-        seventhChoices={props.watchingChoices}
-        onChoiceChange={() => props.onChange(props.watchingChoices)}
-      />
-      <BackButtonSix onClick={props.moveBack} />
+      <BackButtonSix onClick={() => {
+        if (step <= 0) {
+          props.moveBack();
+        } else {
+          setStep(step - 1);
+        }
+      }} />
       <button
         className="absolute-contunue-btn font-24"
-        onClick={props.moveNext}>Continue</button>
+        onClick={() => {
+          if (step >= props.watchingChoices.length - 1) {
+            props.moveNext()
+          } else {
+            setStep(step + 1);
+          }
+        }}>Continue</button>
     </div>
   );
 }

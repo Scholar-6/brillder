@@ -1,8 +1,8 @@
 import React from "react";
 
-import CheckBoxV2 from "./CheckBox";
+import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import BackButtonSix from "./BackButtonSix";
+import BackButtonSix from "../BackButtonSix";
 
 export enum ReadingChoice {
   first = 1,
@@ -22,6 +22,7 @@ interface ReadingV1Props {
 const ReadingV1: React.FC<ReadingV1Props> = (props) => {
   return (
     <div className="question question-6">
+      <img src="/images/choicesTool/SecondStepReadingV1.png" className="third-step-img third-step-img-r4"></img>
       <div className="bold font-32 question-text">
         <div>
           Reading

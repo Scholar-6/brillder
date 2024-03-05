@@ -1,8 +1,8 @@
 import React from "react";
 
-import CheckBoxV2 from "./CheckBox";
+import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import BackButtonSix from "./BackButtonSix";
+import BackButtonSix from "../BackButtonSix";
 import { Dialog, Grid } from "@material-ui/core";
 
 export enum ReadingChoiceV2 {
@@ -56,6 +56,7 @@ const ReadingV2: React.FC<ReadingV1Props> = (props) => {
   }
   return (
     <div className="question question-6">
+      <img src="/images/choicesTool/SecondStepReadingV2.png" className="third-step-img third-step-img-r4"></img>
       <div className="bold font-32 question-text">
         <div>
           Reading

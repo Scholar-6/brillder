@@ -100,6 +100,24 @@
   }
 }
 
+.progress-watching-bar {
+  margin-left: 0;
+  width: 46vw;
+  padding-bottom: 5vh;
+
+  svg {
+    width: 1.6vw;
+    height: 1.6vw;
+    padding-top: 3vh;
+  }
+
+  .subject-description-3c1 {
+    padding-top: 5vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+}
+
 .progress-container-r1-323 {
   margin-top: 2vh;
   margin-left: 0;
@@ -131,5 +149,37 @@
   .subject-description-3c1 {
     padding-left: 4vw;
     padding-right: 4vw;
+  }
+}
+
+.btns-container-r32 {
+  margin-top: 4vh;
+  width: 46vw;
+  > div {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 12vh;
+    color: white;
+    width: 18vw;
+    text-align: center;
+    line-height: 1.4;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+
+    &.btn-red {
+      margin-right: 1vw;
+      background: var(--theme-orange);
+    }
+
+    &.btn-orange {
+      background: #FFB11D;
+    }
+
+    &.btn-green {
+      margin-left: 1vw;
+      background: var(--theme-green);
+    }
   }
 }
