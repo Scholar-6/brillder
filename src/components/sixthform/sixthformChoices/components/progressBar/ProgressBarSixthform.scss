@@ -181,5 +181,9 @@
       margin-left: 1vw;
       background: var(--theme-green);
     }
+
+    &.not-active {
+      opacity: 0.5;
+    }
   }
 }

@@ -1,8 +1,13 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import SecondTable from "../sixStep/SecondTable";
 import ProgressBarStep6 from "../progressBar/ProgressBarStep6";
+
+export enum WatchingChoice {
+  Never = 1,
+  Sometimes,
+  ALot
+}
 
 interface ThirdProps {
   watchingChoices: any[];
@@ -14,7 +19,22 @@ interface ThirdProps {
 const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.watchingChoices[step];
-  console.log(currentStep);
+
+  const renderBtn = (choice: WatchingChoice, realChoice: WatchingChoice, className: string, label: string) => {
+    const isEmpty = choice === null;
+    const isActive = choice === realChoice;
+    return (
+      <div
+        className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
+        onClick={() => {
+          currentStep.choice = realChoice;
+          props.onChange(props.watchingChoices);
+        }}
+        dangerouslySetInnerHTML={{__html: label}}
+      />
+    )
+  }
+
   return (
     <div className="question question-6 question-3-watching">
       <div className="font-16 question-text">
@@ -34,9 +54,9 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
       <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
       <ProgressBarStep6 step={step} total={props.watchingChoices.length} subjectDescription={currentStep.label} />
       <div className="btns-container-r32 font-20 bold flex-center">
-        <div className="btn btn-red">NEVER OR<br/> HARDLY EVER</div>
-        <div className="btn btn-orange">SOMETIMES</div>
-        <div className="btn btn-green">A LOT</div>
+        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NEVER OR<br/> HARDLY EVER")}
+        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SOMETIMES")}
+        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "A LOT")}
       </div>
       <BackButtonSix onClick={() => {
         if (step <= 0) {
