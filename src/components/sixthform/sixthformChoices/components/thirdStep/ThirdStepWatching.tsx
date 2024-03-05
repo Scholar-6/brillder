@@ -32,9 +32,7 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
       </div>
       <SecondTable
         seventhChoices={props.watchingChoices}
-        onChoiceChange={() => {
-          props.onChange(props.watchingChoices);
-        }}
+        onChoiceChange={() => props.onChange(props.watchingChoices)}
       />
       <BackButtonSix onClick={props.moveBack} />
       <button

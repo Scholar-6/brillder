@@ -83,8 +83,11 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
       name: "Having done Geography and Combined Science at GCSE, I love the depth and breadth of this course, from physical, chemical and biological processes to political, economic and cultural context. Save the planet!"
     }];
 
-    if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      answers = this.props.pairAnswers;
+    if (this.props.pairAnswers && this.props.pairAnswers.length === 8) {
+      let answer = this.props.pairAnswers[0];
+      if (answer.name) {
+        answers = this.props.pairAnswers;
+      }
     }
 
     this.state = {

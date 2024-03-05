@@ -1,35 +1,36 @@
+
 import React, { Component } from "react";
-import { ReactSortable } from "react-sortablejs";
 
 import BackButtonSix from "./BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { shuffle } from "../services/shuffle";
-
-enum SubStep {
-  subStepA,
-  subStepB
-}
+import ProgressBarStep3C1 from "./progressBar/ProgressBarStep3C1";
+import { Grid } from "@material-ui/core";
 
 interface ThirdProps {
-  abAnswer: any;
+  careers: any;
   onChange(answer: any): void;
   moveBack(answer: any): void;
   moveNext(answer: any): void;
 }
 
+enum AnswerStatus {
+  None,
+  Correct,
+  Incorrect,
+}
+
 interface ThirdQuestionState {
-  subStep: SubStep;
-  subjects: any[];
+  step: number;
   answers: any[];
+  careers: any[];
 }
 
 class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-    let subStep = SubStep.subStepA;
-
-    let subjects = [{
+    let answers = [{
       correctIndex: 0,
       name: "Scientific Disciplines",
       subName: "(e.g. medicine or engineering)"
@@ -59,21 +60,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(e.g. nursing, social work, uniformed services)"
     }];
 
-    // don`t shuffle for faster showing to clients
-    //subjects = shuffle(subjects);
-    //console.log(this.props.abAnswer);
-
-    if (this.props.abAnswer) {
-      const abAnswer = this.props.abAnswer;
-      if (abAnswer.abSubjects) {
-        subjects = abAnswer.abSubjects;
-      }
-      if (abAnswer.subStep) {
-        subStep = abAnswer.subStep;
-      }
-    }
-
-    let answers = [{
+    let careers = [{
       name: "almost invariably require Maths & Science A levels, usually to a high standard"
     }, {
       name: "require vocational qualifications and, often, apprenticeships"
@@ -89,169 +76,82 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       name: "require vocational training but recruit from a wide range of post-16 and degree courses"
     }];
 
-    this.state = {
-      subStep,
-      subjects,
-      answers
-    }
-  }
+    careers = shuffle(careers);
 
-  setSubjects(subjects: any[]) {
-    this.setState({ subjects });
+    if (this.props.careers && this.props.careers.length > 0) {
+      careers = this.props.careers;
+    }
+
+    this.state = {
+      step: 0,
+      answers,
+      careers
+    }
   }
 
   getAnswer() {
     return {
-      subStep: this.state.subStep,
-      abSubjects: this.state.subjects
+      abSubjects: this.state.careers
     }
   }
 
-  renderNextAButton() {
-    let disabled = false;
-    let className = 'absolute-contunue-btn font-24';
-    if (this.state.subjects.length > 0) {
-      const res = this.state.subjects.find((s, i) => {
-        return s.correctIndex !== i
-      });
-      if (res) {
-        disabled = true;
-        className += ' disabled';
+  renderSubjectBox(subject: any, currentAnswer: any) {
+    let answerStatus = AnswerStatus.None;
+
+    if (currentAnswer.subject) {
+      if (currentAnswer.subject.correctIndex === this.state.step && currentAnswer.subject.name === subject.name) {
+        answerStatus = AnswerStatus.Correct;
+      } else if (currentAnswer.subject.name === subject.name) {
+        answerStatus = AnswerStatus.Incorrect;
       }
     }
 
     return (
-      <button className={className} onClick={() => {
-        this.setState({ subStep: SubStep.subStepB });
-      }}>Done matching!</button>
+      <Grid item xs={6}>
+        <div className={`container-3c1 font-16 ${answerStatus === AnswerStatus.Correct ? 'correct' : answerStatus === AnswerStatus.Incorrect ? 'incorrect' : ''}`} onClick={() => {
+          const { careers } = this.state;
+          currentAnswer.subject = subject;
+          this.setState({ careers });
+          this.props.onChange(careers);
+        }}>
+          <SpriteIcon name={subject.icon} />
+          <div className="text-center">
+            <div className="font-16">{subject.name}</div>
+            <div className="font-13">{subject.subName}</div>
+          </div>
+          {answerStatus === AnswerStatus.Incorrect && <SpriteIcon className="absolute-svg-3c1" name="bad-answer-3c1" />}
+          {answerStatus === AnswerStatus.Correct && <SpriteIcon className="absolute-svg-3c1" name="good-answer-3c1" />}
+        </div>
+        <div className="font-16 help-text-3c1 text-orange">{answerStatus === AnswerStatus.Incorrect ? 'Incorrect, please try again' : ''}</div>
+        <div className="font-16 help-text-3c1 text-theme-green">{answerStatus === AnswerStatus.Correct ? 'That’s correct!' : ''}</div>
+      </Grid>
     );
   }
 
   render() {
-    if (this.state.subStep === SubStep.subStepB) {
-      return (
-        <div className="drag-container-r22 drag-container-5a drag-container-5b">
-          <div className="title-r22 bold font-16">
-            Now check the boxes of up to TWO career categories if they apply to you.
-          </div>
-          <div className="container-r22">
-            <div className="left-part-r22">
-              {this.state.subjects.map((subject: any, i: number) => {
-                return (
-                  <div className={"drag-boxv2-r22 font-13" + (subject.active ? ' active' : '')} key={i} onClick={() => {
-                    let activeCount = this.state.subjects.filter(s => s.active === true).length;
-                    console.log(activeCount);
-                    if (activeCount >= 2 && !subject.active) {
-                      // skip
-                    } else {
-                      subject.active = !subject.active;
-                      this.setState({ subjects: this.state.subjects });
-                    }
-                  }}>
-                    <SpriteIcon name={subject.active === true ? 'radio-btn-active' : 'radio-btn-blue'} className="absolute-correct-check" />
-                    <div className="bold">{subject.name}</div>
-                    <div>{subject.subName}</div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="right-part-r22">
-              {this.state.answers.map((answer: any, i: number) => {
-                let isActive = false;
-                this.state.subjects.forEach((subject: any) => {
-                  if (subject.active && subject.correctIndex === i) {
-                    isActive = true;
-                  }
-                });
-                return (
-                  <div className={"answer-item-r22 font-12 " + (isActive ? 'active' : "")} key={i + 1} onClick={() => {
-                    let subject = this.state.subjects[i];
-                    let subjects = this.state.subjects.filter(s => s.active === true);
-
-                    if (subjects.length < 2 || subject.active === true) {
-                      subject.active = !subject.active;
-                      this.setState({ subjects: this.state.subjects });
-                    }
-                  }}>
-                    {answer.name}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.subStepA })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.moveNext(this.getAnswer());
-          }}>Continue</button>
-        </div>
-      );
-    }
-
-    let isCorrect = true;
-    if (this.state.subjects.length > 0) {
-      const res = this.state.subjects.find((s, i) => {
-        return s.correctIndex !== i
-      });
-      if (res) {
-        isCorrect = false;
-      }
-    }
-
+    console.log(this.state.step);
+    const currentAnswer = this.state.careers[this.state.step];
     return (
-      <div className="drag-container-r22 drag-container-5a">
-        <div className="title-r22 bold font-16">
-          Drag to match the categories to their sixth form expectations
-        </div>
-        <div className={"container-r22 " + (isCorrect ? " correct" : "")}>
-          <div className="left-part-r22">
-            {isCorrect ? this.state.subjects.map((subject: any, i: number) => {
-              return (
-                <div className="drag-boxv2-r22 correct font-13" key={i}>
-                  <SpriteIcon name="circle-check-six" className="absolute-correct-check" />
-                  <div className="bold">{subject.name}</div>
-                  <div>{subject.subName}</div>
-                </div>
-              );
-            }) :
-              <ReactSortable
-                list={this.state.subjects}
-                animation={150}
-                group={{ name: "cloning-group-name", pull: "clone" }}
-                setList={newSubjects => {
-                  this.props.onChange(this.getAnswer());
-                  this.setState({ subjects: newSubjects });
-                }}
-              >
-                {this.state.subjects.map((subject: any, i: number) => {
-                  if (subject.correctIndex === i) {
-                    return (
-                      <div className="drag-boxv2-r22 correct font-13" key={i}>
-                        <div className="bold">{subject.name}</div>
-                        <div>{subject.subName}</div>
-                      </div>
-                    );
-                  }
-                  return (
-                    <div className="drag-boxv2-r22 font-13" key={i}>
-                      <div className="bold">{subject.name}</div>
-                      <div>{subject.subName}</div>
-                    </div>
-                  );
-                })}
-              </ReactSortable>}
-          </div>
-          <div className="right-part-r22">
-            {this.state.answers.map((answer: any, i: number) => {
-              return (
-                <div className="answer-item-r22 font-12" key={i + 1}>
-                  {answer.name}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
-        {this.renderNextAButton()}
+      <div className="question-step-5a">
+        <ProgressBarStep3C1 step={this.state.step} total={this.state.careers.length} subjectDescription={currentAnswer.name} />
+        <Grid container direction="row" className="containers-3c1">
+          {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
+        </Grid>
+        <BackButtonSix onClick={() => {
+          if (this.state.step <= 0) {
+            this.props.moveBack(this.getAnswer());
+          } else {
+            this.setState({ step: this.state.step - 1 });
+          }
+        }} />
+        <button className="absolute-contunue-btn font-24" onClick={() => {
+          console.log('test', this.state.step, this.state.careers.length - 1);
+          if (this.state.step >= this.state.careers.length - 1) {
+            this.props.moveNext(this.getAnswer());
+          } else {
+            this.setState({ step: this.state.step + 1 });
+          }
+        }}>Continue</button>
       </div>
     );
   }
