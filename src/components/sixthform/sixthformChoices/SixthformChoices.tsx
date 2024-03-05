@@ -287,6 +287,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.subStep = answer.subStep;
+        answerR1.answer.aAnswer = answer.aAnswer;
         answerR1.answer.abAnswer = answer.abAnswer;
         answerR1.answer.careers = answer.careers;
         this.setState({

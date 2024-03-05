@@ -79,6 +79,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
     careers = shuffle(careers);
 
     if (this.props.careers && this.props.careers.length > 0) {
+      console.log('load from cash');
       careers = this.props.careers;
     }
 
@@ -90,9 +91,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   getAnswer() {
-    return {
-      abSubjects: this.state.careers
-    }
+    return this.state.careers
   }
 
   renderSubjectBox(subject: any, currentAnswer: any) {
@@ -129,29 +128,42 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    console.log(this.state.step);
     const currentAnswer = this.state.careers[this.state.step];
     return (
-      <div className="question-step-5a">
-        <ProgressBarStep3C1 step={this.state.step} total={this.state.careers.length} subjectDescription={currentAnswer.name} />
-        <Grid container direction="row" className="containers-3c1">
-          {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
-        </Grid>
-        <BackButtonSix onClick={() => {
-          if (this.state.step <= 0) {
-            this.props.moveBack(this.getAnswer());
-          } else {
-            this.setState({ step: this.state.step - 1 });
-          }
-        }} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
-          console.log('test', this.state.step, this.state.careers.length - 1);
-          if (this.state.step >= this.state.careers.length - 1) {
-            this.props.moveNext(this.getAnswer());
-          } else {
-            this.setState({ step: this.state.step + 1 });
-          }
-        }}>Continue</button>
+      <div className="question question-step-5a">
+        <img src="/images/choicesTool/FifthStepR13.png" className="third-step-img fifth-step-img-r13"></img>
+        <div className="bold font-32 question-text-4">
+          Categories of Career
+        </div>
+        <div className="font-16">
+          For many careers, you can study almost any combination of subjects in sixth form.
+        </div>
+        <div className="font-16">
+          However, a number of professions have specific expectations for post-16 education. Some really do require careful choices in the sixth form.
+        </div>
+        <div className="font-16">
+          Match the professional categories with sixth form expectations on the right.
+        </div>
+        <div className="question-step-5a">
+          <ProgressBarStep3C1 step={this.state.step} total={this.state.careers.length} subjectDescription={currentAnswer.name} />
+          <Grid container direction="row" className="containers-3c1">
+            {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
+          </Grid>
+          <BackButtonSix onClick={() => {
+            if (this.state.step <= 0) {
+              this.props.moveBack(this.getAnswer());
+            } else {
+              this.setState({ step: this.state.step - 1 });
+            }
+          }} />
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            if (this.state.step >= this.state.careers.length - 1) {
+              this.props.moveNext(this.getAnswer());
+            } else {
+              this.setState({ step: this.state.step + 1 });
+            }
+          }}>Continue</button>
+        </div>
       </div>
     );
   }
