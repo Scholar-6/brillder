@@ -10,7 +10,7 @@ import {
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 import FirstStep from "./components/FirstStep";
-import SecondStep from "./components/SecondStep";
+import SecondStep from "./components/secondStep/SecondStep";
 import ThirdStep from "./components/thirdStep/ThirdStep";
 import FourthStep from "./components/FourthStep";
 import FifthStep from "./components/FifthStep";

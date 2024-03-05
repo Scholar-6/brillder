@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Grid } from "@material-ui/core";
-import { Dialog } from "@material-ui/core";
 
 import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -10,8 +8,9 @@ import SixthStepSixthTable from "./SixthTable";
 import FifthBTable from "./FifthBTable";
 import FourthTable from "./FourthTable";
 import ThirdTable from "./ThirdTable";
-import SecondTable from "./SecondTable";
 import map from "components/map";
+import SixthStepStart from "./SixthStepStart";
+import SixthStepWelcome from "./SixthStepWelcome";
 
 interface FirstQuestionProps {
   answer: any;
@@ -22,10 +21,8 @@ interface FirstQuestionProps {
 }
 
 export enum SixthSubStep {
+  Welcome,
   Start,
-  sixA,
-  sixB,
-  second,
   third,
   fourth,
   fifthA,
@@ -33,29 +30,6 @@ export enum SixthSubStep {
   sixth,
   seventh,
   final
-}
-
-export enum ReadingChoiceV2 {
-  Fiction = 1,
-  Science,
-  Sport,
-  Music,
-  Travel,
-  Nature,
-  History,
-  Biography,
-  Art,
-  Power,
-  Religion,
-  Other
-}
-
-export enum ReadingChoice {
-  first = 1,
-  second,
-  third,
-  fourth,
-  fifth,
 }
 
 export enum WritingChoice {
@@ -152,9 +126,7 @@ export enum FirstChoice {
 }
 
 interface SixStepState {
-  readingChoice: ReadingChoice | null;
   writingChoice: FirstChoice | null;
-  readingChoicesV2: ReadingChoiceV2[];
   secondChoices: any[];
   thirdChoices: any[];
   fourthChoices: any[];
@@ -169,12 +141,10 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
   constructor(props: FirstQuestionProps) {
     super(props);
 
-    let readingChoice = null;
     let writingChoice = null;
 
     if (props.answer && props.answer.answer) {
       const { answer } = props.answer;
-      readingChoice = answer.readingChoice;
       writingChoice = answer.writingChoice;
     }
 
@@ -566,22 +536,16 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     ];
 
     this.state = {
-      readingChoice,
       writingChoice,
-      readingChoicesV2: [],
       secondChoices,
       thirdChoices,
       fourthChoices,
       fifthBChoices,
       seventhChoices,
       sixthChoices,
-      subStep: SixthSubStep.Start,
+      subStep: SixthSubStep.Welcome,
       overflowOpen: false
     }
-  }
-
-  setReadingChoice(readingChoice: ReadingChoice) {
-    this.setState({ readingChoice });
   }
 
   setWritingChoice(writingChoice: FirstChoice) {
@@ -592,9 +556,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
   getAnswer() {
     return {
       subStep: this.state.subStep,
-      readingChoice: this.state.readingChoice,
       writingChoice: this.state.writingChoice,
-      readingChoicesV2: this.state.readingChoicesV2,
       secondChoices: this.state.secondChoices,
       thirdChoices: this.state.thirdChoices,
       fourthChoices: this.state.fourthChoices,
@@ -602,31 +564,6 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       seventhChoices: this.state.seventhChoices,
       sixthChoices: this.state.sixthChoices,
     }
-  }
-
-  renderReadingChoiceV2(label: string, currentChoice: ReadingChoiceV2) {
-    const choiceR1 = this.state.readingChoicesV2.find(c => c === currentChoice);
-    return (
-      <CheckBoxV2
-        currentChoice={currentChoice}
-        choice={choiceR1 as any}
-        label={label}
-        setChoice={choice => {
-          let choices = this.state.readingChoicesV2;
-          let index = choices.findIndex(c => c === choice);
-          if (index >= 0) {
-            choices.splice(index, 1);
-          } else {
-            if (choices.length <= 3) {
-              choices.push(choice);
-            } else {
-              this.setState({ overflowOpen: true });
-            }
-          }
-          this.setState({ readingChoicesV2: this.state.readingChoicesV2 });
-        }}
-      />
-    );
   }
 
   render() {
@@ -846,25 +783,19 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           }}>Continue</button>
         </div>
       );
+    } else if (this.state.subStep === SixthSubStep.Start) {
+      return (
+        <SixthStepStart
+          moveBack={() => this.setState({ subStep: SixthSubStep.Welcome })}
+          moveNext={() => this.setState({ subStep: SixthSubStep.third })}
+        />
+      );
     }
-    return (
-      <div className="question question-6">
-        <div className="bold font-32 question-text">
-          YOU
-        </div>
-        <div className="font-16">
-          This is the most fun and, in many ways, the most important part of the process.
-        </div>
-        <div className="font-16">
-          It is important to choose courses that you will enjoy. Your answers in this final stage will help us evaluate your interests.
-        </div>
-        <SpriteIcon name="sixthform-sixth-description" className="big-svg-description" />
-        <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.setState({ subStep: SixthSubStep.third });
-        }}>Let’s start!</button>
-      </div>
-    );
+
+    return <SixthStepWelcome
+      moveBack={() => this.props.moveBack(this.getAnswer())}
+      moveNext={() => this.setState({ subStep: SixthSubStep.Start })}
+    />
   }
 }
 
