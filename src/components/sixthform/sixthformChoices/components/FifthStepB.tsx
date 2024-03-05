@@ -13,11 +13,14 @@ interface ThirdProps {
 interface ThirdQuestionState {
   subjects: any[];
   answers: any[];
+  none: boolean;
 }
 
 class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
+
+    let none = false;
 
     let subjects = [{
       correctIndex: 0,
@@ -49,8 +52,13 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(e.g. nursing, social work, uniformed services)"
     }];
 
-    if (this.props.abAnswer && this.props.abAnswer.length > 0) {
-      subjects = this.props.abAnswer;
+    if (this.props.abAnswer && this.props.abAnswer) {
+      if (this.props.abAnswer.subjects && this.props.abAnswer.subjects.length > 0) {
+        subjects = this.props.abAnswer.subjects;
+      }
+      if (this.props.abAnswer.none) {
+        none = this.props.abAnswer.none;
+      }
     }
 
     let answers = [{
@@ -71,18 +79,22 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
 
     this.state = {
       subjects,
+      none,
       answers
     }
   }
 
   getAnswer() {
-    return this.state.subjects
+    return {
+      subjects: this.state.subjects,
+      none: this.state.none
+    }
   }
 
   render() {
     return (
       <div className="question question-step-5b">
-        <img src="/images/choicesTool/FifthStepR14.png" className="third-step-img fifth-step-img-r13"></img>
+        <img src="/images/choicesTool/FifthStepR14.png" className="third-step-img fifth-step-img-r14"></img>
         <div className="bold font-32 question-text-4">
           Possible Careers for You
         </div>
@@ -90,20 +102,17 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
           Now select up to two career categories that currently interest you.
         </div>
         <div className="drag-container-r22 drag-container-5a drag-container-5b">
-          <div className="title-r22 bold font-16">
-            Now check the boxes of up to TWO career categories if they apply to you.
-          </div>
           <div className="container-r22">
             <div className="left-part-r22">
               {this.state.subjects.map((subject: any, i: number) => {
                 return (
-                  <div className={"drag-boxv2-r22 font-13" + (subject.active ? ' active' : '')} key={i} onClick={() => {
+                  <div className={"drag-boxv2-r22 font-12" + (subject.active ? ' active' : '')} key={i} onClick={() => {
                     let activeCount = this.state.subjects.filter(s => s.active === true).length;
                     if (activeCount >= 2 && !subject.active) {
                       // skip
                     } else {
                       subject.active = !subject.active;
-                      this.setState({ subjects: this.state.subjects });
+                      this.setState({ subjects: this.state.subjects, none: false });
                     }
                   }}>
                     <SpriteIcon name={subject.active === true ? 'radio-btn-active' : 'radio-btn-blue'} className="absolute-correct-check" />
@@ -135,6 +144,15 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
                   </div>
                 );
               })}
+            </div>
+          </div>
+          <div>
+            <div className={"last-none-box font-12" + (this.state.none ? ' active' : '')} onClick={() => {
+              this.state.subjects.map(s => s.active = false);
+              this.setState({ none: true, subjects: this.state.subjects });
+            }}>
+              <SpriteIcon name={this.state.none === true ? 'radio-btn-active' : 'radio-btn-blue'} className="absolute-correct-check" />
+              <div className="bold-italic">My career interested don’t fit any of these categories.</div>
             </div>
           </div>
           <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />

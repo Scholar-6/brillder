@@ -98,8 +98,11 @@
     height: calc(4vh + 4.5vh + 1.7vh + 1.7vh + 3.2vw);
   }
 
-  .fifth-step-img-r13 {
-    height: calc(5vh + 4.5vh + 2.2vw);
+  .fifth-step-img-r14 {
+    height: calc(5vh + 4.5vh + 1.3vh + 2.2vw);
+  }
+  .fifth-step-img-r15 {
+    height: calc(5vh + 4.5vh + 2vh + 2.7vw);
   }
 
   .question-3d-r8-r1 {
@@ -1887,6 +1890,7 @@
 
     .question-3d-r6 {
       width: 30vw;
+
       .image-container-r6 {
         position: absolute;
         width: 30vw;
@@ -2463,27 +2467,61 @@
     }
   }
 
-  .question .drag-container-5b .container-r22 {
-    .left-part-r22 {
-      padding-left: 1vw;
+  .question .drag-container-5b {
+    height: unset !important;
+    overflow-y: auto;
+    max-height: calc(100vh - 5.834vw - 4vh - 4.5vh - 9vh - 2vh - 4vh - 6vw) !important;
 
-      .drag-boxv2-r22.active {
-        color: var(--white);
-        background: #4C608A;
-      }
-    }
+    .container-r22 {
+      height: unset !important;
+      max-height: unset !important;
 
-    .right-part-r22 {
-      margin-left: 1.15vw;
-      width: 43vw;
+      .left-part-r22 {
+        margin-left: 1.1vw;
+        padding-left: 1vw;
 
-      .answer-item-r22 {
-        cursor: pointer;
-
-        &.active {
+        .drag-boxv2-r22.active {
           color: var(--white);
           background: #4C608A;
         }
+      }
+
+      .right-part-r22 {
+        margin-left: 1.15vw;
+        width: 43vw;
+
+        .answer-item-r22 {
+          cursor: pointer;
+
+          &.active {
+            color: var(--white);
+            background: #4C608A;
+          }
+        }
+      }
+    }
+
+    .last-none-box {
+      margin-bottom: 0.5vw;
+      margin-left: 2.1vw;
+      padding-left: 1vw;
+      cursor: pointer;
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 2.3vw !important;
+      position: relative;
+      width: 62.6vw;
+      display: flex;
+      align-items: center;
+      border-radius: 0.5vw;
+      background: #F6F7F9;
+
+      .absolute-correct-check {
+        position: absolute;
+        top: 0.7vw;
+        left: -1.5vw;
+        width: 1vw;
+        height: 1vw;
       }
     }
   }

@@ -79,7 +79,6 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
     careers = shuffle(careers);
 
     if (this.props.careers && this.props.careers.length > 0) {
-      console.log('load from cash');
       careers = this.props.careers;
     }
 

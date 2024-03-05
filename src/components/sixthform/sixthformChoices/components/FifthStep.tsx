@@ -158,11 +158,13 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
     if (this.state.subStep === SubStep.sub5c) {
       return (
         <div className="question">
+          <img src="/images/choicesTool/FifthStepR15.png" className="third-step-img fifth-step-img-r15"></img>
           <div className="bold font-32 question-text-4">
             Careers with A-level Requirements
           </div>
           <div className="font-16">
-            The following careers favour specific A-levels, usually because relevant degree courses require them. Most of you will probably select “None are for me”, but be aware of what you might be ruling out.
+            The following careers favour specific A-levels, usually because relevant degree courses require them.<br/>
+            Most of you will probably select “None are for me”, but be aware of what you might be ruling out.
           </div>
           <div className="drag-container-5c">
             <div className="subjects-table subjects-table-5c">
