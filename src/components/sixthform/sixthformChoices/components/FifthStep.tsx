@@ -4,8 +4,10 @@ import { Dialog } from "@material-ui/core";
 import BackButtonSix from "./BackButtonSix";
 import FifthStepAB from "./FifthStepAB";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import FifthStepWelcome from "./FifthStepWelcome";
 
 enum SubStep {
+  welcome,
   sub5ab,
   sub5c,
 }
@@ -28,25 +30,18 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
   constructor(props: FifthProps) {
     super(props);
 
-    let subStep = SubStep.sub5ab;
+    let subStep = SubStep.welcome;
 
     let abAnswer = null;
 
     let careers = [{
       jobName: 'Accountant, Auditor',
       advisory: ['Maths'],
-      handy: [
-        'Economics',
-        'Accounting',
-        'Statistics'
-      ]
+      handy: ['Economics', 'Accounting', 'Statistics']
     }, {
       jobName: 'Actuary',
       essential: ['Maths'],
-      handy: [
-        'Statistics',
-        'Further Maths',
-      ]
+      handy: ['Statistics', 'Further Maths']
     }, {
       jobName: 'Architect',
       advisory: ['Art & Design', 'Maths'],
@@ -60,7 +55,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       jobName: 'Biotechnologist',
       essential: ['Biology'],
       advisory: ['Maths', 'Chemistry'],
-      handy: ['Further Maths']
+      handy: ['Further Maths', 'Physics']
     }, {
       jobName: 'Chemical Engineer',
       essential: ['Maths', 'Chemistry'],
@@ -83,9 +78,9 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       handy: ['Statistics']
     }, {
       jobName: 'Materials Scientist',
-      essential: ['Statistics', 'Physics', 'Chemistry'],
-      advisory: ['Further Maths'],
-      handy: []
+      essential: ['Physics', 'Maths'],
+      advisory: ['Chemistry'],
+      handy: ['Further Maths', 'Design & Technology']
     }, {
       jobName: 'Medicine',
       essential: ['Biology', 'Chemistry'],
@@ -133,8 +128,6 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
         careers = answer.careers;
       }
     }
-
-
 
     this.state = {
       subStep,
@@ -227,7 +220,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
                       this.state.careers.find(c => c.jobName === 'None are for me').active = false;
                       let activeCount = this.state.careers.filter(c => c.active).length;
                       if (activeCount >= 3 && !career.active) {
-                        this.setState({overflowOpen: true});
+                        this.setState({ overflowOpen: true });
                       } else {
                         career.active = !career.active;
                       }
@@ -260,9 +253,9 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
               </div>
             </div>
           </div>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({overflowOpen: false})}>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
             Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({overflowOpen: false})}>Close</div>
+            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5ab })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
@@ -270,39 +263,47 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
           }}>Continue</button>
         </div >
       );
+    } else if (this.state.subStep === SubStep.sub5ab) {
+      return (
+        <div className="question question-step-5a">
+          <img src="/images/choicesTool/FifthStepR13.png" className="third-step-img fifth-step-img-r13"></img>
+          <div className="bold font-32 question-text-4">
+            Categories of Career
+          </div>
+          <div className="font-16">
+            For many careers, you can study almost any combination of subjects in sixth form.
+          </div>
+          <div className="font-16">
+            However, a number of professions have specific expectations for post-16 education. Some really do require careful choices in the sixth form.
+          </div>
+          <div className="font-16">
+            Match the professional categories with sixth form expectations on the right.
+          </div>
+          <FifthStepAB
+            abAnswer={this.state.abAnswer}
+            onChange={answer => {
+              this.setState({ abAnswer: answer });
+            }}
+            moveNext={answer => {
+              this.props.saveAnswer(answer);
+              this.setState({ subStep: SubStep.sub5c, abAnswer: answer });
+            }}
+            moveBack={abAnswer => {
+              let answer = this.getAnswer();
+              answer.abAnswer = abAnswer;
+              this.setState({ subStep: SubStep.welcome, abAnswer: answer });
+            }}
+          />
+        </div>
+      );
     }
 
     return (
-      <div className="question question-step-5a">
-        <div className="bold font-32 question-text-4">
-          Categories of Career
-        </div>
-        <div className="font-16">
-          For many careers, you can study almost any combination of subjects in sixth form.
-        </div>
-        <div className="font-16">
-          However, a number of professions have specific expectations for post-16 education. Some really do require careful choices in the sixth form.
-        </div>
-        <div className="font-16">
-          Match the professional categories with sixth form expectations on the right.
-        </div>
-        <FifthStepAB
-          abAnswer={this.state.abAnswer}
-          onChange={answer => {
-            this.setState({ abAnswer: answer });
-          }}
-          moveNext={answer => {
-            this.props.saveAnswer(answer);
-            this.setState({ subStep: SubStep.sub5c, abAnswer: answer });
-          }}
-          moveBack={abAnswer => {
-            let answer = this.getAnswer();
-            answer.abAnswer = abAnswer;
-            this.props.moveBack(answer);
-          }}
-        />
-      </div>
-    );
+      <FifthStepWelcome 
+        moveNext={() => this.setState({ subStep: SubStep.sub5ab })}
+        moveBack={() => this.props.moveBack(this.getAnswer())}
+      />
+    )
   }
 }
 
