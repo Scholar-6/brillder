@@ -77,10 +77,12 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       otherChoice = answer.otherChoice;
       currentSchool = answer.currentSchool;
       sixthformChoice = answer.sixthformChoice;
-      schoolName = answer.schoolName,
-        subStep = answer.subStep;
+      schoolName = answer.schoolName;
+      subStep = answer.subStep;
       readingChoice = answer.readingChoice;
-      readingChoicesV2 = answer.readingChoicesV2;
+      if (answer.readingChoicesV2) {
+        readingChoicesV2 = answer.readingChoicesV2;
+      }
     }
 
     this.state = {

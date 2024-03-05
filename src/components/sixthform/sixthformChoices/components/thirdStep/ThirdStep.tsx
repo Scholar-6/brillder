@@ -168,6 +168,8 @@ class ThirdStep extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
+    console.log(watchingChoices);
+
     this.state = {
       subStep,
       typedSubject: '',

@@ -280,7 +280,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
             Match the professional categories with sixth form expectations on the right.
           </div>
           <FifthStepAB
-            abAnswer={this.state.abAnswer}
+            careers={this.state.abAnswer}
             onChange={answer => {
               this.setState({ abAnswer: answer });
             }}

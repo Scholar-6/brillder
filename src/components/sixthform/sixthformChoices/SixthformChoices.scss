@@ -1617,6 +1617,7 @@
     }
   }
 
+  .question-step-5a,
   .question-step-3e,
   .question-step-3c2,
   .question-step-3c1 {
@@ -1678,6 +1679,11 @@
   }
 
   .question-step-3c2 .containers-3c1 .container-3c1 {
+    height: 6.7vh;
+    margin-top: 0.3vh;
+  }
+
+  .question-step-5a .containers-3c1 .container-3c1 {
     height: 6.7vh;
     margin-top: 0.3vh;
   }
@@ -2397,13 +2403,8 @@
     }
   }
 
-  .question .drag-container-5a {
+  .question .answers-container-5a {
     height: auto;
-
-    .container-r22 {
-      height: auto;
-      max-height: calc(100vh - 5.834vw - 22vh - 12.5vw);
-    }
   }
 
   .question .drag-container-5a .container-r22 {
