@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Dialog } from "@material-ui/core";
 
 import BackButtonSix from "./BackButtonSix";
-import FifthStepAB from "./FifthStepAB";
+import FifthStepA from "./FifthStepA";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FifthStepWelcome from "./FifthStepWelcome";
+import FifthStepB from "./FifthStepB";
 
 enum SubStep {
   welcome,
-  sub5ab,
+  sub5a,
+  sub5b,
   sub5c,
 }
 
@@ -21,6 +23,7 @@ interface FifthProps {
 
 interface FifthStepState {
   subStep: SubStep;
+  aAnswer: any;
   abAnswer: any;
   careers: any[];
   overflowOpen: boolean;
@@ -32,6 +35,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
 
     let subStep = SubStep.welcome;
 
+    let aAnswer = null;
     let abAnswer = null;
 
     let careers = [{
@@ -118,6 +122,9 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
 
     if (props.answer) {
       const { answer } = props.answer;
+      if (answer.aAnswer) {
+        aAnswer = answer.aAnswer;
+      }
       if (answer.abAnswer) {
         abAnswer = answer.abAnswer;
       }
@@ -131,6 +138,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
 
     this.state = {
       subStep,
+      aAnswer,
       abAnswer,
       careers,
       overflowOpen: false
@@ -138,13 +146,9 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
   }
 
   getAnswer() {
-    console.log('answer fifth', {
-      subStep: this.state.subStep,
-      abAnswer: this.state.abAnswer,
-      careers: this.state.careers
-    });
     return {
       subStep: this.state.subStep,
+      aAnswer: this.state.aAnswer,
       abAnswer: this.state.abAnswer,
       careers: this.state.careers
     }
@@ -257,50 +261,51 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
             Oops! You’ve tried to pick too many.
             <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5ab })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.moveNext(this.getAnswer());
           }}>Continue</button>
         </div >
       );
-    } else if (this.state.subStep === SubStep.sub5ab) {
+    } else if (this.state.subStep === SubStep.sub5b) {
       return (
-        <div className="question question-step-5a">
-          <img src="/images/choicesTool/FifthStepR13.png" className="third-step-img fifth-step-img-r13"></img>
-          <div className="bold font-32 question-text-4">
-            Categories of Career
-          </div>
-          <div className="font-16">
-            For many careers, you can study almost any combination of subjects in sixth form.
-          </div>
-          <div className="font-16">
-            However, a number of professions have specific expectations for post-16 education. Some really do require careful choices in the sixth form.
-          </div>
-          <div className="font-16">
-            Match the professional categories with sixth form expectations on the right.
-          </div>
-          <FifthStepAB
-            careers={this.state.abAnswer}
-            onChange={answer => {
-              this.setState({ abAnswer: answer });
-            }}
-            moveNext={answer => {
-              this.props.saveAnswer(answer);
-              this.setState({ subStep: SubStep.sub5c, abAnswer: answer });
-            }}
-            moveBack={abAnswer => {
-              let answer = this.getAnswer();
-              answer.abAnswer = abAnswer;
-              this.setState({ subStep: SubStep.welcome, abAnswer: answer });
-            }}
-          />
-        </div>
+        <FifthStepB
+          abAnswer={this.state.abAnswer}
+          onChange={answer => this.setState({ abAnswer: answer })}
+          moveNext={answer => {
+            this.props.saveAnswer(answer);
+            this.setState({ subStep: SubStep.sub5c, abAnswer: answer });
+          }}
+          moveBack={abAnswer => {
+            let answer = this.getAnswer();
+            answer.abAnswer = abAnswer;
+            this.setState({ subStep: SubStep.sub5a, abAnswer: answer });
+          }}
+        />
+      );
+    } else if (this.state.subStep === SubStep.sub5a) {
+      return (
+        <FifthStepA
+          careers={this.state.aAnswer}
+          onChange={answer => this.setState({ aAnswer: answer })}
+          moveNext={answer => {
+            console.log('aAnswer', answer);
+            this.props.saveAnswer(answer);
+            this.setState({ subStep: SubStep.sub5b, aAnswer: answer });
+          }}
+          moveBack={aAnswer => {
+            console.log('aAnswer', aAnswer);
+            let answer = this.getAnswer();
+            answer.aAnswer = aAnswer;
+            this.setState({ subStep: SubStep.welcome, aAnswer: answer });
+          }}
+        />
       );
     }
 
     return (
-      <FifthStepWelcome 
-        moveNext={() => this.setState({ subStep: SubStep.sub5ab })}
+      <FifthStepWelcome
+        moveNext={() => this.setState({ subStep: SubStep.sub5a })}
         moveBack={() => this.props.moveBack(this.getAnswer())}
       />
     )
