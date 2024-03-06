@@ -22,7 +22,6 @@ interface Props {
 }
 
 const SixthformAuth: React.FC<Props> = (props) => {
-  console.log(props.isAuthenticated);
   if (props.isAuthenticated === isAuthenticated.None || props.isAuthenticated === isAuthenticated.False) {
     return (
       <div className="LoginSixthformPage">
