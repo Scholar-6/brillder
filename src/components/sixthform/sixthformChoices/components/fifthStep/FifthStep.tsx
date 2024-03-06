@@ -182,7 +182,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       handy: ['Environmental Science']
     }, {
       jobName: 'None are for me',
-      description: 'I could be ruling out, or making very difficult, the above career paths by choosing other A levels, and I’m happy with that.'
+      description: 'I could be ruling out, or making very difficult, the above career paths by choosing other A-levels, and I’m happy with that.'
     }];
 
     if (props.answer) {
@@ -293,7 +293,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
                           {career.jobName}
                         </div>
                         <div className="table-5c-column value-column-5c-big font-12">
-                          I could be ruling out, or making very difficult, the above career paths by choosing other A levels, and I’m happy with that.
+                          I could be ruling out, or making very difficult, the above career paths by choosing other A-Levels, and I’m happy with that.
                         </div>
                       </div>
                     );

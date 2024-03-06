@@ -812,9 +812,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderSubjectGroup(subject: SixthformSubject) {
     if (subject.isTLevel) {
-      return "T Level";
+      return "T-Level";
     } else if (subject.isALevel) {
-      return "A Level";
+      return "A-Level";
     } else {
       return "VAP";
     }
