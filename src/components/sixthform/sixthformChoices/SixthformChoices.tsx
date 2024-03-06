@@ -91,7 +91,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       popupSubject: null,
       subjectPosition: null,
 
-      page: Pages.Question6,
+      page,
       brickPopup: {
         isOpen: false,
         brick: null

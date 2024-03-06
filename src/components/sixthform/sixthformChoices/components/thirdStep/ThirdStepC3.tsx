@@ -119,9 +119,6 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
       <div className="font-12 combo-block-c3-r23">
         <div className="text-block-c3-r23">
           <div className="page-number-r1023 font-14">{this.state.step + 1}/{this.state.categories.length}</div>
-          <div className="flex-center">
-            <SpriteIcon name="step3c1-progress" />
-          </div>
           <div className="bold text-center font-24">{category.boldText}</div>
           <div className="text-center font-16">{category.text}</div>
         </div>

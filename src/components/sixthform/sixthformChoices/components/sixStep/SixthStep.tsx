@@ -404,7 +404,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       fifthBChoices,
       seventhChoices,
       sixthChoices,
-      subStep: SixthSubStep.DreamsStart,
+      subStep: SixthSubStep.Welcome,
       overflowOpen: false
     }
   }
