@@ -399,12 +399,36 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       }
     ];
 
+    let subStep = SixthSubStep.Welcome;
+
+    if (props.answer && props.answer.answer) {
+      const { answer } = props.answer;
+
+      if (answer.writingChoice) {
+        writingChoice = answer.writingChoice;
+      }
+      if (answer.fifthBChoices) {
+        fifthBChoices = answer.fifthBChoices;
+      }
+
+      if (answer.seventhChoices) {
+        seventhChoices = answer.seventhChoices;
+      }
+      if (answer.sixthChoices) {
+        sixthChoices = answer.sixthChoices;
+      }
+
+      if (answer.subStep) {
+        subStep = answer.subStep;
+      }
+    }
+
     this.state = {
       writingChoice,
       fifthBChoices,
       seventhChoices,
       sixthChoices,
-      subStep: SixthSubStep.Welcome,
+      subStep,
       overflowOpen: false
     }
   }

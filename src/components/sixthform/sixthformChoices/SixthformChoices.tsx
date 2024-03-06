@@ -9,7 +9,7 @@ import {
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-import FirstStep from "./components/FirstStep";
+import FirstStep from "./components/firstStep/FirstStep";
 import SecondStep from "./components/secondStep/SecondStep";
 import ThirdStep from "./components/thirdStep/ThirdStep";
 import FourthStep from "./components/fourthStep/FourthStep";
@@ -22,7 +22,6 @@ import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
 import authRoutes from "../login/routes";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import WelcomePage from "./components/welcomePage/WelcomePage";
 
 
 interface UserProfileProps {
@@ -33,8 +32,7 @@ interface UserProfileProps {
 }
 
 export enum Pages {
-  Welcome = 0,
-  Question1,
+  Question1 = 1,
   Question2,
   Question3,
   Question4,
@@ -73,7 +71,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     let subjectType = SubjectType.AllSubjects;
 
-    let page = Pages.Welcome;
+    let page = Pages.Question1;
 
     // if step in params load from cash
     if (this.props.match.params.step) {
@@ -291,6 +289,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.aAnswer = answer.aAnswer;
         answerR1.answer.abAnswer = answer.abAnswer;
         answerR1.answer.careers = answer.careers;
+        answerR1.answer.speakingChoices = answer.speakingChoices;
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -440,16 +439,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCourseContent() {
-    if (this.state.page === Pages.Welcome) {
-      return (
-        <WelcomePage moveNext={() => this.setState({ page: Pages.Question1 })} />
-      );
-    } else if (this.state.page === Pages.Question1) {
+    if (this.state.page === Pages.Question1) {
       return <FirstStep
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
         onChoiceChange={(answer: any) => this.saveFirstAnswer(answer)}
         moveNext={() => this.setState({ page: Pages.Question2 })}
-        moveBack={() => this.setState({ page: Pages.Welcome })}
       />
     } else if (this.state.page === Pages.Question2) {
       return <SecondStep

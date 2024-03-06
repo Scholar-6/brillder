@@ -19,7 +19,7 @@ const ProgressBarSixthform: React.FC<Props> = (props) => {
   return (
     <div className="progress-bar-sixthform">
       <div>
-        {renderStep(1, step === Pages.Welcome || step === Pages.Question1, step >= 1)}
+        {renderStep(1, step === Pages.Question1, step >= 1)}
         <div className="font-12 progress-label-s6">TYPES OF COURSE</div>
       </div>
       {renderLine(step >= 2)}

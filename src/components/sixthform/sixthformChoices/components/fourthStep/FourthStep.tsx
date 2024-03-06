@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
-import { FirstChoice } from "../FirstStep";
+import { FirstChoice } from "../firstStep/FirstStep";
 import CheckBoxB from "../CheckBoxB";
 import FourthStepA from "./FourthStepA";
 import { Dialog } from "@material-ui/core";

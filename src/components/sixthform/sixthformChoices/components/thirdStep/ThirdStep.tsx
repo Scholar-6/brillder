@@ -11,7 +11,7 @@ import ThirdStepC4 from "./ThirdStepC4";
 import ThirdStepD, { ThirdStepDChoice } from "./ThirdStepD";
 import ThirdStepE from "./ThirdStepE";
 import ThirdStepF from "./ThirdStepF";
-import { FirstChoice } from "../FirstStep";
+import { FirstChoice } from "../firstStep/FirstStep";
 import ThirdStepBTable from "./ThirdStepBTable";
 import BackButtonSix from "../BackButtonSix";
 import { enterPressed } from "components/services/key";
