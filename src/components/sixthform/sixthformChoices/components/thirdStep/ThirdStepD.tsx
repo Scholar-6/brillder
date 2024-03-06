@@ -249,20 +249,20 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
               <div className="flex-center top-label-r3-r23 bold">
                 Would you like to see other Vocational, Applied and Practical courses?
               </div>
-                <div className="flex-center">
-                  <div className="button-step-d-r23 button-step-dl4-r23">
-                    <div onClick={() => this.props.moveToStepE()}>
-                      Yes, I would.
-                    </div>
+              <div className="flex-center">
+                <div className="button-step-d-r23 button-step-dl4-r23">
+                  <div onClick={() => this.props.moveToStepE()}>
+                    Yes, I would.
                   </div>
                 </div>
-                <div className="flex-center">
-                  <div className="button-step-d-r23 button-step-dl4-r23">
-                    <div onClick={() => this.props.moveToStep4()}>
-                      No - if I do a vocational course, it’ll be a T-level.
-                    </div>
+              </div>
+              <div className="flex-center">
+                <div className="button-step-d-r23 button-step-dl4-r23">
+                  <div onClick={() => this.props.moveToStep4()}>
+                    No - if I do a vocational course, it’ll be a T-level.
                   </div>
                 </div>
+              </div>
             </div>
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.TableLeaf })} />
@@ -330,36 +330,38 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           T-levels
         </div>
         <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
-        <div className="font-16 line-d3">
-          These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects.
-        </div>
-        <div className="font-16 line-d3">
-          T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement.
-        </div>
-        <div className="font-16 line-d3">
-          Choosing a T-level requires you to be clear in your own mind that you wish to work in this field.
-        </div>
-        <div className="font-16 bold sub-title-e23">
-          Which of the following best applies to you?
-        </div>
-        <div className="boxes-container font-24">
-          <CheckBoxV2
-            currentChoice={ThirdStepDChoice.First} choice={this.state.choice}
-            label="If the right T-level is available, I’d be interested." setChoice={choice => this.setChoice(choice)}
-          />
-          <CheckBoxV2
-            currentChoice={ThirdStepDChoice.Second} choice={this.state.choice}
-            label="I’d prefer to do a combination of shorter vocational courses." setChoice={choice => this.setChoice(choice)}
-          />
-          <CheckBoxV2
-            currentChoice={ThirdStepDChoice.Third} choice={this.state.choice}
-            label="I’d prefer to do a mixture of vocational courses and A-levels." setChoice={choice => this.setChoice(choice)}
-          />
-          <CheckBoxV2
-            currentChoice={ThirdStepDChoice.Forth} choice={this.state.choice}
-            label="I’m not really sure yet."
-            setChoice={() => this.setState({ choice: ThirdStepDChoice.Forth })}
-          />
+        <div className="absolute-container-3d">
+          <div className="font-16 line-d3">
+            These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects.
+          </div>
+          <div className="font-16 line-d3">
+            T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement.
+          </div>
+          <div className="font-16 line-d3">
+            Choosing a T-level requires you to be clear in your own mind that you wish to work in this field.
+          </div>
+          <div className="font-16 bold sub-title-e23">
+            Which of the following best applies to you?
+          </div>
+          <div className="boxes-container font-24">
+            <CheckBoxV2
+              currentChoice={ThirdStepDChoice.First} choice={this.state.choice}
+              label="If the right T-level is available, I’d be interested." setChoice={choice => this.setChoice(choice)}
+            />
+            <CheckBoxV2
+              currentChoice={ThirdStepDChoice.Second} choice={this.state.choice}
+              label="I’d prefer to do a combination of shorter vocational courses." setChoice={choice => this.setChoice(choice)}
+            />
+            <CheckBoxV2
+              currentChoice={ThirdStepDChoice.Third} choice={this.state.choice}
+              label="I’d prefer to do a mixture of vocational courses and A-levels." setChoice={choice => this.setChoice(choice)}
+            />
+            <CheckBoxV2
+              currentChoice={ThirdStepDChoice.Forth} choice={this.state.choice}
+              label="I’m not really sure yet."
+              setChoice={() => this.setState({ choice: ThirdStepDChoice.Forth })}
+            />
+          </div>
         </div>
         <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         {this.renderNextDButton()}
