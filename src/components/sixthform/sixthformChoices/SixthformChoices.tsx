@@ -812,9 +812,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderSubjectGroup(subject: SixthformSubject) {
     if (subject.isTLevel) {
-      return "T-Level";
+      return "T-level";
     } else if (subject.isALevel) {
-      return "A-Level";
+      return "A-level";
     } else {
       return "VAP";
     }
@@ -852,7 +852,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               {this.state.page < Pages.Question1 &&
                 <div className="subjects-select-box">
                   <div className="bold sidebar-title font-18">Show me:</div>
-                  {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-Levels Only')}
+                  {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-levels Only')}
                   {this.renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
                   {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
                 </div>}

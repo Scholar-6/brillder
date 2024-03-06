@@ -178,9 +178,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderSubjectTag(subject: SixthformSubject) {
     let label = "VAP"
     if (subject.isTLevel) {
-      label = 'T-Level';
+      label = 'T-level';
     } else if (subject.isALevel) {
-      label = 'A-Level';
+      label = 'A-level';
     }
     return <div className="level-round font-14">{label}</div>
   }
@@ -235,7 +235,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 </span>
                 {this.renderSubjectTag(subject)}
               </span>
-              <span className="font-14 right-part-e323">This subject is a T-Level course, meaning you can only select to do this at Sixth Form.</span>
+              <span className="font-14 right-part-e323">This subject is a T-level course, meaning you can only select to do this at Sixth Form.</span>
             </div>
 
             <div className="flex-box-e234">
