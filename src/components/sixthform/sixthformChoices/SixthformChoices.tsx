@@ -266,6 +266,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
         answerR1.answer.categories4c = answer.categories4c;
         answerR1.answer.categories4e = answer.categories4e;
+        answerR1.answer.listeningChoices = answer.listeningChoices;
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)

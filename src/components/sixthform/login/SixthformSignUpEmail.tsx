@@ -8,14 +8,18 @@ import './SixthformLoginPage.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { login } from "services/axios/auth";
 import WrongLoginDialog from 'components/loginPage/components/WrongLoginDialog';
-import userActions from 'redux/actions/user';
 import { User } from 'model/user';
 import map from 'components/map';
 import routes from './routes';
 
+import userActions from 'redux/actions/user';
+import actions from "redux/actions/auth";
+
+
 
 interface Props {
   getUser(): Promise<User>;
+  loginSuccess(): void;
 }
 
 const SixthformLoginPage: React.FC<Props> = (props) => {
@@ -36,6 +40,7 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
+        props.loginSuccess();
         history.push(map.SixthformChoices);
         return;
       }
@@ -66,7 +71,7 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
 
   const register = (email: string, password: string) => {
     let data = {
-      email, password, confirmPassword: password
+      email, password, fullName, confirmPassword: password
     } as any;
 
     axios.post(
@@ -169,6 +174,7 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
+  loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
 const connector = connect(null, mapDispatch)
