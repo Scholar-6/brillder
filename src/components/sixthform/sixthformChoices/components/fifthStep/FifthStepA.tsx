@@ -1,10 +1,10 @@
 
 import React, { Component } from "react";
 
-import BackButtonSix from "./BackButtonSix";
+import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { shuffle } from "../services/shuffle";
-import ProgressBarStep3C1 from "./progressBar/ProgressBarStep3C1";
+import { shuffle } from "../../services/shuffle";
+import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 import { Grid } from "@material-ui/core";
 
 interface ThirdProps {

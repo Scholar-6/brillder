@@ -1,5 +1,5 @@
 import React from "react";
-import BackButtonSix from "./BackButtonSix";
+import BackButtonSix from "../BackButtonSix";
 
 interface WelcomeProps {
   moveNext(): void;

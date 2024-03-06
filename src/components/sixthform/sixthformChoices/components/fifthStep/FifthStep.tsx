@@ -1,17 +1,33 @@
 import React, { Component } from "react";
 import { Dialog } from "@material-ui/core";
 
-import BackButtonSix from "./BackButtonSix";
+import BackButtonSix from "../BackButtonSix";
 import FifthStepA from "./FifthStepA";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FifthStepWelcome from "./FifthStepWelcome";
 import FifthStepB from "./FifthStepB";
+import FifthStepSpeaking from "./FifthStepSpeaking";
 
 enum SubStep {
   welcome,
   sub5a,
   sub5b,
   sub5c,
+  speaking,
+}
+
+export enum SpeakingChoices {
+  InTheClassroom = 1,
+  ICantStand,
+  AtHome,
+  WithMyFriends,
+  MyFriends,
+  IPreferPractical,
+  ILove,
+  ImNot,
+  ILikeTalking,
+  IPreferToListen,
+  IReallyAdmire
 }
 
 interface FifthProps {
@@ -27,6 +43,7 @@ interface FifthStepState {
   abAnswer: any;
   careers: any[];
   overflowOpen: boolean;
+  speakingChoices: any[];
 }
 
 class FifthStep extends Component<FifthProps, FifthStepState> {
@@ -34,6 +51,54 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
     super(props);
 
     let subStep = SubStep.welcome;
+
+    let speakingChoices = [
+      {
+        type: SpeakingChoices.InTheClassroom,
+        label: 'In the classroom, I enjoy contributing ideas and showing what I know.',
+        choice: null
+      }, {
+        type: SpeakingChoices.ICantStand,
+        label: 'I can’t stand pretentious people who waffle on about stuff which isn’t relevant.',
+        choice: null
+      }, {
+        type: SpeakingChoices.AtHome,
+        label: 'At home, my family talk a lot about what’s going on in the world and we have interesting discussions.',
+        choice: null
+      }, {
+        type: SpeakingChoices.WithMyFriends,
+        label: 'With my friends I mainly gossip and enjoy the chance to banter and have fun.',
+        choice: null
+      }, {
+        type: SpeakingChoices.MyFriends,
+        label: 'My friends put forward new ideas and challenge my thinking in ways I value.',
+        choice: null
+      }, {
+        type: SpeakingChoices.IPreferPractical,
+        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more solid answers.',
+        choice: null
+      }, {
+        type: SpeakingChoices.ILove,
+        label: 'I love the chance to put an argument in a proper debate, and I’m good at undermining other people’s arguments.',
+        choice: null
+      }, {
+        type: SpeakingChoices.ImNot,
+        label: 'I’m not a confident communicator - my strengths are in other areas.',
+        choice: null
+      }, {
+        type: SpeakingChoices.ILikeTalking,
+        label: 'I like talking in depth with others about music, books or about documentaries, plays and films we’ve seen.',
+        choice: null
+      }, {
+        type: SpeakingChoices.IPreferToListen,
+        label: 'I prefer to listen carefully and chip in only when something really needs to be said.',
+        choice: null
+      }, {
+        type: SpeakingChoices.IReallyAdmire,
+        label: 'I really admire people who can communicate effectively in foreign languages.',
+        choice: null
+      }
+    ];
 
     let aAnswer = null;
     let abAnswer = null;
@@ -134,6 +199,9 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       if (answer.careers) {
         careers = answer.careers;
       }
+      if (answer.speakingChoices) {
+        speakingChoices = answer.speakingChoices;
+      }
     }
 
     this.state = {
@@ -141,6 +209,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       aAnswer,
       abAnswer,
       careers,
+      speakingChoices,
       overflowOpen: false
     }
   }
@@ -150,12 +219,20 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
       subStep: this.state.subStep,
       aAnswer: this.state.aAnswer,
       abAnswer: this.state.abAnswer,
-      careers: this.state.careers
+      careers: this.state.careers,
+      speakingChoices: this.state.speakingChoices
     }
   }
 
   render() {
-    if (this.state.subStep === SubStep.sub5c) {
+    if (this.state.subStep === SubStep.speaking) {
+      return <FifthStepSpeaking
+        speakingChoices={this.state.speakingChoices}
+        onChange={speakingChoices => this.setState({ speakingChoices })}
+        moveBack={() => this.setState({ subStep: SubStep.sub5c })}
+        moveNext={() => this.props.moveNext(this.getAnswer())}
+      />
+    } else if (this.state.subStep === SubStep.sub5c) {
       return (
         <div className="question">
           <img src="/images/choicesTool/FifthStepR15.png" className="third-step-img fifth-step-img-r15"></img>
@@ -163,7 +240,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
             Careers with A-level Requirements
           </div>
           <div className="font-16">
-            The following careers favour specific A-levels, usually because relevant degree courses require them.<br/>
+            The following careers favour specific A-levels, usually because relevant degree courses require them.<br />
             Most of you will probably select “None are for me”, but be aware of what you might be ruling out.
           </div>
           <div className="drag-container-5c">
@@ -265,7 +342,7 @@ class FifthStep extends Component<FifthProps, FifthStepState> {
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.moveNext(this.getAnswer());
+            this.setState({ subStep: SubStep.speaking });
           }}>Continue</button>
         </div >
       );

@@ -52,7 +52,7 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
         </div>
       </div>
       <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 step={step} total={props.watchingChoices.length} subjectDescription={currentStep.label} />
+      <ProgressBarStep6 icon="watching-start" step={step} total={props.watchingChoices.length} subjectDescription={currentStep.label} />
       <div className="btns-container-r32 font-20 bold flex-center">
         {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NEVER OR<br/> HARDLY EVER")}
         {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SOMETIMES")}
