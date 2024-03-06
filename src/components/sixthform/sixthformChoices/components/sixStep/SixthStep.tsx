@@ -4,11 +4,13 @@ import map from "components/map";
 import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
-import SixthStepSeventhTable from "./SeventhTable";
-import SixthStepSixthTable from "./SixthTable";
 import SixthStepStart from "./SixthStepStart";
 import SixthStepWelcome from "./SixthStepWelcome";
 import SixStepWriting from "./SixStepWriting";
+import SixStepEntusiasmStart from "./SixStepEntusiasmStart";
+import SixStepEntusiasm from "./SixStepEntusiasm";
+import SixStepDreamsStart from "./SixStepDreamsStart";
+import SixStepDreams from "./SixStepDreams";
 
 interface FirstQuestionProps {
   answer: any;
@@ -23,9 +25,11 @@ export enum SixthSubStep {
   Start,
   WritingA,
   WritingB,
-  sixth,
-  seventh,
-  final
+  EnthusiasmsStart,
+  Enthusiasms,
+  DreamsStart,
+  Dreams,
+  Final
 }
 
 export enum WritingChoice {
@@ -130,27 +134,27 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     let fifthBChoices = [
       {
         name: 'Fiction',
-        description: 'writing stories or imaginative descriptions',
+        description: 'Writing stories or imaginative descriptions',
         choice: null
       }, {
         name: 'Essays',
-        description: 'assembling evidence and arguments',
+        description: 'Assembling evidence and arguments',
         choice: null
       }, {
         name: 'Poetry',
-        description: 'poems, verse, rap or song lyrics',
+        description: 'Poems, verse, rap or song lyrics',
         choice: null
       }, {
         name: 'Theatre Pieces',
-        description: 'plays, devised drama and comedy sketches',
+        description: 'Plays, devised drama and comedy sketches',
         choice: null
       }, {
         name: 'Proposals, Projects & Reports',
-        description: 'pitching ideas, writing up research or experiments',
+        description: 'Pitching ideas, writing up research or experiments',
         choice: null
       }, {
         name: 'Articles & Reviews',
-        description: 'for blogs, magazines or newspapers',
+        description: 'For blogs, magazines or newspapers',
         choice: null
       }, {
         name: 'Diary & Correspondence',
@@ -400,7 +404,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       fifthBChoices,
       seventhChoices,
       sixthChoices,
-      subStep: SixthSubStep.Welcome,
+      subStep: SixthSubStep.DreamsStart,
       overflowOpen: false
     }
   }
@@ -421,7 +425,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
   }
 
   render() {
-    if (this.state.subStep === SixthSubStep.final) {
+    if (this.state.subStep === SixthSubStep.Final) {
       return (
         <div className="question question-6 question-6-final">
           <div className="background-confetti-sixthform">
@@ -452,66 +456,71 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           </div>
         </div>
       );
-    } else if (this.state.subStep === SixthSubStep.seventh) {
+    } else if (this.state.subStep === SixthSubStep.Dreams) {
       return (
-        <div className="question question-6 question-6-seventh">
-          <div className="bold font-32 question-text">
-            <div>
-              Dreams, Ambitions and Values
-            </div>
-            <div className="hover-area font-14">
-              <SpriteIcon name="help-circle-r1" className="info-icon" />
-              <div className="hover-content regular">
-                <div className="triangle-popup" />
-                Your ideas about the future reflect your priorities, interests<br />
-                and what you feel may be possible. Some of the goals below<br />
-                may seem exceptional, but none are impossible.
-              </div>
-            </div>
-          </div>
-          <div className="font-16">
-            Be honest with yourself. Most answers below will be “not really” - they might sound like nice ideas but you have never given them serious thought.<br />
-            If a scenario touches something close to you that you find genuinely exciting, put “definitely”.
-          </div>
-          <SixthStepSeventhTable seventhChoices={this.state.seventhChoices} onChoiceChange={() => {
-            this.setState({ seventhChoices: this.state.seventhChoices });
-          }} />
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.sixth })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
+        <SixStepDreams
+          choices={this.state.seventhChoices}
+          onChange={seventhChoices => this.setState({ seventhChoices })}
+          moveBack={() => this.setState({ subStep: SixthSubStep.DreamsStart })}
+          moveNext={() => {
             this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.final });
-          }}>Finish Course Selector</button>
-        </div>
+            this.setState({ subStep: SixthSubStep.Final });
+          }}
+        />
       );
-    } else if (this.state.subStep === SixthSubStep.sixth) {
-      return (
-        <div className="question question-6 question-6-sixth">
-          <div className="bold font-32 question-text">
-            <div>
-              Enthusiasms, Passions and Interests
-            </div>
-            <div className="hover-area font-14">
-              <SpriteIcon name="help-circle-r1" className="info-icon" />
-              <div className="hover-content regular">
-                <div className="triangle-popup" />
-                Please be assured that we NEVER give your data to companies which<br />
-                might try to sell you stuff. The reason we are asking this is because<br />
-                sometimes the things you love doing complement what you might study.
-              </div>
+      /*
+      <div className="question question-6 question-6-seventh">
+        <div className="bold font-32 question-text">
+          <div>
+            Dreams, Ambitions and Values
+          </div>
+          <div className="hover-area font-14">
+            <SpriteIcon name="help-circle-r1" className="info-icon" />
+            <div className="hover-content regular">
+              <div className="triangle-popup" />
+              Your ideas about the future reflect your priorities, interests<br />
+              and what you feel may be possible. Some of the goals below<br />
+              may seem exceptional, but none are impossible.
             </div>
           </div>
-          <div className="font-16">
-            Decide how true the following statements are as they apply to you.
-          </div>
-          <SixthStepSixthTable seventhChoices={this.state.sixthChoices} onChoiceChange={() => {
-            this.setState({ sixthChoices: this.state.sixthChoices });
-          }} />
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.WritingB })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.seventh });
-          }}>Continue</button>
         </div>
+        <div className="font-16">
+          Be honest with yourself. Most answers below will be “not really” - they might sound like nice ideas but you have never given them serious thought.<br />
+          If a scenario touches something close to you that you find genuinely exciting, put “definitely”.
+        </div>
+        <SixthStepSeventhTable seventhChoices={this.state.seventhChoices} onChoiceChange={() => {
+          this.setState({ seventhChoices: this.state.seventhChoices });
+        }} />
+        <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.DreamsStart })} />
+        <button className="absolute-contunue-btn font-24" onClick={() => {
+          this.props.saveAnswer(this.getAnswer());
+          this.setState({ subStep: SixthSubStep.Final });
+        }}>Finish Course Selector</button>
+      </div>
+      */
+    } else if (this.state.subStep === SixthSubStep.DreamsStart) {
+      return (
+        <SixStepDreamsStart
+          moveBack={() => this.setState({ subStep: SixthSubStep.Enthusiasms })}
+          moveNext={() => this.setState({ subStep: SixthSubStep.Dreams })}
+        />
+      );
+    } else if (this.state.subStep === SixthSubStep.Enthusiasms) {
+      return <SixStepEntusiasm
+        choices={this.state.sixthChoices}
+        onChange={sixthChoices => this.setState({ sixthChoices })}
+        moveBack={() => this.setState({ subStep: SixthSubStep.WritingB })}
+        moveNext={() => {
+          this.props.saveAnswer(this.getAnswer());
+          this.setState({ subStep: SixthSubStep.DreamsStart });
+        }}
+      />
+    } else if (this.state.subStep === SixthSubStep.EnthusiasmsStart) {
+      return (
+        <SixStepEntusiasmStart
+          moveBack={() => this.setState({ subStep: SixthSubStep.WritingB })}
+          moveNext={() => this.setState({ subStep: SixthSubStep.Enthusiasms })}
+        />
       );
     } else if (this.state.subStep === SixthSubStep.WritingB) {
       return (
@@ -521,7 +530,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           moveBack={() => this.setState({ subStep: SixthSubStep.WritingA })}
           moveNext={() => {
             this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.sixth });
+            this.setState({ subStep: SixthSubStep.EnthusiasmsStart });
           }}
         />
       );

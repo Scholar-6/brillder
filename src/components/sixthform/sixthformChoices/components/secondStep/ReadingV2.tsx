@@ -72,9 +72,8 @@ const ReadingV2: React.FC<ReadingV1Props> = (props) => {
         </div>
       </div>
       <div className="font-16">
-        Which of the following statements best describes your attitude to reading?
+        What sort of reading do you enjoy most? Select up to four.
       </div>
-
       <Grid container direction="row">
         <Grid item xs={6}>
           <div className="boxes-container start font-16">

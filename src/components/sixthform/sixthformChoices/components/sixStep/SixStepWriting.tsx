@@ -1,6 +1,6 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
-import ProgressBarStep6 from "../progressBar/ProgressBarStep6";
+import ProgressBarStep6V2 from "../progressBar/ProgressBarStep6V2";
 
 export enum WatchingChoice {
   Never = 1,
@@ -8,14 +8,14 @@ export enum WatchingChoice {
   ALot
 }
 
-interface ThirdProps {
+interface Props {
   choices: any[];
   onChange(choices: any[]): void;
   moveBack(): void;
   moveNext(): void;
 }
 
-const SixStepWriting: React.FC<ThirdProps> = (props) => {
+const SixStepWriting: React.FC<Props> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.choices[step];
 
@@ -35,7 +35,7 @@ const SixStepWriting: React.FC<ThirdProps> = (props) => {
   }
 
   return (
-    <div className="question question-6 question-3-watching question-5-speaking">
+    <div className="question question-6 question-3-watching question-6-writing">
       <div className="bold font-32 question-text">
         <div>
           Writing
@@ -44,13 +44,15 @@ const SixStepWriting: React.FC<ThirdProps> = (props) => {
       <div className="font-16">
         For each type of writing, say how much of it you do.
       </div>
-      <div className="font-16">How true are the following statements of you?</div>
-      <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 icon="writing-sixth" step={step} total={props.choices.length} subjectDescription={currentStep.label} />
+      <img src="/images/choicesTool/Step6R18.png" className="step3watching-img-v2" />
+      <ProgressBarStep6V2
+        icon="writing-sixth" step={step} total={props.choices.length}
+        title={currentStep.name} description={currentStep.description}
+      />
       <div className="btns-container-r32 font-20 bold flex-center">
-        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "HARDLY AT ALL")}
-        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SORT OF")}
-        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "DEFINITELY")}
+        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "HARDLY<br/> AT ALL")}
+        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "A FAIR BIT")}
+        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "A LOT")}
       </div>
       <BackButtonSix onClick={() => {
         if (step <= 0) {
