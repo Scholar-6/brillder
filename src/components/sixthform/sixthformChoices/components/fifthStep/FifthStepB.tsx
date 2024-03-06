@@ -62,7 +62,7 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     let answers = [{
-      name: "almost invariably require Maths & Science A-Levels, usually to a high standard"
+      name: "almost invariably require Maths & Science A-levels, usually to a high standard"
     }, {
       name: "require vocational qualifications and, often, apprenticeships"
     }, {
