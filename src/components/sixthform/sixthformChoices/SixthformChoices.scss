@@ -607,6 +607,7 @@
       width: 43.5vw;
       margin-top: 6vh;
       margin-bottom: 2vh;
+      padding-right: 0.7vw;
       padding-left: 0.7vw;
       padding-top: 2vh;
       padding-bottom: 2vh;
@@ -1910,6 +1911,11 @@
         height: auto;
         min-height: calc(100vh - 7.834vw);
       }
+    }
+
+    .absolute-container-3d {
+      position: absolute;
+      z-index: 3;
     }
 
     .sub-title-e23 {

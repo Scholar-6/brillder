@@ -112,7 +112,7 @@ export enum FirstChoice {
 }
 
 interface SixStepState {
-  writingChoice: FirstChoice | null;
+  writingChoice: WritingChoice | null;
   fifthBChoices: any[];
   sixthChoices: any[];
   seventhChoices: any[];
@@ -409,18 +409,17 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     }
   }
 
-  setWritingChoice(writingChoice: FirstChoice) {
+  setWritingChoice(writingChoice: WritingChoice) {
     this.setState({ writingChoice });
   }
-
 
   getAnswer() {
     return {
       subStep: this.state.subStep,
       writingChoice: this.state.writingChoice,
       fifthBChoices: this.state.fifthBChoices,
-      seventhChoices: this.state.seventhChoices,
       sixthChoices: this.state.sixthChoices,
+      seventhChoices: this.state.seventhChoices,
     }
   }
 
@@ -576,7 +575,11 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.WritingB });
+            if (this.state.writingChoice === WritingChoice.first || this.state.writingChoice === WritingChoice.second) {
+              this.setState({ subStep: SixthSubStep.WritingB });
+            } else {
+              this.setState({ subStep: SixthSubStep.EnthusiasmsStart });
+            }
           }}>Continue</button>
         </div>
       );

@@ -51,7 +51,6 @@ interface SecondQuestionState {
   schoolName: string;
   schoolId: number;
   sixthformChoice: any;
-  newSchoolOpen: boolean;
   readingChoice: null | ReadingChoice;
   readingChoicesV2: ReadingChoiceV2[];
 }
@@ -94,7 +93,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       sixthformChoice,
       schoolName,
       schools: [],
-      newSchoolOpen: false,
 
       readingChoice,
       readingChoicesV2
@@ -241,12 +239,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     });
   }
 
-  showNewSchoolPopup() {
-    if (this.state.schoolName === '') {
-      return;
-    }
-  }
-
   render() {
     let disabled = false;
 
@@ -368,20 +360,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
               if (found) {
                 this.setState({ subStep: SubStep.Reading });
               } else {
-                if (this.state.sixthformChoice === SixthformChoice.Forbid) {
-                  this.setState({ subStep: SubStep.Reading });
-                } else {
-                  this.setState({ newSchoolOpen: true })
-                }
+                this.setState({ subStep: SubStep.Reading });
               }
             }}
           >Continue</button>
-          {this.state.newSchoolOpen &&
-            <Dialog open={true} className="new-school-popup" onClose={() => this.setState({ subStep: SubStep.Reading })}>
-              {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose.
-              <div className="btn" onClick={() => this.setState({ subStep: SubStep.Reading })}>Continue</div>
-            </Dialog>
-          }
         </div>
       );
     }
