@@ -70,7 +70,7 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
     } as any;
 
     axios.post(
-      `${process.env.REACT_APP_BACKEND_HOST}/auth/SignUp`, data, { withCredentials: true }
+      `${process.env.REACT_APP_BACKEND_HOST}/auth/signUp/sixthform`, data, { withCredentials: true }
     ).then((resp) => {
       const { data } = resp;
 

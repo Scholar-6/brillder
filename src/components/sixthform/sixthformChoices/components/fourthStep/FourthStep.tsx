@@ -229,6 +229,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         selected: false,
       }]
     }, {
+      name: "Languages & Cultures",
       subjects: [{
         name: "Modern European Languages (French, Spanish etc.)",
         selected: false,
@@ -1189,6 +1190,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             <div className="categories-container-4c-r23 font-16">
               {this.state.categories4bc.map((category, i) => {
                 const catData = this.state.cetegoriesData[category];
+                console.log(catData, this.state.cetegoriesData)
                 return (
                   <div key={i} className="font-16">
                     <div className="text-4c">
