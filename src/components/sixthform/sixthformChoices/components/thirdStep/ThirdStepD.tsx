@@ -327,7 +327,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div>
         <div className="bold font-32 question-text-3">
-          T Levels
+          T-Levels
         </div>
         <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
         <div className="font-16 line-d3">
