@@ -54,13 +54,13 @@ class FourthStepA extends Component<FourthAProps, FourthAState> {
           <div className="boxes-container font-20">
             <CheckBoxV2
               currentChoice={FirstChoice.ALevel} choice={this.state.choice}
-              label="Someone who will go to university after completing A Levels"
+              label="Someone who will go to university after completing A-Levels"
               setChoice={() => this.onChoiceChanged(FirstChoice.ALevel)}
             />
             <CheckBoxV2
               currentChoice={FirstChoice.ShowMeAll || FirstChoice.Other}
               choice={this.state.choice}
-              label="Someone who may go to university after completing A Levels and/or vocational courses"
+              label="Someone who may go to university after completing A-Levels and/or vocational courses"
               setChoice={() => this.onChoiceChanged(FirstChoice.ShowMeAll)}
             />
             <CheckBoxV2

@@ -36,12 +36,12 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
 
     let categories = [{
       boldText: "English Language",
-      text: "“The A Level is very unlike GCSE English Language and has much more to do with linguistics than, for example, creative writing.”",
+      text: "“The A-Level is very unlike GCSE English Language and has much more to do with linguistics than, for example, creative writing.”",
       helpText: 'This is true.',
       status: ThirdC3Status.None,
     }, {
       boldText: "Further Mathematics",
-      text: "“The decision around whether to choose Further Maths should be more about your love of the subject than your ability. In fact, doing the additional A Level makes the normal A Level content easier because you get more time to spend on it.”",
+      text: "“The decision around whether to choose Further Maths should be more about your love of the subject than your ability. In fact, doing the additional A-Level makes the normal A-Level content easier because you get more time to spend on it.”",
       helpText: 'This is not true. You’ll need a 9, or maybe an 8, at GCSE to do Further Maths, which plays well with leading universities if you want to take a STEM degree. You also need to be able to cover the ordinary A-level content faster.',
       status: ThirdC3Status.None,
     }, {
@@ -52,12 +52,12 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       boldText: "Engineering",
       text: "“There is no Engineering A-level, but Design & Technology has some engineering content.  A large number of Physics and Maths students opt to do a BTEC in Engineering, which is highly regarded by universities and employers.”",
-      helpText: 'This is true. But you can get onto a university engineering course with good Physics and Maths A Levels if your school or college does not offer an engineering qualification.',
+      helpText: 'This is true. But you can get onto a university engineering course with good Physics and Maths A-Levels if your school or college does not offer an engineering qualification.',
       status: ThirdC3Status.None,
     }, {
       boldText: "Sport & Physical Education, Dance, Music, Theatre Studies",
       text: "“It’s better to do the A-level than take a vocational equivalent in these subjects”",
-      helpText: 'There’s some truth in this if you’re planning to apply to a university (and because some VAPs are being phased out). But vocational courses often afford more time on practical components (many are equivalent to more than one A level), which means you achieve greater proficiency.',
+      helpText: 'There’s some truth in this if you’re planning to apply to a university (and because some VAPs are being phased out). But vocational courses often afford more time on practical components (many are equivalent to more than one A-Level), which means you achieve greater proficiency.',
       status: ThirdC3Status.None,
     }, {
       boldText: "Modern Languages",
@@ -191,7 +191,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
           Common Misunderstandings
         </div>
         <div className="font-16 margin-text-c3">
-          There are a few A Levels which need careful thought because there may be more to them than first meets the eye. Decide whether<br />
+          There are a few A-Levels which need careful thought because there may be more to them than first meets the eye. Decide whether<br />
           the statement which follows each of the following subjects is ‘TRUE’, ‘FALSE’ or ‘SOMEWHERE IN BETWEEN’.
         </div>
         <ProgressBarStepsR1 step={this.state.step} total={this.state.categories.length} />
