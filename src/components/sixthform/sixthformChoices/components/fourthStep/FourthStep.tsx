@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import BackButtonSix from "./BackButtonSix";
-import { FirstChoice } from "./FirstStep";
-import CheckBoxB from "./CheckBoxB";
+import BackButtonSix from "../BackButtonSix";
+import { FirstChoice } from "../FirstStep";
+import CheckBoxB from "../CheckBoxB";
 import FourthStepA from "./FourthStepA";
 import { Dialog } from "@material-ui/core";
 import FourthStepWelcome from "./FourthStepWelcome";
+import FourthStepListening from "./FourthStepListening";
+import FourthStepListenStart from "./FourthStepListenStart";
 
 enum SubStep {
   welcome,
@@ -17,6 +19,22 @@ enum SubStep {
   sub4d2,
   sub4e1,
   sub4e2,
+  listeningStart,
+  listening,
+}
+
+export enum SixStepFourthChoices {
+  InTheClassroom = 1,
+  ICantStand,
+  AtHome,
+  WithMyFriends,
+  MyFriends,
+  IPreferPractical,
+  ILove,
+  ImNot,
+  ILikeTalking,
+  IPreferToListen,
+  IReallyAdmire
 }
 
 enum Category {
@@ -56,6 +74,8 @@ interface ThirdQuestionState {
   tVocCoursesE1Part1: TLevelCourse[];
   tVocCoursesE1Part2: TLevelCourse[];
 
+  listeningChoices: any[];
+
   overflowOpen: boolean;
 }
 
@@ -66,6 +86,34 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     let subStep = SubStep.welcome;
 
     let categories4bc: any[] = [];
+
+    let listeningChoices = [
+      {
+        label: 'Current Affairs, News & Talk (e.g. Radio Four)',
+        choice: null
+      }, {
+        label: 'Podcasts (e.g. Joe Rogan)',
+        choice: null
+      }, {
+        label: 'Sport & Sport Talk (e.g. Radio Five)',
+        choice: null
+      }, {
+        label: 'Audiobooks (e.g. Audible)',
+        choice: null
+      }, {
+        label: 'Comedy and Drama (e.g. Radio Four)',
+        choice: null
+      }, {
+        label: 'Mainstream Music (Rock, Rap, Pop & Chart)',
+        choice: null
+      }, {
+        label: 'Music, Folk or Jazz',
+        choice: null
+      }, {
+        label: 'Music, Classical ',
+        choice: null
+      }
+    ];
 
     let cetegoriesData = [{
       name: "none",
@@ -537,6 +585,9 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           tVocCoursesE1Part2 = answer.categories4e.tVocCoursesE1Part2;
         }
       }
+      if (answer.listeningChoices) {
+        listeningChoices = answer.listeningChoices;
+      }
     }
 
     this.state = {
@@ -549,6 +600,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
       tVocCoursesE1Part1,
       tVocCoursesE1Part2,
+
+      listeningChoices,
 
       overflowOpen: false,
     }
@@ -565,6 +618,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       subStep: this.state.subStep,
       cetegoriesData: this.state.cetegoriesData,
       categories4bc: categories4bc,
+      listeningChoices: this.state.listeningChoices,
       facilitatingSubjects: this.state.facilitatingSubjects,
       nonFacilitatingSubjects: this.state.nonFacilitatingSubjects,
       categories4c,
@@ -945,275 +999,288 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === SubStep.sub4e2) {
-      let selected = this.state.tVocCoursesE1Part1.filter(a => a.active == true);
-      selected.push(...this.state.tVocCoursesE1Part2.filter(a => a.active == true));
+    if (this.state.subStep === SubStep.listening) {
+      return <FourthStepListening
+        listeningChoices={this.state.listeningChoices}
+        onChange={listeningChoices => this.setState({ listeningChoices })}
+        moveBack={() => this.setState({ subStep: SubStep.listeningStart })}
+        moveNext={() => this.props.moveNext(this.getAnswer())}
+      />
+    } else
+      if (this.state.subStep === SubStep.listeningStart) {
+        return <FourthStepListenStart
+          moveBack={() => this.setState({ subStep: SubStep.sub4e2 })}
+          moveNext={() => this.setState({ subStep: SubStep.listening })}
+        />
+      } else if (this.state.subStep === SubStep.sub4e2) {
+        let selected = this.state.tVocCoursesE1Part1.filter(a => a.active == true);
+        selected.push(...this.state.tVocCoursesE1Part2.filter(a => a.active == true));
 
-      return (
-        <div className="question">
-          <div className="bold font-32 question-text-3">
-            Vocational Degrees
-          </div>
-          <div className="font-16">
-            View the courses available for the categories you selected. Select up to five that interest you.
-          </div>
-          <div className="categories-container categories-container-r342">
-            {selected.map((course, i) => {
-              return (
-                <div>
-                  <div
-                    className="hovered-category"
-                    onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
-                    onMouseLeave={this.leaveCategory.bind(this)}
-                    onClick={() => this.selectCategory(Category.Stem)}
-                  >
-                    <div className="bold font-16">{course.name}</div>
-                    <div>
-                      <div className="lozengies-container font-11 first-lozengies lozengies-r232">
-                        {course.subjects.map(s => <div>{s.name}</div>)}
+        return (
+          <div className="question">
+            <div className="bold font-32 question-text-3">
+              Vocational Degrees
+            </div>
+            <div className="font-16">
+              View the courses available for the categories you selected. Select up to five that interest you.
+            </div>
+            <div className="categories-container categories-container-r342">
+              {selected.map((course, i) => {
+                return (
+                  <div>
+                    <div
+                      className="hovered-category"
+                      onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+                      onMouseLeave={this.leaveCategory.bind(this)}
+                      onClick={() => this.selectCategory(Category.Stem)}
+                    >
+                      <div className="bold font-16">{course.name}</div>
+                      <div>
+                        <div className="lozengies-container font-11 first-lozengies lozengies-r232">
+                          {course.subjects.map(s => <div>{s.name}</div>)}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.moveNext(this.getAnswer());
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SubStep.sub4e1) {
-      return (
-        <div className="font-16 question-4e1">
-          <div className="bold font-32 question-text-3">
-            Types of Vocational Degree
-          </div>
-          <div>
-            Many students go directly into work or apprenticeships after sixth form. But some begin vocational degrees instead.
-          </div>
-          <div>
-            Here are fifteen types of vocational degree. Select up to three that interest you.
-          </div>
-          <div className="d3-table-scroll-container">
-            <div className="d3-table-leaf">
-              {this.renderList("first-b-r-23", this.state.tVocCoursesE1Part1, () => {
-                this.setState({ tVocCoursesE1Part1: [...this.state.tVocCoursesE1Part1] })
-              })}
-              {this.renderList("second-b-r-23", this.state.tVocCoursesE1Part2, () => {
-                this.setState({ tVocCoursesE1Part2: [...this.state.tVocCoursesE1Part2] })
+                );
               })}
             </div>
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.setState({ subStep: SubStep.listeningStart });
+            }}>Continue</button>
           </div>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-            Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
-          </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.saveAnswer();
-            this.setState({ subStep: SubStep.sub4e2 });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SubStep.sub4d2) {
-      return (
-        <div className="question question-step-4d2">
-          <div className="bold font-32 question-text-4">
-            Other Subjects
-          </div>
-          <div className="font-16 margin-bottom-1">
-            In fact, there are many other subjects which will strongly support your university application.
-          </div>
-          <div className="font-16 margin-bottom-1">
-            Now select the three subjects you would choose if you could only choose from the following.
-          </div>
-          <div className="categories-container-4c-r23 non-facilitation-category font-16">
-            <div className="font-16">
-              <div className="text-4c">
-                <div className="bold">Russell Group’s Non-Facilitating Subjects:</div>
-              </div>
-              <div className="checkbox-container-r23">
-                {this.state.nonFacilitatingSubjects.map((subject: any) => <div>
-                  <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                    let selectedCount = this.state.nonFacilitatingSubjects.filter(c => c.selected).length;
-                    if (selectedCount >= 3 && !subject.selected) {
-                      this.setState({ overflowOpen: true });
-                    } else {
-                      subject.selected = !subject.selected;
-                    }
-                    this.setState({ cetegoriesData: this.state.cetegoriesData });
-                  }} />
-                </div>)}
+        );
+      } else if (this.state.subStep === SubStep.sub4e1) {
+        return (
+          <div className="font-16 question-4e1">
+            <div className="bold font-32 question-text-3">
+              Types of Vocational Degree
+            </div>
+            <div>
+              Many students go directly into work or apprenticeships after sixth form. But some begin vocational degrees instead.
+            </div>
+            <div>
+              Here are fifteen types of vocational degree. Select up to three that interest you.
+            </div>
+            <div className="d3-table-scroll-container">
+              <div className="d3-table-leaf">
+                {this.renderList("first-b-r-23", this.state.tVocCoursesE1Part1, () => {
+                  this.setState({ tVocCoursesE1Part1: [...this.state.tVocCoursesE1Part1] })
+                })}
+                {this.renderList("second-b-r-23", this.state.tVocCoursesE1Part2, () => {
+                  this.setState({ tVocCoursesE1Part2: [...this.state.tVocCoursesE1Part2] })
+                })}
               </div>
             </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4e2 });
+            }}>Continue</button>
           </div>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-            Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
-          </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.saveAnswer();
-            let choice = this.props.firstAnswer.answer.choice;
-            if (choice === FirstChoice.ALevel) {
-              this.props.moveNext(this.getAnswer());
-              //this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
-            } else {
-              this.setState({ subStep: SubStep.sub4e1 });
-            }
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SubStep.sub4d1) {
-      return (
-        <div className="question question-step-4d1">
-          <div className="bold font-32 question-text-4">
-            Are some A-levels better than others?
-          </div>
-          <div className="font-16 margin-bottom-1">
-            Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any sixth-form qualification, but its universities may be more likely to make offers to students taking some of the following subjects.
-          </div>
-          <div className="font-16 margin-bottom-1">
-            As an experiment, imagine you could only pick from this list. Which three subjects would you choose?
-          </div>
-          <div className="categories-container-4c-r23 facilitation-category font-16">
-            <div className="font-16">
-              <div className="checkbox-container-r23">
-                {this.state.facilitatingSubjects.map((subject: any) => <div>
-                  <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                    let selectedCount = this.state.facilitatingSubjects.filter(c => c.selected).length;
-                    if (selectedCount >= 3 && !subject.selected) {
-                      this.setState({ overflowOpen: true });
-                    } else {
-                      subject.selected = !subject.selected;
-                    }
-                    this.setState({ cetegoriesData: this.state.cetegoriesData });
-                  }} />
-                </div>)}
-              </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4d2) {
+        return (
+          <div className="question question-step-4d2">
+            <div className="bold font-32 question-text-4">
+              Other Subjects
             </div>
-          </div>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-            Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
-          </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.saveAnswer();
-            this.setState({ subStep: SubStep.sub4d2 });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SubStep.sub4c) {
-      return (
-        <div className="question">
-          <img src="/images/choicesTool/FourthStepR12.png" className="third-step-img fourth-step-img-r12"></img>
-          <div className="bold font-32 question-text-4">
-            Degree Courses
-          </div>
-          <div className="font-16 margin-bottom-1">
-            You have suggested that your eventual degree course might come from one of the following categories.
-          </div>
-          <div className="font-16 margin-bottom-1">
-            Now choose up to five individual courses that particularly appeal to you.
-          </div>
-          <div className="categories-container-4c-r23 font-16">
-            {this.state.categories4bc.map((category, i) => {
-              const catData = this.state.cetegoriesData[category];
-              return (
-                <div key={i} className="font-16">
-                  <div className="text-4c">
-                    <div className="bold">{catData.name}</div>
-                    {catData.description ? <div className="font-14">{catData.description}</div> : ""}
-                  </div>
-                  <div className="checkbox-container-r23">
-                    {catData.subjects.map((subject: any) => <div>
-                      <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
-                        let selected: any[] = [];
-                        this.state.cetegoriesData.forEach((c: any) => {
-                          selected.push(...c.subjects.filter((s: any) => s.selected));
-                        });
-                        if (selected.length >= 5 && !subject.selected) {
-                          this.setState({ overflowOpen: true });
-                          //skip
-                        } else {
-                          subject.selected = !subject.selected;
-                        }
-                        this.setState({ cetegoriesData: this.state.cetegoriesData });
-                      }} />
-                    </div>)}
-                  </div>
+            <div className="font-16 margin-bottom-1">
+              In fact, there are many other subjects which will strongly support your university application.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Now select the three subjects you would choose if you could only choose from the following.
+            </div>
+            <div className="categories-container-4c-r23 non-facilitation-category font-16">
+              <div className="font-16">
+                <div className="text-4c">
+                  <div className="bold">Russell Group’s Non-Facilitating Subjects:</div>
                 </div>
-              );
-            })}
-          </div>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-            Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
-          </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.saveAnswer();
-            this.setState({ subStep: SubStep.sub4d1 });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SubStep.sub4b) {
-      return (
-        <div className="question">
-          <img src="/images/choicesTool/FourthStepR11.png" className="third-step-img fourth-step-img-r11"></img>
-          <div className="bold font-32 question-text-4">
-            Types of Degree Course
-          </div>
-          <div className="font-16 margin-bottom-1">
-            You probably don’t yet know what degree you are going to do, but it makes sense to think about it.<br/>
-            You can’t do some degrees without certain qualifications.
-          </div>
-          <div className="font-16 margin-bottom-1">
-            Below are five broad categories of degree. Select up to three categories that you think you might fall into.
-          </div>
-          <div className="categories-container font-16">
-            <div>
-              {this.renderStemCategory()}
-              {this.renderHumanityCategory()}
-              {this.renderArtsCategory()}
+                <div className="checkbox-container-r23">
+                  {this.state.nonFacilitatingSubjects.map((subject: any) => <div>
+                    <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                      let selectedCount = this.state.nonFacilitatingSubjects.filter(c => c.selected).length;
+                      if (selectedCount >= 3 && !subject.selected) {
+                        this.setState({ overflowOpen: true });
+                      } else {
+                        subject.selected = !subject.selected;
+                      }
+                      this.setState({ cetegoriesData: this.state.cetegoriesData });
+                    }} />
+                  </div>)}
+                </div>
+              </div>
             </div>
-            <div>
-              {this.renderScienceCategory()}
-              {this.renderLanguageCategory()}
-              {this.renderVocationalCategory()}
-            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              let choice = this.props.firstAnswer.answer.choice;
+              if (choice === FirstChoice.ALevel) {
+                this.props.moveNext(this.getAnswer());
+                //this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
+              } else {
+                this.setState({ subStep: SubStep.sub4e1 });
+              }
+            }}>Continue</button>
           </div>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-            Oops! You’ve tried to pick too many
-            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
-          </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4a })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.saveAnswer();
-            this.setState({ subStep: SubStep.sub4c });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SubStep.sub4a) {
-      let choice = FirstChoice.ShowMeAll;
-      if (this.props.firstAnswer && this.props.firstAnswer.answer && this.props.firstAnswer.answer.choice) {
-        choice = this.props.firstAnswer.answer.choice;
-      }
+        );
+      } else if (this.state.subStep === SubStep.sub4d1) {
+        return (
+          <div className="question question-step-4d1">
+            <div className="bold font-32 question-text-4">
+              Are some A-levels better than others?
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any sixth-form qualification, but its universities may be more likely to make offers to students taking some of the following subjects.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              As an experiment, imagine you could only pick from this list. Which three subjects would you choose?
+            </div>
+            <div className="categories-container-4c-r23 facilitation-category font-16">
+              <div className="font-16">
+                <div className="checkbox-container-r23">
+                  {this.state.facilitatingSubjects.map((subject: any) => <div>
+                    <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                      let selectedCount = this.state.facilitatingSubjects.filter(c => c.selected).length;
+                      if (selectedCount >= 3 && !subject.selected) {
+                        this.setState({ overflowOpen: true });
+                      } else {
+                        subject.selected = !subject.selected;
+                      }
+                      this.setState({ cetegoriesData: this.state.cetegoriesData });
+                    }} />
+                  </div>)}
+                </div>
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4d2 });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4c) {
+        return (
+          <div className="question">
+            <img src="/images/choicesTool/FourthStepR12.png" className="third-step-img fourth-step-img-r12"></img>
+            <div className="bold font-32 question-text-4">
+              Degree Courses
+            </div>
+            <div className="font-16 margin-bottom-1">
+              You have suggested that your eventual degree course might come from one of the following categories.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Now choose up to five individual courses that particularly appeal to you.
+            </div>
+            <div className="categories-container-4c-r23 font-16">
+              {this.state.categories4bc.map((category, i) => {
+                const catData = this.state.cetegoriesData[category];
+                return (
+                  <div key={i} className="font-16">
+                    <div className="text-4c">
+                      <div className="bold">{catData.name}</div>
+                      {catData.description ? <div className="font-14">{catData.description}</div> : ""}
+                    </div>
+                    <div className="checkbox-container-r23">
+                      {catData.subjects.map((subject: any) => <div>
+                        <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                          let selected: any[] = [];
+                          this.state.cetegoriesData.forEach((c: any) => {
+                            selected.push(...c.subjects.filter((s: any) => s.selected));
+                          });
+                          if (selected.length >= 5 && !subject.selected) {
+                            this.setState({ overflowOpen: true });
+                            //skip
+                          } else {
+                            subject.selected = !subject.selected;
+                          }
+                          this.setState({ cetegoriesData: this.state.cetegoriesData });
+                        }} />
+                      </div>)}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4d1 });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4b) {
+        return (
+          <div className="question">
+            <img src="/images/choicesTool/FourthStepR11.png" className="third-step-img fourth-step-img-r11"></img>
+            <div className="bold font-32 question-text-4">
+              Types of Degree Course
+            </div>
+            <div className="font-16 margin-bottom-1">
+              You probably don’t yet know what degree you are going to do, but it makes sense to think about it.<br />
+              You can’t do some degrees without certain qualifications.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Below are five broad categories of degree. Select up to three categories that you think you might fall into.
+            </div>
+            <div className="categories-container font-16">
+              <div>
+                {this.renderStemCategory()}
+                {this.renderHumanityCategory()}
+                {this.renderArtsCategory()}
+              </div>
+              <div>
+                {this.renderScienceCategory()}
+                {this.renderLanguageCategory()}
+                {this.renderVocationalCategory()}
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4a })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4c });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4a) {
+        let choice = FirstChoice.ShowMeAll;
+        if (this.props.firstAnswer && this.props.firstAnswer.answer && this.props.firstAnswer.answer.choice) {
+          choice = this.props.firstAnswer.answer.choice;
+        }
 
-      return <FourthStepA
-        moveBack={() => this.setState({ subStep: SubStep.welcome })}
-        moveNext={() => {
-          this.setState({ subStep: SubStep.sub4b });
-        }}
-        choice={choice}
-        onChoiceChanged={choice => {
-          this.props.saveFirstAnswer(choice);
-        }}
-      />;
-    }
+        return <FourthStepA
+          moveBack={() => this.setState({ subStep: SubStep.welcome })}
+          moveNext={() => {
+            this.setState({ subStep: SubStep.sub4b });
+          }}
+          choice={choice}
+          onChoiceChanged={choice => {
+            this.props.saveFirstAnswer(choice);
+          }}
+        />;
+      }
 
     return <FourthStepWelcome
       moveNext={() => this.setState({ subStep: SubStep.sub4a })}

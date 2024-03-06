@@ -135,7 +135,7 @@
 
   .text-container-5432 {
     position: absolute;
-    left: 3.2vw;
+    left: 4.8vw;
     top: 0;
     height: 30vw;
     display: flex;
@@ -2725,31 +2725,16 @@
         top: 1.2vw !important;
       }
     }
+  }
+  
 
-    .subjects-table {
-      .first-column {
-        padding-top: 1vh;
-        padding-bottom: 1vh;
-        width: 38vw;
+  .question-5-speaking {
+    .question-text .hover-area .hover-content {
+      bottom: -0.5vw;
+      width: 28vw;
 
-        .blue-background-s6 {
-          border-radius: 2vw;
-          padding: 0.7vh 0.7vw;
-          color: white;
-          background: #4C608A;
-        }
-      }
-
-      .fourth-column {
-        width: 5vw;
-      }
-
-      .check-box-container {
-        padding-right: 0 !important;
-      }
-
-      .table-body {
-        max-height: calc(100vh - 5.834vw - 23vh - 9vw);
+      .triangle-popup {
+        top: 1.2vw !important;
       }
     }
   }
@@ -2859,6 +2844,12 @@
     }
   }
 
+  .question-6-writing {
+    .boxes-container .check-box-container {
+      max-width: 70vw;
+    }
+  }
+
   .question-6-final {
     position: relative;
 
@@ -2921,6 +2912,7 @@
     .text-r34234 {
       margin-top: 1.5vh;
     }
+    
 
     .absolute-contunue-btn {
       width: 20vw !important;

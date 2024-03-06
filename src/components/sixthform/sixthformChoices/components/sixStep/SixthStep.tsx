@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 
+import map from "components/map";
 import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import SixthStepSeventhTable from "./SeventhTable";
 import SixthStepSixthTable from "./SixthTable";
-import FifthBTable from "./FifthBTable";
-import FourthTable from "./FourthTable";
-import ThirdTable from "./ThirdTable";
-import map from "components/map";
 import SixthStepStart from "./SixthStepStart";
 import SixthStepWelcome from "./SixthStepWelcome";
+import SixStepWriting from "./SixStepWriting";
 
 interface FirstQuestionProps {
   answer: any;
@@ -23,10 +21,8 @@ interface FirstQuestionProps {
 export enum SixthSubStep {
   Welcome,
   Start,
-  third,
-  fourth,
-  fifthA,
-  fifthB,
+  WritingA,
+  WritingB,
   sixth,
   seventh,
   final
@@ -38,20 +34,6 @@ export enum WritingChoice {
   third,
   fourth,
   fifth,
-}
-
-export enum SixStepFourthChoices {
-  InTheClassroom = 1,
-  ICantStand,
-  AtHome,
-  WithMyFriends,
-  MyFriends,
-  IPreferPractical,
-  ILove,
-  ImNot,
-  ILikeTalking,
-  IPreferToListen,
-  IReallyAdmire
 }
 
 export enum SixStepSixthChoices {
@@ -127,9 +109,6 @@ export enum FirstChoice {
 
 interface SixStepState {
   writingChoice: FirstChoice | null;
-  secondChoices: any[];
-  thirdChoices: any[];
-  fourthChoices: any[];
   fifthBChoices: any[];
   sixthChoices: any[];
   seventhChoices: any[];
@@ -147,125 +126,6 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       const { answer } = props.answer;
       writingChoice = answer.writingChoice;
     }
-
-    let secondChoices = [
-      {
-        label: 'News & Current Affairs',
-        choice: null
-      }, {
-        label: 'Nature, Farming & Environment',
-        choice: null
-      }, {
-        label: 'Other Science (e.g. Astronomy, Technology)',
-        choice: null
-      }, {
-        label: 'Art, Architecture & Design',
-        choice: null
-      }, {
-        label: 'Quiz & Puzzle Shows',
-        choice: null
-      }, {
-        label: 'History, Ancient History & Anthropology',
-        choice: null
-      }, {
-        label: 'Vehicles & Motorsport',
-        choice: null
-      }, {
-        label: 'Classic Old Films',
-        choice: null
-      }, {
-        label: 'Sit-coms, Stand-Ups and Funny Stuff',
-        choice: null
-      }, {
-        label: 'Sport',
-        choice: null
-      }, {
-        label: 'Drama & Box Sets',
-        choice: null
-      }, {
-        label: 'Animated Movies',
-        choice: null
-      }, {
-        label: 'Reality Television',
-        choice: null
-      }
-    ]
-
-    let thirdChoices = [
-      {
-        label: 'Current Affairs, News & Talk (e.g. Radio Four)',
-        choice: null
-      }, {
-        label: 'Podcasts (e.g. Joe Rogan)',
-        choice: null
-      }, {
-        label: 'Sport & Sport Talk (e.g. Radio Five)',
-        choice: null
-      }, {
-        label: 'Audiobooks (e.g. Audible)',
-        choice: null
-      }, {
-        label: 'Comedy and Drama (e.g. Radio Four)',
-        choice: null
-      }, {
-        label: 'Mainstream Music (Rock, Rap, Pop & Chart)',
-        choice: null
-      }, {
-        label: 'Music, Folk or Jazz',
-        choice: null
-      }, {
-        label: 'Music, Classical ',
-        choice: null
-      }
-    ]
-
-    let fourthChoices = [
-      {
-        type: SixStepFourthChoices.InTheClassroom,
-        label: 'In the classroom, I enjoy contributing ideas and showing what I know.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.ICantStand,
-        label: 'I can’t stand pretentious people who waffle on about stuff which isn’t relevant.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.AtHome,
-        label: 'At home, my family talk a lot about what’s going on in the world and we have interesting discussions.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.WithMyFriends,
-        label: 'With my friends I mainly gossip and enjoy the chance to banter and have fun.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.MyFriends,
-        label: 'My friends put forward new ideas and challenge my thinking in ways I value.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.IPreferPractical,
-        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more solid answers.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.ILove,
-        label: 'I love the chance to put an argument in a proper debate, and I’m good at undermining other people’s arguments.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.ImNot,
-        label: 'I’m not a confident communicator - my strengths are in other areas.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.ILikeTalking,
-        label: 'I like talking in depth with others about music, books or about documentaries, plays and films we’ve seen.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.IPreferToListen,
-        label: 'I prefer to listen carefully and chip in only when something really needs to be said.',
-        choice: null
-      }, {
-        type: SixStepFourthChoices.IReallyAdmire,
-        label: 'I really admire people who can communicate effectively in foreign languages.',
-        choice: null
-      }
-    ]
 
     let fifthBChoices = [
       {
@@ -537,9 +397,6 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
 
     this.state = {
       writingChoice,
-      secondChoices,
-      thirdChoices,
-      fourthChoices,
       fifthBChoices,
       seventhChoices,
       sixthChoices,
@@ -557,9 +414,6 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     return {
       subStep: this.state.subStep,
       writingChoice: this.state.writingChoice,
-      secondChoices: this.state.secondChoices,
-      thirdChoices: this.state.thirdChoices,
-      fourthChoices: this.state.fourthChoices,
       fifthBChoices: this.state.fifthBChoices,
       seventhChoices: this.state.seventhChoices,
       sixthChoices: this.state.sixthChoices,
@@ -652,37 +506,29 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
           <SixthStepSixthTable seventhChoices={this.state.sixthChoices} onChoiceChange={() => {
             this.setState({ sixthChoices: this.state.sixthChoices });
           }} />
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.fifthB })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.WritingB })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.seventh });
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SixthSubStep.fifthB) {
+    } else if (this.state.subStep === SixthSubStep.WritingB) {
       return (
-        <div className="question question-6 question-6-fifthB">
-          <div className="bold font-32 question-text">
-            <div>
-              Writing
-            </div>
-          </div>
-          <div className="font-16">
-            For each type of writing, say how much of it you do.
-          </div>
-          <FifthBTable seventhChoices={this.state.fifthBChoices} onChoiceChange={() => {
-            this.setState({ fifthBChoices: this.state.fifthBChoices });
-          }} />
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.fifthA })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
+        <SixStepWriting
+          choices={this.state.fifthBChoices}
+          onChange={fifthBChoices => this.setState({ fifthBChoices })}
+          moveBack={() => this.setState({ subStep: SixthSubStep.WritingA })}
+          moveNext={() => {
             this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SixthSubStep.sixth });
-          }}>Continue</button>
-        </div>
+          }}
+        />
       );
-    } else if (this.state.subStep === SixthSubStep.fifthA) {
+    } else if (this.state.subStep === SixthSubStep.WritingA) {
       return (
-        <div className="question question-6">
+        <div className="question question-6 question-6-writing">
+          <img src="/images/choicesTool/Step6R17.png" className="third-step-img step-img-r17"></img>
           <div className="bold font-32 question-text">
             <div>
               Writing
@@ -718,68 +564,10 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
               setChoice={this.setWritingChoice.bind(this)}
             />
           </div>
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.fourth })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.fifthB });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SixthSubStep.fourth) {
-      return (
-        <div className="question question-6 question-6-fourth">
-          <div className="bold font-32 question-text">
-            <div>
-              Speaking
-            </div>
-            <div className="hover-area font-14">
-              <SpriteIcon name="help-circle-r1" className="info-icon" />
-              <div className="hover-content regular">
-                <div className="triangle-popup" />
-                We talk about what we’re interested in, and the way we engage in<br />
-                discussion and take opportunities to speak reflects our character.
-              </div>
-            </div>
-          </div>
-          <div className="font-16">
-            Tell us whether the following statements are true of you.
-          </div>
-          <FourthTable seventhChoices={this.state.fourthChoices} onChoiceChange={() => {
-            this.setState({ fourthChoices: this.state.fourthChoices });
-          }} />
-          <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.third })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.fifthA });
-          }}>Continue</button>
-        </div>
-      );
-    } else if (this.state.subStep === SixthSubStep.third) {
-      return (
-        <div className="question question-6 question-6-third">
-          <div className="bold font-32 question-text">
-            <div>
-              Listening
-            </div>
-            <div className="hover-area font-14">
-              <SpriteIcon name="help-circle-r1" className="info-icon" />
-              <div className="hover-content regular">
-                <div className="triangle-popup" />
-                The average teemager spends more than two hours per<br />
-                day streaming music or podcasts, or listening to radio.
-              </div>
-            </div>
-          </div>
-          <div className="font-16">
-            There is all sorts of content out there. How often do you watch the following?
-          </div>
-          <ThirdTable seventhChoices={this.state.thirdChoices} onChoiceChange={() => {
-            this.setState({ thirdChoices: this.state.thirdChoices });
-          }} />
           <BackButtonSix onClick={() => this.setState({ subStep: SixthSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SixthSubStep.fourth });
+            this.setState({ subStep: SixthSubStep.WritingB });
           }}>Continue</button>
         </div>
       );
@@ -787,7 +575,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       return (
         <SixthStepStart
           moveBack={() => this.setState({ subStep: SixthSubStep.Welcome })}
-          moveNext={() => this.setState({ subStep: SixthSubStep.third })}
+          moveNext={() => this.setState({ subStep: SixthSubStep.WritingA })}
         />
       );
     }

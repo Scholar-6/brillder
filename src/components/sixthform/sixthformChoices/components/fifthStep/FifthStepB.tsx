@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import BackButtonSix from "./BackButtonSix";
+import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
 interface ThirdProps {
