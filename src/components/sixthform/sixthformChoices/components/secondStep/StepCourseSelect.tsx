@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import CheckBoxV2 from "./CheckBox";
-import BackButtonSix from "./BackButtonSix";
+import CheckBoxV2 from "../CheckBox";
+import BackButtonSix from "../BackButtonSix";
 
 interface FirstQuestionProps {
-  answer: any;
-  onChoiceChange(answer: any): void;
+  choice: FirstChoice;
+  onChoiceChange(choice: FirstChoice): void;
   moveNext(): void;
   moveBack(): void;
 }
@@ -21,14 +21,14 @@ interface FirstQuestionState {
   popup: boolean;
 }
 
-class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
+class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState> {
   constructor(props: FirstQuestionProps) {
     super(props);
 
     let choice = null;
 
-    if (props.answer) {
-      choice = props.answer.answer.choice;
+    if (props.choice) {
+      choice = props.choice;
     }
 
     this.state = {
@@ -60,7 +60,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
 
   setChoice(choice: FirstChoice) {
     this.setState({ choice });
-    this.props.onChoiceChange({choice});
+    this.props.onChoiceChange(choice);
   }
 
   render() {
@@ -103,4 +103,4 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
   }
 }
 
-export default FirstQuestion;
+export default StepCourseSelect;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
-import { FirstChoice } from "../FirstStep";
+import { FirstChoice } from "../secondStep/StepCourseSelect";
 import { Dialog } from "@material-ui/core";
 
 interface FourthAProps {

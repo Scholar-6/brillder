@@ -9,7 +9,7 @@ import {
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
-import FirstStep from "./components/FirstStep";
+import FirstStep from "./components/firstStep/FirstStep";
 import SecondStep from "./components/secondStep/SecondStep";
 import ThirdStep from "./components/thirdStep/ThirdStep";
 import FourthStep from "./components/fourthStep/FourthStep";
@@ -22,7 +22,6 @@ import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
 import authRoutes from "../login/routes";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
-import WelcomePage from "./components/welcomePage/WelcomePage";
 
 
 interface UserProfileProps {
@@ -33,8 +32,7 @@ interface UserProfileProps {
 }
 
 export enum Pages {
-  Welcome = 0,
-  Question1,
+  Question1 = 1,
   Question2,
   Question3,
   Question4,
@@ -73,7 +71,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     let subjectType = SubjectType.AllSubjects;
 
-    let page = Pages.Welcome;
+    let page = Pages.Question1;
 
     // if step in params load from cash
     if (this.props.match.params.step) {
@@ -105,14 +103,20 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     const subjects = await getSixthformSubjects();
     const answers = await getSixthformAnswers();
 
-    let firstAnswer = null;
+    let secondAnswer = null;
     if (answers) {
       for (let answer of answers) {
         answer.answer = JSON.parse(answer.answer);
       }
-      firstAnswer = answers.find(a => a.step === Pages.Question1);
-      if (firstAnswer) {
-        subjectType = firstAnswer.answer.choice;
+      secondAnswer = answers.find(a => a.step === Pages.Question2);
+      if (secondAnswer && secondAnswer.answer.subjectType) {
+        subjectType = secondAnswer.answer.subjectType;
+      } else {
+        secondAnswer = {
+          answer: {
+            subjectType: SubjectType.AllSubjects
+          }
+        }
       }
     }
 
@@ -123,9 +127,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
-
-      await this.saveFirstAnswer({ choice: subjectType });
-      //this.setState({ subjects: this.sortByScore(subjects), allSubjects: this.sortByScore(subjects) });
+      if (secondAnswer) {
+        await this.saveSecondAnswer(secondAnswer.answer);
+      }
     } else {
       this.props.history.push(authRoutes.SignUp);
     }
@@ -177,7 +181,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result && result.result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
-        answerR1.answer.choice = answer.choice;
+        answerR1.answer.email = answer.email;
+        answerR1.answer.emailCorrected = answer.emailCorrected;
+        answerR1.answer.firstName = answer.firstName;
+        answerR1.answer.lastName = answer.lastName;
+        answerR1.answer.nameCorrected = answer.nameCorrected;
+        answerR1.answer.subStep = answer.subStep;
+        answerR1.answer.dreamChoices = answer.dreamChoices;
+        answerR1.answer.enthusiasmChoices = answer.enthusiasmChoices;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
         this.state.answers.push(result.result);
@@ -192,6 +203,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
         answerR1.answer.otherChoice = answer.otherChoice;
+        answerR1.answer.subjectType = answer.subjectType;
         answerR1.answer.subStep = answer.subStep;
         answerR1.answer.currentSchool = answer.currentSchool;
         answerR1.answer.schoolName = answer.schoolName;
@@ -353,7 +365,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderSidebarCheckbox(currentSubjectType: SubjectType, label: string) {
     return (
       <label className="check-box-container container font-16" onClick={() => {
-        this.saveFirstAnswer({ choice: currentSubjectType });
+        let answer = this.state.answers.find(a => a.step === Pages.Question2);
+        if (!answer) {
+          answer = { answer: {subjectType: currentSubjectType} };
+        } else {
+          answer.answer.subjectType = currentSubjectType;
+        }
+        this.saveSecondAnswer(answer.answer);
       }}>
         {label}
         <span className={`checkmark ${currentSubjectType === this.state.subjectType ? "checked" : ""}`}></span>
@@ -366,7 +384,20 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       this.parseAnswer(result, answer, Pages.Question1);
       this.setState({
-        subjects: this.filterBySubjectType(answer.choice, result.subjectScores), allSubjects: result.subjectScores, subjectType: answer.choice
+        subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores),
+        allSubjects: result.subjectScores
+      });
+    }
+  }
+
+  async saveSecondAnswer(answer: any) {
+    const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
+    if (result) {
+      this.parseAnswer2(result, answer, Pages.Question2);
+      this.setState({
+        subjects: this.filterBySubjectType(answer.subjectType, result.subjectScores),
+        allSubjects: result.subjectScores,
+        subjectType: answer.subjectType
       });
     }
   }
@@ -440,133 +471,30 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCourseContent() {
-    if (this.state.page === Pages.Welcome) {
-      return (
-        <WelcomePage moveNext={() => this.setState({ page: Pages.Question1 })} />
-      );
-    } else if (this.state.page === Pages.Question1) {
+    if (this.state.page === Pages.Question1) {
       return <FirstStep
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
-        onChoiceChange={(answer: any) => this.saveFirstAnswer(answer)}
+        saveAnswer={(answer: any) => this.saveFirstAnswer(answer)}
         moveNext={() => this.setState({ page: Pages.Question2 })}
-        moveBack={() => this.setState({ page: Pages.Welcome })}
       />
     } else if (this.state.page === Pages.Question2) {
       return <SecondStep
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
+        saveAnswer={async (answer: any) => {
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
+          if (result) {
+            this.parseAnswer2(result, answer, Pages.Question2);
+            this.setState({
+              subjects: this.filterBySubjectType(answer.subjectType, result.subjectScores),
+              allSubjects: result.subjectScores,
+              subjectType: answer.subjectType
+            });
+          }
+        }}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
           if (result) {
             let subjects = this.state.subjects;
-            if (answer && answer.schoolName) {
-              let name = answer.schoolName;
-              if (name === "Hereford Sixth Form College") {
-                subjects = subjects.filter(s =>
-                  s.name === 'Biology' ||
-                  s.name === 'Business' ||
-                  s.name === 'Chemistry' ||
-                  s.name === 'Classical Civilisation' ||
-                  s.name === 'Computer Science' ||
-                  s.name === 'Drama & Theatre Studies' ||
-                  s.name === 'Economics' ||
-                  s.name === 'English Language' ||
-                  s.name === 'English Literature' ||
-                  s.name === 'Environmental Science' ||
-                  s.name === 'Fine Art' ||
-                  s.name === 'French' ||
-                  s.name === 'Further Mathematics' ||
-                  s.name === 'Geography' ||
-                  s.name === 'Geology' ||
-                  s.name === 'German' ||
-                  s.name === 'History' ||
-                  s.name === 'History of Art' ||
-                  s.name === 'Law' ||
-                  s.name === 'Mathematics' ||
-                  s.name === 'Media Studies' ||
-                  s.name === 'Music' ||
-                  s.name === 'Philosophy' ||
-                  s.name === 'Photography' ||
-                  s.name === 'Physical Education' ||
-                  s.name === 'Physics' ||
-                  s.name === 'Politics' ||
-                  s.name === 'Psychology' ||
-                  s.name === 'Sociology' ||
-                  s.name === 'Spanish' ||
-                  s.name === 'Statistics' ||
-
-                  s.name === 'Applied Maths (Core & Certificate)' ||
-                  s.name === 'Applied Psychology' ||
-                  s.name === 'Creative Digital Media' ||
-                  s.name === 'Criminology' ||
-                  s.name === 'Dance (Vocational)' ||
-                  s.name === 'Engineering' ||
-                  s.name === 'Enterprise & Entrepreneurship' ||
-                  s.name === 'eSports & Computer Games' ||
-                  s.name === 'Forensic Science' ||
-                  s.name === 'Health & Social Care' ||
-                  s.name === 'Information Technology' ||
-                  s.name === 'Musical Theatre' ||
-                  s.name === 'Performing Arts (Acting)' ||
-                  s.name === 'Sport & Exercise Science' ||
-                  s.name === 'Sporting Excellence' ||
-                  s.name === 'Travel & Tourism'
-                );
-              } else if (name === "Worcester Sixth Form College") {
-                subjects = subjects.filter(s =>
-                  s.name === 'Accounting' ||
-                  s.name === 'Bengali' ||
-                  s.name === 'Biology' ||
-                  s.name === 'Business' ||
-                  s.name === 'Chemistry' ||
-                  s.name === 'Classical Civilisation' ||
-                  s.name === 'Computer Science' ||
-                  s.name === 'Dance' ||
-                  s.name === 'Drama & Theatre Studies' ||
-                  s.name === 'Economics' ||
-                  s.name === 'English Language' ||
-                  s.name === 'English Literature' ||
-                  s.name === 'Environmental Science' ||
-                  s.name === 'Film Studies' ||
-                  s.name === 'Fine Art' ||
-                  s.name === 'French' ||
-                  s.name === 'Further Mathematics' ||
-                  s.name === 'Geography' ||
-                  s.name === 'Geology' ||
-                  s.name === 'German' ||
-                  s.name === 'Graphic Communication' ||
-                  s.name === 'History' ||
-                  s.name === 'Law' ||
-                  s.name === 'Mathematics' ||
-                  s.name === 'Media Studies' ||
-                  s.name === 'Music' ||
-                  s.name === 'Music Technology' ||
-                  s.name === 'Philosophy' ||
-                  s.name === 'Photography' ||
-                  s.name === 'Physical Education' ||
-                  s.name === 'Physics' ||
-                  s.name === 'Politics' ||
-                  s.name === 'Psychology' ||
-                  s.name === 'Sociology' ||
-                  s.name === 'Spanish' ||
-                  s.name === 'Urdu' ||
-
-                  s.name === 'Applied Business' ||
-                  s.name === 'Applied Maths (Core & Certificate)' ||
-                  s.name === 'Childcare & Child Development (Education & Early Years)' ||
-                  s.name === 'Criminology' ||
-                  s.name === 'Engineering' ||
-                  s.name === 'Food Science & Nutrition' ||
-                  s.name === 'Health & Social Care' ||
-                  s.name === 'Information Technology' ||
-                  s.name === 'Performing Arts (Acting)' ||
-                  s.name === 'Sport & Exercise Science' ||
-                  s.name === 'Travel & Tourism' ||
-
-                  s.name === 'Education & Early Years' ||
-                  s.name === 'Health & Science'
-                );
-              }
-            }
             this.parseAnswer2(result, answer, Pages.Question2);
             this.setState({ page: Pages.Question3, subjects: subjects });
           }
@@ -581,11 +509,118 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       />
     } else if (this.state.page === Pages.Question3) {
       return <ThirdStep
-        subjects={this.state.allSubjects}
-        firstAnswer={this.state.answers.find(a => a.step === Pages.Question1)}
-        secondAnswer={this.state.answers.find(a => a.step === Pages.Question2)}
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        saveThirdAnswer={async (answer: any) => {
+        saveAnswer={async (answer: any) => {
+          let subjects = this.state.subjects;
+          if (answer && answer.schoolName) {
+            let name = answer.schoolName;
+            if (name === "Hereford Sixth Form College") {
+              subjects = subjects.filter(s =>
+                s.name === 'Biology' ||
+                s.name === 'Business' ||
+                s.name === 'Chemistry' ||
+                s.name === 'Classical Civilisation' ||
+                s.name === 'Computer Science' ||
+                s.name === 'Drama & Theatre Studies' ||
+                s.name === 'Economics' ||
+                s.name === 'English Language' ||
+                s.name === 'English Literature' ||
+                s.name === 'Environmental Science' ||
+                s.name === 'Fine Art' ||
+                s.name === 'French' ||
+                s.name === 'Further Mathematics' ||
+                s.name === 'Geography' ||
+                s.name === 'Geology' ||
+                s.name === 'German' ||
+                s.name === 'History' ||
+                s.name === 'History of Art' ||
+                s.name === 'Law' ||
+                s.name === 'Mathematics' ||
+                s.name === 'Media Studies' ||
+                s.name === 'Music' ||
+                s.name === 'Philosophy' ||
+                s.name === 'Photography' ||
+                s.name === 'Physical Education' ||
+                s.name === 'Physics' ||
+                s.name === 'Politics' ||
+                s.name === 'Psychology' ||
+                s.name === 'Sociology' ||
+                s.name === 'Spanish' ||
+                s.name === 'Statistics' ||
+
+                s.name === 'Applied Maths (Core & Certificate)' ||
+                s.name === 'Applied Psychology' ||
+                s.name === 'Creative Digital Media' ||
+                s.name === 'Criminology' ||
+                s.name === 'Dance (Vocational)' ||
+                s.name === 'Engineering' ||
+                s.name === 'Enterprise & Entrepreneurship' ||
+                s.name === 'eSports & Computer Games' ||
+                s.name === 'Forensic Science' ||
+                s.name === 'Health & Social Care' ||
+                s.name === 'Information Technology' ||
+                s.name === 'Musical Theatre' ||
+                s.name === 'Performing Arts (Acting)' ||
+                s.name === 'Sport & Exercise Science' ||
+                s.name === 'Sporting Excellence' ||
+                s.name === 'Travel & Tourism'
+              );
+            } else if (name === "Worcester Sixth Form College") {
+              subjects = subjects.filter(s =>
+                s.name === 'Accounting' ||
+                s.name === 'Bengali' ||
+                s.name === 'Biology' ||
+                s.name === 'Business' ||
+                s.name === 'Chemistry' ||
+                s.name === 'Classical Civilisation' ||
+                s.name === 'Computer Science' ||
+                s.name === 'Dance' ||
+                s.name === 'Drama & Theatre Studies' ||
+                s.name === 'Economics' ||
+                s.name === 'English Language' ||
+                s.name === 'English Literature' ||
+                s.name === 'Environmental Science' ||
+                s.name === 'Film Studies' ||
+                s.name === 'Fine Art' ||
+                s.name === 'French' ||
+                s.name === 'Further Mathematics' ||
+                s.name === 'Geography' ||
+                s.name === 'Geology' ||
+                s.name === 'German' ||
+                s.name === 'Graphic Communication' ||
+                s.name === 'History' ||
+                s.name === 'Law' ||
+                s.name === 'Mathematics' ||
+                s.name === 'Media Studies' ||
+                s.name === 'Music' ||
+                s.name === 'Music Technology' ||
+                s.name === 'Philosophy' ||
+                s.name === 'Photography' ||
+                s.name === 'Physical Education' ||
+                s.name === 'Physics' ||
+                s.name === 'Politics' ||
+                s.name === 'Psychology' ||
+                s.name === 'Sociology' ||
+                s.name === 'Spanish' ||
+                s.name === 'Urdu' ||
+
+                s.name === 'Applied Business' ||
+                s.name === 'Applied Maths (Core & Certificate)' ||
+                s.name === 'Childcare & Child Development (Education & Early Years)' ||
+                s.name === 'Criminology' ||
+                s.name === 'Engineering' ||
+                s.name === 'Food Science & Nutrition' ||
+                s.name === 'Health & Social Care' ||
+                s.name === 'Information Technology' ||
+                s.name === 'Performing Arts (Acting)' ||
+                s.name === 'Sport & Exercise Science' ||
+                s.name === 'Travel & Tourism' ||
+
+                s.name === 'Education & Early Years' ||
+                s.name === 'Health & Science'
+              );
+            }
+          }
           await this.saveThirdAnswer(answer);
         }}
         moveNext={async (answer: any) => {
@@ -596,6 +631,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           }
         }}
         moveBack={async (answer: any) => {
+          console.log('move back')
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
           if (result) {
             this.parseAnswer3(result, answer, Pages.Question3);
@@ -850,7 +886,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           </div>
           <div className="sorted-row">
             <div className="sort-and-filter-container">
-              {this.state.page < Pages.Question1 &&
+              {this.state.page <= Pages.Question1 &&
                 <div className="subjects-select-box">
                   <div className="bold sidebar-title font-18">Show me:</div>
                   {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-levels Only')}
@@ -858,7 +894,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
                 </div>}
               <div className="font-18 ranking-label">Your subject rankings</div>
-              <div className={`subjects-scrollbar font-16 ${this.state.page >= Pages.Question1 ? 'big-subjects-sidebar' : ''}`}>
+              <div className={`subjects-scrollbar font-16 ${this.state.page > Pages.Question1 ? 'big-subjects-sidebar' : ''}`}>
                 {this.state.subjects.map((subject, i) => {
                   return <div key={i} className="subject-box-r1" onMouseEnter={(event) => {
                     if (this.state.popupTimeout) {

@@ -6,14 +6,14 @@ interface WelcomeProps {
   moveBack(): void;
 }
 
-const ThirdStepWelcome: React.FC<WelcomeProps> = (props) => {
+const StepTypeCourse: React.FC<WelcomeProps> = (props) => {
   return (
-    <div className="question">
-      <img src="/images/choicesTool/Step2background.png" className="step2background-img" />
+    <div className="question question-6-entusiasm-start">
+      <img src="/images/choicesTool/Step2backgroundR2.png" className="step2background-img" />
       <div className="text-container-5432">
         <div>
-          <div className="font-20">You’ve completed Step One, now let’s look at:</div>
-          <div className="font-48 bold s-text-323">INSTITUTIONS</div>
+          <div className="font-16">You’ve completed Step One, now let’s look at</div>
+          <div className="font-32 bold s-text-323">TYPES OF COURSE</div>
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />
@@ -25,4 +25,4 @@ const ThirdStepWelcome: React.FC<WelcomeProps> = (props) => {
   );
 }
 
-export default ThirdStepWelcome;
+export default StepTypeCourse;

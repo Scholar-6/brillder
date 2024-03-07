@@ -8,10 +8,13 @@ import { getSixthformSchools } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";
 import ReadingV1, { ReadingChoice } from "./ReadingV1";
 import ReadingV2, { ReadingChoiceV2 } from "./ReadingV2";
+import StepTypeCourse from "./StepTypeCourse";
+import StepCourseSelect, { FirstChoice } from "./StepCourseSelect";
 
 
 enum SubStep {
   Intro,
+  CourseSelect,
   First,
   Second,
   Reading,
@@ -38,12 +41,14 @@ enum SixthformChoice {
 
 interface SecondQuestionProps {
   answer: any;
+  saveAnswer(answer: any): void;
   moveNext(answer: any): void;
   moveBack(answer: any): void;
 }
 
 interface SecondQuestionState {
   choice: null | SecondChoice;
+  subjectType: FirstChoice;
   otherChoice: null | OtherChoice;
   currentSchool: string;
   subStep: SubStep;
@@ -60,6 +65,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     super(props);
 
     let choice = null;
+    let subjectType = FirstChoice.ShowMeAll;
     let otherChoice = null;
     let currentSchool = '';
     let sixthformChoice = null;
@@ -82,10 +88,12 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
       if (answer.readingChoicesV2) {
         readingChoicesV2 = answer.readingChoicesV2;
       }
+      subjectType = answer.subjectType;
     }
 
     this.state = {
       choice,
+      subjectType,
       otherChoice,
       subStep,
       schoolId: 0,
@@ -211,9 +219,10 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
     );
   }
 
-  moveBack() {
-    this.props.moveBack({
+  getAnswer() {
+    return {
       choice: this.state.choice,
+      subjectType: this.state.subjectType,
       subStep: this.state.subStep,
       otherChoice: this.state.otherChoice,
       currentSchool: this.state.currentSchool,
@@ -222,47 +231,39 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
       readingChoice: this.state.readingChoice,
       readingChoicesV2: this.state.readingChoicesV2
-    });
+    }
+  }
+
+  moveBack() {
+    this.props.moveBack(this.getAnswer());
   }
 
   moveNext() {
-    this.props.moveNext({
-      choice: this.state.choice,
-      subStep: this.state.subStep,
-      otherChoice: this.state.otherChoice,
-      currentSchool: this.state.currentSchool,
-      sixthformChoice: this.state.sixthformChoice,
-      schoolName: this.state.schoolName,
-
-      readingChoice: this.state.readingChoice,
-      readingChoicesV2: this.state.readingChoicesV2
-    });
+    this.props.moveNext(this.getAnswer());
   }
 
   render() {
     let disabled = false;
 
     if (this.state.subStep === SubStep.Intro) {
-      return (
-        <div className="question">
-          <img src="/images/choicesTool/Step2background.png" className="step2background-img" />
-          <div className="text-container-5432">
-            <div>
-              <div className="font-20">You’ve completed Step One, now let’s look at:</div>
-              <div className="font-24">Step 2</div>
-              <div className="font-48 bold">INSTITUTIONS</div>
-            </div>
-          </div>
-          <BackButtonSix onClick={() => this.moveBack()} />
-          <button
-            className="absolute-contunue-btn font-24"
-            onClick={() => this.setState({ subStep: SubStep.First })}
-          >Begin step 2</button>
-        </div>
-      );
-    }
-
-    if (this.state.subStep === SubStep.ReadingV2) {
+      return <StepTypeCourse
+        moveBack={() => this.moveBack()}
+        moveNext={() => this.setState({ subStep: SubStep.CourseSelect })}
+      />
+    } else if (this.state.subStep === SubStep.CourseSelect) {
+      return <StepCourseSelect
+        choice={this.state.subjectType}
+        onChoiceChange={(subjectType: FirstChoice) => {
+          this.setState({ subjectType });
+          const answer = this.getAnswer();
+          answer.subjectType = subjectType;
+          console.log('save subject type', answer);
+          this.props.saveAnswer(answer);
+        }}
+        moveNext={() => this.setState({ subStep: SubStep.Reading })}
+        moveBack={() => this.setState({ subStep: SubStep.Intro })}
+      />
+    } else if (this.state.subStep === SubStep.ReadingV2) {
       return (
         <ReadingV2
           readingChoicesV2={this.state.readingChoicesV2}
@@ -276,7 +277,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
         <ReadingV1
           readingChoice={this.state.readingChoice}
           onChange={readingChoice => this.setState({ readingChoice })}
-          moveBack={() => this.setState({ subStep: SubStep.First })}
+          moveBack={() => this.setState({ subStep: SubStep.CourseSelect })}
           moveNext={() => {
             if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
               this.setState({ subStep: SubStep.ReadingV2 })
