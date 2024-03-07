@@ -10,15 +10,15 @@ export enum WatchingChoice {
 }
 
 interface ThirdProps {
-  watchingChoices: any[];
-  onChange(watchingChoices: any[]): void;
+  listeningChoices: any[];
+  onChange(listeningChoices: any[]): void;
   moveBack(): void;
   moveNext(): void;
 }
 
-const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
+const FourthStepListening: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
-  let currentStep = props.watchingChoices[step];
+  let currentStep = props.listeningChoices[step];
 
   const renderBtn = (choice: WatchingChoice, realChoice: WatchingChoice, className: string, label: string) => {
     const isEmpty = choice === null;
@@ -28,31 +28,30 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
         className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
         onClick={() => {
           currentStep.choice = realChoice;
-          props.onChange(props.watchingChoices);
+          props.onChange(props.listeningChoices);
         }}
-        dangerouslySetInnerHTML={{__html: label}}
+        dangerouslySetInnerHTML={{ __html: label }}
       />
     )
   }
 
   return (
-    <div className="question question-6 question-3-watching">
+    <div className="question question-6 question-3-watching question-6-third">
       <div className="font-16 question-text">
         <div>
-          How often do you watch the following?
+          How often do you listen to the following?
         </div>
         <div className="hover-area font-14">
           <SpriteIcon name="help-circle-r1" className="info-icon" />
           <div className="hover-content regular">
             <div className="triangle-popup" />
-            What you choose to watch reflects your interests and, to some<br />
-            extent, your capacity to challenge yourself with content which might<br />
-            seek to inform or educate as well as simply entertain.
+            The average teemager spends more than two hours per<br />
+            day streaming music or podcasts, or listening to radio.
           </div>
         </div>
       </div>
-      <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 icon="watching-start" step={step} total={props.watchingChoices.length} subjectDescription={currentStep.label} />
+      <img src="/images/choicesTool/FourthStepListening.png" className="step3watching-img-v2" />
+      <ProgressBarStep6 icon="listening-sixth" step={step} total={props.listeningChoices.length} subjectDescription={currentStep.label} />
       <div className="btns-container-r32 font-20 bold flex-center">
         {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NEVER OR<br/> HARDLY EVER")}
         {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SOMETIMES")}
@@ -68,7 +67,7 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
       <button
         className="absolute-contunue-btn font-24"
         onClick={() => {
-          if (step >= props.watchingChoices.length - 1) {
+          if (step >= props.listeningChoices.length - 1) {
             props.moveNext()
           } else {
             setStep(step + 1);
@@ -78,4 +77,4 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
   );
 }
 
-export default ThirdStepWatching;
+export default FourthStepListening;

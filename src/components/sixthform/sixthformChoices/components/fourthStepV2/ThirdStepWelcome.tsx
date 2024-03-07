@@ -13,7 +13,6 @@ const ThirdStepWelcome: React.FC<WelcomeProps> = (props) => {
       <div className="text-container-5432">
         <div>
           <div className="font-20">You’ve completed Step Two, now let’s look at:</div>
-          <div className="font-24">Step 3</div>
           <div className="font-48 bold">SUBJECTS</div>
         </div>
       </div>
