@@ -399,6 +399,19 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       }
     ];
 
+    if (props.answer && props.answer.answer) {
+      const {answer} = props.answer;
+      if (answer.fifthBChoices) {
+        fifthBChoices = answer.fifthBChoices;
+      }
+      if (answer.sixthChoices) {
+        sixthChoices = answer.sixthChoices;
+      }
+      if (answer.seventhChoices) {
+        seventhChoices = answer.seventhChoices;
+      }
+    }
+
     this.state = {
       writingChoice,
       fifthBChoices,
@@ -508,7 +521,7 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
       return <SixStepEntusiasm
         choices={this.state.sixthChoices}
         onChange={sixthChoices => this.setState({ sixthChoices })}
-        moveBack={() => this.setState({ subStep: SixthSubStep.WritingB })}
+        moveBack={() => this.setState({ subStep: SixthSubStep.EnthusiasmsStart })}
         moveNext={() => {
           this.props.saveAnswer(this.getAnswer());
           this.setState({ subStep: SixthSubStep.DreamsStart });
@@ -517,7 +530,13 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
     } else if (this.state.subStep === SixthSubStep.EnthusiasmsStart) {
       return (
         <SixStepEntusiasmStart
-          moveBack={() => this.setState({ subStep: SixthSubStep.WritingB })}
+          moveBack={() => {
+            if (this.state.writingChoice === WritingChoice.first || this.state.writingChoice === WritingChoice.second) {
+              this.setState({ subStep: SixthSubStep.WritingB });
+            } else {
+              this.setState({ subStep: SixthSubStep.WritingA })
+            }
+          }}
           moveNext={() => this.setState({ subStep: SixthSubStep.Enthusiasms })}
         />
       );
