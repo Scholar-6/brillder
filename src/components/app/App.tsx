@@ -85,6 +85,7 @@ import BrickPersonalLinks from 'components/admin/brickLinks/BrickPersonalLinks';
 import QuickAssign from 'components/play/quickAssign/QuickAssign';
 import SixthFormChoices from 'components/sixthform/sixthformChoices/SixthformChoices';
 import SixthformOutcome from 'components/sixthform/sixthformOutcome/SixthformOutcome';
+import AllUsersRouteSixthform from './AllUsersRouteSixthform';
 
 
 interface AppProps {
@@ -412,12 +413,13 @@ const App: React.FC<AppProps> = props => {
 
             <Route path={map.TermsPage} component={PublicTerms} />
             <Route path={`/${map.QuickassignPrefix}/:code`} component={QuickAssign} />
-            <Route path={map.SixthformChoices + '/:step'} component={SixthFormChoices} />
-            <Route path={map.SixthformChoices} component={SixthFormChoices} />
-            <AllUsersRoute path={map.SixthformOutcome} component={SixthformOutcome} />
-            <AllUsersRoute path={map.SixthformTaster} component={SixthformOutcome} />
-
+           
+            <AllUsersRouteSixthform path={map.SixthformChoices + '/:step'} component={SixthFormChoices} />
+            <AllUsersRouteSixthform path={map.SixthformChoices} component={SixthFormChoices} />
+            <AllUsersRouteSixthform path={map.SixthformOutcome} component={SixthformOutcome} />
+            <AllUsersRouteSixthform path={map.SixthformTaster} component={SixthformOutcome} />
             <Route path={map.SixthformAuth} component={SixthformAuth} />
+            
             <Route component={AuthRedirectRoute} />
           </Switch>
           <VersionLabel />
