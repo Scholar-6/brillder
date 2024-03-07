@@ -2360,6 +2360,7 @@
     .course-box-r-23 {
       padding-top: 2vh;
       padding-bottom: 2vh;
+      padding-right: 0.6vw;
       margin-top: 0.4vh;
       margin-bottom: 0.4vh;
       border-radius: 0.4vw;
@@ -3110,12 +3111,14 @@
 
   .MuiPaper-root {
     padding: 1vw;
+    border-radius: 0.5vw;
     color: var(--theme-dark-blue);
 
     .btn {
       cursor: pointer;
       color: white;
       text-align: center;
+      margin-top: 2vh;
       background: var(--theme-green);
 
       &:hover {

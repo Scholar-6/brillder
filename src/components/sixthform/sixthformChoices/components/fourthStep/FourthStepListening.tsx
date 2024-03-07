@@ -53,9 +53,9 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
       <img src="/images/choicesTool/FourthStepListening.png" className="step3watching-img-v2" />
       <ProgressBarStep6 icon="listening-sixth" step={step} total={props.listeningChoices.length} subjectDescription={currentStep.label} />
       <div className="btns-container-r32 font-20 bold flex-center">
-        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NOT REALLY")}
-        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SORT OF")}
-        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "DEFINITELY")}
+        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NEVER OR<br/> HARDLY EVER")}
+        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SOMETIMES")}
+        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "A LOT")}
       </div>
       <BackButtonSix onClick={() => {
         if (step <= 0) {

@@ -76,8 +76,6 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
       name: "require vocational training but recruit from a wide range of post-16 and degree courses"
     }];
 
-    careers = shuffle(careers);
-
     if (this.props.careers && this.props.careers.length > 0) {
       careers = this.props.careers;
     }

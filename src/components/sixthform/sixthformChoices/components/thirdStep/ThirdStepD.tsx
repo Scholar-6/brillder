@@ -3,6 +3,7 @@ import { SixthformSubject } from "services/axios/sixthformChoices";
 import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { Dialog } from "@material-ui/core";
 
 export enum ThirdStepDChoice {
   First,
@@ -42,6 +43,7 @@ interface ThirdQuestionState {
   nothing: boolean;
   tLevelCoursesPart1: TLevelCourse[];
   tLevelCoursesPart2: TLevelCourse[];
+  overflowOpen: boolean;
 }
 
 class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
@@ -128,7 +130,8 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       nothing: false,
       tLevelCoursesPart1: tLevelCourses1,
       tLevelCoursesPart2: tLevelCourses2,
-      subStep: ThirdStepDSubStep.Start
+      subStep: ThirdStepDSubStep.Start,
+      overflowOpen: false
     }
   }
 
@@ -197,6 +200,8 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                       this.addSelectedSubject(selected, this.state.tLevelCoursesPart2);
                       if (selected.length < 3) {
                         subject.checked = true;
+                      } else {
+                        this.setState({ overflowOpen: true });
                       }
                     } else {
                       subject.checked = false;
@@ -301,6 +306,10 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
               </div>
             </div>
           </div>
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+            Oops! You’ve tried to pick too many.
+            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+          </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.setState({ subStep: ThirdStepDSubStep.LastStep });
