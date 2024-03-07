@@ -12,7 +12,6 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FirstStep from "./components/firstStep/FirstStep";
 import SecondStep from "./components/secondStep/SecondStep";
 import ThirdStep from "./components/thirdStep/ThirdStep";
-import FourthStep from "./components/fourthStep/FourthStep";
 import FifthStep from "./components/fifthStep/FifthStep";
 import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
@@ -22,6 +21,7 @@ import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
 import authRoutes from "../login/routes";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
+import FourthStep from "./components/fourthStep/FourthStep";
 
 
 interface UserProfileProps {
@@ -640,10 +640,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }} />
     } else if (this.state.page === Pages.Question4) {
       let firstAnswer = this.state.answers.find(a => a.step === Pages.Question1);
+      let secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
       return <FourthStep
         firstAnswer={firstAnswer}
+        secondAnswer={secondAnswer}
+        subjects={this.state.subjects}
         answer={this.state.answers.find(a => a.step === Pages.Question4)}
-        saveAnswer={answer => {
+        saveThirdAnswer={answer => {
           this.saveFourthAnswer(answer);
         }}
         moveNext={answer => {
@@ -654,7 +657,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.saveFourthAnswer(answer);
           this.setState({ page: Pages.Question3 });
         }}
-        saveFirstAnswer={choice => this.saveFirstAnswer({ choice })}
       />
     } else if (this.state.page === Pages.Question5) {
       return <FifthStep
@@ -670,6 +672,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.saveFifthAnswer(answer);
           this.setState({ page: Pages.Question4 });
         }}
+        //saveFirstAnswer={choice => this.saveFirstAnswer({ choice })}
       />
     } else if (this.state.page === Pages.Question6) {
       return <SixthStep
