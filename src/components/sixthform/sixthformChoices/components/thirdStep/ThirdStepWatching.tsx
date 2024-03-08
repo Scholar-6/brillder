@@ -29,6 +29,11 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
         onClick={() => {
           currentStep.choice = realChoice;
           props.onChange(props.watchingChoices);
+          if (step >= props.watchingChoices.length - 1) {
+            props.moveNext()
+          } else {
+            setStep(step + 1);
+          }
         }}
         dangerouslySetInnerHTML={{__html: label}}
       />
@@ -67,13 +72,7 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
       }} />
       <button
         className="absolute-contunue-btn font-24"
-        onClick={() => {
-          if (step >= props.watchingChoices.length - 1) {
-            props.moveNext()
-          } else {
-            setStep(step + 1);
-          }
-        }}>Continue</button>
+        onClick={props.moveNext}>Skip</button>
     </div>
   );
 }

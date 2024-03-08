@@ -52,6 +52,8 @@ interface ThirdProps {
 
 interface ThirdQuestionState {
   showMinWarning: boolean;
+  showMathWarning: boolean;
+  seenMathWarining: boolean;
 
   subStep: ThirdSubStep;
   typedSubject: string;
@@ -158,6 +160,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     this.state = {
       showMinWarning: false,
+      showMathWarning: false,
+      seenMathWarining: false,
 
       subStep,
       typedSubject: '',
@@ -322,8 +326,14 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         if (disabled) {
           this.setState({ showMinWarning: true });
         } else {
-          this.props.saveThirdAnswer(this.getAnswer());
-          this.setState({ subStep: ThirdSubStep.Second });
+          let mathFound = this.state.subjectSelections.find(s => s.name === "Maths" || s.name === "English Language");
+          if (!mathFound && !this.state.seenMathWarining) {
+            disabled = true;
+            this.setState({ showMathWarning: true });
+          } else {
+            this.props.saveThirdAnswer(this.getAnswer());
+            this.setState({ subStep: ThirdSubStep.Second });
+          }
         }
       }}>Continue</button>
     );
@@ -817,18 +827,18 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             </div>
           </div>
           {this.state.showMinWarning &&
-          <div className="warning-popup-s434 font-16 absolute-popup-s4-r absolute-popup-s4-r2">
-            <SpriteIcon name="cancel-custom" className="close-btn-se23" onClick={() => this.setState({showMinWarning: false})} />
-            <SpriteIcon name="sixthform-warning" />
-            Select your subjects to continue.
-          </div>}
-          {/* 
-          <div className="warning-popup-s434 absolute-popup-s4-r">
-            <SpriteIcon name="cancel-custom" />
-            <SpriteIcon name="sixthform-warning" />
-            You haven’t selected Maths and/or English<br />
-            Language. Are you sure this is correct?
-          </div>*/}
+            <div className="warning-popup-s434 font-16 absolute-popup-s4-r absolute-popup-s4-r2">
+              <SpriteIcon name="cancel-custom" className="close-btn-se23" onClick={() => this.setState({ showMinWarning: false })} />
+              <SpriteIcon name="sixthform-warning" />
+              Select your subjects to continue.
+            </div>}
+          {this.state.showMathWarning &&
+            <div className="warning-popup-s434 font-16 absolute-popup-s4-r absolute-popup-s4-r2 absolute-popup-s4-r3">
+              <SpriteIcon name="cancel-custom" className="close-btn-se23" onClick={() => this.setState({ showMathWarning: false, seenMathWarining: true })} />
+              <SpriteIcon name="sixthform-warning" />
+              You haven’t selected Maths and/or English<br />
+              Language. Are you sure this is correct?
+            </div>}
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.Welcome })} />
           {this.renderThirdStepAButton()}
         </div>
