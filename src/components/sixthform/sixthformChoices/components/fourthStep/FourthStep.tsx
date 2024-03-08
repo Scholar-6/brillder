@@ -41,8 +41,8 @@ export enum ThirdSubStep {
 }
 
 interface ThirdProps {
-  firstAnswer: any;
   secondAnswer: any;
+  thirdAnswer: any;
   answer: any;
   subjects: SixthformSubject[];
   saveThirdAnswer(answer: any): void;
@@ -51,6 +51,8 @@ interface ThirdProps {
 }
 
 interface ThirdQuestionState {
+  showMinWarning: boolean;
+
   subStep: ThirdSubStep;
   typedSubject: string;
   subjectGroup: SubjectGroupR21;
@@ -155,6 +157,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     this.state = {
+      showMinWarning: false,
+
       subStep,
       typedSubject: '',
       subjectGroup: SubjectGroupR21.GCSE,
@@ -290,8 +294,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       <button className={className} disabled={disabled} onClick={() => {
         this.props.saveThirdAnswer(this.getAnswer());
         // all courses and A-levels can go to C1 else D
-        if (this.props.firstAnswer && this.props.firstAnswer.answer) {
-          let choice = this.props.firstAnswer.answer.choice;
+        if (this.props.secondAnswer && this.props.secondAnswer.answer) {
+          let choice = this.props.secondAnswer.answer.subjectType;
           if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
             this.setState({ subStep: ThirdSubStep.ThirdC1 });
           } else {
@@ -314,9 +318,13 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     return (
-      <button className={className} disabled={disabled} onClick={() => {
-        this.props.saveThirdAnswer(this.getAnswer());
-        this.setState({ subStep: ThirdSubStep.Second });
+      <button className={className} onClick={() => {
+        if (disabled) {
+          this.setState({ showMinWarning: true });
+        } else {
+          this.props.saveThirdAnswer(this.getAnswer());
+          this.setState({ subStep: ThirdSubStep.Second });
+        }
       }}>Continue</button>
     );
   }
@@ -480,7 +488,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       return <FourthStepListenStart
         moveNext={() => this.setState({ subStep: ThirdSubStep.Listening })}
         moveBack={() => {
-          if (this.props.firstAnswer && this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
+          if (this.props.secondAnswer && this.props.secondAnswer.answer.subjectType === FirstChoice.ALevel) {
             this.setState({ subStep: ThirdSubStep.ThirdC4 });
           } else {
             this.setState({ subStep: ThirdSubStep.ThirdF });
@@ -524,10 +532,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             }}
             moveBack={() => {
               if (
-                this.props.secondAnswer &&
-                this.props.secondAnswer.answer &&
-                this.props.secondAnswer.answer.databaseSchool &&
-                this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+                this.props.thirdAnswer &&
+                this.props.thirdAnswer.answer &&
+                this.props.thirdAnswer.answer.databaseSchool &&
+                this.props.thirdAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
               ) {
                 this.setState({ subStep: ThirdSubStep.ThirdC4 });
               } else {
@@ -555,7 +563,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               this.props.saveThirdAnswer(answer);
             }}
             moveBack={coursesD => {
-              let choice = this.props.firstAnswer.answer.choice;
+              let choice = this.props.secondAnswer.answer.subjectType;
               if (choice === FirstChoice.ShowMeAll) {
                 this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
               } else {
@@ -586,14 +594,14 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ categoriesC4 })
             }}
             onSkip={() => {
-              if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
+              if (this.props.secondAnswer.answer.subjectType === FirstChoice.ALevel) {
                 this.setState({ subStep: ThirdSubStep.ListenStart });
               } else {
                 if (
-                  this.props.secondAnswer &&
-                  this.props.secondAnswer.answer &&
-                  this.props.secondAnswer.answer.databaseSchool &&
-                  this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+                  this.props.thirdAnswer &&
+                  this.props.thirdAnswer.answer &&
+                  this.props.thirdAnswer.answer.databaseSchool &&
+                  this.props.thirdAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
                 ) {
                   this.setState({ subStep: ThirdSubStep.ThirdE });
                 } else {
@@ -605,17 +613,16 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.ThirdC3 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.saveThirdAnswer(this.getAnswer());
-            if (this.props.firstAnswer.answer.choice === FirstChoice.ALevel) {
+            if (this.props.secondAnswer.answer.subjectType === FirstChoice.ALevel) {
               this.setState({ subStep: ThirdSubStep.ListenStart });
             } else {
               if (
-                this.props.secondAnswer &&
-                this.props.secondAnswer.answer &&
-                this.props.secondAnswer.answer.databaseSchool &&
-                this.props.secondAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+                this.props.thirdAnswer &&
+                this.props.thirdAnswer.answer &&
+                this.props.thirdAnswer.answer.databaseSchool &&
+                this.props.thirdAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
               ) {
                 this.setState({ subStep: ThirdSubStep.ThirdE });
-                console.log('move next')
               } else {
                 this.setState({ subStep: ThirdSubStep.ThirdD });
               }
@@ -809,6 +816,19 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               })}
             </div>
           </div>
+          {this.state.showMinWarning &&
+          <div className="warning-popup-s434 font-16 absolute-popup-s4-r absolute-popup-s4-r2">
+            <SpriteIcon name="cancel-custom" className="close-btn-se23" onClick={() => this.setState({showMinWarning: false})} />
+            <SpriteIcon name="sixthform-warning" />
+            Select your subjects to continue.
+          </div>}
+          {/* 
+          <div className="warning-popup-s434 absolute-popup-s4-r">
+            <SpriteIcon name="cancel-custom" />
+            <SpriteIcon name="sixthform-warning" />
+            You haven’t selected Maths and/or English<br />
+            Language. Are you sure this is correct?
+          </div>*/}
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.Welcome })} />
           {this.renderThirdStepAButton()}
         </div>

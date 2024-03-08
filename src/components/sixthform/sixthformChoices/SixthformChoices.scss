@@ -695,6 +695,51 @@
       }
     }
 
+    .warning-popup-s434 {
+      display: flex;
+      align-items: center;
+      width: 43.5vw;
+      margin-top: 6vh;
+      margin-bottom: 2vh;
+      padding-right: 0.7vw;
+      padding-left: 0.7vw;
+      padding-top: 2vh;
+      padding-bottom: 2vh;
+      border-radius: 0.5vw;
+      color: #C43C30;
+      background: #FAECEB;
+      font-family: "Brandon Grotesque Regular" !important;
+      line-height: 1.26;
+      border: 1px solid #C43C30;
+
+      svg {
+        padding-top: 0.4vw;
+        width: 2.2vw;
+        height: 2.2vw;
+        padding-right: 0.65vw;
+      }
+
+      .close-btn-se23 {
+        cursor: pointer;
+        width: 1.3vw;
+        height: 1.3vw;
+        position: absolute;
+        top: 0;
+        right: 0;
+        stroke-width: 2.5;
+      }
+    }
+
+    .absolute-popup-s4-r {
+      position: absolute;
+      bottom: calc(8vh + 2vw);
+      right: 4vw;
+    }
+
+    .absolute-popup-s4-r2 {
+      width: 20vw;
+    }
+
     .question-text {
       line-height: 1;
       width: 93%;
@@ -2806,7 +2851,17 @@
       }
     }
   }
-  
+
+  .hover-area-entusiasm {
+    .hover-content {
+      width: 30vw !important;
+      bottom: -1.2vw !important;
+
+      .triangle-popup {
+        top: 1.4vw !important;
+      }
+    }
+  }
 
   .question-5-speaking {
     .question-text .hover-area .hover-content {

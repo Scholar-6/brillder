@@ -10,13 +10,13 @@ interface WelcomeProps {
 const FourthStepListenStart: React.FC<WelcomeProps> = (props) => {
   return (
     <div className="question question-watching-start">
-      <img src="/images/choicesTool/Step4backgroundListening.png" className="step2background-img" />
+      <img src="/images/choicesTool/Step5backgroundR2.png" className="step2background-img" />
       <div className="text-container-5432">
         <div>
-          <SpriteIcon name="listening-sixth" className="watching-start" />
-          <div className="font-32 bold">Listening</div>
+          <SpriteIcon name="sixthform-comment" className="watching-start" />
+          <div className="font-32 bold">Speaking</div>
           <div className="font-16 text-r34234">
-          There is all sorts of content out there. How often do you listen to the following?
+            How true are the following statements of you?
           </div>
         </div>
       </div>

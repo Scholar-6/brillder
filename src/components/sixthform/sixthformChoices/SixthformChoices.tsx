@@ -15,7 +15,7 @@ import ThirdStep from "./components/thirdStep/ThirdStep";
 import FifthStep from "./components/fifthStep/FifthStep";
 import { fileUrl } from "components/services/uploadFile";
 import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
-import SixthStep from "./components/sixStep/SixthStep";
+import SixStep from "./components/sixStep/SixStep";
 import map from "components/map";
 import TasterBrickDialog from "./components/TasterBrickDialog";
 import routes from "components/play/routes";
@@ -89,7 +89,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       popupSubject: null,
       subjectPosition: null,
 
-      page,
+      page: Pages.Question4,
       brickPopup: {
         isOpen: false,
         brick: null
@@ -367,7 +367,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       <label className="check-box-container container font-16" onClick={() => {
         let answer = this.state.answers.find(a => a.step === Pages.Question2);
         if (!answer) {
-          answer = { answer: {subjectType: currentSubjectType} };
+          answer = { answer: { subjectType: currentSubjectType } };
         } else {
           answer.answer.subjectType = currentSubjectType;
         }
@@ -639,11 +639,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           }
         }} />
     } else if (this.state.page === Pages.Question4) {
-      let firstAnswer = this.state.answers.find(a => a.step === Pages.Question1);
       let secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
+      let thirdAnswer = this.state.answers.find(a => a.step === Pages.Question3);
       return <FourthStep
-        firstAnswer={firstAnswer}
         secondAnswer={secondAnswer}
+        thirdAnswer={thirdAnswer}
         subjects={this.state.subjects}
         answer={this.state.answers.find(a => a.step === Pages.Question4)}
         saveThirdAnswer={answer => {
@@ -659,7 +659,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }}
       />
     } else if (this.state.page === Pages.Question5) {
+      let secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
+
       return <FifthStep
+        secondAnswer={secondAnswer}
         answer={this.state.answers.find(a => a.step === Pages.Question5)}
         saveAnswer={(answer: any) => {
           this.saveFifthAnswer(answer);
@@ -672,10 +675,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.saveFifthAnswer(answer);
           this.setState({ page: Pages.Question4 });
         }}
-        //saveFirstAnswer={choice => this.saveFirstAnswer({ choice })}
+        saveSecondAnswer={sType => {
+          let answer = this.state.answers.find(a => a.step === Pages.Question2);
+          if (answer && answer.answer) {
+            answer.answer.subjectType = sType;
+            this.saveSecondAnswer(answer.answer);
+          }
+        }}
       />
     } else if (this.state.page === Pages.Question6) {
-      return <SixthStep
+      return <SixStep
         answer={this.state.answers.find(a => a.step === Pages.Question6)}
         history={this.props.history}
         saveAnswer={answer => this.saveSixthAnswer(answer)}

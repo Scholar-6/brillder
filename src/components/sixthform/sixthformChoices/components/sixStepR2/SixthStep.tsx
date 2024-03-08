@@ -5,7 +5,6 @@ import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import SixthStepStart from "./SixthStepStart";
-import SixthStepWelcome from "./SixthStepWelcome";
 import SixStepWriting from "./SixStepWriting";
 import SixStepEntusiasmStart from "./SixStepEntusiasmStart";
 import SixStepEntusiasm from "./SixStepEntusiasm";
@@ -610,11 +609,6 @@ class SixthStep extends Component<FirstQuestionProps, SixStepState> {
         />
       );
     }
-
-    return <SixthStepWelcome
-      moveBack={() => this.props.moveBack(this.getAnswer())}
-      moveNext={() => this.setState({ subStep: SixthSubStep.Start })}
-    />
   }
 }
 
