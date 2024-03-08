@@ -10,15 +10,15 @@ export enum WatchingChoice {
 }
 
 interface ThirdProps {
-  listeningChoices: any[];
-  onChange(listeningChoices: any[]): void;
+  speakingChoices: any[];
+  onChange(speakingChoices: any[]): void;
   moveBack(): void;
   moveNext(): void;
 }
 
-const FourthStepListening: React.FC<ThirdProps> = (props) => {
+const FiftthStepSpeaking: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
-  let currentStep = props.listeningChoices[step];
+  let currentStep = props.speakingChoices[step];
 
   const renderBtn = (choice: WatchingChoice, realChoice: WatchingChoice, className: string, label: string) => {
     const isEmpty = choice === null;
@@ -28,7 +28,12 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
         className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
         onClick={() => {
           currentStep.choice = realChoice;
-          props.onChange(props.listeningChoices);
+          props.onChange(props.speakingChoices);
+          if (step >= props.speakingChoices.length - 1) {
+            props.moveNext()
+          } else {
+            setStep(step + 1);
+          }
         }}
         dangerouslySetInnerHTML={{ __html: label }}
       />
@@ -36,26 +41,27 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
   }
 
   return (
-    <div className="question question-6 question-3-watching question-6-third">
+    <div className="question question-6 question-3-watching question-5-speaking">
       <div className="font-16 question-text">
-        <div>
-          How often do you listen to the following?
+        <div className="font-32 bold">
+          Speaking?
         </div>
         <div className="hover-area font-14">
           <SpriteIcon name="help-circle-r1" className="info-icon" />
           <div className="hover-content regular">
             <div className="triangle-popup" />
-            The average teemager spends more than two hours per<br />
-            day streaming music or podcasts, or listening to radio.
+            We talk about what we’re interested in, and the way we engage in<br />
+            discussion and take opportunities to speak reflects our character.
           </div>
         </div>
       </div>
-      <img src="/images/choicesTool/FourthStepListening.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 icon="listening-sixth" step={step} total={props.listeningChoices.length} subjectDescription={currentStep.label} />
+      <div className="font-16">How true are the following statements of you?</div>
+      <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
+      <ProgressBarStep6 step={step} total={props.speakingChoices.length} subjectDescription={currentStep.label} />
       <div className="btns-container-r32 font-20 bold flex-center">
-        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NEVER OR<br/> HARDLY EVER")}
-        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SOMETIMES")}
-        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "A LOT")}
+        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NOT REALLY")}
+        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SORT OF")}
+        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "DEFINITELY")}
       </div>
       <BackButtonSix onClick={() => {
         if (step <= 0) {
@@ -66,15 +72,9 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
       }} />
       <button
         className="absolute-contunue-btn font-24"
-        onClick={() => {
-          if (step >= props.listeningChoices.length - 1) {
-            props.moveNext()
-          } else {
-            setStep(step + 1);
-          }
-        }}>Continue</button>
+        onClick={props.moveNext}>Skip</button>
     </div>
   );
 }
 
-export default FourthStepListening;
+export default FiftthStepSpeaking;

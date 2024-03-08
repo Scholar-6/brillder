@@ -6,20 +6,23 @@ interface WelcomeProps {
   moveBack(): void;
 }
 
-const SixthStepWelcome: React.FC<WelcomeProps> = (props) => {
+const SixStepWelcome: React.FC<WelcomeProps> = (props) => {
   return (
     <div className="question">
-      <img src="/images/choicesTool/Step6background.png" className="step2background-img" />
+      <img src="/images/choicesTool/Step5background.png" className="step2background-img" />
       <div className="text-container-5432">
-        <div className="font-20">Let’s start off with <span className="font-48 bold">YOU.</span></div>
+        <div>
+          <div className="font-20">You’ve completed Step Five, now let’s look at</div>
+          <div className="font-48 bold s-text-323">CAREERS</div>
+        </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />
       <button
         className="absolute-contunue-btn font-24"
         onClick={props.moveNext}
-      >Begin step 6</button>
+      >Start</button>
     </div>
   );
 }
 
-export default SixthStepWelcome;
+export default SixStepWelcome;

@@ -321,7 +321,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
             onClick={() => {
               let name = this.state.schoolName;
               let found = this.state.schools.find(s => s.name == name);
-              this.setState({ subStep: SubStep.Watching });
+              this.setState({ subStep: SubStep.WatchingStart });
             }}
           >Continue</button>
         </div>

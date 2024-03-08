@@ -1,22 +1,29 @@
 import React, { Component } from "react";
-import { Dialog } from "@material-ui/core";
 
-import BackButtonSix from "../BackButtonSix";
-import FifthStepA from "./FifthStepA";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import FifthStepWelcome from "./FifthStepWelcome";
-import FifthStepB from "./FifthStepB";
+import BackButtonSix from "../BackButtonSix";
+import { FirstChoice } from "../secondStep/StepCourseSelect";
+import CheckBoxB from "../CheckBoxB";
+import FourthStepA from "./FourthStepA";
+import { Dialog } from "@material-ui/core";
+import FourthStepWelcome from "./FourthStepWelcome";
 import FifthStepSpeaking from "./FifthStepSpeaking";
+import FourthStepListenStart from "./FourthStepListenStart";
 
 enum SubStep {
   welcome,
-  sub5a,
-  sub5b,
-  sub5c,
-  speaking,
+  sub4a,
+  sub4b,
+  sub4c,
+  sub4d1,
+  sub4d2,
+  sub4e1,
+  sub4e2,
+  listeningStart,
+  listening,
 }
 
-export enum SpeakingChoices {
+export enum SixStepFourthChoices {
   InTheClassroom = 1,
   ICantStand,
   AtHome,
@@ -30,365 +37,1257 @@ export enum SpeakingChoices {
   IReallyAdmire
 }
 
-interface FifthProps {
+enum Category {
+  Stem = 1,
+  Science,
+  Humanities,
+  Languages,
+  Arts,
+  Vocational
+}
+interface TLevelCourse {
+  icon: string;
+  name: string;
+  active: boolean;
+  expanded?: boolean;
+  subjects: any[];
+}
+
+interface ThirdProps {
+  secondAnswer: any;
   answer: any;
-  saveAnswer(answer: any): void;
   moveNext(answer: any): void;
   moveBack(answer: any): void;
+  saveAnswer(answer: any): void;
+  saveSecondAnswer(choice: FirstChoice): void;
 }
 
-interface FifthStepState {
+interface ThirdQuestionState {
   subStep: SubStep;
-  aAnswer: any;
-  abAnswer: any;
-  careers: any[];
+  cetegoriesData: any[];
+  categories4bc: Category[];
+  hoveredCategory: number;
+  facilitatingSubjects: any[];
+  nonFacilitatingSubjects: any[];
+
+  tVocCoursesE1Part1: TLevelCourse[];
+  tVocCoursesE1Part2: TLevelCourse[];
+
+  listeningChoices: any[];
+
   overflowOpen: boolean;
-  speakingChoices: any[];
 }
 
-class FifthStep extends Component<FifthProps, FifthStepState> {
-  constructor(props: FifthProps) {
+class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
+  constructor(props: ThirdProps) {
     super(props);
 
     let subStep = SubStep.welcome;
 
-    let speakingChoices = [
+    let categories4bc: any[] = [];
+
+    let listeningChoices = [
       {
-        type: SpeakingChoices.InTheClassroom,
-        label: 'In the classroom, I enjoy contributing ideas and showing what I know.',
+        label: 'Current Affairs, News & Talk (e.g. Radio Four)',
         choice: null
       }, {
-        type: SpeakingChoices.ICantStand,
-        label: 'I can’t stand pretentious people who waffle on about stuff which isn’t relevant.',
+        label: 'Podcasts (e.g. Joe Rogan)',
         choice: null
       }, {
-        type: SpeakingChoices.AtHome,
-        label: 'At home, my family talk a lot about what’s going on in the world and we have interesting discussions.',
+        label: 'Sport & Sport Talk (e.g. Radio Five)',
         choice: null
       }, {
-        type: SpeakingChoices.WithMyFriends,
-        label: 'With my friends I mainly gossip and enjoy the chance to banter and have fun.',
+        label: 'Audiobooks (e.g. Audible)',
         choice: null
       }, {
-        type: SpeakingChoices.MyFriends,
-        label: 'My friends put forward new ideas and challenge my thinking in ways I value.',
+        label: 'Comedy and Drama (e.g. Radio Four)',
         choice: null
       }, {
-        type: SpeakingChoices.IPreferPractical,
-        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more solid answers.',
+        label: 'Mainstream Music (Rock, Rap, Pop & Chart)',
         choice: null
       }, {
-        type: SpeakingChoices.ILove,
-        label: 'I love the chance to put an argument in a proper debate, and I’m good at undermining other people’s arguments.',
+        label: 'Music, Folk or Jazz',
         choice: null
       }, {
-        type: SpeakingChoices.ImNot,
-        label: 'I’m not a confident communicator - my strengths are in other areas.',
-        choice: null
-      }, {
-        type: SpeakingChoices.ILikeTalking,
-        label: 'I like talking in depth with others about music, books or about documentaries, plays and films we’ve seen.',
-        choice: null
-      }, {
-        type: SpeakingChoices.IPreferToListen,
-        label: 'I prefer to listen carefully and chip in only when something really needs to be said.',
-        choice: null
-      }, {
-        type: SpeakingChoices.IReallyAdmire,
-        label: 'I really admire people who can communicate effectively in foreign languages.',
+        label: 'Music, Classical ',
         choice: null
       }
     ];
 
-    let aAnswer = null;
-    let abAnswer = null;
+    let cetegoriesData = [{
+      name: "none",
+      subjects: []
+    }, {
+      name: "Traditional STEM",
+      description: "For many science courses there is an expectation that you will have done A-level Maths.",
+      subjects: [{
+        name: "Astronomy",
+        selected: false,
+      }, {
+        name: "Biology",
+        selected: false,
+      }, {
+        name: "Computer Science",
+        selected: false,
+      }, {
+        name: "Chemistry",
+        selected: false,
+      }, {
+        name: "Data Science",
+        selected: false,
+      }, {
+        name: "Dentistry",
+        selected: false,
+      }, {
+        name: "Ecology",
+        selected: false,
+      }, {
+        name: "Engineering",
+        selected: false,
+      }, {
+        name: "Geology",
+        selected: false,
+      }, {
+        name: "Mathematics",
+        selected: false,
+      }, {
+        name: "Medicine (Human and Veterinary)",
+        selected: false,
+      }, {
+        name: "Pharmacology",
+        selected: false,
+      }, {
+        name: "Physics",
+        selected: false,
+      }, {
+        name: "Robotics",
+        selected: false,
+      }, {
+        name: "Zoology",
+        selected: false,
+      }]
+    }, {
+      name: "Interdisciplinary Sciences",
+      description: "Some subjects fuse scientific or statistical method with aspects of Humanities and/or Arts",
+      subjects: [{
+        name: "Agriculture & Forestry",
+        selected: false,
+      }, {
+        name: "Anthropology",
+        selected: false,
+      }, {
+        name: "Archaeology",
+        selected: false,
+      }, {
+        name: "Architecture",
+        selected: false,
+      }, {
+        name: "Criminology",
+        selected: false,
+      }, {
+        name: "Economics",
+        selected: false,
+      }, {
+        name: "Environmental Science",
+        selected: false,
+      }, {
+        name: "Forensic Science",
+        selected: false,
+      }, {
+        name: "Geography",
+        selected: false,
+      }, {
+        name: "Psychology",
+        selected: false,
+      }, {
+        name: "Sociology",
+        selected: false,
+      }]
+    }, {
+      name: "Traditional Humanities",
+      subjects: [{
+        name: "Classics & Ancient History",
+        selected: false,
+      }, {
+        name: "Education",
+        selected: false,
+      }, {
+        name: "English Literature",
+        selected: false,
+      }, {
+        name: "History",
+        selected: false,
+      }, {
+        name: "Law",
+        selected: false,
+      }, {
+        name: "Politics",
+        selected: false,
+      }, {
+        name: "Religion, Philosophy & Ethics",
+        selected: false,
+      }]
+    }, {
+      name: "Languages & Cultures",
+      subjects: [{
+        name: "Modern European Languages (French, Spanish etc.)",
+        selected: false,
+      }, {
+        name: "Other Modern Languages (Arabic, Mandarin, Japanese etc.)",
+        selected: false,
+      }, {
+        name: "Classics (Latin, Ancient Greek, and also, Classical Civilisation / Archaeology)",
+        selected: false,
+      }]
+    }, {
+      name: "Arts",
+      subjects: [{
+        name: "Performing Arts",
+        selected: false,
+      }, {
+        name: "Art & Design (Photography)",
+        selected: false,
+      }, {
+        name: "Dance",
+        selected: false,
+      }, {
+        name: "Fine Art",
+        selected: false,
+      }, {
+        name: "Photography",
+        selected: false,
+      }, {
+        name: "Film & Media",
+        selected: false,
+      }, {
+        name: "Design",
+        selected: false,
+      }, {
+        name: "Music",
+        selected: false,
+      }]
+    }, {
+      name: "Vocational & Commercial",
+      subjects: [{
+        name: "Business & Management",
+        selected: false,
+      }, {
+        name: "Journalism",
+        selected: false,
+      }, {
+        name: "Retail",
+        selected: false,
+      }, {
+        name: "Marketing, Advertising & PR",
+        selected: false,
+      }]
+    }]
 
-    let careers = [{
-      jobName: 'Accountant, Auditor',
-      advisory: ['Maths'],
-      handy: ['Economics', 'Accounting', 'Statistics']
+    let facilitatingSubjects = [{
+      name: "Maths",
+      selected: false,
     }, {
-      jobName: 'Actuary',
-      essential: ['Maths'],
-      handy: ['Statistics', 'Further Maths']
+      name: "Further Maths",
+      selected: false,
     }, {
-      jobName: 'Architect',
-      advisory: ['Art & Design', 'Maths'],
-      handy: ['Engineering', 'Design & Technology']
+      name: "Physics",
+      selected: false,
     }, {
-      jobName: 'Banking, Investment & Finance',
-      essential: ['Maths'],
-      advisory: ['Economics'],
-      handy: ['Statistics', 'Business', 'Further Maths']
+      name: "Biology",
+      selected: false,
     }, {
-      jobName: 'Biotechnologist',
-      essential: ['Biology'],
-      advisory: ['Maths', 'Chemistry'],
-      handy: ['Further Maths', 'Physics']
+      name: "Chemistry",
+      selected: false,
     }, {
-      jobName: 'Chemical Engineer',
-      essential: ['Maths', 'Chemistry'],
-      advisory: ['Physics'],
-      handy: ['Further Maths']
+      name: "Geography",
+      selected: false,
     }, {
-      jobName: 'Dentistry',
-      essential: ['Chemistry'],
-      advisory: ['Biology', 'Maths'],
-      handy: ['Physics']
+      name: "English Literature",
+      selected: false
     }, {
-      jobName: 'Engineering',
-      essential: ['Maths', 'Physics'],
-      advisory: [],
-      handy: ['Engineering', 'Design & Technology']
+      name: "History",
+      selected: false,
     }, {
-      jobName: 'Insurance (Underwriting)',
-      essential: [],
-      advisory: ['Maths', 'Accounting'],
-      handy: ['Statistics']
+      name: "French",
+      selected: false,
     }, {
-      jobName: 'Materials Scientist',
-      essential: ['Physics', 'Maths'],
-      advisory: ['Chemistry'],
-      handy: ['Further Maths', 'Design & Technology']
+      name: "German",
+      selected: false,
     }, {
-      jobName: 'Medicine',
-      essential: ['Biology', 'Chemistry'],
-      advisory: ['Maths'],
-      handy: ['Physics', 'Further Maths']
+      name: "Spanish",
+      selected: false,
     }, {
-      jobName: 'Museum Curator',
-      essential: [],
-      advisory: ['History', 'Art & Design'],
-      handy: ['History of Art', 'Ancient History']
+      name: "Other Modern Language",
+      selected: false,
     }, {
-      jobName: 'Naval Architect',
-      essential: ['Maths', 'Physics'],
-      advisory: [],
-      handy: ['Engineering', 'Design & Technology']
+      name: "Latin",
+      selected: false,
     }, {
-      jobName: 'Urban Planner',
-      essential: [],
-      advisory: ['Maths', 'Geography'],
-      handy: ['Economics', 'Politics']
+      name: "Ancient Greek",
+      selected: false,
+    }]
+
+    let nonFacilitatingSubjects = [{
+      name: "Sociology",
+      selected: false,
     }, {
-      jobName: 'Veterinary Science',
-      essential: ['Chemistry'],
-      advisory: ['Biology'],
-      handy: ['Physics', 'Maths']
+      name: "Psychology",
+      selected: false,
     }, {
-      jobName: 'Zoologist',
-      essential: ['Biology'],
-      advisory: ['Chemistry', 'Physics', 'Maths'],
-      handy: ['Environmental Science']
+      name: "Media Studies",
+      selected: false,
     }, {
-      jobName: 'None are for me',
-      description: 'I could be ruling out, or making very difficult, the above career paths by choosing other A-levels, and I’m happy with that.'
+      name: "Criminology",
+      selected: false,
+    }, {
+      name: "Law",
+      selected: false,
+    }, {
+      name: "Accounting",
+      selected: false,
+    }, {
+      name: "Art and Design",
+      selected: false,
+    }, {
+      name: "Business Studies",
+      selected: false,
+    }, {
+      name: "Communication Studies",
+      selected: false,
+    }, {
+      name: "Design and Technology",
+      selected: false,
+    }, {
+      name: "Drama and Theatre Studies",
+      selected: false,
+    }, {
+      name: "Music",
+      selected: false,
+    }, {
+      name: "Music Technology",
+      selected: false,
+    }, {
+      name: "Sports Studies",
+      selected: false,
+    }, {
+      name: "Travel and Tourism",
+      selected: false,
+    }, {
+      name: "English Language",
+      selected: false,
+    }]
+
+    let tVocCoursesE1Part1 = [{
+      icon: 'six-frame2',
+      name: 'Design, Craft & Visual Arts',
+      active: false,
+      subjects: [
+        { name: 'Photography' },
+        { name: 'Jewellery & Silversmithing' },
+        { name: 'Furniture Design & Build' },
+        { name: 'Fashion & Textiles' },
+        { name: 'Fashion Design and Production' },
+        { name: 'Fine Art' },
+        { name: 'Interior Design' }
+      ],
+    }, {
+      icon: 'six-frame23',
+      name: 'Catering, Travel & Hospitality',
+      active: false,
+      subjects: [
+        { name: 'Professional Cookery' },
+        { name: 'Food Industry Management' },
+        { name: 'International Travel & Tourism' },
+        { name: 'Hospitality Management' },
+      ],
+    }, {
+      icon: 'six-frame9',
+      name: 'Engineering',
+      active: false,
+      subjects: [
+        { name: 'Electrical & Electronic' },
+        { name: 'Mechanical' },
+        { name: 'Manufacturing' },
+        { name: 'Aeronautical' },
+        { name: 'Automotive' },
+        { name: 'Nuclear' },
+        { name: 'Rail' },
+        { name: 'Space Technologies' },
+        { name: 'Mechatronics' },
+      ],
+    }, {
+      icon: 'six-frame8',
+      name: 'Computing',
+      active: false,
+      subjects: [
+        { name: 'Computing' },
+        { name: 'Computing & Systems Development' },
+        { name: 'Business Computing (Web Design)' },
+        { name: 'Software Engineering' },
+        { name: 'Web Technology & Security' },
+        { name: 'Cloud Computing' },
+      ],
+    }, {
+      icon: 'six-frame24',
+      name: 'Creative Digital Media',
+      active: false,
+      subjects: [
+        { name: 'Computer Generated Animation' },
+        { name: 'Graphic and Digital Design' },
+        { name: 'Games Design' },
+        { name: 'Creative Media Production' },
+        { name: 'Film & Television' },
+        { name: 'Sound & Media' },
+        { name: 'Visual Effects' },
+      ],
+    }, {
+      icon: 'six-frame6',
+      name: 'Business & Management',
+      active: false,
+      subjects: [
+        { name: 'Business' },
+        { name: 'Business & Law' },
+        { name: 'Business & Accounting' },
+        { name: 'Business & Marketing' },
+        { name: 'Business and Management' },
+        { name: 'Leadership & Management' },
+      ],
+    }, {
+      icon: 'six-frame15',
+      name: 'Land-based Sector Studies',
+      active: false,
+      subjects: [
+        { name: 'Animal Welfare and Management' },
+        { name: 'Arboriculture' },
+        { name: 'Horticulture' },
+        { name: 'Landscape Management' },
+        { name: 'Agricultural Science' },
+        { name: 'Applied Bioscience' },
+        { name: 'LegAnimal Careal' },
+        { name: 'Countryside Management' },
+        { name: 'Equine Studies' },
+        { name: 'Garden Design' },
+        { name: 'Green Technology' },
+        { name: 'Wildlife Conservation' },
+        { name: 'Agriculture' },
+        { name: 'Veterinary Technician' },
+      ],
+    }, {
+      icon: 'six-frame16',
+      name: 'Sport & Exercise',
+      active: false,
+      subjects: [
+        { name: 'Coaching and Developing Sport' },
+        { name: 'Sport and Exercise Science' },
+        { name: 'Sports Therapy' },
+        { name: 'Community Coaching' }
+      ],
+    }];
+
+    let tVocCoursesE1Part2 = [{
+      icon: 'six-frame7',
+      name: 'Construction',
+      active: false,
+      subjects: [
+        { name: 'Building Services Engineering' },
+        { name: 'Electrical Installation' },
+        { name: 'Construction Management' },
+        { name: 'Civil Engineering' },
+        { name: 'Construction & Built Environment' },
+        { name: 'Architectural Design & Technology' },
+        { name: 'Future Homes Design & Construction' },
+        { name: 'Quantity Surveying' },
+      ],
+    }, {
+      icon: 'six-frame3',
+      name: 'Education',
+      active: false,
+      subjects: [
+        { name: 'Early Years Education' },
+        { name: 'Primary Education & Teaching' },
+      ]
+    }, {
+      icon: 'six-frame4',
+      name: 'Hair & Beauty',
+      active: false,
+      subjects: [
+        { name: 'Beauty' },
+        { name: 'Hairdressing' },
+      ],
+    }, {
+      icon: 'six-frame17',
+      active: false,
+      name: 'Health, Care & Social Services',
+      subjects: [
+        { name: 'Work with Children and Families' },
+        { name: 'Care Practice' },
+        { name: 'Applied Biology' },
+        { name: 'Forensic Science' },
+        { name: 'Nursing' },
+        { name: 'Public & Emergency Services' },
+        { name: 'Counselling & Applied Psychology' },
+        { name: 'Social & Community Work' },
+        { name: 'Healthcare Practice' },
+        { name: 'Policing' },
+      ],
+    }, {
+      icon: 'six-frame11',
+      active: false,
+      name: 'Media & Communications',
+      subjects: [{ name: 'Electronics & Communications' }, { name: 'Journalism' }],
+    }, {
+      icon: 'six-frame21',
+      active: false,
+      name: 'Performing Arts',
+      subjects: [
+        { name: 'Dance Performance' },
+        { name: 'Creative Production Arts' },
+        { name: 'Media make up' },
+        { name: 'Acting' },
+        { name: 'Musical Theatre' },
+        { name: 'Music' },
+      ]
+    }, {
+      icon: 'six-frame20',
+      active: false,
+      name: 'Retail & Distribution Industry',
+      subjects: [
+        { name: 'Retail Management' },
+        { name: 'Retail and Sales' },
+        { name: 'Supply Chain Management' },
+        { name: 'Vehicle Operations Management' },
+        { name: 'Logistics and Transport' },
+      ]
     }];
 
     if (props.answer) {
       const { answer } = props.answer;
-      if (answer.aAnswer) {
-        aAnswer = answer.aAnswer;
-      }
-      if (answer.abAnswer) {
-        abAnswer = answer.abAnswer;
-      }
       if (answer.subStep) {
         subStep = answer.subStep;
       }
-      if (answer.careers) {
-        careers = answer.careers;
+      if (answer.categories4bc) {
+        categories4bc = answer.categories4bc;
       }
-      if (answer.speakingChoices) {
-        speakingChoices = answer.speakingChoices;
+      if (answer.cetegoriesData) {
+        cetegoriesData = answer.cetegoriesData;
+      }
+      if (answer.facilitatingSubjects) {
+        facilitatingSubjects = answer.facilitatingSubjects;
+      }
+      if (answer.nonFacilitatingSubjects) {
+        nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
+      }
+      if (answer.categories4e) {
+        if (answer.categories4e.tVocCoursesE1Part1) {
+          tVocCoursesE1Part1 = answer.categories4e.tVocCoursesE1Part1;
+        }
+        if (answer.categories4e.tVocCoursesE1Part2) {
+          tVocCoursesE1Part2 = answer.categories4e.tVocCoursesE1Part2;
+        }
+      }
+      if (answer.listeningChoices) {
+        listeningChoices = answer.listeningChoices;
       }
     }
 
     this.state = {
+      categories4bc,
+      cetegoriesData,
+      facilitatingSubjects,
+      nonFacilitatingSubjects,
+      hoveredCategory: -1,
       subStep,
-      aAnswer,
-      abAnswer,
-      careers,
-      speakingChoices,
-      overflowOpen: false
+
+      tVocCoursesE1Part1,
+      tVocCoursesE1Part2,
+
+      listeningChoices,
+
+      overflowOpen: false,
     }
   }
 
   getAnswer() {
+    const { categories4bc } = this.state;
+    const categories4c: any[] = [];
+    for (let category4b of categories4bc) {
+      const category = this.state.cetegoriesData[category4b];
+      categories4c.push(category);
+    }
     return {
       subStep: this.state.subStep,
-      aAnswer: this.state.aAnswer,
-      abAnswer: this.state.abAnswer,
-      careers: this.state.careers,
-      speakingChoices: this.state.speakingChoices
+      cetegoriesData: this.state.cetegoriesData,
+      categories4bc: categories4bc,
+      listeningChoices: this.state.listeningChoices,
+      facilitatingSubjects: this.state.facilitatingSubjects,
+      nonFacilitatingSubjects: this.state.nonFacilitatingSubjects,
+      categories4c,
+      categories4e: {
+        tVocCoursesE1Part1: this.state.tVocCoursesE1Part1,
+        tVocCoursesE1Part2: this.state.tVocCoursesE1Part2
+      }
     }
   }
 
-  render() {
-    if (this.state.subStep === SubStep.speaking) {
-      return <FifthStepSpeaking
-        speakingChoices={this.state.speakingChoices}
-        onChange={speakingChoices => this.setState({ speakingChoices })}
-        moveBack={() => this.setState({ subStep: SubStep.sub5c })}
-        moveNext={() => this.props.moveNext(this.getAnswer())}
-      />
-    } else if (this.state.subStep === SubStep.sub5c) {
+  saveAnswer() {
+    this.props.saveAnswer(this.getAnswer());
+  }
+
+  renderNextBtn() {
+    let disabled = false;
+    return (
+      <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} onClick={() => {
+        this.props.moveNext(this.getAnswer());
+      }}>Continue</button>
+    )
+  }
+
+  leaveCategory() {
+    this.setState({ hoveredCategory: -1 })
+  }
+
+  selectCategory(category: Category) {
+    let { categories4bc } = this.state;
+    if (categories4bc.includes(category)) {
+      categories4bc = categories4bc.filter(c => c !== category);
+    } else {
+      if (categories4bc.length < 3) {
+        categories4bc.push(category);
+      } else {
+        this.setState({ overflowOpen: true });
+      }
+    }
+    this.setState({ categories4bc });
+  }
+
+  renderStemCategory() {
+    let className = "";
+    let category = this.state.categories4bc.includes(Category.Stem);
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Stem) {
       return (
-        <div className="question">
-          <img src="/images/choicesTool/FifthStepR15.png" className="third-step-img fifth-step-img-r15"></img>
-          <div className="bold font-32 question-text-4">
-            Careers with A-level Requirements
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Stem)}
+        >
+          <div className="bold font-16 h-title-r24">Traditional STEM degrees</div>
+          <div className="font-14">
+            For many science courses there is an expectation that you will have done <br /> A-level Maths.
           </div>
-          <div className="font-16">
-            The following careers favour specific A-levels, usually because relevant degree courses require them.<br />
-            Most of you will probably select “None are for me”, but be aware of what you might be ruling out.
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>Chemistry</div>
+            <div>Mathematics</div>
+            <div>Engineering</div>
+            <div>Biology</div>
+            <div>Physics</div>
           </div>
-          <div className="drag-container-5c">
-            <div className="subjects-table subjects-table-5c">
-              <div className="top-row title-r22 bold font-16">
-                Choose up to three careers you’re currently interested in.
-              </div>
-              <div className="table-head bold font-16">
-                <div className="checkbox-column" />
-                <div className="first-column table-5c-column center-y">Jobs</div>
-                <div className="second-column table-5c-column center-column header-label">
-                  <div>Essential</div>
-                  <div className="hover-area font-14">
-                    <SpriteIcon name="help-icon-v4" className="info-icon" />
-                    <div className="hover-content">it’s almost impossible to get a degree course offer without these subjects</div>
-                    <div className="hover-arrow-bottom" />
-                  </div>
-                </div>
-                <div className="third-column table-5c-column center-column header-label">
-                  <div>Advisory</div>
-                  <div className="hover-area font-14">
-                    <SpriteIcon name="help-icon-v4" className="info-icon" />
-                    <div className="hover-content">these subjects reinforce an application with relevant skills</div>
-                    <div className="hover-arrow-bottom" />
-                  </div>
-                </div>
-                <div className="fourth-column table-5c-column center-column header-label">
-                  <div>Handy</div>
-                  <div className="hover-area font-14">
-                    <SpriteIcon name="help-icon-v4" className="info-icon" />
-                    <div className="hover-content">if you meet the essential and advisory criteria, these are optional suggestions</div>
-                    <div className="hover-arrow-bottom" />
-                  </div>
-                </div>
-              </div>
-              <div className="table-body-5c">
-                {this.state.careers.map((career, i) => {
-                  if (career.jobName === 'None are for me') {
-                    return (
-                      <div key={i} className="table-5c-body-row font-14" onClick={() => {
-                        let careerCopy = Object.assign({}, career);
-                        this.state.careers.map(c => c.active = false);
-                        career.active = !careerCopy.active;
-                        this.setState({ careers: this.state.careers });
-                      }}>
-                        <div className="checkbox-column flex-center">
-                          <SpriteIcon name={career.active === true ? 'radio-btn-active' : 'radio-btn-blue'} className="absolute-correct-check" />
-                        </div>
-                        <div className="table-5c-column value-column-5c first">
-                          {career.jobName}
-                        </div>
-                        <div className="table-5c-column value-column-5c-big font-12">
-                          I could be ruling out, or making very difficult, the above career paths by choosing other A-levels, and I’m happy with that.
-                        </div>
-                      </div>
-                    );
-                  }
-                  return (
-                    <div key={i} className="table-5c-body-row font-14" onClick={() => {
-                      this.state.careers.find(c => c.jobName === 'None are for me').active = false;
-                      let activeCount = this.state.careers.filter(c => c.active).length;
-                      if (activeCount >= 3 && !career.active) {
-                        this.setState({ overflowOpen: true });
-                      } else {
-                        career.active = !career.active;
-                      }
-                      this.setState({ careers: this.state.careers });
-                    }}>
-                      <div className="checkbox-column flex-center">
-                        <SpriteIcon name={career.active === true ? 'radio-btn-active' : 'radio-btn-blue'} className="absolute-correct-check" />
-                      </div>
-                      <div className="table-5c-column value-column-5c border-right first">
-                        {career.jobName}
-                      </div>
-                      <div className="table-5c-column value-column-5c border-right">
-                        <div>
-                          {career.essential && career.essential.map((subject: any, j: number) => <div key={j}>{subject}</div>)}
-                        </div>
-                      </div>
-                      <div className="table-5c-column value-column-5c border-right">
-                        <div>
-                          {career.advisory && career.advisory.map((subject: any, j: number) => <div key={j}>{subject}</div>)}
-                        </div>
-                      </div>
-                      <div className="table-5c-column value-column-5c last">
-                        <div>
-                          {career.handy && career.handy.map((subject: any, j: number) => <div key={j}>{subject}</div>)}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
+          <div className="lozengies-container font-11">
+            <div>Medicine (Human and Veterinary)</div>
+            <div>Computer Science</div>
+            <div>Geology</div>
           </div>
-          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-            Oops! You’ve tried to pick too many.
-            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
-          </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5b })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({ subStep: SubStep.speaking });
-          }}>Continue</button>
-        </div >
+        </div>
       );
-    } else if (this.state.subStep === SubStep.sub5b) {
+    }
+    return (<div
+      className={className + " flex-center"}
+      onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+      onMouseLeave={this.leaveCategory.bind(this)}
+      onClick={() => this.selectCategory(Category.Stem)}
+    >
+      <div className="flex-center">
+        <SpriteIcon name="stem-icon" />
+      </div>
+      <div className="bold">
+        Traditional STEM degrees
+      </div>
+    </div>
+    );
+  }
+
+  renderScienceCategory() {
+    let className = "";
+    let category = this.state.categories4bc.includes(Category.Science);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Science) {
+      className += " start-f-r24";
+    }
+
+    if (this.state.hoveredCategory === Category.Science) {
       return (
-        <FifthStepB
-          abAnswer={this.state.abAnswer}
-          onChange={answer => this.setState({ abAnswer: answer })}
-          moveNext={answer => {
-            this.props.saveAnswer(answer);
-            this.setState({ subStep: SubStep.sub5c, abAnswer: answer });
-          }}
-          moveBack={abAnswer => {
-            let answer = this.getAnswer();
-            answer.abAnswer = abAnswer;
-            this.setState({ subStep: SubStep.sub5a, abAnswer: answer });
-          }}
-        />
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Science })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Science)}
+        >
+          <div className="bold font-16 h-title-r24">Interdisciplinary Sciences</div>
+          <div className="font-14">
+            Some subjects fuse scientific or statistical method with aspects of<br /> Humanities
+          </div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>Economics</div>
+            <div>Geography</div>
+            <div>Psychology</div>
+            <div>Environmental Sciences</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Sociology</div>
+            <div>Architecture</div>
+          </div>
+        </div>
       );
-    } else if (this.state.subStep === SubStep.sub5a) {
+    }
+    return (
+      <div
+        className={className + " flex-center"}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Science })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Science)}
+      >
+        <div className="flex-center">
+          <SpriteIcon name="science-icon" />
+        </div>
+        <div className="bold">Interdisciplinary Sciences</div>
+      </div>
+    );
+  }
+
+  renderHumanityCategory() {
+    let className = "";
+    let category = this.state.categories4bc.includes(Category.Humanities);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Humanities) {
+      className += " start-f-r24";
+    }
+
+    if (this.state.hoveredCategory === Category.Humanities) {
       return (
-        <FifthStepA
-          careers={this.state.aAnswer}
-          onChange={answer => this.setState({ aAnswer: answer })}
-          moveNext={answer => {
-            console.log('aAnswer', answer);
-            this.props.saveAnswer(answer);
-            this.setState({ subStep: SubStep.sub5b, aAnswer: answer });
-          }}
-          moveBack={aAnswer => {
-            console.log('aAnswer', aAnswer);
-            let answer = this.getAnswer();
-            answer.aAnswer = aAnswer;
-            this.setState({ subStep: SubStep.welcome, aAnswer: answer });
-          }}
-        />
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Humanities })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Humanities)}
+        >
+          <div className="bold font-16 h-title-r24">Traditional Humanities</div>
+          <div className="lozengies-container font-11 first-lozengies">
+            <div>History</div>
+            <div>Politics</div>
+            <div>Religion, Philosophy & Ethics</div>
+            <div>Law</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>English Literature</div>
+          </div>
+        </div>
       );
     }
 
     return (
-      <FifthStepWelcome
-        moveNext={() => this.setState({ subStep: SubStep.sub5a })}
-        moveBack={() => this.props.moveBack(this.getAnswer())}
+      <div
+        className={className + " "}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Humanities })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Humanities)}>
+        <div className="flex-center">
+          <SpriteIcon name="humanity-icon" />
+        </div>
+        <div className="bold">Traditional Humanities</div>
+      </div>
+    );
+  }
+
+  renderLanguageCategory() {
+    let className = "";
+    let category = this.state.categories4bc.includes(Category.Languages);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Languages) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Languages })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Languages)}
+        >
+          <div className="bold font-16 h-title-r24">Languages & Cultures</div>
+          <div className="lozengies-container font-11">
+            <div>Modern European Languages (French, Spanish etc.)</div>
+            <div>Linguistics</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Eastern and Oriental Languages (Arabic, Mandarin, Japanese etc.)</div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Classical Languages like Latin (also, Classical Civilisation / Archaeology)</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div
+        className={className + " flex-center"}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Languages })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Languages)}
+      >
+        <div className="flex-center">
+          <SpriteIcon name="language-icon" />
+        </div>
+        <div className="bold">Languages & Cultures</div>
+      </div>
+    );
+  }
+
+  renderArtsCategory() {
+    let className = "";
+    let category = this.state.categories4bc.includes(Category.Arts);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Arts) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Arts })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Arts)}
+        >
+          <div className="bold font-16 h-title-r24">Arts</div>
+          <div className="lozengies-container font-11">
+            <div>Performing Arts</div>
+            <div>Art & Design (Photography)</div>
+            <div>Dance</div>
+            <div>Fine Art </div>
+          </div>
+          <div className="lozengies-container font-11">
+            <div>Photography</div>
+            <div>Film & Media </div>
+            <div>Design</div>
+            <div>Music</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div
+        className={className + " flex-center"}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Arts })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Arts)}
+      >
+        <div className="flex-center">
+          <SpriteIcon name="arts-icon" />
+        </div>
+        <div className="bold">Arts</div>
+      </div>
+    );
+  }
+
+  renderVocationalCategory() {
+    let className = "";
+    let category = this.state.categories4bc.includes(Category.Vocational);
+
+    if (category) {
+      className += " active";
+    }
+
+    if (this.state.hoveredCategory === Category.Vocational) {
+      return (
+        <div
+          className={className + " hovered-category"}
+          onMouseEnter={() => this.setState({ hoveredCategory: Category.Vocational })}
+          onMouseLeave={this.leaveCategory.bind(this)}
+          onClick={() => this.selectCategory(Category.Vocational)}
+        >
+          <div className="bold font-16 h-title-r24">Vocational & Commercial</div>
+          <div className="lozengies-container font-11">
+            <div>Business & Management</div>
+            <div>Journalism</div>
+            <div>Retail</div>
+            <div>Marketing, Advertising & PR</div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div
+        className={className + " flex-center"}
+        onMouseEnter={() => this.setState({ hoveredCategory: Category.Vocational })}
+        onMouseLeave={this.leaveCategory.bind(this)}
+        onClick={() => this.selectCategory(Category.Arts)}
+      >
+        <div className="flex-center">
+          <SpriteIcon name="vocational-comertial" />
+        </div>
+        <div className="bold">Vocational & Commercial</div>
+      </div>
+    );
+  }
+
+  renderContinueBtn() {
+    let className = "absolute-contunue-btn font-24";
+    let disabled = this.state.categories4bc.length === 0;
+    if (disabled) {
+      className += " disabled";
+    }
+    return (
+      <button className={className} onClick={() => {
+        this.setState({ subStep: SubStep.sub4c });
+      }}>Continue</button>
+    );
+  }
+
+  renderList(className: string, list: TLevelCourse[], onChange: Function) {
+    return (
+      <div>
+        {list.map((course, i) => {
+          return (
+            <div key={i} className={"course-box-r-23 course-box-4e1 " + className + (course.active ? ' active' : "")} onClick={() => {
+              const activeNumber = this.state.tVocCoursesE1Part1.filter(a => a.active == true).length + this.state.tVocCoursesE1Part2.filter(a => a.active == true).length;
+              if (activeNumber >= 3 && !course.active) {
+                this.setState({ overflowOpen: true });
+              } else {
+                course.active = !course.active;
+              }
+              onChange();
+            }}>
+              <div className="font-16 bold flex">
+                <div className="flex-center big-r-23">
+                  <SpriteIcon name={course.icon} />
+                </div>
+                <div className="flex-y-center course-name-r23">
+                  {course.name}
+                </div>
+                <div className="flex-center coursor-pointer" onClick={e => {
+                  e.stopPropagation();
+                  course.expanded = !course.expanded;
+                  onChange();
+                }}>
+                  <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
+                </div>
+              </div>
+              {course.expanded && <div className="course-subjects-r23 font-14">
+                {course.subjects.map((subject, i) =>
+                  <span>
+                    {subject.name}{i !== course.subjects.length - 1 ? ", " : "."}
+                  </span>)}
+              </div>}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  render() {
+    if (this.state.subStep === SubStep.listening) {
+      return <FifthStepSpeaking
+        speakingChoices={this.state.listeningChoices}
+        onChange={listeningChoices => this.setState({ listeningChoices })}
+        moveBack={() => this.setState({ subStep: SubStep.listeningStart })}
+        moveNext={() => this.props.moveNext(this.getAnswer())}
       />
-    )
+    } else
+      if (this.state.subStep === SubStep.listeningStart) {
+        return <FourthStepListenStart
+          moveBack={() => this.setState({ subStep: SubStep.sub4e2 })}
+          moveNext={() => this.setState({ subStep: SubStep.listening })}
+        />
+      } else if (this.state.subStep === SubStep.sub4e2) {
+        let selected = this.state.tVocCoursesE1Part1.filter(a => a.active == true);
+        selected.push(...this.state.tVocCoursesE1Part2.filter(a => a.active == true));
+
+        return (
+          <div className="question">
+            <div className="bold font-32 question-text-3">
+              Vocational Degrees
+            </div>
+            <div className="font-16">
+              View the courses available for the categories you selected. Select up to five that interest you.
+            </div>
+            <div className="categories-container categories-container-r342">
+              {selected.map((course, i) => {
+                return (
+                  <div>
+                    <div
+                      className="hovered-category"
+                      onMouseEnter={() => this.setState({ hoveredCategory: Category.Stem })}
+                      onMouseLeave={this.leaveCategory.bind(this)}
+                      onClick={() => this.selectCategory(Category.Stem)}
+                    >
+                      <div className="bold font-16">{course.name}</div>
+                      <div>
+                        <div className="lozengies-container font-11 first-lozengies lozengies-r232">
+                          {course.subjects.map(s => <div>{s.name}</div>)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.setState({ subStep: SubStep.listeningStart });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4e1) {
+        return (
+          <div className="font-16 question-4e1">
+            <div className="bold font-32 question-text-3">
+              Types of Vocational Degree
+            </div>
+            <div>
+              Many students go directly into work or apprenticeships after sixth form. But some begin vocational degrees instead.
+            </div>
+            <div>
+              Here are fifteen types of vocational degree. Select up to three that interest you.
+            </div>
+            <div className="d3-table-scroll-container">
+              <div className="d3-table-leaf">
+                {this.renderList("first-b-r-23", this.state.tVocCoursesE1Part1, () => {
+                  this.setState({ tVocCoursesE1Part1: [...this.state.tVocCoursesE1Part1] })
+                })}
+                {this.renderList("second-b-r-23", this.state.tVocCoursesE1Part2, () => {
+                  this.setState({ tVocCoursesE1Part2: [...this.state.tVocCoursesE1Part2] })
+                })}
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4e2 });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4d2) {
+        return (
+          <div className="question question-step-4d2">
+            <div className="bold font-32 question-text-4">
+              Other Subjects
+            </div>
+            <div className="font-16 margin-bottom-1">
+              In fact, there are many other subjects which will strongly support your university application.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Now select the three subjects you would choose if you could only choose from the following.
+            </div>
+            <div className="categories-container-4c-r23 non-facilitation-category font-16">
+              <div className="font-16">
+                <div className="text-4c">
+                  <div className="bold">Russell Group’s Non-Facilitating Subjects:</div>
+                </div>
+                <div className="checkbox-container-r23">
+                  {this.state.nonFacilitatingSubjects.map((subject: any) => <div>
+                    <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                      let selectedCount = this.state.nonFacilitatingSubjects.filter(c => c.selected).length;
+                      if (selectedCount >= 3 && !subject.selected) {
+                        this.setState({ overflowOpen: true });
+                      } else {
+                        subject.selected = !subject.selected;
+                      }
+                      this.setState({ cetegoriesData: this.state.cetegoriesData });
+                    }} />
+                  </div>)}
+                </div>
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              let choice = this.props.secondAnswer.answer.subjectType;
+              if (choice === FirstChoice.ALevel) {
+                this.props.moveNext(this.getAnswer());
+                //this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
+              } else {
+                this.setState({ subStep: SubStep.sub4e1 });
+              }
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4d1) {
+        return (
+          <div className="question question-step-4d1">
+            <div className="bold font-32 question-text-4">
+              Are some A-levels better than others?
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any sixth-form qualification, but its universities may be more likely to make offers to students taking some of the following subjects.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              As an experiment, imagine you could only pick from this list. Which three subjects would you choose?
+            </div>
+            <div className="categories-container-4c-r23 facilitation-category font-16">
+              <div className="font-16">
+                <div className="checkbox-container-r23">
+                  {this.state.facilitatingSubjects.map((subject: any) => <div>
+                    <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                      let selectedCount = this.state.facilitatingSubjects.filter(c => c.selected).length;
+                      if (selectedCount >= 3 && !subject.selected) {
+                        this.setState({ overflowOpen: true });
+                      } else {
+                        subject.selected = !subject.selected;
+                      }
+                      this.setState({ cetegoriesData: this.state.cetegoriesData });
+                    }} />
+                  </div>)}
+                </div>
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4d2 });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4c) {
+        return (
+          <div className="question">
+            <img src="/images/choicesTool/FourthStepR12.png" className="third-step-img fourth-step-img-r12"></img>
+            <div className="bold font-32 question-text-4">
+              Degree Courses
+            </div>
+            <div className="font-16 margin-bottom-1">
+              You have suggested that your eventual degree course might come from one of the following categories.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Now choose up to five individual courses that particularly appeal to you.
+            </div>
+            <div className="categories-container-4c-r23 font-16">
+              {this.state.categories4bc.map((category, i) => {
+                const catData = this.state.cetegoriesData[category];
+                console.log(catData, this.state.cetegoriesData)
+                return (
+                  <div key={i} className="font-16">
+                    <div className="text-4c">
+                      <div className="bold">{catData.name}</div>
+                      {catData.description ? <div className="font-14">{catData.description}</div> : ""}
+                    </div>
+                    <div className="checkbox-container-r23">
+                      {catData.subjects.map((subject: any) => <div>
+                        <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                          let selected: any[] = [];
+                          this.state.cetegoriesData.forEach((c: any) => {
+                            selected.push(...c.subjects.filter((s: any) => s.selected));
+                          });
+                          if (selected.length >= 5 && !subject.selected) {
+                            this.setState({ overflowOpen: true });
+                            //skip
+                          } else {
+                            subject.selected = !subject.selected;
+                          }
+                          this.setState({ cetegoriesData: this.state.cetegoriesData });
+                        }} />
+                      </div>)}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4d1 });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4b) {
+        return (
+          <div className="question">
+            <img src="/images/choicesTool/FourthStepR11.png" className="third-step-img fourth-step-img-r11"></img>
+            <div className="bold font-32 question-text-4">
+              Types of Degree Course
+            </div>
+            <div className="font-16 margin-bottom-1">
+              You probably don’t yet know what degree you are going to do, but it makes sense to think about it.<br />
+              You can’t do some degrees without certain qualifications.
+            </div>
+            <div className="font-16 margin-bottom-1">
+              Below are five broad categories of degree. Select up to three categories that you think you might fall into.
+            </div>
+            <div className="categories-container font-16">
+              <div>
+                {this.renderStemCategory()}
+                {this.renderHumanityCategory()}
+                {this.renderArtsCategory()}
+              </div>
+              <div>
+                {this.renderScienceCategory()}
+                {this.renderLanguageCategory()}
+                {this.renderVocationalCategory()}
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4a })} />
+            <button className="absolute-contunue-btn font-24" onClick={() => {
+              this.saveAnswer();
+              this.setState({ subStep: SubStep.sub4c });
+            }}>Continue</button>
+          </div>
+        );
+      } else if (this.state.subStep === SubStep.sub4a) {
+        let choice = FirstChoice.ShowMeAll;
+        if (this.props.secondAnswer && this.props.secondAnswer.answer && this.props.secondAnswer.answer.subjectType) {
+          choice = this.props.secondAnswer.answer.subjectType;
+        }
+
+        return <FourthStepA
+          moveBack={() => this.setState({ subStep: SubStep.welcome })}
+          moveNext={() => {
+            this.setState({ subStep: SubStep.sub4b });
+          }}
+          choice={choice}
+          onChoiceChanged={choice => {
+            this.props.saveSecondAnswer(choice);
+          }}
+        />;
+      }
+
+    return <FourthStepWelcome
+      moveNext={() => this.setState({ subStep: SubStep.sub4a })}
+      moveBack={() => this.props.moveBack(this.getAnswer())}
+    />;
   }
 }
 
-export default FifthStep;
+export default FourthStep;

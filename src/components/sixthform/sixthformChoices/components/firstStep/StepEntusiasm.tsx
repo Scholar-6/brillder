@@ -41,12 +41,12 @@ const SixStepEntusiasm: React.FC<ThirdProps> = (props) => {
   }
 
   return (
-    <div className="question question-6 question-3-watching question-6-third">
+    <div className="question question-6 question-3-watching">
       <div className="font-16 question-text">
         <div>
-          Enthusiasms, Passions and Interests
+          How true are the following statements of you?
         </div>
-        <div className="hover-area font-14">
+        <div className="hover-area font-14 hover-area-entusiasm">
           <SpriteIcon name="help-circle-r1" className="info-icon" />
           <div className="hover-content regular">
             <div className="triangle-popup" />
