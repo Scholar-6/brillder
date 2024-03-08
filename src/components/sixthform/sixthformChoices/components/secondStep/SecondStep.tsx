@@ -32,7 +32,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
   constructor(props: SecondQuestionProps) {
     super(props);
 
-    let choice = null;
     let subjectType = FirstChoice.ShowMeAll;
 
     let subStep = SubStep.Intro;
@@ -42,7 +41,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
 
     if (props.answer) {
       let answer = props.answer.answer;
-      choice = answer.choice;
       subStep = answer.subStep;
       readingChoice = answer.readingChoice;
       if (answer.readingChoicesV2) {
@@ -107,6 +105,7 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           moveBack={() => this.setState({ subStep: SubStep.CourseSelect })}
           moveNext={() => {
             if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
+              this.props.saveAnswer(this.getAnswer());
               this.setState({ subStep: SubStep.ReadingV2 })
             } else {
               this.moveNext();

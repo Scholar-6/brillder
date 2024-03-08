@@ -341,6 +341,8 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
       }
     ];
 
+    let subStep = SubStep.Welcome;
+
     let firstName = '';
     let lastName = '';
     let nameCorrected = false;
@@ -374,7 +376,12 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
       if (answer.emailCorrected) {
         emailCorrected = answer.emailCorrected;
       }
+
+      if (answer.subStep) {
+        subStep = answer.subStep;
+      }
     }
+
 
     this.state = {
       email,
@@ -384,7 +391,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
       emailCorrected,
       enthusiasmChoices,
       dreamChoices,
-      subStep: SubStep.Welcome,
+      subStep,
       popup: false
     }
   }

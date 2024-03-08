@@ -137,8 +137,6 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
               </React.Fragment>
             )}
             renderInput={(params: any) => {
-              console.log('params', this.state.schoolName);
-
               return (
                 <TextField
                   {...params}
@@ -312,15 +310,12 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
               </div>
             }
           </div>
-          <BackButtonSix onClick={() => {
-            this.setState({ subStep: SubStep.First });
-          }} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.First })} />
           <button
             className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
             disabled={disabled}
             onClick={() => {
-              let name = this.state.schoolName;
-              let found = this.state.schools.find(s => s.name == name);
+              this.props.saveAnswer(this.getAnswer());
               this.setState({ subStep: SubStep.WatchingStart });
             }}
           >Continue</button>
