@@ -9,12 +9,11 @@ import {
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 
+import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
 import FirstStep from "./components/firstStep/FirstStep";
 import SecondStep from "./components/secondStep/SecondStep";
 import ThirdStep from "./components/thirdStep/ThirdStep";
 import FifthStep from "./components/fifthStep/FifthStep";
-import { fileUrl } from "components/services/uploadFile";
-import ProgressBarSixthform from "./components/progressBar/ProgressBarSixthform";
 import SixStep from "./components/sixStep/SixStep";
 import map from "components/map";
 import TasterBrickDialog from "./components/TasterBrickDialog";
@@ -536,126 +535,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
           if (result) {
             this.parseAnswer2(result, answer, Pages.Question2);
-            this.setState({ page: Pages.Question1, subjects: this.state.allSubjects });
+            this.setState({ page: Pages.Question1 });
           }
         }}
       />
     } else if (this.state.page === Pages.Question3) {
       return <ThirdStep
         answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        saveAnswer={async (answer: any) => {
-          let subjects = this.state.subjects;
-          if (answer && answer.schoolName) {
-            let name = answer.schoolName;
-            if (name === "Hereford Sixth Form College") {
-              subjects = subjects.filter(s =>
-                s.name === 'Biology' ||
-                s.name === 'Business' ||
-                s.name === 'Chemistry' ||
-                s.name === 'Classical Civilisation' ||
-                s.name === 'Computer Science' ||
-                s.name === 'Drama & Theatre Studies' ||
-                s.name === 'Economics' ||
-                s.name === 'English Language' ||
-                s.name === 'English Literature' ||
-                s.name === 'Environmental Science' ||
-                s.name === 'Fine Art' ||
-                s.name === 'French' ||
-                s.name === 'Further Mathematics' ||
-                s.name === 'Geography' ||
-                s.name === 'Geology' ||
-                s.name === 'German' ||
-                s.name === 'History' ||
-                s.name === 'History of Art' ||
-                s.name === 'Law' ||
-                s.name === 'Mathematics' ||
-                s.name === 'Media Studies' ||
-                s.name === 'Music' ||
-                s.name === 'Philosophy' ||
-                s.name === 'Photography' ||
-                s.name === 'Physical Education' ||
-                s.name === 'Physics' ||
-                s.name === 'Politics' ||
-                s.name === 'Psychology' ||
-                s.name === 'Sociology' ||
-                s.name === 'Spanish' ||
-                s.name === 'Statistics' ||
-
-                s.name === 'Applied Maths (Core & Certificate)' ||
-                s.name === 'Applied Psychology' ||
-                s.name === 'Creative Digital Media' ||
-                s.name === 'Criminology' ||
-                s.name === 'Dance (Vocational)' ||
-                s.name === 'Engineering' ||
-                s.name === 'Enterprise & Entrepreneurship' ||
-                s.name === 'eSports & Computer Games' ||
-                s.name === 'Forensic Science' ||
-                s.name === 'Health & Social Care' ||
-                s.name === 'Information Technology' ||
-                s.name === 'Musical Theatre' ||
-                s.name === 'Performing Arts (Acting)' ||
-                s.name === 'Sport & Exercise Science' ||
-                s.name === 'Sporting Excellence' ||
-                s.name === 'Travel & Tourism'
-              );
-            } else if (name === "Worcester Sixth Form College") {
-              subjects = subjects.filter(s =>
-                s.name === 'Accounting' ||
-                s.name === 'Bengali' ||
-                s.name === 'Biology' ||
-                s.name === 'Business' ||
-                s.name === 'Chemistry' ||
-                s.name === 'Classical Civilisation' ||
-                s.name === 'Computer Science' ||
-                s.name === 'Dance' ||
-                s.name === 'Drama & Theatre Studies' ||
-                s.name === 'Economics' ||
-                s.name === 'English Language' ||
-                s.name === 'English Literature' ||
-                s.name === 'Environmental Science' ||
-                s.name === 'Film Studies' ||
-                s.name === 'Fine Art' ||
-                s.name === 'French' ||
-                s.name === 'Further Mathematics' ||
-                s.name === 'Geography' ||
-                s.name === 'Geology' ||
-                s.name === 'German' ||
-                s.name === 'Graphic Communication' ||
-                s.name === 'History' ||
-                s.name === 'Law' ||
-                s.name === 'Mathematics' ||
-                s.name === 'Media Studies' ||
-                s.name === 'Music' ||
-                s.name === 'Music Technology' ||
-                s.name === 'Philosophy' ||
-                s.name === 'Photography' ||
-                s.name === 'Physical Education' ||
-                s.name === 'Physics' ||
-                s.name === 'Politics' ||
-                s.name === 'Psychology' ||
-                s.name === 'Sociology' ||
-                s.name === 'Spanish' ||
-                s.name === 'Urdu' ||
-
-                s.name === 'Applied Business' ||
-                s.name === 'Applied Maths (Core & Certificate)' ||
-                s.name === 'Childcare & Child Development (Education & Early Years)' ||
-                s.name === 'Criminology' ||
-                s.name === 'Engineering' ||
-                s.name === 'Food Science & Nutrition' ||
-                s.name === 'Health & Social Care' ||
-                s.name === 'Information Technology' ||
-                s.name === 'Performing Arts (Acting)' ||
-                s.name === 'Sport & Exercise Science' ||
-                s.name === 'Travel & Tourism' ||
-
-                s.name === 'Education & Early Years' ||
-                s.name === 'Health & Science'
-              );
-            }
-          }
-          await this.saveThirdAnswer(answer);
-        }}
+        saveAnswer={this.saveThirdAnswer.bind(this)}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
           if (result) {
