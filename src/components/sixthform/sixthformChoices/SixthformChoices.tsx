@@ -22,6 +22,7 @@ import routes from "components/play/routes";
 import authRoutes from "../login/routes";
 import PageLoader from "components/baseComponents/loaders/pageLoader";
 import FourthStep from "./components/fourthStep/FourthStep";
+import SubjectSidebarPopup from "./components/SubjectSidebarPopup";
 
 
 interface UserProfileProps {
@@ -279,6 +280,38 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.categories4c = answer.categories4c;
         answerR1.answer.categories4e = answer.categories4e;
         answerR1.answer.listeningChoices = answer.listeningChoices;
+
+        if (answer.firstPairResults) {
+          answerR1.answer.firstPairResults = answer.firstPairResults;
+        }
+        if (answer.secondPairResults) {
+          answerR1.answer.secondPairResults = answer.secondPairResults;
+        }
+        if (answer.subjectSelections) {
+          answerR1.answer.subjectSelections = answer.subjectSelections;
+        }
+        if (answer.categoriesC3) {
+          answerR1.answer.categoriesC3 = answer.categoriesC3;
+        }
+        if (answer.categoriesC4) {
+          answerR1.answer.categoriesC4 = answer.categoriesC4;
+        }
+        if (answer.coursesD) {
+          answerR1.answer.coursesD = answer.coursesD;
+        }
+        if (answer.coursesF) {
+          answerR1.answer.coursesF = answer.coursesF;
+        }
+        if (answer.ePairResults) {
+          answerR1.answer.ePairResults = answer.ePairResults;
+        }
+        if (answer.subStep) {
+          answerR1.answer.subStep = answer.subStep;
+        }
+        if (answer.watchingChoices) {
+          answerR1.answer.watchingChoices = answer.watchingChoices;
+        }
+
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -638,8 +671,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           }
         }} />
     } else if (this.state.page === Pages.Question4) {
-      let secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
-      let thirdAnswer = this.state.answers.find(a => a.step === Pages.Question3);
+      const secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
+      const thirdAnswer = this.state.answers.find(a => a.step === Pages.Question3);
       return <FourthStep
         secondAnswer={secondAnswer}
         thirdAnswer={thirdAnswer}
@@ -658,7 +691,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }}
       />
     } else if (this.state.page === Pages.Question5) {
-      let secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
+      const secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
 
       return <FifthStep
         secondAnswer={secondAnswer}
@@ -701,161 +734,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   async updateSubject(subject: SixthformSubject) {
     await setSixthformSubjectChoice(subject);
     this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
-  }
-
-  renderSwitchButton(subject: SixthformSubject) {
-    return (
-      <div className="switch-button font-12 bold">
-        <div
-          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`}
-          onClick={() => {
-            if (!subject.score) {
-              subject.score = 0;
-            }
-            if (subject.userChoice === UserSubjectChoice.Maybe) {
-              subject.score += 2;
-            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              subject.score += 15;
-            } else {
-              subject.score += 5;
-            }
-            subject.userChoice = UserSubjectChoice.Definetly;
-            this.updateSubject(subject);
-          }}>Definitely!</div>
-        <div
-          className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow' : ''}`}
-          onClick={() => {
-            if (!subject.score) {
-              subject.score = 0;
-            }
-
-            if (subject.userChoice === UserSubjectChoice.Definetly) {
-              subject.score -= 2;
-            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              subject.score += 13;
-            } else {
-              subject.score += 3;
-            }
-            subject.userChoice = UserSubjectChoice.Maybe;
-            this.updateSubject(subject);
-          }}>Maybe</div>
-        <div
-          className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red' : ''}`}
-          onClick={() => {
-            if (!subject.score) {
-              subject.score = 0;
-            }
-
-            if (subject.userChoice === UserSubjectChoice.Definetly) {
-              subject.score -= 15;
-            } else if (subject.userChoice === UserSubjectChoice.Maybe) {
-              subject.score -= 13;
-            } else {
-              subject.score -= 10;
-            }
-            subject.userChoice = UserSubjectChoice.NotForMe;
-            this.updateSubject(subject);
-          }}>Not for me</div>
-      </div>
-    );
-  }
-
-  renderBrick(subject: SixthformSubject) {
-    if (subject.brick) {
-      return (
-        <div className="brick-container">
-          <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
-          <div className="bottom-description-color" />
-          <div className="bottom-description font-8 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
-        </div>
-      );
-    }
-    return (
-      <div className="brick-container">
-        <div className="scroll-block" style={{ backgroundImage: `url(https://s3.eu-west-2.amazonaws.com/app.brillder.files.com/files/6c5bb9cb-28f0-4bb4-acc6-0169ef9ce9aa.png)` }}></div>
-        <div className="bottom-description-color" />
-        <div className="bottom-description font-8 bold">Introduction to Advanced Mathemathics</div>
-      </div>
-    );
-  }
-
-  renderSubjectPopup(subject: SixthformSubject) {
-    if (this.state.popupSubject && this.state.popupSubject === subject) {
-      const { popupSubject, subjectPosition } = this.state;
-      const windowHeight = window.innerHeight;
-      let style = { top: '11vw', bottom: 'unset' };
-
-      if (subjectPosition && (subjectPosition.bottom > (windowHeight / 1.5))) {
-        // popup should be based on bottom
-        style.top = 'unset';
-        style.bottom = '5vw';
-      } else if (subjectPosition && (subjectPosition.bottom > (windowHeight / 1.7))) {
-        // popup should be based on bottom
-        style.top = 'unset';
-        style.bottom = '11vw';
-      }
-      return (
-        <div style={style} className={`subject-sixth-popup ${subject.isTLevel ? 'big-T-level' : ''}`}>
-          {subject.facilitatingSubject &&
-            <div className="facilitation-container font-12">
-              <div>
-                <SpriteIcon name="facilitating-badge" />
-                <span>Facilitating Subject</span>
-              </div>
-            </div>}
-          <div className="subject-name font-24 bold">
-            {this.renderCircle(subject)}
-            <span className="subject-name-only">
-              {popupSubject.name} {/*popupSubject.score*/}
-            </span>
-          </div>
-          <div className="font-14">
-            {subject.description && subject.description}
-          </div>
-          <div className="second-row">
-            <div className="box-v32 m-r">
-              <div>
-                <SpriteIcon name="user-custom-v3" />
-              </div>
-              <div className="font-12">Candidates</div>
-              <div className="bold font-15">{subject.candidates > 0 ? subject.candidates : 1000}</div>
-            </div>
-            <div className="box-v32">
-              <div>
-                <SpriteIcon name="facility-icon-hat" />
-              </div>
-              <div className="font-12">Subject Group</div>
-              <div className="bold font-12">{subject.subjectGroup ? subject.subjectGroup : 'STEM'}</div>
-            </div>
-            <div className="box-v32 m-l">
-              <div>
-                <SpriteIcon name="bricks-icon-v3" />
-              </div>
-              <div className="font-12">Often taken with</div>
-              <div className="bold font-11">{subject.oftenWith ? subject.oftenWith : 'Accounting, Business'}</div>
-            </div>
-          </div>
-          {this.renderSwitchButton(subject)}
-          {subject.brick &&
-            <div className="taste-container" onClick={() => {
-              if (subject.brick) {
-                this.setState({ brickPopup: { isOpen: true, brick: subject.brick } });
-              }
-            }}>
-              <div className="label-container">
-                <div>
-                  <div className="bold font-18">Try a taster topic</div>
-                  <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
-                </div>
-              </div>
-              <div>
-                {this.renderBrick(subject)}
-              </div>
-            </div>}
-        </div>
-      );
-    }
-    return;
   }
 
   renderSubjectGroup(subject: SixthformSubject) {
@@ -924,7 +802,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     {this.renderCircle(subject)}
                     <div className="subject-name">{subject.name}</div>
                     <div className="level-round font-12">{this.renderSubjectGroup(subject)}</div>
-                    {this.renderSubjectPopup(subject)}
+                    <SubjectSidebarPopup
+                      subject={subject}
+                      popupSubject={this.state.popupSubject}
+                      subjectPosition={this.state.subjectPosition}
+                      showPopup={() => this.setState({ brickPopup: { isOpen: true, brick: subject.brick } })}
+                      updateSubject={() => this.updateSubject(subject)}
+                    />
                   </div>
                 })}
               </div>

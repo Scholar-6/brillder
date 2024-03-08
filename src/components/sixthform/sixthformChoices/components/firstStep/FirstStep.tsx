@@ -410,7 +410,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
           onChange={dreamChoices => this.setState({ dreamChoices })}
           moveBack={() => this.setState({ subStep: SubStep.DreamsStart })}
           moveNext={() => {
-            //this.props.saveAnswer(this.getAnswer());
+            this.props.saveAnswer(this.getAnswer());
             this.props.moveNext();
           }}
         />
@@ -423,7 +423,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
     } else if (this.state.subStep === SubStep.Entusiasm) {
       return <SixStepEntusiasm
         choices={this.state.enthusiasmChoices}
-        onChange={enthusiasmChoices => {this.setState({ enthusiasmChoices })}}
+        onChange={enthusiasmChoices => this.setState({ enthusiasmChoices })}
         moveBack={() => {
           this.props.saveAnswer(this.getAnswer());
           this.setState({ subStep: SubStep.EntusiasmStart });

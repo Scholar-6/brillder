@@ -326,7 +326,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         if (disabled) {
           this.setState({ showMinWarning: true });
         } else {
-          let mathFound = this.state.subjectSelections.find(s => s.name === "Maths" || s.name === "English Language");
+          let mathFound = this.state.subjectSelections.find(s => s.name == "Maths" || s.name == "English Language");
           if (!mathFound && !this.state.seenMathWarining) {
             disabled = true;
             this.setState({ showMathWarning: true });
