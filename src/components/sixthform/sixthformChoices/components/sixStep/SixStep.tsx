@@ -20,7 +20,7 @@ enum SubStep {
   final,
 }
 
-interface FifthProps {
+interface Props {
   history: any;
   answer: any;
   saveAnswer(answer: any): void;
@@ -28,7 +28,7 @@ interface FifthProps {
   moveBack(answer: any): void;
 }
 
-interface FifthStepState {
+interface State {
   subStep: SubStep;
   aAnswer: any;
   abAnswer: any;
@@ -38,8 +38,8 @@ interface FifthStepState {
   writingChoices: any[];
 }
 
-class SixStep extends Component<FifthProps, FifthStepState> {
-  constructor(props: FifthProps) {
+class SixStep extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     let subStep = SubStep.welcome;
