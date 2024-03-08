@@ -89,7 +89,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       popupSubject: null,
       subjectPosition: null,
 
-      page: Pages.Question4,
+      page,
       brickPopup: {
         isOpen: false,
         brick: null
@@ -631,7 +631,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           }
         }}
         moveBack={async (answer: any) => {
-          console.log('move back')
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
           if (result) {
             this.parseAnswer3(result, answer, Pages.Question3);
