@@ -105,7 +105,6 @@ class SecondQuestion extends Component<SecondQuestionProps, SecondQuestionState>
           moveBack={() => this.setState({ subStep: SubStep.CourseSelect })}
           moveNext={() => {
             if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
-              this.props.saveAnswer(this.getAnswer());
               this.setState({ subStep: SubStep.ReadingV2 })
             } else {
               this.moveNext();

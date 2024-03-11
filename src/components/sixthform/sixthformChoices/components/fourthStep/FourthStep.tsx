@@ -490,6 +490,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           onChange={listeningChoices => this.setState({ listeningChoices })}
           moveBack={() => this.setState({ subStep: ThirdSubStep.ListenStart })}
           moveNext={async () => {
+            console.log('save')
             await this.props.saveThirdAnswer(this.getAnswer());
             this.moveNext();
           }} />
@@ -527,6 +528,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             moveToStep4={coursesF => {
               let answer = this.getAnswer();
               answer.coursesF = coursesF;
+              this.props.saveThirdAnswer(answer);
               this.setState({ coursesF, subStep: ThirdSubStep.ListenStart });
             }}
           />

@@ -164,6 +164,8 @@ class SixStep extends Component<Props, State> {
       }
     ];
 
+    console.log('answer', props.answer);
+
     if (props.answer) {
       const { answer } = props.answer;
       if (answer.aAnswer) {
@@ -203,11 +205,13 @@ class SixStep extends Component<Props, State> {
       aAnswer: this.state.aAnswer,
       abAnswer: this.state.abAnswer,
       careers: this.state.careers,
-      writingChoice: this.state.writingChoice
+      writingChoice: this.state.writingChoice,
+      writingChoices: this.state.writingChoices
     }
   }
 
   render() {
+    console.log('render abAnswer', this.state.abAnswer);
     if (this.state.subStep === SubStep.final) {
       return <SixStepFinal history={this.props.history} />
     } else if (this.state.subStep === SubStep.writingB) {
@@ -352,6 +356,7 @@ class SixStep extends Component<Props, State> {
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.writingA });
           }}>Continue</button>
         </div >
@@ -361,14 +366,17 @@ class SixStep extends Component<Props, State> {
         <FifthStepB
           abAnswer={this.state.abAnswer}
           onChange={answer => this.setState({ abAnswer: answer })}
-          moveNext={answer => {
+          moveNext={abAnswer => {
+            const answer = this.getAnswer();
+            answer.abAnswer = abAnswer;
             this.props.saveAnswer(answer);
-            this.setState({ subStep: SubStep.sub5c, abAnswer: answer });
+            this.setState({ subStep: SubStep.sub5c, abAnswer: abAnswer });
           }}
           moveBack={abAnswer => {
-            let answer = this.getAnswer();
+            const answer = this.getAnswer();
             answer.abAnswer = abAnswer;
-            this.setState({ subStep: SubStep.sub5a, abAnswer: answer });
+            this.props.saveAnswer(answer);
+            this.setState({ subStep: SubStep.sub5a, abAnswer: abAnswer });
           }}
         />
       );
@@ -377,12 +385,13 @@ class SixStep extends Component<Props, State> {
         <FifthStepA
           careers={this.state.aAnswer}
           onChange={answer => this.setState({ aAnswer: answer })}
-          moveNext={answer => {
-            this.props.saveAnswer(answer);
+          moveNext={aAnswer => {
+            const answer = this.getAnswer();
+            answer.aAnswer = aAnswer;
             this.setState({ subStep: SubStep.sub5b, aAnswer: answer });
           }}
           moveBack={aAnswer => {
-            let answer = this.getAnswer();
+            const answer = this.getAnswer();
             answer.aAnswer = aAnswer;
             this.setState({ subStep: SubStep.welcome, aAnswer: answer });
           }}
