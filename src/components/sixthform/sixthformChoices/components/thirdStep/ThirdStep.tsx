@@ -69,7 +69,48 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
 
     let subStep = SubStep.Intro;
 
-    let watchingChoices = [];
+    let watchingChoices = [
+      {
+        label: 'News & Current Affairs',
+        choice: null
+      }, {
+        label: 'Nature, Farming & Environment',
+        choice: null
+      }, {
+        label: 'Other Science (e.g. Astronomy, Technology)',
+        choice: null
+      }, {
+        label: 'Art, Architecture & Design',
+        choice: null
+      }, {
+        label: 'Quiz & Puzzle Shows',
+        choice: null
+      }, {
+        label: 'History, Ancient History & Anthropology',
+        choice: null
+      }, {
+        label: 'Vehicles & Motorsport',
+        choice: null
+      }, {
+        label: 'Classic Old Films',
+        choice: null
+      }, {
+        label: 'Sit-coms, Stand-Ups and Funny Stuff',
+        choice: null
+      }, {
+        label: 'Sport',
+        choice: null
+      }, {
+        label: 'Drama & Box Sets',
+        choice: null
+      }, {
+        label: 'Animated Movies',
+        choice: null
+      }, {
+        label: 'Reality Television',
+        choice: null
+      }
+    ];
 
     if (props.answer) {
       let answer = props.answer.answer;
@@ -79,7 +120,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
       sixthformChoice = answer.sixthformChoice;
       schoolName = answer.schoolName;
       subStep = answer.subStep;
-      if (answer.watchingChoices) {
+      if (answer.watchingChoices && answer.watchingChoices.length > 12) {
         watchingChoices = answer.watchingChoices;
       }
     }
@@ -259,6 +300,8 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
         }
       }
 
+      console.log(this.state.schoolName);
+
       return (
         <div className="question">
           <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
@@ -370,7 +413,11 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
             disabled={disabled}
             onClick={() => {
               if (this.state.choice === SecondChoice.SixthForm || this.state.choice === SecondChoice.NewSchool || this.state.choice === SecondChoice.CurrentSchool) {
-                this.setState({ subStep: SubStep.Second });
+                if (this.state.currentSchool !== '' && this.state.schoolName === '') {
+                  this.setState({ schoolName: this.state.currentSchool, subStep: SubStep.Second });
+                } else {
+                  this.setState({ subStep: SubStep.Second });
+                }
               } else {
                 this.moveNext();
               }

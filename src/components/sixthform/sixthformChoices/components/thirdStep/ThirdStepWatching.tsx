@@ -29,9 +29,12 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
         onClick={() => {
           currentStep.choice = realChoice;
           props.onChange(props.watchingChoices);
+          console.log(step, props.watchingChoices.length - 1);
           if (step >= props.watchingChoices.length - 1) {
+            console.log('move next');
             props.moveNext()
           } else {
+            console.log('step + 1');
             setStep(step + 1);
           }
         }}

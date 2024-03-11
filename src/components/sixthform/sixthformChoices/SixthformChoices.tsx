@@ -253,16 +253,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           answerR1.answer.watchingChoices = answer.watchingChoices;
         }
         this.setState({
-          allSubjects: this.sortByScore(this.state.allSubjects),
-          subjects: this.sortByScore(this.state.subjects)
+          allSubjects: this.sortByScore(result.subjectScores),
+          subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores)
         });
       } else {
         result.result.answer = JSON.parse(result.result.answer);
         this.state.answers.push(result.result);
         this.setState({
           answers: [...this.state.answers],
-          allSubjects: this.sortByScore(this.state.allSubjects),
-          subjects: this.sortByScore(this.state.subjects)
+          allSubjects: this.sortByScore(result.subjectScores),
+          subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores)
         });
       }
     }
@@ -312,16 +312,16 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }
 
         this.setState({
-          allSubjects: this.sortByScore(this.state.allSubjects),
-          subjects: this.sortByScore(this.state.subjects)
+          allSubjects: this.sortByScore(result.subjectScores),
+          subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores)
         });
       } else {
         result.result.answer = JSON.parse(result.result.answer);
         this.state.answers.push(result.result);
         this.setState({
           answers: [...this.state.answers],
-          allSubjects: this.sortByScore(this.state.allSubjects),
-          subjects: this.sortByScore(this.state.subjects)
+          allSubjects: this.sortByScore(result.subjectScores),
+          subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores)
         });
       }
     }
@@ -332,9 +332,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.subStep = answer.subStep;
-        answerR1.answer.aAnswer = answer.aAnswer;
-        answerR1.answer.abAnswer = answer.abAnswer;
-        answerR1.answer.careers = answer.careers;
+        answerR1.answer.categories4bc = answer.categories4bc;
+        answerR1.answer.categories4c = answer.categories4c;
+        answerR1.answer.cetegoriesData = answer.cetegoriesData;
+        answerR1.answer.facilitatingSubjects = answer.facilitatingSubjects;
+        answerR1.answer.nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
+        answerR1.answer.categories4e = answer.categories4e;
+        answerR1.answer.speakingChoices = answer.speakingChoices;
+
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)
@@ -356,6 +361,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
         answerR1.answer.subStep = answer.subStep;
+        answerR1.answer.aAnswer = answer.aAnswer;
+        answerR1.answer.abAnswer = answer.abAnswer;
+        answerR1.answer.careers = answer.careers;
+        answerR1.answer.writingChoice = answer.writingChoice;
+        answerR1.answer.writingChoices = answer.writingChoices;
+
         this.setState({
           allSubjects: this.sortByScore(this.state.allSubjects),
           subjects: this.sortByScore(this.state.subjects)

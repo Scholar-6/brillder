@@ -8,7 +8,7 @@ import FourthStepA from "./FourthStepA";
 import { Dialog } from "@material-ui/core";
 import FourthStepWelcome from "./FourthStepWelcome";
 import FifthStepSpeaking from "./FifthStepSpeaking";
-import FourthStepListenStart from "./FourthStepListenStart";
+import FifthStepSpeakingStart from "./FifthStepSpeakingStart";
 
 enum SubStep {
   welcome,
@@ -19,11 +19,11 @@ enum SubStep {
   sub4d2,
   sub4e1,
   sub4e2,
-  listeningStart,
-  listening,
+  speakingStart,
+  speaking,
 }
 
-export enum SixStepFourthChoices {
+export enum SpeakingChoices {
   InTheClassroom = 1,
   ICantStand,
   AtHome,
@@ -73,7 +73,7 @@ interface ThirdQuestionState {
   tVocCoursesE1Part1: TLevelCourse[];
   tVocCoursesE1Part2: TLevelCourse[];
 
-  listeningChoices: any[];
+  speakingChoices: any[];
 
   overflowOpen: boolean;
 }
@@ -86,30 +86,50 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let categories4bc: any[] = [];
 
-    let listeningChoices = [
+    let speakingChoices = [
       {
-        label: 'Current Affairs, News & Talk (e.g. Radio Four)',
+        type: SpeakingChoices.InTheClassroom,
+        label: 'In the classroom, I enjoy contributing ideas and showing what I know.',
         choice: null
       }, {
-        label: 'Podcasts (e.g. Joe Rogan)',
+        type: SpeakingChoices.ICantStand,
+        label: 'I can’t stand pretentious people who waffle on about stuff which isn’t relevant.',
         choice: null
       }, {
-        label: 'Sport & Sport Talk (e.g. Radio Five)',
+        type: SpeakingChoices.AtHome,
+        label: 'At home, my family talk a lot about what’s going on in the world and we have interesting discussions.',
         choice: null
       }, {
-        label: 'Audiobooks (e.g. Audible)',
+        type: SpeakingChoices.WithMyFriends,
+        label: 'With my friends I mainly gossip and enjoy the chance to banter and have fun.',
         choice: null
       }, {
-        label: 'Comedy and Drama (e.g. Radio Four)',
+        type: SpeakingChoices.MyFriends,
+        label: 'My friends put forward new ideas and challenge my thinking in ways I value.',
         choice: null
       }, {
-        label: 'Mainstream Music (Rock, Rap, Pop & Chart)',
+        type: SpeakingChoices.IPreferPractical,
+        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more solid answers.',
         choice: null
       }, {
-        label: 'Music, Folk or Jazz',
+        type: SpeakingChoices.ILove,
+        label: 'I love the chance to put an argument in a proper debate, and I’m good at undermining other people’s arguments.',
         choice: null
       }, {
-        label: 'Music, Classical ',
+        type: SpeakingChoices.ImNot,
+        label: 'I’m not a confident communicator - my strengths are in other areas.',
+        choice: null
+      }, {
+        type: SpeakingChoices.ILikeTalking,
+        label: 'I like talking in depth with others about music, books or about documentaries, plays and films we’ve seen.',
+        choice: null
+      }, {
+        type: SpeakingChoices.IPreferToListen,
+        label: 'I prefer to listen carefully and chip in only when something really needs to be said.',
+        choice: null
+      }, {
+        type: SpeakingChoices.IReallyAdmire,
+        label: 'I really admire people who can communicate effectively in foreign languages.',
         choice: null
       }
     ];
@@ -585,8 +605,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           tVocCoursesE1Part2 = answer.categories4e.tVocCoursesE1Part2;
         }
       }
-      if (answer.listeningChoices) {
-        listeningChoices = answer.listeningChoices;
+      if (answer.speakingChoices) {
+        speakingChoices = answer.speakingChoices;
       }
     }
 
@@ -601,7 +621,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       tVocCoursesE1Part1,
       tVocCoursesE1Part2,
 
-      listeningChoices,
+      speakingChoices,
 
       overflowOpen: false,
     }
@@ -618,7 +638,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
       subStep: this.state.subStep,
       cetegoriesData: this.state.cetegoriesData,
       categories4bc: categories4bc,
-      listeningChoices: this.state.listeningChoices,
+      speakingChoices: this.state.speakingChoices,
       facilitatingSubjects: this.state.facilitatingSubjects,
       nonFacilitatingSubjects: this.state.nonFacilitatingSubjects,
       categories4c,
@@ -999,18 +1019,18 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === SubStep.listening) {
+    if (this.state.subStep === SubStep.speaking) {
       return <FifthStepSpeaking
-        speakingChoices={this.state.listeningChoices}
-        onChange={listeningChoices => this.setState({ listeningChoices })}
-        moveBack={() => this.setState({ subStep: SubStep.listeningStart })}
+        speakingChoices={this.state.speakingChoices}
+        onChange={speakingChoices => this.setState({ speakingChoices })}
+        moveBack={() => this.setState({ subStep: SubStep.speakingStart })}
         moveNext={() => this.props.moveNext(this.getAnswer())}
       />
     } else
-      if (this.state.subStep === SubStep.listeningStart) {
-        return <FourthStepListenStart
+      if (this.state.subStep === SubStep.speakingStart) {
+        return <FifthStepSpeakingStart
           moveBack={() => this.setState({ subStep: SubStep.sub4e2 })}
-          moveNext={() => this.setState({ subStep: SubStep.listening })}
+          moveNext={() => this.setState({ subStep: SubStep.speaking })}
         />
       } else if (this.state.subStep === SubStep.sub4e2) {
         let selected = this.state.tVocCoursesE1Part1.filter(a => a.active == true);
@@ -1047,7 +1067,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             </div>
             <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
             <button className="absolute-contunue-btn font-24" onClick={() => {
-              this.setState({ subStep: SubStep.listeningStart });
+              this.setState({ subStep: SubStep.speakingStart });
             }}>Continue</button>
           </div>
         );
