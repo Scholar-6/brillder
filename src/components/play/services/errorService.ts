@@ -5,3 +5,11 @@ export const sendError = (err: string) => {
 
   errorPromise.then(() => {});
 }
+
+export const sendSixthformError = (err: string) => {
+  const errorPromise = new Promise(() => {
+    throw new Error("Sixthform Error: " + err);
+  });
+
+  errorPromise.then(() => {});
+}

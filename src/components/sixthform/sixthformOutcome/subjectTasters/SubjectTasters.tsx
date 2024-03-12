@@ -4,7 +4,6 @@ import { SixthformSubject } from "services/axios/sixthformChoices";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { fileUrl } from "components/services/uploadFile";
-import { playCover } from "components/play/routes";
 import { AcademicLevelLabels, SubjectGroup } from "model/brick";
 
 
