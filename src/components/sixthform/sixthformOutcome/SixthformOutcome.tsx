@@ -575,7 +575,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     return <div />;
   }
 
-  renderOutcomeTabContent() {
+  renderOutcomeTabContent(progressScore: number) {
     let answer2 = null;
     let lastStep = 0;
     let answers = this.state.answers;
@@ -605,7 +605,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 <div className="font-16">{this.props.user.email}</div>
                 {this.renderCollegeName(answer2)}
               </div>
-              <ProgressBox history={this.props.history} answers={this.state.answers} loading={this.state.loading} />
+              <ProgressBox progress={progressScore} history={this.props.history} answers={this.state.answers} loading={this.state.loading} />
             </div>
             <div className="box-e354-big">
               <div className="box-box box-first">
@@ -661,17 +661,18 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
-  renderTabContent() {
+  renderTabContent(progressScore: number) {
     if (this.state.activeTab === SixActiveTab.SubjectTasters) {
       return this.renderTatersTabContent();
     } else if (this.state.activeTab === SixActiveTab.Survey) {
       return this.renderSurveyTabContent();
     } else if (this.state.activeTab === SixActiveTab.Outcome) {
-      return this.renderOutcomeTabContent();
+      return this.renderOutcomeTabContent(progressScore);
     }
   }
 
   render() {
+    const progressScore = Math.round((this.state.answers.length / 6) * 100);
     return (
       <React.Suspense fallback={<></>}>
         <div className="SixthformOutcomePage">
@@ -684,7 +685,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 </div>
               </div>
             </div>
-            <TopMenu history={this.props.history} />
+            <TopMenu progress={progressScore} history={this.props.history} />
           </div>
           <div className="content-container-e354">
             <div>
@@ -714,7 +715,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   My Outcomes
                 </div>
               </div>
-              {this.renderTabContent()}
+              {this.renderTabContent(progressScore)}
             </div>
           </div>
         </div>
