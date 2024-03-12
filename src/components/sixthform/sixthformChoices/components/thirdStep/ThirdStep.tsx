@@ -162,7 +162,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
             inputValue={this.state.schoolName}
             onChange={(e: any, v: any) => {
               if (v && v.name) {
-                this.setState({ schoolName: v.name, schoolId: v.id })
+                this.setState({ schoolName: v.name, sixthformChoice: SixthformChoice.SixthForm, schoolId: v.id })
               }
             }}
             noOptionsText="Sorry, try typing something else"
@@ -193,7 +193,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
                         break;
                       }
                     }
-                    this.setState({ schoolName: e.target.value, schoolId });
+                    this.setState({ schoolName: e.target.value, sixthformChoice: SixthformChoice.SixthForm, schoolId });
                   }}
                   placeholder="Type to start browsing our database"
                 />);
@@ -299,8 +299,6 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           disabled = true;
         }
       }
-
-      console.log(this.state.schoolName);
 
       return (
         <div className="question">

@@ -69,7 +69,7 @@ class FourthStepA extends Component<FourthAProps, FourthAState> {
               setChoice={() => this.onChoiceChanged(FirstChoice.Vocational)}
             />
           </div>
-          <div className="font-16 white-blue">If you’ve changed your mind, select the category above that best applies to you.</div>
+          <div className="font-16 white-blue bottom-text-s5">If you’ve changed your mind, select the category above that best applies to you.</div>
         </div>
         <BackButtonSix onClick={() => this.props.moveBack()} />
         <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>Continue</button>
