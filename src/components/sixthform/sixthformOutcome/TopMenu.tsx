@@ -1,6 +1,7 @@
 import React from 'react';
-import { Grid, Menu } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { CircularProgressbar } from "react-circular-progressbar";
 
 import { User } from 'model/user';
 import { Notification } from 'model/notifications';
@@ -18,11 +19,14 @@ import NotificationPanel from 'components/baseComponents/notificationPanel/Notif
 import NotificationPopup from 'components/baseComponents/notificationPopup/NotificationPopup';
 import { isPhone } from 'services/phone';
 import ReactDOM from 'react-dom';
+import map from 'components/map';
 
 
 interface Props {
-  user: User | null;
   history: any;
+  progress: number;
+
+  user: User | null;
   isAuthenticated: any;
   notifications: Notification[] | null;
   getNotifications(): void;
@@ -51,6 +55,21 @@ const TopMenu: React.FC<Props> = (props) => {
         </div>
         {user &&
           <Grid container direction="row" className="action-container">
+            <div className="circle-container-r32" onClick={() => props.history.push(map.SixthformChoices)}>
+              <div className="css-custom-tooltip font-14">
+                <div className="triangle" />
+                Continue Course Selector survey
+              </div>
+              <div className="circle-score-r32 font-16 bold">
+                {props.progress}%
+              </div>
+              <CircularProgressbar
+                className="circle-progress-first"
+                strokeWidth={10}
+                counterClockwise={false}
+                value={props.progress}
+              />
+            </div>
             <BrillIconAnimated />
             <BellButton
               notificationCount={notificationCount}

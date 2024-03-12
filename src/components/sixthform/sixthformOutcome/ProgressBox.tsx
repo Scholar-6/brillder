@@ -11,6 +11,7 @@ interface ProgressProps {
   history: any;
   answers: any[];
   loading: boolean;
+  progress: number;
 }
 
 class ProgressBox extends Component<ProgressProps> {
@@ -57,12 +58,11 @@ class ProgressBox extends Component<ProgressProps> {
             <div className="completed-progress-bar">
               {this.renderStepper(lastStep)}
             </div>
-            {/*
             <div className="survey-btn-container">
-              <div className="btn survey-btn font-16" onClick={() => {
-                //this.props.history.push()
-              }}>View Survey</div>
-            </div>*/}
+              <div className="btn survey-btn font-16" onClick={() => 
+                this.props.history.push(map.SixthformChoices)
+              }>View Survey</div>
+            </div>
           </div>
         );
       }
@@ -73,7 +73,7 @@ class ProgressBox extends Component<ProgressProps> {
             <div className="opacity-04">SIXTH FORM COURSE SELECTOR:</div>
             <div className="flex-end">
               <span className="flex-center opacity-04 progress-label">PROGRESS:</span>
-              <span className="font-24 percentage-label">50%</span>
+              <span className="font-24 percentage-label">{this.props.progress}%</span>
             </div>
           </div>
           <div className="uncompleted-progress-bar">
