@@ -3252,8 +3252,16 @@
 
 .step-4a-absolute-box {
   position: absolute;
-  bottom: calc(18vh + 2vw);
+  top: calc(14vw);
   left: 4vw;
   width: 100%;
   z-index: 2;
+
+  .question-text-4 {
+    margin-top: 2vh !important;
+    margin-bottom: 4vh !important;
+  }
+  .bottom-text-s5 {
+    padding-top: 2vh;
+  }
 }
