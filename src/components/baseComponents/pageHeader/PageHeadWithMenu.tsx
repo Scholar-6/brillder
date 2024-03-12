@@ -24,6 +24,7 @@ export enum PageEnum {
   MyLibrary,
   Book,
   MyAssignments,
+  SixthformOutcomes,
 }
 
 interface HeaderMenuProps {

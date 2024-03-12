@@ -17,6 +17,7 @@ import { playCover } from "components/play/routes";
 import SubjectTasters from "./subjectTasters/SubjectTasters";
 import { Pages, SubjectType } from "../sixthformChoices/SixthformChoices";
 import ProgressBox from "./ProgressBox";
+import TopMenu from "./TopMenu";
 
 
 interface UserProfileProps {
@@ -33,7 +34,6 @@ enum SixActiveTab {
 }
 
 interface UserProfileState {
-  searchString: string;
   filters: any[];
   answers: any[];
   definetlyList: SixthformSubject[];
@@ -58,7 +58,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     this.state = {
       loading: true,
-      searchString: '',
       filters: [],
       answers: [],
       definetlyList: [],
@@ -685,11 +684,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 </div>
               </div>
             </div>
-            <div className="logout-container">
-              <div className="search-container font-32">
-                {this.props.user.firstName} Dashboard
-              </div>
-            </div>
+            <TopMenu history={this.props.history} />
           </div>
           <div className="content-container-e354">
             <div>

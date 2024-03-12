@@ -9,7 +9,9 @@
   height: 100%;
 
   .progress-bar-sixthform {
-    .active, .completed {
+
+    .active,
+    .completed {
       cursor: pointer;
     }
   }
@@ -76,6 +78,63 @@
     align-items: center;
     padding-left: 2vw;
     width: calc(100vw - 14.434vw);
+    position: relative;
+
+    .action-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 21vw;
+      padding-top: 1.1vw;
+
+      .brill-intro-container {
+        display: flex;
+        color: white;
+        font-family: $font-family-bold;
+        align-items: center;
+        font-size: 1.2vw;
+        height: 3.68vw;
+
+        .brill-coin-img {
+          position: relative;
+          width: 3.68vw;
+          height: 3.68vw;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+
+          svg {
+            color: var(--theme-orange);
+            position: absolute;
+            top: 22.5%;
+            left: 22.5%;
+            width: 55%;
+            height: 55%;
+          }
+
+          .css-custom-tooltip {
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            display: none;
+            margin-top: 1vh;
+            width: 20vw;
+            background: var(--white);
+            padding: 1.4vw 2vw;
+            margin-left: -6vw;
+          }
+
+          &:hover {
+            .css-custom-tooltip {
+              opacity: 1;
+              display: block;
+              z-index: 100;
+            }
+          }
+        }
+      }
+    }
   }
 
   .header-top {
@@ -116,6 +175,7 @@
     display: block !important;
     background: #6981B3;
     border-radius: 0.2vw;
+
     &:hover {
       cursor: pointer;
       display: block !important;
@@ -269,6 +329,7 @@
             width: 100%;
             display: flex;
             justify-content: flex-end;
+
             .survey-btn {
               cursor: pointer;
               margin-top: 1.1vw;
@@ -446,6 +507,7 @@
                       display: inline;
                     }
                   }
+
                   .right-part-e323 {
                     width: 34vw;
                   }
@@ -471,9 +533,11 @@
                   }
                 }
               }
-              .subject-sixth-card > {
+
+              .subject-sixth-card> {
                 border-radius: 0.5vw;
                 background: white;
+
                 div {
                   background: linear-gradient(255.62deg, #30C474 -138.07%, #FFFFFF 98.24%);
 
@@ -572,6 +636,7 @@
           &.active {
             background: var(--theme-dark-blue);
           }
+
           svg {
             border-radius: 50%;
             border: 2px solid white;
@@ -632,7 +697,7 @@
             transition: all 200ms ease-in-out;
 
             &.selected {
-              background:  #4C5F89;
+              background: #4C5F89;
             }
 
             svg {
@@ -686,23 +751,26 @@
                 background: rgba($color: #FFF, $alpha: 0.8);
                 color: var(--theme-dark-blue);
                 font-size: 2.1vh;
-            
+
                 .before-alternative {
                   position: relative;
                   z-index: unset;
                   top: unset;
                   right: unset;
-                  > div {
+
+                  >div {
                     border-radius: 50%;
                     height: 4.2vh;
                     width: 4.2vh;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+
                     .level {
                       right: 0.6vh;
                       top: 0.6vh;
-                      > div {
+
+                      >div {
                         color: white;
                         border-radius: 50%;
                         width: 3vh;
@@ -710,9 +778,9 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-            
+
                         font-size: 2.1vh;
-            
+
                         svg {
                           width: 2.4vh;
                           height: 2.4vh;
@@ -721,6 +789,7 @@
                     }
                   }
                 }
+
                 .length-text-r3 {
                   color: var(--theme-dark-blue);
                   font-size: 2.1vh;
@@ -841,7 +910,7 @@
     width: 28.8vw;
     min-width: 28.5vw;
 
-    > div {
+    >div {
       color: var(--theme-dark-blue);
       border-radius: 0.5vw;
       background: white;
