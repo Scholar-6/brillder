@@ -18,6 +18,8 @@ interface ThirdProps {
 
 interface ThirdQuestionState {
   subjects: any[];
+  modernLanguagesExpanded: boolean;
+  modernLanguages: any[];
   interestedSubjects: any[];
   quiteInterestedSubjects: any[];
 }
@@ -25,6 +27,8 @@ interface ThirdQuestionState {
 class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
+
+    let modernLanguages: any[] = [];
 
     let sNames = [
       'Ancient History',
@@ -46,7 +50,6 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       'Politics',
       'Psychology',
       'Sociology',
-      'Other Modern Language',
     ];
 
     let subjects = [];
@@ -55,25 +58,18 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       if (s) {
         subjects.push(s);
       }
-      if (sName === 'Other Modern Language') {
-        console.log(this.props.subjects);
-        let modernLanguages = [];
-        const langNames = [
-          "Arabic", "Bengali", "Chinese (Mandarin)", "Modern Greek", "Irish", "Gujarati",
-          "Modern Hebrew", "Japanese", "Panjabi", "Persian", "Polish",
-          "Portuguese", "Russian", "Turkish", "Urdu", "Welsh"
-        ];
+    }
 
-        for (const langName of langNames) {
-          const subject1 = this.props.subjects.find((s) => s.name === langName);
-          modernLanguages.push(subject1);
-        }
+    const langNames = [
+      "Arabic", "Bengali", "Chinese (Mandarin)", "Modern Greek", "Irish", "Gujarati",
+      "Modern Hebrew", "Japanese", "Panjabi", "Persian", "Polish",
+      "Portuguese", "Russian", "Turkish", "Urdu", "Welsh"
+    ];
 
-        subjects.push({
-          isOtherModernLanguage: true,
-          name: sName,
-          subjects: modernLanguages,
-        })
+    for (const langName of langNames) {
+      const subject1 = this.props.subjects.find((s) => s.name === langName);
+      if (subject1) {
+        modernLanguages.push(subject1);
       }
     }
 
@@ -93,8 +89,12 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
+    console.log('modernLanguages', modernLanguages, )
+
     this.state = {
       subjects,
+      modernLanguagesExpanded: false,
+      modernLanguages,
       interestedSubjects,
       quiteInterestedSubjects
     }
@@ -107,6 +107,8 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
   onChange() {
     this.props.onChange({
       subjects: this.state.subjects,
+      modernLanguages: this.state.modernLanguages,
+      modernLanguagesExpanded: this.state.modernLanguagesExpanded,
       interestedSubjects: this.state.interestedSubjects,
       quiteInterestedSubjects: this.state.quiteInterestedSubjects,
     })
@@ -114,6 +116,11 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
 
   updateSubjects(subjects: any[]) {
     this.setState({ subjects });
+    this.onChange();
+  }
+
+  updateModernLanguages(modernLanguages: any[]) {
+    this.setState({ modernLanguages });
     this.onChange();
   }
 
@@ -128,26 +135,6 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   renderSubjectBox(s: any, i: number) {
-    if (s.isOtherModernLanguage === true) {
-      return (
-        <div className={`drag-box-r23 other-language ${s.expanded ? 'expanded' : ''}`} key={i}>
-          <div className="drag-item-r23">
-            <div className="other-language-label" onClick={() => {
-              s.expanded = !s.expanded;
-              this.setState({ subjects: this.state.subjects });
-            }}>
-              <SpriteIcon name="arrow-right" />
-              {s.name}
-            </div>
-            {s.expanded && s.subjects.map((s: any) => <div className="subject-left">
-              <div>
-                {s.name}
-              </div>
-            </div>)}
-          </div>
-        </div>
-      );
-    }
     return (
       <div className="drag-box-r23" key={i}>
         <div className="drag-item-r23">{s.name}</div>
@@ -165,7 +152,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <img src="/images/choicesTool/ThirdStepR4.png" className="third-step-img third-step-img-r4"></img>
         <div className="font-16">
-          Now consider whether you are interested in taking any of these subjects. Select those you’re very<br/>
+          Now consider whether you are interested in taking any of these subjects. Select those you’re very<br />
           interested or quite interested in. Leave the others where they are.
         </div>
         <div className="drag-container-r23">
@@ -184,6 +171,26 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
                 >
                   {this.state.subjects.map(this.renderSubjectBox.bind(this))}
                 </ReactSortableV1>
+                <div className={`drag-box-r23 other-language ${this.state.modernLanguagesExpanded ? 'expanded' : ''}`}>
+                  <div className="drag-item-r24">
+                    <div className="other-language-label" onClick={() => {
+                      this.setState({ modernLanguagesExpanded: !this.state.modernLanguagesExpanded });
+                    }}>
+                      <SpriteIcon name="arrow-right" />
+                      Other Modern Language
+                    </div>
+                    {this.state.modernLanguagesExpanded &&
+                      <ReactSortableV1
+                        list={this.state.modernLanguages as any[]}
+                        animation={150}
+                        className="sortable-list-r23"
+                        group={{ name: "cloning-group-name" }}
+                        setList={(list: any[]) => this.updateModernLanguages(list)}
+                      >
+                        {this.state.modernLanguages.map(this.renderSubjectBox.bind(this))}
+                      </ReactSortableV1>}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -196,7 +203,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
                 <ReactSortableV1
                   list={this.state.interestedSubjects as any[]}
                   animation={150}
-                  className="sortable-list-r23"
+                  className="sortable-list-r23 full-height-r23"
                   group={{ name: "cloning-group-name" }}
                   setList={(list: any[]) => this.updateInterestedSubjects(list)}
                 >
