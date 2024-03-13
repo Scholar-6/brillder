@@ -1943,51 +1943,62 @@
 
             .sortable-list-r23 {
               width: 100%;
-              height: 100%;
+
+              &.full-height-r23 {
+                height: 100%;
+              }
 
               .drag-box-r23 {
                 display: flex;
+              }
+            }
+            .other-language {
+              padding-bottom: 0.4vw;
+              .drag-item-r24 {
+                padding-top: 0.4vw;
+                padding-bottom: 0.4vw;
+                width: 10.3vw;
+                padding-left: 0vw;
+                padding-right: 0.3vw;
+                border-radius: 1vw;
+                color: var(--theme-dark-blue);
+                background: #C43C304D;
 
-                &.other-language {
-                  .drag-item-r23 {
-                    padding-right: 1vw;
-                    border-radius: 0.5vw;
-                    color: var(--theme-dark-blue);
-                    background: #C43C304D;
+                .other-language-label {
+                  display: flex;
+                  justify-content: center;
+                  margin-bottom: 0vw;
+                }
 
-                    .other-language-label {
-                      display: flex;
-                      justify-content: center;
-                      margin-bottom: 0.4vw;
-                    }
+                svg {
+                  transition: all 300ms ease-in-out;
+                  width: 1vw;
+                  height: 1vw;
+                }
+              }
 
-                    svg {
-                      transition: all 300ms ease-in-out;
-                      width: 1vw;
-                      height: 1vw;
-                    }
+              .sortable-list-r23 {
+                padding-left: 0.4vw;
+              }
+
+              &.expanded {
+                .subject-left {
+                  margin-top: 0.4vw;
+                  margin-bottom: 0.4vw;
+                  display: flex;
+
+                  >div {
+                    text-align: left;
+                    color: white;
+                    display: flex;
+                    padding: 0.4vw 0.7vw;
+                    border-radius: 2vw;
+                    background: var(--theme-orange);
                   }
+                }
 
-                  &.expanded {
-                    .subject-left {
-                      margin-top: 0.4vw;
-                      margin-bottom: 0.4vw;
-                      display: flex;
-
-                      >div {
-                        text-align: left;
-                        color: white;
-                        display: flex;
-                        padding: 0.4vw 0.7vw;
-                        border-radius: 2vw;
-                        background: var(--theme-orange);
-                      }
-                    }
-
-                    svg {
-                      rotate: -90deg;
-                    }
-                  }
+                svg {
+                  rotate: -90deg;
                 }
               }
             }
