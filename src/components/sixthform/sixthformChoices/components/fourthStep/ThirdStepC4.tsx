@@ -5,7 +5,9 @@ import { SixthformSubject } from "services/axios/sixthformChoices";
 
 interface ThirdCategoriesC4 {
   subjects: any[];
+  modernLanguagesExpanded: boolean;
   interestedSubjects: any[];
+  modernLanguages: any[];
   quiteInterestedSubjects: any[];
 }
 
@@ -73,6 +75,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
+    let modernLanguagesExpanded = false;
     let interestedSubjects: any[] = [];
     let quiteInterestedSubjects: any[] = [];
 
@@ -87,13 +90,19 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       if (categoriesC4.quiteInterestedSubjects) {
         quiteInterestedSubjects = categoriesC4.quiteInterestedSubjects;
       }
+      if (categoriesC4.modernLanguages) {
+        modernLanguages = categoriesC4.modernLanguages;
+      }
+      if (categoriesC4.modernLanguagesExpanded) {
+        modernLanguagesExpanded = modernLanguagesExpanded;
+      }
     }
 
     console.log('modernLanguages', modernLanguages, )
 
     this.state = {
       subjects,
-      modernLanguagesExpanded: false,
+      modernLanguagesExpanded,
       modernLanguages,
       interestedSubjects,
       quiteInterestedSubjects
@@ -221,7 +230,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
                 <ReactSortableV1
                   list={this.state.quiteInterestedSubjects as any[]}
                   animation={150}
-                  className="sortable-list-r23"
+                  className="sortable-list-r23 full-height-r23"
                   group={{ name: "cloning-group-name" }}
                   setList={(list: any[]) => this.updateQuiteInterestedSubjects(list)}
                 >
