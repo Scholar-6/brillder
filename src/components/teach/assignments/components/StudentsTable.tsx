@@ -47,8 +47,6 @@ class StudentsTable extends Component<StudentsProps, State> {
       }
     }
 
-    console.log('students table students: ', props.classItem.classroom.students);
-
     this.state = { 
       isAscending: false, sorting: SortStudentOption.ByTime,
       questionCount,
@@ -155,7 +153,13 @@ class StudentsTable extends Component<StudentsProps, State> {
       const studentResult = this.getStudentResult(student.id);
 
       if (studentResult) {
-        const attempt = studentResult.attempts[0];
+        let attempt = studentResult.attempts[0];
+
+        for (let attemptR1 of studentResult.attempts) {
+          if (attemptR1.score > attempt.score) {
+            attempt = attemptR1;
+          }
+        }
 
         let duration = this.getDuration(attempt);
 

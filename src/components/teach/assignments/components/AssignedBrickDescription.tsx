@@ -55,14 +55,14 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
     if (this.state.clicked) {
       return;
     }
-    this.setState({clicked: true});
+    this.setState({ clicked: true });
     if (this.props.classItem.assignment) {
       let assignmentId = this.props.classItem.assignment.id;
       const res = await deleteAssignment(this.props.classItem.assignment.id);
       if (res) {
         this.props.removeAssignment(assignmentId);
       }
-      this.setState({deletingOpen: false, clicked: false})
+      this.setState({ deletingOpen: false, clicked: false })
     }
   }
 
@@ -77,11 +77,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
 
     return (
       <div className="assigned-brick-description-v3">
-        <div className="assigned-brick-description-v2" onMouseEnter={() => {
-          this.setState({ hovered: true });
-        }} onMouseLeave={() => {
-          this.setState({ hovered: false });
-        }} style={{ display: 'flex' }}>
+        <div
+          className="assigned-brick-description-v2"
+          onMouseEnter={() => this.setState({ hovered: true })}
+          onMouseLeave={() => this.setState({ hovered: false })}
+          style={{ display: 'flex' }}
+        >
           {!this.props.dragHidden &&
             <SpriteIcon className="absolute-custom-drag-icon" style={{ opacity: this.state.hovered ? 1 : 0 }} name="drag-custom-icon" />
           }
@@ -122,7 +123,7 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
               </div>
             </div>
             <div className="flex-center">
-              <div className="btn btn-orange" onClick={() => this.setState({deletingOpen: true})}>
+              <div className="btn btn-orange" onClick={() => this.setState({ deletingOpen: true })}>
                 delete
               </div>
             </div>
@@ -135,12 +136,12 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
           </div>
         }
         {
-          this.state.deletingOpen && <BaseDialogWrapper open={this.state.deletingOpen} close={() => this.setState({deletingOpen: false})} submit={this.removeAssignment.bind(this)}>
+          this.state.deletingOpen && <BaseDialogWrapper open={this.state.deletingOpen} close={() => this.setState({ deletingOpen: false })} submit={this.removeAssignment.bind(this)}>
             <div className="dialog-header">
               <div>Are you sure you want to delete this brick from the class?</div>
             </div>
             <div className="dialog-footer">
-              <button className="btn btn-md bg-gray no-button" onClick={() => this.setState({deletingOpen: false})}>
+              <button className="btn btn-md bg-gray no-button" onClick={() => this.setState({ deletingOpen: false })}>
                 <span>No, cancel</span>
               </button>
               <button className="btn btn-md bg-theme-orange yes-button" onClick={this.removeAssignment.bind(this)}>
