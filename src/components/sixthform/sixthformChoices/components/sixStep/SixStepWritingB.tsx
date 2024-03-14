@@ -1,6 +1,7 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import ProgressBarStep6V2 from "../progressBar/ProgressBarStep6V2";
+import ThreeButtons from "../base/ThreeButtons";
 
 export enum WatchingChoice {
   Never = 1,
@@ -19,21 +20,6 @@ const SixStepWriting: React.FC<Props> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.choices[step];
 
-  const renderBtn = (choice: WatchingChoice, realChoice: WatchingChoice, className: string, label: string) => {
-    const isEmpty = choice === null;
-    const isActive = choice === realChoice;
-    return (
-      <div
-        className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
-        onClick={() => {
-          currentStep.choice = realChoice;
-          props.onChange(props.choices);
-        }}
-        dangerouslySetInnerHTML={{ __html: label }}
-      />
-    )
-  }
-
   return (
     <div className="question question-6 question-3-watching question-6-writing">
       <div className="bold font-32 question-text">
@@ -49,11 +35,19 @@ const SixStepWriting: React.FC<Props> = (props) => {
         icon="writing-sixth" step={step} total={props.choices.length}
         title={currentStep.name} description={currentStep.description}
       />
-      <div className="btns-container-r32 font-20 bold flex-center">
-        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "HARDLY<br/> AT ALL")}
-        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "A FAIR BIT")}
-        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "A LOT")}
-      </div>
+      <ThreeButtons
+        currentChoice={currentStep.choice}
+        firstLabel="HARDLY<br/> AT ALL" middleLabel="A FAIR BIT" lastLabel="A LOT"
+        onClick={choice => {
+          currentStep.choice = choice;
+          props.onChange(props.choices);
+          if (step >= props.choices.length - 1) {
+            props.moveNext()
+          } else {
+            setStep(step + 1);
+          }
+        }}
+      />
       <BackButtonSix onClick={() => {
         if (step <= 0) {
           props.moveBack();
@@ -63,13 +57,7 @@ const SixStepWriting: React.FC<Props> = (props) => {
       }} />
       <button
         className="absolute-contunue-btn font-24"
-        onClick={() => {
-          if (step >= props.choices.length - 1) {
-            props.moveNext()
-          } else {
-            setStep(step + 1);
-          }
-        }}>Continue</button>
+        onClick={props.moveNext}>Skip</button>
     </div>
   );
 }

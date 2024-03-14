@@ -294,12 +294,18 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
               })}
             </div>
             <div className="course-box-r-23 big-b-r-23" onClick={() => {
-
+              // nothing
+              this.state.tLevelCoursesPart1.forEach(t => {
+                t.expanded = false;
+                t.subjects.map(s => s.checked = false);
+              });
+              this.state.tLevelCoursesPart2.forEach(t => {
+                t.expanded = false;
+                t.subjects.map(s => s.checked = false);
+              });
+              this.setState({ tLevelCoursesPart1: this.state.tLevelCoursesPart1, tLevelCoursesPart2: this.state.tLevelCoursesPart2});
             }}>
               <div className="font-16 bold flex">
-                <div className="flex-y-center bold">
-                  NOTHING
-                </div>
                 <div className="flex-center nothing-hint">
                   Not sure. None of these really interests me.
                 </div>

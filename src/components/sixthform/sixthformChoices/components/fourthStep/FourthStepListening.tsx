@@ -2,6 +2,7 @@ import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProgressBarStep6 from "../progressBar/ProgressBarStep6";
+import ThreeButtons from "../base/ThreeButtons";
 
 export enum WatchingChoice {
   Never = 1,
@@ -20,26 +21,6 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.listeningChoices[step];
 
-  const renderBtn = (choice: WatchingChoice, realChoice: WatchingChoice, className: string, label: string) => {
-    const isEmpty = choice === null;
-    const isActive = choice === realChoice;
-    return (
-      <div
-        className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
-        onClick={() => {
-          currentStep.choice = realChoice;
-          props.onChange(props.listeningChoices);
-          if (step >= props.listeningChoices.length - 1) {
-            props.moveNext()
-          } else {
-            setStep(step + 1);
-          }
-        }}
-        dangerouslySetInnerHTML={{ __html: label }}
-      />
-    )
-  }
-
   return (
     <div className="question question-6 question-3-watching question-6-third">
       <div className="font-16 question-text">
@@ -57,11 +38,19 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
       </div>
       <img src="/images/choicesTool/FourthStepListening.png" className="step3watching-img-v2" />
       <ProgressBarStep6 icon="listening-sixth" step={step} total={props.listeningChoices.length} subjectDescription={currentStep.label} />
-      <div className="btns-container-r32 font-20 bold flex-center">
-        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NEVER OR<br/> HARDLY EVER")}
-        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SOMETIMES")}
-        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "A LOT")}
-      </div>
+      <ThreeButtons
+        currentChoice={currentStep.choice}
+        firstLabel="NEVER OR<br/> HARDLY EVER" middleLabel="SOMETIMES" lastLabel="A LOT"
+        onClick={realChoice => {
+          currentStep.choice = realChoice;
+          props.onChange(props.listeningChoices);
+          if (step >= props.listeningChoices.length - 1) {
+            props.moveNext()
+          } else {
+            setStep(step + 1);
+          }
+        }}
+      />
       <BackButtonSix onClick={() => {
         if (step <= 0) {
           props.moveBack();

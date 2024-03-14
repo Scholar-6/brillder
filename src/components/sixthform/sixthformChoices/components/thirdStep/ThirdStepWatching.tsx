@@ -2,6 +2,7 @@ import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProgressBarStep6 from "../progressBar/ProgressBarStep6";
+import ThreeButtons from "../base/ThreeButtons";
 
 export enum WatchingChoice {
   Never = 1,
@@ -19,29 +20,6 @@ interface ThirdProps {
 const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.watchingChoices[step];
-
-  const renderBtn = (choice: WatchingChoice, realChoice: WatchingChoice, className: string, label: string) => {
-    const isEmpty = choice === null;
-    const isActive = choice === realChoice;
-    return (
-      <div
-        className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
-        onClick={() => {
-          currentStep.choice = realChoice;
-          props.onChange(props.watchingChoices);
-          console.log(step, props.watchingChoices.length - 1);
-          if (step >= props.watchingChoices.length - 1) {
-            console.log('move next');
-            props.moveNext()
-          } else {
-            console.log('step + 1');
-            setStep(step + 1);
-          }
-        }}
-        dangerouslySetInnerHTML={{__html: label}}
-      />
-    )
-  }
 
   return (
     <div className="question question-6 question-3-watching">
@@ -61,11 +39,19 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
       </div>
       <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
       <ProgressBarStep6 icon="watching-start" step={step} total={props.watchingChoices.length} subjectDescription={currentStep.label} />
-      <div className="btns-container-r32 font-20 bold flex-center">
-        {renderBtn(currentStep.choice, WatchingChoice.Never, "btn-red", "NEVER OR<br/> HARDLY EVER")}
-        {renderBtn(currentStep.choice, WatchingChoice.Sometimes, "btn-orange", "SOMETIMES")}
-        {renderBtn(currentStep.choice, WatchingChoice.ALot, "btn-green", "A LOT")}
-      </div>
+      <ThreeButtons
+        currentChoice={currentStep.choice}
+        firstLabel="NEVER OR<br/> HARDLY EVER" middleLabel="SOMETIMES" lastLabel="A LOT"
+        onClick={realChoice => {
+          currentStep.choice = realChoice;
+          props.onChange(props.watchingChoices);
+          if (step >= props.watchingChoices.length - 1) {
+            props.moveNext()
+          } else {
+            setStep(step + 1);
+          }
+        }}
+      />
       <BackButtonSix onClick={() => {
         if (step <= 0) {
           props.moveBack();
