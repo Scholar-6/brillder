@@ -47,12 +47,20 @@ class StudentsTable extends Component<StudentsProps, State> {
       }
     }
 
+    console.log('student table constructor', props.classItem.classroom.students);
+
     this.state = { 
       isAscending: false, sorting: SortStudentOption.ByTime,
       questionCount,
       students: props.classItem.classroom.students,
       bookData: { open: false, student: null, assignment: null }
     };
+  }
+
+  componentDidUpdate(prevProps: StudentsProps) {
+    if (prevProps.classItem.classroom.students !== this.props.classItem.classroom.students) {
+      this.setState({ students: this.props.classItem.classroom.students });
+    }
   }
 
   nextStudent() {
@@ -164,11 +172,11 @@ class StudentsTable extends Component<StudentsProps, State> {
 
         let duration = this.getDuration(attempt);
 
-        let time = this.getTimeDuration(duration);
-        let preparationTime = this.getTimeDuration(attempt.preparationDuration);
-        let liveTime = this.getTimeDuration(attempt.liveDuration);
-        let synthesisTime = this.getTimeDuration(attempt.synthesisDuration);
-        let reviewTime = this.getTimeDuration(attempt.reviewDuration);
+        const time = this.getTimeDuration(duration);
+        const preparationTime = this.getTimeDuration(attempt.preparationDuration);
+        const liveTime = this.getTimeDuration(attempt.liveDuration);
+        const synthesisTime = this.getTimeDuration(attempt.synthesisDuration);
+        const reviewTime = this.getTimeDuration(attempt.reviewDuration);
 
         return (
           <tr className="user-row" key={index} onMouseEnter={() => console.log(attempt)}>
@@ -188,7 +196,11 @@ class StudentsTable extends Component<StudentsProps, State> {
                 {Math.round(attempt.score / attempt.maxScore * 100)}
                 <div className="css-custom-tooltip">
                   {attempt.oldScore ? <div className="bold">Review: {Math.round(attempt.score / attempt.maxScore * 100)}</div> : ""}
-                  <div>Investigation: {attempt.oldScore ? Math.round(attempt.oldScore / attempt.maxScore * 100) : Math.round(attempt.score / attempt.maxScore * 100)}</div>
+                  <div>
+                    Investigation: {attempt.oldScore
+                      ? Math.round(attempt.oldScore / attempt.maxScore * 100)
+                      : Math.round(attempt.score / attempt.maxScore * 100)}
+                  </div>
                   {attempt.oldScore ? <div>Average: {Math.round(attempt.percentScore)}</div> : ""}
                 </div>
               </div>

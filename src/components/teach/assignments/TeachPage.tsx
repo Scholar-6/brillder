@@ -174,8 +174,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     const values = queryString.parse(this.props.history.location.search);
     let searchStringV2 = values.search || searchString;
 
-    console.log('init', values.classroomId)
-
     if (values.classroomId) {
       const classroomId = parseInt(values.classroomId as string);
       await this.loadClasses(classroomId);
@@ -189,7 +187,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       this.searching(searchStringV2 as string);
       this.search();
     } else {
-      console.log('load by teacherId')
       this.loadClasses(-1, teacherId);
     }
   }
@@ -198,7 +195,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
     let totalCount = 0;
     let classrooms = [] as TeachClassroom[] | null;
     if ((this.state.teacherId && this.state.teacherId > 0) || (teacherId && teacherId > 0)) {
-      console.log('get teacher classrooms')
       classrooms = await getTeacherClassrooms(this.state.teacherId || teacherId) as TeachClassroom[] | null;
     } else {
       if (this.state.isAdminOrInstitution) {
@@ -227,8 +223,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
       }
 
       let { activeClassroom } = this.state;
-
-      console.log('active', activeClassId)
 
       if (activeClassId) {
         const classroom = classrooms.find(c => c.id === activeClassId);
@@ -365,6 +359,8 @@ class TeachPage extends Component<TeachProps, TeachState> {
     this.collapseClasses();
     const { classrooms } = this.state;
 
+    console.log('set active classroom', id)
+
     let classroom = classrooms.find(c => c.id === id);
     if (this.state.isSearching) {
       classroom = this.state.searchClassrooms.find(c => c.id === id);
@@ -397,9 +393,7 @@ class TeachPage extends Component<TeachProps, TeachState> {
       });
       this.props.history.push({ search: queryString.stringify({ classroomId: id, teacherId: this.state.teacherId }) });
     } else {
-      this.setState({
-        activeClassroom: null,
-      });
+      this.setState({ activeClassroom: null });
       this.props.history.push({ search: "" });
     }
   }
