@@ -25,9 +25,9 @@ interface Props {
 const SixthformLoginPage: React.FC<Props> = (props) => {
   const history = useHistory();
 
-  const [highlightedTerms, setHighlightedTerms] = useState(false);
-
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [ageAccepted, setAgeAccepted] = useState(false);
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -113,8 +113,6 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     if (termsAccepted) {
-      setHighlightedTerms(false);
-  
       const res = validateForm();
       if (res !== true) {
         toggleAlertMessage(true);
@@ -123,8 +121,6 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
       }
   
       sendLogin(email, password);
-    } else {
-      setHighlightedTerms(true);
     }
   }
 
@@ -138,10 +134,16 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
               <div>Hey there!</div>
             </div>
             <div className="font-24 text-center">Register with Email</div>
-            <input className="font-28 full-name-input" placeholder='Full name' onChange={e => setFullName(e.target.value)} />
+            <input className="font-28 full-name-input" required placeholder='Full name' onChange={e => setFullName(e.target.value)} />
             <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
             <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
-            <div className={`terms-checkbox-container`}>
+            <div className="terms-checkbox-container">
+              <Checkbox required value={ageAccepted} onClick={() => setAgeAccepted(!ageAccepted)} />
+              <div className="font-15">
+                I am 13 years of age or older.
+              </div>
+            </div>
+            <div className="terms-checkbox-container">
               <Checkbox required value={termsAccepted} onClick={() => setTermsAccepted(!termsAccepted)} />
               <div className="font-15">
                 By signing up, I agree to the Scholar6 <span className="text-underline">Terms and Conditions</span>
