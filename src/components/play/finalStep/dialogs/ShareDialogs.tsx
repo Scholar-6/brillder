@@ -73,7 +73,7 @@ const ShareDialogs: React.FC<ShareProps> = props => {
         close={props.close}
       />
       <LinkDialog
-        isOpen={linkOpen} link={document.location.host + link}
+        isOpen={linkOpen} link={document.location.origin + link}
         submit={() => setCopiedLink(true)} close={() => setLink(false)}
       />
       <LinkCopiedDialog isOpen={linkCopiedOpen} close={() => setCopiedLink(false)} />
