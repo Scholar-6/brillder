@@ -50,7 +50,8 @@ class StudentsTable extends Component<StudentsProps, State> {
     this.state = { 
       isAscending: false, sorting: SortStudentOption.ByTime,
       questionCount,
-      students: props.classItem.classroom.students, bookData: { open: false, student: null, assignment: null }
+      students: props.classItem.classroom.students,
+      bookData: { open: false, student: null, assignment: null }
     };
   }
 
