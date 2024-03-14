@@ -92,7 +92,10 @@ class AssignedBrickDescription extends Component<AssignedDescriptionProps, State
                 assignment.expanded = !assignment.expanded;
                 this.setState({ expanded: !this.state.expanded });
               }}>
-                <img alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)} />
+                <img
+                  alt="" className={this.state.coverLoaded ? ' visible' : 'hidden'} 
+                  onLoad={() => this.setState({ coverLoaded: true })} src={fileUrl(brick.coverImage)}
+                />
                 <div className="expand-button">
                   <div>
                     <span className="font-10 flex-center">{assignment.expanded ? 'Collapse' : 'Expand'}</span>
