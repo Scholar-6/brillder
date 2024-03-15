@@ -228,7 +228,8 @@ export interface PageBricks {
 export const getPublishedBricksByPage = async (
   pageSize: number, page: number, isCore: boolean,
   level: number[], length: BrickLengthEnum[], subjectIds: number[],
-  onlyCompetitions: boolean, subjectGroup?: SubjectGroup | null, sortBy?: SortBy
+  onlyCompetitions: boolean, subjectGroup?: SubjectGroup | null, sortBy?: SortBy,
+  authorId?: number
 ) => {
   try {
 
@@ -240,7 +241,8 @@ export const getPublishedBricksByPage = async (
       subjectIds,
       subjectGroup,
       onlyCompetitions,
-      sortBy
+      sortBy,
+      authorId
     } as any;
 
     return await post<PageBricks>(`/bricks/byStatus/${BrickStatus.Publish}/page/${page}`, data);
