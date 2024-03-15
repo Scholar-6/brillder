@@ -1248,6 +1248,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
         );
       } else if (this.state.subStep === SubStep.sub4b) {
+        const disabled = this.state.categories4bc.length === 0;
         return (
           <div className="question">
             <img src="/images/choicesTool/FourthStepR11.png" className="third-step-img fourth-step-img-r11"></img>
@@ -1278,7 +1279,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
             </Dialog>}
             <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4a })} />
-            <button className="absolute-contunue-btn font-24" onClick={() => {
+            <button className={`absolute-contunue-btn font-24 ${disabled ? 'disabled' : ''}`} disabled={disabled} onClick={() => {
               this.saveAnswer();
               this.setState({ subStep: SubStep.sub4c });
             }}>Continue</button>
