@@ -680,7 +680,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   {this.renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
                   {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
                 </div>}
-              <div className="font-18 ranking-label">Your subject rankings</div>
+              <div className="font-18 ranking-label">Your subject rankings <span className="score-lable-r23 font-16">Score</span></div>
               <div className={`subjects-scrollbar font-16 ${this.state.page > Pages.Question1 ? 'big-subjects-sidebar' : ''}`}>
                 {this.state.subjects.map((subject, i) => {
                   return <div key={i} className="subject-box-r1" onMouseEnter={(event) => {
@@ -700,6 +700,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     {this.renderCircle(subject)}
                     <div className="subject-name">{subject.name}</div>
                     <div className="level-round font-12">{this.renderSubjectGroup(subject)}</div>
+                    <div className="score-container">{subject.score}</div>
                     <SubjectSidebarPopup
                       subject={subject}
                       popupSubject={this.state.popupSubject}

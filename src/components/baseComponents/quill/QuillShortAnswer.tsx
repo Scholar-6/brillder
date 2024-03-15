@@ -72,6 +72,9 @@ const QuillShortAnswer = React.forwardRef<HTMLDivElement, QuillEditorProps>((pro
   const ref = React.useCallback((node: ReactQuill) => {
     if (node) {
       const editor = node.getEditor();
+      editor.root.addEventListener("keydown", (e) => {
+        e.stopPropagation();
+      });
       editor.on("editor-change", () => {
         const clipboard = editor.getModule("clipboard");
         if (clipboardModule !== clipboard) {
