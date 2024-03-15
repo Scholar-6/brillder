@@ -414,10 +414,14 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
       subjectIds = this.state.subjects.filter(s => s.checked === true).map(s => s.id);
       if (!isPhone()) {
+        let userIdSearch = -1;
+        if (values.searchUserId) {
+          userIdSearch = parseInt(values.searchUserId as string, 10);
+        }
         const pageBricks = await getPublishedBricksByPage(
           state.pageSize, state.page, (values && values.personal) ? false : true,
           state.filterLevels, state.filterLength, subjectIds,
-          state.filterCompetition, this.state.subjectGroup, state.sortBy
+          state.filterCompetition, this.state.subjectGroup, state.sortBy, userIdSearch
         );
         if (pageBricks) {
           this.state.subjects.map(s1 => {
@@ -1087,7 +1091,7 @@ class ViewAllPage extends Component<ViewAllProps, ViewAllState> {
 
   async loadAndSetSearchBricks(
     searchString: string, page: number,
-    pageSize: number, isCore: boolean, 
+    pageSize: number, isCore: boolean,
     level: number[], length: number[],
     subjectIds: number[], isKeyword?: boolean
   ) {

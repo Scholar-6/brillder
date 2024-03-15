@@ -420,7 +420,9 @@
         display: flex;
         align-items: center;
         top: 0.3vw;
-        right: 0.5vw;
+        right: 0vw;
+        width: 2vw;
+        justify-content: center;
       }
     }
 
