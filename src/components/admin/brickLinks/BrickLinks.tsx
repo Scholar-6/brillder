@@ -170,6 +170,7 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
               a.click();
             }}
           >{bl.link}</div>
+          <div className="location-column">{bl.position}</div>
           <div className={`status-column ${(bl.status === 200 ? '' : 'text-orange')}`}>{status}</div>
           <div className="brick-column">
             <span>
@@ -221,6 +222,9 @@ class BrickLinksPage extends Component<UsersProps, UsersState> {
                 const finalLinks = this.filterAndSort(isAscending, DSortBy.Link)
                 this.setState({ isAscending, finalLinks });
               }} /></div>
+            </div>
+            <div className="location-column header">
+              Location
             </div>
             <div className="status-column header">
               <div>Status</div>
