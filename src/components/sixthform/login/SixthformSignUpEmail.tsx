@@ -28,7 +28,8 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [ageAccepted, setAgeAccepted] = useState(false);
 
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -71,7 +72,7 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
 
   const register = (email: string, password: string) => {
     let data = {
-      email, password, fullName, confirmPassword: password
+      email, password, firstName, lastName, confirmPassword: password
     } as any;
 
     axios.post(
@@ -134,7 +135,10 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
               <div>Hey there!</div>
             </div>
             <div className="font-24 text-center">Register with Email</div>
-            <input className="font-28 full-name-input" required placeholder='Full name' onChange={e => setFullName(e.target.value)} />
+            <div className="flex-center names-box-r23">
+              <input className="font-28 full-name-input" required placeholder='First Name' onChange={e => setFirstName(e.target.value)} />
+              <input className="font-28 full-name-input" required placeholder='Last Name' onChange={e => setLastName(e.target.value)} />
+            </div>
             <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
             <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
             <div className="terms-checkbox-container">
