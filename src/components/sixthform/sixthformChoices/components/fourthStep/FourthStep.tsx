@@ -352,7 +352,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
   renderSubjectsBox() {
     if (this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded) {
-      console.log('rendering subjects box input');
       let subjects = [...this.state.otherGCSESubjects, ...this.state.GCSESubjects];
       return (
         <div className="subjects-typer-r21 font-14">
@@ -490,7 +489,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           onChange={listeningChoices => this.setState({ listeningChoices })}
           moveBack={() => this.setState({ subStep: ThirdSubStep.ListenStart })}
           moveNext={async () => {
-            console.log('save')
             await this.props.saveThirdAnswer(this.getAnswer());
             this.moveNext();
           }} />

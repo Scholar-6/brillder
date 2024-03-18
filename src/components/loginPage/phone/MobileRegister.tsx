@@ -102,7 +102,6 @@ const MobileRegisterPage: React.FC<MobileLoginProps> = (props) => {
 
   const sendLogin = async (email: string, password: string) => {
     let data = await login(email, password);
-    console.log('logged in')
     if (!data.isError) {
       if (data === "OK") {
         const res = await axios.get(

@@ -106,7 +106,6 @@ class PageHeader extends Component<Props, State> {
   }
 
   componentWillUnmount(): void {
-    console.log('destroy');
     if (this.props.page !== PageEnum.ViewAll) {
       this.props.clearSearch();
     }

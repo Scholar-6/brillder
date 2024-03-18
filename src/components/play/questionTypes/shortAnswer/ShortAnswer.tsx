@@ -37,8 +37,6 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
   constructor(props: ShortAnswerProps) {
     super(props);
 
-    console.log('short answer', props)
-
     let userAnswers: string[] = [];
     if (props.answers) {
       userAnswers = props.answers;

@@ -46,7 +46,6 @@ class MobileLoginPage extends React.Component<MobileLoginProps, MobileLoginState
   }
 
   moveToLibraryLogin() {
-    console.log('move to library')
     this.props.history.push(LibraryLoginPage);
   }
 

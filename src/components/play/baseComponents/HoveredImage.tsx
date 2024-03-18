@@ -32,8 +32,6 @@ const HoveredImageContent: React.FC<AnswerProps> = ({ imageHovered, imageSource,
       );
     }
 
-    console.log('hover image', fileUrl(fileName), fileName);
-
     return (
       <div className="center-fixed-image unselectable">
         <div className="sd-image-container">

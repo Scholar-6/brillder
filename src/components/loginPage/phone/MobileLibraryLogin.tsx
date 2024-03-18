@@ -103,7 +103,6 @@ const MobileLibraryLoginPage: React.FC<MobileLoginProps> = (props) => {
             setLibraryLabelFailed("Invalid details");
           }
         } else {
-          console.log(response);
           setSuggestionFailed(true);
           setLibraryLabelFailed("Invalid details");
         }
