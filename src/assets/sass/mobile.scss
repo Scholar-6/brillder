@@ -426,6 +426,15 @@ html {
         color: white;
         text-align: center;
         padding-top: 80vw;
+
+        .btn-orange {
+          cursor: pointer;
+          margin-top: 3vw;
+          margin-bottom: 2vw;
+          border-radius: 3vw;
+          padding: 2vw 7vw;
+          background: var(--theme-orange);
+        }
       }
 
       .box-with-lines-r322 {

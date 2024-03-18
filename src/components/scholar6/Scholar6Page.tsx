@@ -85,7 +85,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
               View your outcomes after taking the Survey
             </div>
             <div className="flex-center text-center font-16">
-              Your results will yield important insights on the<br/>
+              Your results will yield important insights on the<br />
               courses you’re considering.
             </div>
             <div className="flex-center">
@@ -199,7 +199,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
               <div className="abolute-page-content">
                 <div className="top-menu font-18">
                   <div className="absolute-partner-btn font-12">
-                    <div>OUR KEY PARTNERS</div>
+                    <div>OUR KEY PARTNERS:</div>
                     <div className="flex-center">
                       <img className="brillder-image" src="/images/brillder-white-logo.png" onClick={() => window.location.href = 'https://brillder.com/'} />
                       <img className="partner-image" src="/images/main-partner.png" onClick={() => window.location.href = 'https://www.sixthformcolleges.org/'} />
@@ -214,13 +214,17 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                   <div className="font-24">
                     What will you study in the<br /> sixth form?
                   </div>
+                  <div className="flex-center">
+                    <div className="btn btn-orange font-24" onClick={() => {
+                      window.location.href = 'https://app.brillder.com/sixthform-auth/signup';
+                    }}>Get Started</div>
+                  </div>
                   <div className="font-16 light">
-                    Scholar 6 helps you make informed decisions<br />
-                    about choosing sixth form courses like A-levels.<br />
-                    Uniquely, we can assess both your current<br />
-                    aptitude and your future potential across a wide<br />
-                    range of academic subjects, including many which<br />
-                    are not normally studied before the sixth form.
+                    Scholar 6 helps you make informed decisions<br/>
+                    about choosing sixth form courses like A-levels.<br/>
+                    Uniquely, we can assess both your current<br/>
+                    aptitude and your future potential across a wide<br/>
+                    range of academic and vocational subjects.
                   </div>
                 </div>
               </div>
@@ -234,7 +238,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                       this.setState({ activeTab: SixActiveTab.Survey });
                     }}
                   >
-                    Six Step Survey
+                    Six-Step Survey
                   </div>
                   <div
                     className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active bold" : "not-active"}`}
@@ -476,7 +480,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                 <div className="menu-item">About</div>
                 <div className="menu-item clickable" onClick={() => window.location.href = 'https://brillder.com'}>Academic Catalogue</div>
                 <div className="absolute-partner-btn font-16">
-                  <div>OUR KEY PARTNERS</div>
+                  <div>OUR KEY PARTNERS:</div>
                   <img className="brillder-image" src="/images/brillder-white-logo.png" onClick={() => window.location.href = 'https://brillder.com/'} />
                   <img className="partner-image" src="/images/main-partner.png" onClick={() => window.location.href = 'https://www.sixthformcolleges.org/'} />
                 </div>
@@ -486,9 +490,13 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                   What will you study in the sixth form?
                 </div>
                 <div className="font-20 light">
-                  Scholar 6 helps you make informed decisions about choosing sixth form courses like A-levels.<br />
-                  Uniquely, we can assess both your current aptitude and your future potential across a wide range of<br />
-                  academic subjects, including many which are not normally studied before the sixth form.
+                  Scholar 6 helps you make informed decisions about choosing sixth form courses like A-levels. Uniquely, we can assess<br />
+                  both your current aptitude and your future potential across a wide range of academic and vocational subjects.
+                </div>
+                <div className="flex-center">
+                  <div className="btn btn-orange font-24" onClick={() => {
+                    window.location.href = 'https://app.brillder.com/sixthform-auth/signup';
+                  }}>Get Started</div>
                 </div>
               </div>
             </div>
@@ -502,7 +510,7 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                     this.setState({ activeTab: SixActiveTab.Survey });
                   }}
                 >
-                  Six Step Survey
+                  Six-Step Survey
                 </div>
                 <div
                   className={`tab-e354 font-30 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active bold" : "not-active"}`}

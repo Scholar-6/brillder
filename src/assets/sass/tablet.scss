@@ -2077,6 +2077,14 @@ html body #root .browser-type-container .sorted-row .brick-row-container.teach-t
         color: white;
         text-align: center;
         padding-top: 53vh;
+
+        .btn-orange {
+          cursor: pointer;
+          margin-top: 3vh;
+          border-radius: 0.5vw;
+          padding: 0.6vw 3vw;
+          background: var(--theme-orange);
+        }
       }
 
       .box-with-lines-r322 {
