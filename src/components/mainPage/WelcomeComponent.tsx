@@ -113,7 +113,6 @@ class WelcomeComponent extends Component<WelcomeProps, WelcomeState> {
       });
       if (count >= maxCount) {
         clearInterval(setNameInterval);
-        console.log('run animation')
         setTimeout(() => this.runNotificationAnimation(props), 500);
       }
       count++;

@@ -146,7 +146,6 @@ class TeachFilterSidebar extends Component<
     e.stopPropagation();
     e.preventDefault();
     let active = !activeClassroom.active;
-    console.log(activeClassroom)
     if (active === true) {
       this.props.setActiveClassroom(activeClassroom.id);
     }
@@ -230,8 +229,6 @@ class TeachFilterSidebar extends Component<
     const lastPage = (this.props.page + 1) * 100;
     const endLimit = this.props.totalCount > (this.props.page + 1) * 100;
 
-    console.log('render pagination')
-    
     return (
       <div className="sort-box">
         <div className="index-box m-view-all flex-center pagination">

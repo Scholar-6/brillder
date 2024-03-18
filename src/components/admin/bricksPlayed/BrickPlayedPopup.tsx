@@ -196,8 +196,6 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
     const brickAttempts = this.state.attempts;
     const uniqueAttempts: any[] = [];
 
-    console.log('render attempts', brickAttempts)
-
     for (let attempt of brickAttempts) {
       let found = uniqueAttempts.find(sr => {
         if (attempt.student) {
@@ -211,15 +209,12 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
         }
         return false;
       });
-      console.log('attempt', attempt, found, uniqueAttempts);
       if (!found) {
         if (attempt.student) {
           uniqueAttempts.push(attempt);
         }
       }
     }
-
-    console.log('unique attempts', uniqueAttempts);
 
     let i = 1;
     const data = [];
@@ -253,8 +248,6 @@ class BrickPlayedPopup extends Component<TeachProps, TeachState> {
       </div>
       );
     }
-
-    console.log('data', data)
 
     return data;
   }

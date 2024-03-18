@@ -330,7 +330,6 @@ export const checkAssignment = (brick: Brick, user: User | undefined) => {
   if (brick.assignments) {
     for (let assignmen of brick.assignments) {
       let assignment = assignmen as any;
-      console.log(27, assignment);
 
       if (assignment && assignment.stats) {
         for (let student of assignment?.stats?.byStudent) {

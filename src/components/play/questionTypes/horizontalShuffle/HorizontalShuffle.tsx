@@ -83,7 +83,6 @@ class HorizontalShuffle extends CompComponent<VerticalShuffleProps, HorizontalSh
           break;
         }
         const text = stripHtml(answer.value);
-        console.log('text', text, answer.value)
         if (text && text.length) {
           textLength += text.length;
         }

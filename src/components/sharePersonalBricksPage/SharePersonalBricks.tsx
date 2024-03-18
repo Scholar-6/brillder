@@ -335,11 +335,9 @@ class SharePersonalBricks extends Component<ViewAllProps, ViewAllState> {
             try {
               if (b.selected) {
                 const selectedBricks = [...this.state.selectedBricks, b];
-                console.log('select brick', selectedBricks)
                 this.setState({ selectedBricks });
               } else {
                 const selectedBricks = this.state.selectedBricks.filter(br => br.id !== b.id);
-                console.log('unselect brick', selectedBricks)
                 this.setState({ selectedBricks });
               }
             } catch {

@@ -52,11 +52,8 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
       subName: "(e.g. nursing, social work, uniformed services)"
     }];
 
-    console.log('answer ab', this.props.abAnswer);
-
     if (this.props.abAnswer) {
       if (this.props.abAnswer.subjects && this.props.abAnswer.subjects.length > 0) {
-        console.log('set subjects');
         subjects = this.props.abAnswer.subjects;
       }
       if (this.props.abAnswer.none) {

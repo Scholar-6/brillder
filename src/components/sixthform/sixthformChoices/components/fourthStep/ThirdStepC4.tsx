@@ -98,8 +98,6 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
-    console.log('modernLanguages', modernLanguages, )
-
     this.state = {
       subjects,
       modernLanguagesExpanded,
