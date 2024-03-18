@@ -128,7 +128,6 @@ const StripePageCreditCard: React.FC<Props> = (props) => {
     if (coupon) {
       setCoupon(coupon);
       setMonthly(true);
-      console.log(coupon);
     }
   }
 

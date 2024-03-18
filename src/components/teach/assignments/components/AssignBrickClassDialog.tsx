@@ -51,13 +51,11 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
   React.useEffect(() => {
     if (props.classroom) {
       const cashedClass = GetClassAssignedBricks();
-      console.log('cashed class', cashedClass);
       if (cashedClass && cashedClass.id === props.classroom.id) {
         let cashAssignments = [];
         if (cashedClass.cashAssignments) {
           cashAssignments = cashedClass.cashAssignments.filter((a: any) => a != null);
         }
-        console.log('set assignemnts', cashAssignments);
         setAssignments(cashAssignments);
       }
 
@@ -179,7 +177,6 @@ const AssignBrickClassDialog: React.FC<AssignClassProps> = (props) => {
                             if (lockedAssignments) {
                               for (let brick of searchBricks) {
                                 let found = lockedAssignments.find((a: any) => a.brick.id === parseInt(brick.id as any));
-                                console.log(brick, found);
                                 if (!found) {
                                   filtered.push(brick);
                                 }

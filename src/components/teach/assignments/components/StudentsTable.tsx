@@ -47,8 +47,6 @@ class StudentsTable extends Component<StudentsProps, State> {
       }
     }
 
-    console.log('student table constructor', props.classItem.classroom.students);
-
     this.state = { 
       isAscending: false, sorting: SortStudentOption.ByTime,
       questionCount,

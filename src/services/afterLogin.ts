@@ -9,7 +9,6 @@ export const afterLoginorRegister = () => {
   const assignment = GetQuickAssignment();
   if (assignment && assignment.accepted === true) {
     if (assignment.classroom) {
-      console.log('accepting classroom');
       quickAcceptClassroom(assignment.classroom.id);
     }
     ClearQuickAssignment();

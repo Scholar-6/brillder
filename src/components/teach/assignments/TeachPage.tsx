@@ -268,8 +268,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
         classrooms = this.sortAndReturnClassrooms(sort, classrooms);
       }
 
-      console.log('set classrooms', classrooms)
-
       this.setState({ classrooms, activeClassroom, totalCount, isLoaded: true });
       return classrooms;
     } else {
@@ -278,7 +276,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   }
 
   async loadClassesV2(selectedChoice: ClassroomChoice, page: number, selectedDomain: string, sort: number, searchString?: string) {
-    console.log('load v2')
     let totalCount = this.state.totalCount;
     let classrooms = [] as TeachClassroom[] | null;
 
@@ -358,8 +355,6 @@ class TeachPage extends Component<TeachProps, TeachState> {
   async setActiveClassroom(id: number | null) {
     this.collapseClasses();
     const { classrooms } = this.state;
-
-    console.log('set active classroom', id)
 
     let classroom = classrooms.find(c => c.id === id);
     if (this.state.isSearching) {

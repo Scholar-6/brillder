@@ -164,8 +164,6 @@ class SixStep extends Component<Props, State> {
       }
     ];
 
-    console.log('answer', props.answer);
-
     if (props.answer) {
       const { answer } = props.answer;
       if (answer.aAnswer) {
@@ -211,7 +209,6 @@ class SixStep extends Component<Props, State> {
   }
 
   render() {
-    console.log('render abAnswer', this.state.abAnswer);
     if (this.state.subStep === SubStep.final) {
       return <SixStepFinal history={this.props.history} />
     } else if (this.state.subStep === SubStep.writingB) {

@@ -32,7 +32,6 @@ describe("Roles Box", () => {
 
     
     const firstChildren = component.props().children[1].props.children;
-    console.log(firstChildren[0].props.children.props.checked)
     expect(firstChildren[0].props.children.props.checked).toBe(true);
     expect(firstChildren[1].props.children.props.checked).toBe(false);
     expect(firstChildren[2].props.children.props.checked).toBe(false);
