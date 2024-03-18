@@ -45,8 +45,6 @@ const BookDialog: React.FC<Props> = ({ bookData, onClose, ...props }) => {
     if (bookData.assignment && bookData.assignment.studentStatus) {
       const studentAttempts = bookData.assignment.studentStatus.find(s => s.studentId == bookData.student.id)?.attempts;
 
-      console.log('bookData', studentAttempts);
-      
       if (studentAttempts) {
         return getBestAttempt(studentAttempts);
       }

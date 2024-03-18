@@ -16,11 +16,9 @@ import routes from 'components/play/routes';
 const loginSuccess = (userId?: number) => {
   enableTracking();
 
-  console.log('login success');
   // IF USER HAS attempt id set that attempt with user
   if (userId) {
     let attemptId = GetLastAttemptId();
-    console.log('got attemptId and setting attempt user id', userId, attemptId)
     if (attemptId) {
       axios.put(
         process.env.REACT_APP_BACKEND_HOST + "/play/setAttemptAndUser",

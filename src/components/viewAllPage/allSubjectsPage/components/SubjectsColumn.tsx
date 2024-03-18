@@ -39,12 +39,8 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, isCore, viewAll, onClick })
     let isOdd = false;
     let row = [];
 
-    console.log(isCore, subjects);
-    
-
     for (let subject of subjects) {
       if (isCore) {
-        console.log(subject.viewAllCount);
         if (subject.viewAllCount === 0) {
           continue;
         }
@@ -80,8 +76,6 @@ const SubjectsColumn: React.FC<Props> = ({ subjects, isCore, viewAll, onClick })
   if (!isMobile || (isIPad13 || isTablet)) {
     return renderDesktop();
   }
-
-  console.log('test', subjects);
 
   // render phone version
   return (

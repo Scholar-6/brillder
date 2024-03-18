@@ -62,12 +62,10 @@ class SaveProfileButton extends Component<SaveProfileProps, SaveProfileState> {
   }
 
   render() {
-    console.log(this.props.disabled, this.state.isValid);
     let className = "save-image";
     if (this.state.isValid && !this.props.disabled) {
       className += " valid";
     }
-    console.log(this.props.disabled);
     if (this.state.shouldPulse) {
       className += " save-pulse";
     }
