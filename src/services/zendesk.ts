@@ -189,7 +189,6 @@ function messageSent() {
         buttonR53.style.fontSize = '3rem';
         buttonR53.innerHTML = '-';
         buttonR53.style.marginBottom = '8px';
-        console.log(header, buttonR53);
         if (footer && footer.children[0]) {
           var button = footer.children[0].children[1];
           button.onclick = function () {
@@ -208,11 +207,8 @@ function messageSent() {
                 var tagv3 = innerDoc.getElementById("Embed").children[3].children[0].children[0];
                 if (tagv3.children[1]) {
                   var container = tagv3.children[1].children[0];
-                  console.log(container.children[2].children[0]);
                   var backButtonV5 = container.children[2].children[0];
-                  console.log(backButtonV5.innerHTML);
                   if (backButtonV5.ineerHTML !== 'Send') {
-                    console.log('click')
                     backButtonV5.click();
                   }
                   //clearInterval(interval3);
@@ -221,7 +217,6 @@ function messageSent() {
               }
             }, 250);
           }
-          console.log(button);
           clearInterval(interval2);
         }
       }
@@ -259,7 +254,6 @@ export function setupZendesk(zendeskCreated: boolean, setZendesk: Function) {
                 const success = initZendeskPopupStyling();
                 if (success) {
                   messageSent();
-                  console.log('success');
                   clearInterval(widgetInterval);
                 }
               }, 100);

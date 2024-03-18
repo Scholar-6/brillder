@@ -54,13 +54,9 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
       correct = props.attempt.correct;
     }
 
-    console.log('set userAnswers 1', userAnswers);
-
     if (!userAnswers) {
       userAnswers = [''];
     }
-
-    console.log('set userAnswers 2', userAnswers);
 
     this.state = { userAnswers, correct } as ShortAnswerState;
   }
@@ -69,11 +65,9 @@ class ShortAnswer extends CompComponent<ShortAnswerProps, ShortAnswerState> {
     if (this.props.isBookPreview) {
       if (this.props.answers !== prevProps.answers) {
         let userAnswers = this.props.answers;
-        console.log('set userAnswers 1', this.props.answers);
         if (!userAnswers) {
           userAnswers = [''];
         }
-        console.log('set userAnswers 2', userAnswers);
         this.setState({ userAnswers });
       }
     }

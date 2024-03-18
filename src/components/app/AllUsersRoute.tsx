@@ -24,29 +24,22 @@ interface AllUsersRouteProps {
 
 const AllUsersRoute: React.FC<AllUsersRouteProps> = ({ component: Component, user, ...rest }) => {
   const location = useLocation();
-  console.log('1', rest.isAuthenticated)
-
   if (rest.isAuthenticated === isAuthenticated.True) {
-    console.log('2')
     if (!user) {
       rest.getUser();
       return <PageLoader content="...Getting User..." />;
     }
     if (!user.userPreference && !rest.isPreferencePage) {
-      console.log('3')
       if (user.username) {
         return <Redirect to={map.TermsOnlyAccept} />;
       }
       return <Redirect to={map.TermsSignUp} />
     }
-    console.log('4')
     if (user.firstName === "" || user.lastName === "") {
-      console.log('5')
       if (location.pathname !== map.UserProfile) { // Only redirect to the user profile if we're not already there.
         return <Redirect to={map.UserProfile} />
       }
     }
-    console.log('6')
     return <Route {...rest} render={(props) => {
       return <Component {...props} user={user} />
     }} />;
