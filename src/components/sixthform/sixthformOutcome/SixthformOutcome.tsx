@@ -696,7 +696,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     this.setState({ activeTab: SixActiveTab.Survey });
                   }}
                 >
-                  Six Step Survey
+                  Six-Step Survey
                 </div>
                 <div
                   className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active bold" : "not-active"}`}
