@@ -352,9 +352,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           <div className="font-16 line-d3">
             T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement.
           </div>
-          <div className="font-16 line-d3">
-            Choosing a T-level requires you to be clear in your own mind that you wish to work in this field.
-          </div>
           <div className="font-16 bold sub-title-e23">
             Which of the following best applies to you?
           </div>

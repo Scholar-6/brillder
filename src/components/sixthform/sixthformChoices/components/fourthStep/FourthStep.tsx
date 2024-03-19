@@ -603,7 +603,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             onChange={categoriesC4 => {
               this.setState({ categoriesC4 })
             }}
-            onSkip={() => {
+            moveNext={() => {
+              this.props.saveThirdAnswer(this.getAnswer());
               if (this.props.secondAnswer.answer.subjectType === FirstChoice.ALevel) {
                 this.setState({ subStep: ThirdSubStep.ListenStart });
               } else {
@@ -619,25 +620,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                 }
               }
             }}
+            moveBack={() => this.setState({ subStep: ThirdSubStep.ThirdC3 })}
           />
-          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.ThirdC3 })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.props.saveThirdAnswer(this.getAnswer());
-            if (this.props.secondAnswer.answer.subjectType === FirstChoice.ALevel) {
-              this.setState({ subStep: ThirdSubStep.ListenStart });
-            } else {
-              if (
-                this.props.thirdAnswer &&
-                this.props.thirdAnswer.answer &&
-                this.props.thirdAnswer.answer.databaseSchool &&
-                this.props.thirdAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
-              ) {
-                this.setState({ subStep: ThirdSubStep.ThirdE });
-              } else {
-                this.setState({ subStep: ThirdSubStep.ThirdD });
-              }
-            }
-          }}>Continue</button>
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.ThirdC3) {
