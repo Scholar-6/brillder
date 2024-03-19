@@ -129,7 +129,7 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
             {popupSubject.name} {/*popupSubject.score*/}
           </span>
         </div>
-        <div className="font-14">
+        <div className="font-14 text-justify">
           {subject.description && subject.description}
         </div>
         <div className="second-row">
