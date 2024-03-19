@@ -1118,9 +1118,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             </div>
             <div className="categories-container-4c-r23 non-facilitation-category font-16">
               <div className="font-16">
-                <div className="text-4c">
-                  <div className="bold">Russell Group’s Non-Facilitating Subjects:</div>
-                </div>
                 <div className="checkbox-container-r23">
                   {this.state.nonFacilitatingSubjects.map((subject: any) => <div>
                     <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
@@ -1256,11 +1253,11 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
               Types of Degree Course
             </div>
             <div className="font-16 margin-bottom-1">
-              You probably don’t yet know what degree you are going to do, but it makes sense to think about it.<br />
-              You can’t do some degrees without certain qualifications.
+              You probably don’t yet know what degree you are going to do. However, it makes sense to think about it,<br/>
+              because you can’t do some degrees without certain qualifications.
             </div>
             <div className="font-16 margin-bottom-1">
-              Below are five broad categories of degree. Select up to three categories that you think you might fall into.
+              Below are five broad categories of degree. Select up to <span className="bold">three</span> categories that you think you might fall into.
             </div>
             <div className="categories-container font-16">
               <div>
