@@ -23,6 +23,8 @@ import { GetFinishRedirectUrl, GetHeartOfMerciaUser, UnsetFinishRedirectUrl, Uns
 import { User, UserPreferenceType } from 'model/user';
 import { ReduxCombinedState } from 'redux/reducers';
 import UnauthorizedUserDialogV3 from "components/baseComponents/dialogs/unauthorizedUserDialogV2/UnauthorizedUserDialogV3";
+import { ClearQuickAssignment, GetQuickAssignment, SetQuickAssignment } from 'localStorage/play';
+import QuickAssignLoginDialog from "components/baseComponents/dialogs/unauthorizedUserDialogV2/QuickAssignLoginDialog";
 
 
 const confetti = require('canvas-confetti');
@@ -40,6 +42,8 @@ interface EndingState {
 
   fixedCurrentScore: number;
   unauthorizedOpenV2: boolean;
+
+  quickAssignCompleted: boolean;
 
   isHeartOfMercia: boolean;
 
@@ -86,6 +90,14 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       SetLastAttemptId(this.props.brickAttempt.id)
     }
 
+    // quick assignment logic
+    let quickAssignCompleted = false;
+    const assignment = GetQuickAssignment();
+    if (assignment?.accepted === true) {
+      //unauthorizedOpenV2 = false;
+      //quickAssignCompleted = true;
+    }
+
     this.state = {
       oldScore: oldScoreNumber,
 
@@ -100,6 +112,8 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
       fixedCurrentScore: 0,
 
       unauthorizedOpenV2,
+
+      quickAssignCompleted,
 
       interval: 0,
     };
@@ -673,6 +687,21 @@ class EndingPage extends React.Component<EndingProps, EndingState> {
           </div>
         </div>
         <UnauthorizedUserDialogV3
+          history={this.props.history}
+          brick={brick}
+          isOpen={this.state.unauthorizedOpenV2}
+          close={() => {
+            this.setState({unauthorizedOpenV2: false});
+          }}
+          competitionId={-1}
+          notyet={() => {
+            this.setState({unauthorizedOpenV2: false});
+          }}
+          registered={() => {
+            this.setState({unauthorizedOpenV2: false});
+          }}
+        />
+        <QuickAssignLoginDialog
           history={this.props.history}
           brick={brick}
           isOpen={this.state.unauthorizedOpenV2}
