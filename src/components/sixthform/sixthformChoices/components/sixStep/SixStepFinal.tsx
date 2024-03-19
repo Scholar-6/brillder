@@ -1,12 +1,44 @@
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import React, { useEffect } from "react";
 import map from "components/map";
-import React from "react";
+
+const confetti = require('canvas-confetti');
 
 interface WelcomeProps {
   history: any;
 }
 
 const SixStepFinal: React.FC<WelcomeProps> = (props) => {
+
+  const launchBigConfetti = () => {
+    const colors = ['#0681db', '#ffd900', '#30c474'];
+
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0, colors };
+
+    const randomInRange = (min: number, max: number) => {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval3: any = setInterval(function () {
+      var timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval3);
+      }
+
+      var particleCount = 50 * (timeLeft / duration);
+      // since particles fall down, start a bit higher than random
+      confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+      confetti.default(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+  }
+
+  useEffect(() => {
+    launchBigConfetti();
+  }, []);
+
   return (
     <div className="question question-6 question-6-final">
       <div className="background-confetti-sixthform">
@@ -21,19 +53,20 @@ const SixStepFinal: React.FC<WelcomeProps> = (props) => {
           </svg>
         </div>
         <div className="flex-center">
-          <div className="bold font-40 question-text">
+          <div className="bold font-58 question-text">
             Well done!
           </div>
         </div>
         <div className="flex-center">
-          <div className="font-20">
+          <div className="font-32 text-center">
             You’ve successfully completed the Course Selector Questionnaire.<br /> Kindly check your email for your detailed report and results.
           </div>
         </div>
-        <button className="absolute-contunue-btn font-24" onClick={() => {
-          // exit
-          props.history.push(map.SixthformOutcome);
-        }}>Exit</button>
+        <div className="flex-center">
+          <button className="outcome-btn font-24" onClick={() => {
+            props.history.push(map.SixthformOutcome);
+          }}>See my outcomes</button>
+        </div>
       </div>
     </div>
   );

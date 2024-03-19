@@ -109,6 +109,7 @@
   .fifth-step-img-r14 {
     height: calc(5vh + 4.5vh + 1.3vh + 2.2vw);
   }
+
   .fifth-step-img-r15 {
     height: calc(5vh + 4.5vh + 2vh + 2.7vw);
   }
@@ -144,7 +145,7 @@
         margin-top: 1.7vh;
         margin-bottom: 0.6vh;
 
-        > div {
+        >div {
           padding-top: 0.8vh;
           padding-bottom: 0.8vh;
           width: 4vw;
@@ -163,6 +164,7 @@
 
       .step1-input-row {
         margin-top: 2vh;
+
         input {
           padding: 1.6vh 1vw;
           width: 13vw;
@@ -188,6 +190,7 @@
       position: absolute;
       bottom: calc(5vh + 1vw + 9vh);
     }
+
     .absolute-name-s2 {
       width: 48vw !important;
     }
@@ -1958,8 +1961,10 @@
                 display: flex;
               }
             }
+
             .other-language {
               padding-bottom: 0.4vw;
+
               .drag-item-r24 {
                 padding-top: 0.4vw;
                 padding-bottom: 0.4vw;
@@ -3128,8 +3133,27 @@
       z-index: 3;
     }
 
-    .absolute-contunue-btn {
-      right: -1vw;
+    .outcome-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3vh;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      color: white;
+      text-align: center;
+      width: 20vw;
+      text-align: center;
+      border-radius: 0.5vw;
+      height: 8vh;
+      font-family: "Brandon Grotesque Regular" !important;
+      background: var(--theme-light-blue);
+      transition: all 300ms ease-in-out;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 
@@ -3139,11 +3163,11 @@
       height: 2vw;
       margin-bottom: 0.5vh;
     }
-  
+
     .text-r34234 {
       margin-top: 1.5vh;
     }
-    
+
 
   }
 
@@ -3278,6 +3302,7 @@
     margin-top: 2vh !important;
     margin-bottom: 4vh !important;
   }
+
   .bottom-text-s5 {
     padding-top: 2vh;
   }
