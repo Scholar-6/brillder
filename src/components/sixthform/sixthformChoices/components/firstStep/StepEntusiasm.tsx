@@ -48,7 +48,7 @@ const SixStepEntusiasm: React.FC<ThirdProps> = (props) => {
           currentStep.choice = realChoice;
           props.onChange(props.choices);
           if (step >= props.choices.length - 1) {
-            props.moveNext()
+            props.moveNext();
           } else {
             setStep(step + 1);
           }

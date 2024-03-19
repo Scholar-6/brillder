@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 enum ChoiceEnum {
   Never = 1,
@@ -16,6 +16,10 @@ interface Props {
 
 const ThreeButtons: React.FC<Props> = (props) => {
   let [currentChoice, setCurrentChoice] = React.useState<ChoiceEnum>(props.currentChoice);
+
+  useEffect(() => {
+    setCurrentChoice(props.currentChoice);
+  }, [props.currentChoice]);
 
   const renderBtn = (choice: ChoiceEnum, realChoice: ChoiceEnum, className: string, label: string) => {
     const isEmpty = choice === null;

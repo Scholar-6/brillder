@@ -28,5 +28,4 @@ const ProgressBarStep6V2: React.FC<Props> = (props) => {
   );
 }
 
-
 export default ProgressBarStep6V2;

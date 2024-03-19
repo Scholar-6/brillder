@@ -234,7 +234,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           <div className="other-choices">
             <div className={this.state.otherChoice === OtherChoice.Online ? "bold" : "regular"} onClick={() => this.setState({ otherChoice: OtherChoice.Online })}>
               <SpriteIcon name={this.state.otherChoice === OtherChoice.Online ? 'radio-btn-active' : 'radio-btn-blue'} />
-              <span className="font-16">I will enroll in an online / distance learning college.</span>
+              <span className="font-16">I will enrol in an online / distance learning college.</span>
             </div>
             <div className={this.state.otherChoice === OtherChoice.Home ? "bold" : "regular"} onClick={() => this.setState({ otherChoice: OtherChoice.Home })}>
               <SpriteIcon name={this.state.otherChoice === OtherChoice.Home ? 'radio-btn-active' : 'radio-btn-blue'} />
