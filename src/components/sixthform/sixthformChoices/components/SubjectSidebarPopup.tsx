@@ -162,15 +162,7 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
               props.showPopup();
             }
           }}>
-            <div className="label-container">
-              <div>
-                <div className="bold font-18">Try a taster topic</div>
-                <div className="font-14">Try out a Brick for this subject to see if it’s a good fit for you.</div>
-              </div>
-            </div>
-            <div>
-              {renderBrick(subject)}
-            </div>
+            {renderBrick(subject)}
           </div>}
       </div>
     );

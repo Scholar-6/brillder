@@ -962,25 +962,6 @@
     .taste-container {
       cursor: pointer;
       margin-top: 2vh;
-      display: flex;
-      background: #4C608A1A;
-      border-radius: 0.5vw;
-      padding: 0 0.6vw;
-
-      >div {
-        width: 48%;
-      }
-
-      .label-container {
-        display: flex;
-        align-items: center;
-        padding-right: 0;
-        width: 52%;
-
-        .font-18 {
-          margin-bottom: 1vh;
-        }
-      }
 
       .brick-container {
         position: relative;
@@ -988,9 +969,9 @@
         .scroll-block {
           margin-top: 2vh;
           margin-bottom: 2vh;
-          width: 9.5vw;
-          height: 6.4vw;
-          border-radius: 1vw;
+          width: 22vw;
+          height: 12vw;
+          border-radius: 1.4vw;
           background-size: cover;
           background-position: center center;
 
@@ -1006,8 +987,11 @@
           position: absolute;
           bottom: 0;
           text-align: center;
-          height: 1.8vw;
+          height: 2.5vw;
           width: 100%;
+          font-size: 1.3vw;
+          border-bottom-left-radius: 1.4vw;
+          border-bottom-right-radius: 1.4vw;
         }
 
         .bottom-description {
