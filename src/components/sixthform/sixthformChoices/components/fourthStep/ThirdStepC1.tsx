@@ -111,8 +111,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
           New Subjects
         </div>
         <div className="font-16">
-          Some subjects are rarely studied before the sixth form. See if you understand what<br />
-          they involve - could any be a fit for you?
+          Some subjects are rarely studied before the sixth form. See if you understand what they involve.
         </div>
         <ProgressBarStep3C1 step={this.state.step} total={this.state.answers.length} subjectDescription={currentAnswer.name} />
         <Grid container direction="row" className="containers-3c1">

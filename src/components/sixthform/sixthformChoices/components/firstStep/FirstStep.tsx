@@ -196,55 +196,55 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         choice: null
       }, {
         type: SixStepSixthChoices.Birdwatching,
-        label: 'Birdwatching and wildlife',
+        label: 'birdwatching and wildlife',
         choice: null
       }, {
         type: SixStepSixthChoices.WatchingAndLearning,
-        label: 'Watching and learning about the night sky',
+        label: 'watching and learning about the night sky',
         choice: null
       }, {
         type: SixStepSixthChoices.BuildingContraptions,
-        label: 'Building contraptions, machines and toy kits',
+        label: 'building contraptions, machines and toy kits',
         choice: null
       }, {
         type: SixStepSixthChoices.MeetingAndMakingFriends,
-        label: 'Meeting and making friends with people from abroad',
+        label: 'meeting and making friends with people from abroad',
         choice: null
       }, {
         type: SixStepSixthChoices.CollectingRocksFossils,
-        label: 'Collecting rocks, fossils, minerals and natural curiosities',
+        label: 'collecting rocks, fossils, minerals and natural curiosities',
         choice: null
       }, {
         type: SixStepSixthChoices.OrganisingParties,
-        label: 'Organising parties and events',
+        label: 'organising parties and events',
         choice: null
       }, {
         type: SixStepSixthChoices.SingingInAChoir,
-        label: 'Singing in a choir',
+        label: 'singing in a choir',
         choice: null
       }, {
         type: SixStepSixthChoices.OrganisingData,
-        label: 'Organising data to discover patterns, trends and outliers',
+        label: 'organising data to discover patterns, trends and outliers',
         choice: null
       }, {
         type: SixStepSixthChoices.StudyingHumanBehaviour,
-        label: 'Studying human behaviour',
+        label: 'studying human behaviour',
         choice: null
       }, {
         type: SixStepSixthChoices.SellingStuffOnline,
-        label: 'Selling stuff online',
+        label: 'selling stuff online',
         choice: null
       }, {
         type: SixStepSixthChoices.AttendingOrVisiting,
-        label: 'Attending or visiting places of worship',
+        label: 'attending or visiting places of worship',
         choice: null
       }, {
         type: SixStepSixthChoices.VolunteeringForACharity,
-        label: 'Volunteering for a charity or local event',
+        label: 'volunteering for a charity or local event',
         choice: null
       }, {
         type: SixStepSixthChoices.RenovatingAndDoing,
-        label: 'Renovating and doing up a place',
+        label: 'renovating and doing up a place',
         choice: null
       }
     ]
@@ -300,15 +300,15 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         choice: null
       }, {
         type: SixStepSeventhChoices.AsALawyer,
-        label: 'As a lawyer, plead a case in the High Court',
+        label: 'as a lawyer, plead a case in the High Court',
         choice: null
       }, {
         type: SixStepSeventhChoices.TakePartIn,
-        label: 'Take part in an archaeological find (e.g. a dig )',
+        label: 'take part in an archaeological find (e.g. a dig )',
         choice: null
       }, {
         type: SixStepSeventhChoices.BringACriminalToJustice,
-        label: 'Bring a criminal to justice, either by detective work or as a lawyer in court',
+        label: 'bring a criminal to justice, either by detective work or as a lawyer in court',
         choice: null
       }, {
         type: SixStepSeventhChoices.PerformAtTheRoyalAlbertHall,

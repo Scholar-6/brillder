@@ -12,8 +12,8 @@ const StepTypeCourse: React.FC<WelcomeProps> = (props) => {
       <img src="/images/choicesTool/Step2backgroundR2.png" className="step2background-img" />
       <div className="text-container-5432">
         <div>
-          <div className="font-16">You’ve completed Step One, now let’s look at</div>
-          <div className="font-32 bold s-text-323">TYPES OF COURSE</div>
+          <div className="font-20">Step 2</div>
+          <div className="font-48 bold s-text-323">TYPES OF COURSE</div>
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />
