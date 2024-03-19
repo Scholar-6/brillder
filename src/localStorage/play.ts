@@ -1,7 +1,7 @@
 import { Brick } from 'model/brick';
 import {
   AttemptCash, YoutubeClicked, PreviewAttemptCash, VolumeToggle,
-  UserBrills, AuthBrickCash, UnauthBrickCash, QuickAssignment, LastAttemptId }
+  UserBrills, AuthBrickCash, UnauthBrickCash, QuickAssignment, QuickAssignmentPlay, LastAttemptId }
 from './types';
 import { QuickAssigment } from 'components/baseComponents/classInvitationDialog/QuickClassInvitationDialog';
 
@@ -162,6 +162,30 @@ export function GetQuickAssignment () {
 export function ClearQuickAssignment() {
   localStorage.removeItem(QuickAssignment);
 }
+
+
+
+
+
+// in the end of play show popup if quick assigned
+export function SetQuickPlayAssignment(code: string) {
+  localStorage.setItem(QuickAssignmentPlay, code);
+}
+
+export function GetQuickPlayAssignment () {
+  const data = localStorage.getItem(QuickAssignmentPlay)
+  if (data) {
+    return JSON.parse(data) as QuickAssigment;
+  }
+  return data as null;
+}
+
+export function ClearQuickPlayAssignment() {
+  localStorage.removeItem(QuickAssignmentPlay);
+}
+
+
+
 
 
 // last attempt id of not logged in user
