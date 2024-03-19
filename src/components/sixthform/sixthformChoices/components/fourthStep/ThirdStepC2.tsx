@@ -46,7 +46,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
       correctIndex: 3,
       name: "Media Studies"
     }, {
-      icon: "ClassicalCivilisation-3c2",
+      icon: "ClassicalCivilisation",
       correctIndex: 4,
       name: "Classical Civilisation"
     }, {

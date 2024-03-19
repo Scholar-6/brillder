@@ -76,8 +76,15 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  renderSBox() {
-    
+  renderHelpBox(category: ThirdC3Category, isCorrect: boolean) {
+    if (category.status === ThirdC3Status.None) {
+      return "";
+    }
+
+    if (isCorrect) {
+      return <div className="help-text text-center font-16">{category.helpText}</div>;
+    }
+    return <div className="help-text text-center font-16">Try again!</div>;
   }
 
   renderBox(category: ThirdC3Category) {
@@ -177,7 +184,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
             </div>
           </div>
         </div>
-        {category.status !== ThirdC3Status.None && <div className="help-text text-center font-16">{category.helpText}</div>}
+        {this.renderHelpBox(category, isCorrect)}
       </div>
     );
   }
