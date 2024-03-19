@@ -2253,7 +2253,6 @@
       }
 
       >div>div {
-        overflow-y: scroll;
         cursor: pointer;
         border-radius: 0.4vw;
         display: flex;
@@ -2287,15 +2286,15 @@
         svg {
           width: 2.6vw;
           height: 2.6vw;
-          margin-bottom: 2vh;
         }
       }
 
       .hovered-category {
         padding-top: 1.5vh;
+        padding-bottom: 1vh;
         padding-left: 1.6vw;
         height: auto;
-        min-height: calc(6vw + 2.6vh);
+        min-height: calc(6.4vw + 2.6vh);
         text-align: left;
         display: block;
 
