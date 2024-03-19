@@ -11,13 +11,13 @@ interface Props {
 
 const ProgressBarStep6: React.FC<Props> = (props) => {
   const { step, total, subjectDescription } = props;
-  let renderLine = (isActive: boolean) => {
-    return <div className={`line-r23 ${isActive ? 'active' : ''}`} />
+  let renderLine = (isActive: boolean, i: number) => {
+    return <div key={i} className={`line-r23 ${isActive ? 'active' : ''}`} />
   }
   return (
     <div className="progress-description-container-r3234 progress-watching-bar">
       <div className="progress-bar-sixthform">
-        {Array.from({length: total}).map((v, i) => renderLine(step >= i))}
+        {Array.from({length: total}).map((v, i) => renderLine(step >= i, i))}
       </div>
       <div className="font-14 paging-3c1">{step + 1} / {total} items</div>
       <div className="flex-center">{props.icon ? <SpriteIcon name={props.icon} /> : "" }</div>

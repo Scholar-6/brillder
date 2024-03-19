@@ -55,7 +55,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
       helpText: 'This is true. But you can get onto a university engineering course with good Physics and Maths A-levels if your school or college does not offer an engineering qualification.',
       status: ThirdC3Status.None,
     }, {
-      boldText: "Sport & Physical Education, Dance, Music, Theatre Studies",
+      boldText: "Physical Education, Dance, Music, or Theatre Studies",
       text: "“It’s better to do the A-level than take a vocational equivalent in these subjects”",
       helpText: 'There’s some truth in this if you’re planning to apply to a university (and because some VAPs are being phased out). But vocational courses often afford more time on practical components (many are equivalent to more than one A-level), which means you achieve greater proficiency.',
       status: ThirdC3Status.None,

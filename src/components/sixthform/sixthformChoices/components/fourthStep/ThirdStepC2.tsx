@@ -135,7 +135,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
           New Subjects: Students’ Perspectives
         </div>
         <div className="font-16">
-          Here are a few more subjects that are often new to students in the sixth form.
+          Here are some students’ thoughts about why they chose particular subjects.
         </div>
         <ProgressBarStep3C1 step={this.state.step} total={this.state.answers.length} subjectDescription={currentAnswer.name} />
         <Grid container direction="row" className="containers-3c1">

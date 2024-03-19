@@ -12,7 +12,7 @@ const FourthStepWelcome: React.FC<WelcomeProps> = (props) => {
     <img src="/images/choicesTool/Step3background.png" className="step2background-img" />
     <div className="text-container-5432">
       <div>
-        <div className="font-20">You’ve completed Step Three, now let’s look at</div>
+        <div className="font-20">Step 4</div>
         <div className="font-48 bold s-text-323">SUBJECTS</div>
       </div>
     </div>

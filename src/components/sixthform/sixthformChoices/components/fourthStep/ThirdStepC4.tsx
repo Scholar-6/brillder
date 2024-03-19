@@ -2,6 +2,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { SixthformSubject } from "services/axios/sixthformChoices";
+import BackButtonSix from "../BackButtonSix";
 
 interface ThirdCategoriesC4 {
   subjects: any[];
@@ -14,7 +15,8 @@ interface ThirdCategoriesC4 {
 interface ThirdProps {
   subjects: SixthformSubject[];
   categoriesC4: ThirdCategoriesC4;
-  onSkip(): void;
+  moveNext(): void;
+  moveBack(): void;
   onChange(answer: any): void;
 }
 
@@ -152,6 +154,8 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
   render() {
     const ReactSortableV1 = ReactSortable as any;
 
+    let canSkip = this.state.interestedSubjects.length === 0 && this.state.quiteInterestedSubjects.length === 0;
+
     return (
       <div>
         <div className="bold font-32 question-text-3">
@@ -237,14 +241,14 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
               </div>
             </div>
           </div>
-          {this.state.interestedSubjects.length === 0 && this.state.quiteInterestedSubjects.length === 0 && (
-            <div className="container-r23 last bold font-16">
-              <div>
-                <div>I’m currently not interested in <br /> any of these subjects</div>
-                <div className="skip-btn-container font-14"><div onClick={this.props.onSkip}>Skip</div></div>
-              </div>
-            </div>)}
         </div>
+        <BackButtonSix onClick={this.props.moveBack} />
+        <div>
+          <div>I’m currently not interested in <br /> any of these subjects</div>
+        </div>
+        <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>
+          {canSkip ? 'Skip' : 'Continue'}
+        </button>
       </div>
     );
   }
