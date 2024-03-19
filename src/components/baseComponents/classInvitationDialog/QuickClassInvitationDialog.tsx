@@ -40,9 +40,7 @@ const QuickClassInvitationDialog: React.FC<Props> = props => {
     } catch (e) { }
   }
 
-  useEffect(() => {
-    getInvitations();
-  }, []);
+  useEffect(() => {getInvitations()}, []);
 
   const handleAccept = async () => {
     if (name.length === 0) {
