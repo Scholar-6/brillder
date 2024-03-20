@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import './ProgressBarSixthform.scss';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   step: number;
   description: string;
 }
 
-const AnimatedDescription: React.FC<Props> = (props) => {
+const AnimatedDescriptionV2: React.FC<Props> = (props) => {
   const [description, setDescription] = React.useState(props.description);
   const [animateRight, setAnimateRight] = React.useState(false);
   const [prevStep, setPrevStep] = React.useState(props.step);
@@ -26,7 +25,7 @@ const AnimatedDescription: React.FC<Props> = (props) => {
     return (
       <div className="relative animating-right">
         <div>
-          <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
+          <div className="flex-center bold font-24">One day I’d like to...</div>
           <div className="font-32 text-center bold animating title-6v2">{description}</div>
         </div>
       </div>
@@ -36,11 +35,11 @@ const AnimatedDescription: React.FC<Props> = (props) => {
   return (
     <div className="relative animating-left">
       <div>
-        <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
+        <div className="flex-center bold font-24">One day I’d like to...</div>
         <div className="font-32 text-center bold animating title-6v2">{description}</div>
       </div>
     </div>
   );
 }
 
-export default AnimatedDescription;
+export default AnimatedDescriptionV2;

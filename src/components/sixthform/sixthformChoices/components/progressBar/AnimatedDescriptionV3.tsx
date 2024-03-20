@@ -4,10 +4,11 @@ import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   step: number;
+  icon: string | undefined;
   description: string;
 }
 
-const AnimatedDescription: React.FC<Props> = (props) => {
+const AnimatedDescriptionV3: React.FC<Props> = (props) => {
   const [description, setDescription] = React.useState(props.description);
   const [animateRight, setAnimateRight] = React.useState(false);
   const [prevStep, setPrevStep] = React.useState(props.step);
@@ -26,7 +27,7 @@ const AnimatedDescription: React.FC<Props> = (props) => {
     return (
       <div className="relative animating-right">
         <div>
-          <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
+          <div className="flex-center bold font-24">{props.icon ? <SpriteIcon name={props.icon} /> : ''}</div>
           <div className="font-32 text-center bold animating title-6v2">{description}</div>
         </div>
       </div>
@@ -36,11 +37,11 @@ const AnimatedDescription: React.FC<Props> = (props) => {
   return (
     <div className="relative animating-left">
       <div>
-        <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
+        <div className="flex-center bold font-24">{props.icon ? <SpriteIcon name={props.icon} /> : ''}</div>
         <div className="font-32 text-center bold animating title-6v2">{description}</div>
       </div>
     </div>
   );
 }
 
-export default AnimatedDescription;
+export default AnimatedDescriptionV3;

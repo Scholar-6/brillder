@@ -103,7 +103,7 @@
 .progress-watching-bar {
   margin-left: 0;
   width: 46vw;
-  padding-bottom: 5vh;
+  padding-bottom: 2vh;
 
   svg {
     width: 1.6vw;
@@ -238,20 +238,27 @@
 }
 
 .progress-content-box-r233 {
-  min-height: 20vh;
+  min-height: 22vh;
   width: 46vw;
   overflow-x: hidden;
   position: relative;
 
+  > div {
+    min-height: 22vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .animating-left {
-    bottom: 15%;
+    top: 0;
     width: 46vw;
     position: absolute;
     animation: run 1s;
   }
 
   .animating-right {
-    bottom: 15%;
+    top: 0;
     width: 46vw;
     position: absolute;
     animation: move-right 1s;
