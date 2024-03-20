@@ -264,3 +264,33 @@
     animation: move-right 1s;
   }
 }
+
+.progress-description-container-r3234 {
+  overflow: hidden;
+}
+
+.progress-custom-r32 {
+  min-height: 15vh;
+  width: 65vw;
+  overflow: hidden;
+  > div {
+    min-height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .animating-left {
+    top: 2vw;
+    width: 65vw;
+    position: absolute;
+    animation: run 1s;
+  }
+
+  .animating-right {
+    top: 2vw;
+    width: 65vw;
+    position: absolute;
+    animation: move-right 1s;
+  }
+}
