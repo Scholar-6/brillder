@@ -13,16 +13,13 @@ interface Props {
 const ProgressBarStep6Entusiasm: React.FC<Props> = (props) => {
   const { step, total } = props;
   const value = ((step + 1) / total) * 100;
-  const [animate, setAnimation] = React.useState(false);
-
-  useEffect(() => setAnimation(true), [props.description]);
 
   return (
     <div className="progress-description-container-r3234 progress-watching-bar progress-entusiasm-bar">
       <LinearProgress className="progress-bar-long-r233" variant="determinate" value={value} />
       <div className="font-14 paging-3c1">{step + 1} / {total} items</div>
       <div className="flex-center progress-content-box-r233">
-        <AnimatedDescription key={props.description} description={props.description} />
+        <AnimatedDescription step={step} description={props.description} />
       </div>
     </div>
   );
