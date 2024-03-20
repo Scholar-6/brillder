@@ -29,7 +29,7 @@ const Step1Email: React.FC<ThirdProps> = (props) => {
       return (
         <div className="step1-name-box just-email">
           <div className="font-16">
-            Alright, kindly fill in the email you’d like to use
+            Fill in the email address you'd like to use.
           </div>
           <div className="step1-input-row email-part-s1 font-16">
             <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Your Email" />

@@ -15,9 +15,6 @@ const ThirdStepWatchStart: React.FC<WelcomeProps> = (props) => {
         <div>
           <SpriteIcon name="watching-start" className="watching-start" />
           <div className="font-32 bold">TV, Video & Social Media</div>
-          <div className="font-16 text-r34234">
-            There is all sorts of content out there. How often do you watch the following?
-          </div>
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />
