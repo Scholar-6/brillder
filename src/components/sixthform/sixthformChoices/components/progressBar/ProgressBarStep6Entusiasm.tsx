@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import './ProgressBarSixthform.scss';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import React from 'react';
 import { LinearProgress } from '@material-ui/core';
+import './ProgressBarSixthform.scss';
 import AnimatedDescription from './AnimatedDescription';
 
 interface Props {

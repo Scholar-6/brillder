@@ -22,29 +22,23 @@ const AnimatedDescription: React.FC<Props> = (props) => {
     }, 500);
   }, [props.description]);
 
-  /*
-  if (step === 0) {
-    return (
-      <div className="relative">
-        <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
-        <div className="font-32 text-center bold animating title-6v2">{description}</div>
-      </div>
-    );
-  }*/
-
   if (animateRight) {
     return (
       <div className="relative animating-right">
-        <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
-        <div className="font-32 text-center bold animating title-6v2">{description}</div>
+        <div>
+          <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
+          <div className="font-32 text-center bold animating title-6v2">{description}</div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="relative animating-left">
-      <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
-      <div className="font-32 text-center bold animating title-6v2">{description}</div>
+      <div>
+        <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
+        <div className="font-32 text-center bold animating title-6v2">{description}</div>
+      </div>
     </div>
   );
 }
