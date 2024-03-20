@@ -219,6 +219,25 @@
   }
 }
 
+@keyframes run {
+  0% {
+    left: 46vw;
+  }
+  100% {
+    left: 0;
+  }
+}
+
 .progress-content-box-r233 {
   min-height: 20vh;
+  width: 46vw;
+  overflow-x: hidden;
+  position: relative;
+
+  .animating-left {
+    bottom: 15%;
+    width: 46vw;
+    position: absolute;
+    animation: run 1s;
+  }
 }

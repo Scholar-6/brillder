@@ -1,6 +1,5 @@
 import React from 'react';
 import './ProgressBarSixthform.scss';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   step: number;

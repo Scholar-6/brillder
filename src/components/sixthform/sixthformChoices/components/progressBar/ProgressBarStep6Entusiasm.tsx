@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './ProgressBarSixthform.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { LinearProgress } from '@material-ui/core';
+import AnimatedDescription from './AnimatedDescription';
 
 interface Props {
   step: number;
@@ -11,16 +12,17 @@ interface Props {
 
 const ProgressBarStep6Entusiasm: React.FC<Props> = (props) => {
   const { step, total } = props;
-  const value = ((step + 1) / total) * 100
+  const value = ((step + 1) / total) * 100;
+  const [animate, setAnimation] = React.useState(false);
+
+  useEffect(() => setAnimation(true), [props.description]);
+
   return (
     <div className="progress-description-container-r3234 progress-watching-bar progress-entusiasm-bar">
       <LinearProgress className="progress-bar-long-r233" variant="determinate" value={value} />
       <div className="font-14 paging-3c1">{step + 1} / {total} items</div>
       <div className="flex-center progress-content-box-r233">
-        <div>
-          <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
-          <div className="font-32 text-center bold title-6v2">{props.description}</div>
-        </div>
+        <AnimatedDescription key={props.description} description={props.description} />
       </div>
     </div>
   );
