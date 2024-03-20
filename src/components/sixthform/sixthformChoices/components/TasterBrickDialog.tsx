@@ -20,8 +20,8 @@ const TasterBrickDialog: React.FC<TasterProps> = (props) => {
       </div>
       <div className="font-36 text-center bold title-e234">Taster topic</div>
       <div className="font-25 text-center">
-        You're going to a taster brick, once<br />
-        done, you'll come right back here.
+        You're going to a taster brick. Once<br />
+        you’re finished, you'll come right back here.
       </div>
       <div className="dialog-footer font-25">
         <button className="btn btn-md bg-custom-blue no-button"

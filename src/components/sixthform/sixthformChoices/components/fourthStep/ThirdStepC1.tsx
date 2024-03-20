@@ -55,15 +55,15 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       name: "the study of how society is organised, including issues such as class, crime, the family, culture, gender and identity"
     }, {
-      name: "combines elements of accountancy, finance, marketing, economics, management, human resources, and commercial operations"
+      name: "the study of commercial operations, including financing, resource management, and strategy"
     }, {
-      name: "examines data and statistics around resources, the production of goods and services, and the trends affecting the cost of living, inflation, taxation etc."
+      name: "the study of the production, consumption and distribution of goods and services"
     }, {
-      name: "explores ideologies, policies, constitutions, elections, the legislative process, interest groups and how governments conduct diplomacy, trade and conflict"
+      name: "the study of governance, policy, ideology, and power struggles between groups"
     }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      answers = this.props.pairAnswers;
+      //answers = this.props.pairAnswers;
     }
 
     this.state = {
@@ -113,7 +113,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-16">
           Some subjects are rarely studied before the sixth form. See if you understand what they involve.
         </div>
-        <ProgressBarStep3C1 step={this.state.step} total={this.state.answers.length} subjectDescription={currentAnswer.name} />
+        <ProgressBarStep3C1 step={this.state.step} topLabel="Which subject matches this description?" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
         <Grid container direction="row" className="containers-3c1">
           {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
         </Grid>

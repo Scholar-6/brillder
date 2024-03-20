@@ -56,6 +56,7 @@ interface UserProfileState {
   popupSubject: SixthformSubject | null;
   subjectPosition: any;
   popupTimeout: number | NodeJS.Timeout;
+  leavePopupTimeout: number | NodeJS.Timeout;
 
   answers: any[];
   page: Pages;
@@ -86,6 +87,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       answers: [],
 
       popupTimeout: -1,
+      leavePopupTimeout: -1,
       popupSubject: null,
       subjectPosition: null,
 
@@ -672,7 +674,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
           </div>
           <div className="sorted-row">
-            <div className="sort-and-filter-container">
+            <div className="sort-and-filter-container" onMouseLeave={()=> {
+              if (this.state.popupTimeout != -1) {
+                clearTimeout(this.state.popupTimeout);
+              }
+              this.setState({ popupSubject: null, subjectPosition: null }); 
+            }}>
               {this.state.page <= Pages.Question1 &&
                 <div className="subjects-select-box">
                   <div className="bold sidebar-title font-18">Show me:</div>
@@ -689,13 +696,25 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                     }
                     // get position of the element and calculate where to show the popup
                     const subjectPosition = (event.target as any).getBoundingClientRect();
-                    let popupTimeout = setTimeout(() => {
-                      this.setState({ popupSubject: subject, subjectPosition });
+                    const popupTimeout = setTimeout(() => {
+                      if (this.state.leavePopupTimeout) {
+                        clearTimeout(this.state.leavePopupTimeout);
+                      }
+                      console.log('show popup');
+                      this.setState({ popupSubject: subject, popupTimeout: -1, subjectPosition });
                     }, 1000);
                     this.setState({ popupTimeout });
                   }} onMouseLeave={(e) => {
-                    clearTimeout(this.state.popupTimeout);
-                    this.setState({ popupSubject: null, subjectPosition: null });
+                    console.log('leave started');
+                    if (this.state.popupTimeout == -1) {
+                      console.log('leave processing');
+                      const leavePopupTimeout = setTimeout(() => {
+                        console.log('leave ended');
+                        clearTimeout(this.state.popupTimeout);
+                        this.setState({ popupSubject: null, subjectPosition: null });
+                      }, 1000);
+                      this.setState({ leavePopupTimeout });
+                    }
                   }}>
                     {this.renderCircle(subject)}
                     <div className="subject-name">{subject.name}</div>

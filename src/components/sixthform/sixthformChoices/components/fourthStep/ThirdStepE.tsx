@@ -116,7 +116,7 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-16">
           Already ruled out all the subjects below? Skip to the next question.
         </div>
-        <ProgressBarStep3C1 step={this.state.step} total={this.state.answers.length} subjectDescription={currentAnswer.name} />
+        <ProgressBarStep3C1 step={this.state.step} topLabel="" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
         <Grid container direction="row" className="containers-3c1">
           {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
         </Grid>
