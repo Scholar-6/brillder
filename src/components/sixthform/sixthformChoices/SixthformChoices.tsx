@@ -685,7 +685,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   <div className="bold sidebar-title font-18">Show me:</div>
                   {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-levels Only')}
                   {this.renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
-                  {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'Showing All Subjects')}
+                  {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'All Subjects')}
                 </div>}
               <div className="font-18 ranking-label">Your subject rankings <span className="score-lable-r23 font-16">Score</span></div>
               <div className={`subjects-scrollbar font-16 ${this.state.page > Pages.Question1 ? 'big-subjects-sidebar' : ''}`}>
