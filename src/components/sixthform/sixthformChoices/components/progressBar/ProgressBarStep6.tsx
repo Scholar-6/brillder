@@ -7,6 +7,7 @@ interface Props {
   icon?: string;
   step: number;
   total: number;
+  isBig: boolean;
   subjectDescription: string;
 }
 
@@ -16,7 +17,7 @@ const ProgressBarStep6: React.FC<Props> = (props) => {
     return <div key={i} className={`line-r23 ${isActive ? 'active' : ''}`} />
   }
   return (
-    <div className="progress-description-container-r3234 progress-watching-bar progress-entusiasm-bar box-bigger-r343">
+    <div className={`progress-description-container-r3234 progress-watching-bar progress-entusiasm-bar ${props.isBig ? 'box-bigger-r343' : ''}`}>
       <div className="progress-bar-sixthform">
         {Array.from({length: total}).map((v, i) => renderLine(step >= i, i))}
       </div>

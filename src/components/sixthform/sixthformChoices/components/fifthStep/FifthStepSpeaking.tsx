@@ -38,7 +38,7 @@ const FiftthStepSpeaking: React.FC<ThirdProps> = (props) => {
       </div>
       <div className="font-16">How true are the following statements of you?</div>
       <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 step={step} total={props.speakingChoices.length} subjectDescription={currentStep.label} />
+      <ProgressBarStep6 step={step} total={props.speakingChoices.length} subjectDescription={currentStep.label} isBig={true} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="NOT REALLY" middleLabel="SORT OF" lastLabel="DEFINITELY"
