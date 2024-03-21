@@ -43,7 +43,10 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
     return (
       <div className="step1-name-box">
         <div className="font-16">
-          Is this correct? If not, a school or college wanting to enrol you will not be able to.
+          Is this correct?
+        </div>
+        <div className="font-16 m-t-343">
+          If not, a school or college wanting to enrol you will not be able to.
         </div>
         <div className="step1-btn-row">
           <div className="btn " onClick={() => {
