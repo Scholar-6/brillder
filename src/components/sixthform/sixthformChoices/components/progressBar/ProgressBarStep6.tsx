@@ -1,6 +1,7 @@
 import React from 'react';
 import './ProgressBarSixthform.scss';
 import AnimatedDescription from './AnimatedDescription';
+import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   icon?: string;
@@ -20,6 +21,10 @@ const ProgressBarStep6: React.FC<Props> = (props) => {
         {Array.from({length: total}).map((v, i) => renderLine(step >= i, i))}
       </div>
       <div className="font-14 paging-3c1">{step + 1} / {total} items</div>
+      {props.icon &&
+      <div className="flex-center">
+        <SpriteIcon name={props.icon} />
+      </div>}
       <div className="flex-center progress-content-box-r233">
         <AnimatedDescription step={step} description={subjectDescription} />
       </div>

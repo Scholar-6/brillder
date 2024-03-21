@@ -223,7 +223,7 @@
   0% {
     left: 46vw;
   }
-  100% {
+  50% {
     left: 0;
   }
 }
@@ -256,14 +256,14 @@
     top: 0;
     width: 46vw;
     position: absolute;
-    animation: run 1s;
+    animation: run 0.24s;
   }
 
   .animating-right {
     top: 0;
     width: 46vw;
     position: absolute;
-    animation: move-right 1s;
+    animation: move-right 0.7s;
   }
 }
 .box-bigger-r343 {
