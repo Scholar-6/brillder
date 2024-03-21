@@ -37,7 +37,7 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
         </div>
       </div>
       <img src="/images/choicesTool/FourthStepListening.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 icon="listening-sixth" step={step} total={props.listeningChoices.length} subjectDescription={currentStep.label} />
+      <ProgressBarStep6 icon="listening-sixth" step={step} total={props.listeningChoices.length} subjectDescription={currentStep.label} isBig={false} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="NEVER OR<br/> HARDLY EVER" middleLabel="SOMETIMES" lastLabel="A LOT"
