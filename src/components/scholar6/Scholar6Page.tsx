@@ -220,10 +220,10 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
                     }}>Get Started</div>
                   </div>
                   <div className="font-16 light">
-                    Scholar 6 helps you make informed decisions<br/>
-                    about choosing sixth form courses like A-levels.<br/>
-                    Uniquely, we can assess both your current<br/>
-                    aptitude and your future potential across a wide<br/>
+                    Scholar 6 helps you make informed decisions<br />
+                    about choosing sixth form courses like A-levels.<br />
+                    Uniquely, we can assess both your current<br />
+                    aptitude and your future potential across a wide<br />
                     range of academic and vocational subjects.
                   </div>
                 </div>
@@ -430,11 +430,11 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
             <div className="page-10 font-24">
               <SpriteIcon className="blue-shape-icon-r1" name="blue-shape-icon-r1" />
               <div>
-                When you have at least<br />
-                reflected on the many questions<br />
-                and angles which should affect<br />
-                your choices, you will be in a<br />
-                much better position to choose.
+                When you have reflected<br/>
+                on the many different factors<br/>
+                that affect your decision,<br/>
+                you will be in a much better<br/>
+                position to choose.
               </div>
             </div>
             <div className="page-bottom font-16">
@@ -749,9 +749,9 @@ class Scholar6Page extends Component<UserProfileProps, UserProfileState> {
           <div className="page-10 font-40">
             <SpriteIcon className="blue-shape-icon-r1" name="blue-shape-icon-r1" />
             <div>
-              When you have at least reflected on the many questions<br />
-              and angles which should affect your choices, you will be<br />
-              in a much better position to choose.
+              When you have reflected on the many different factors<br />
+              that affect your decision, you will be in a much<br />
+              better position to choose.
             </div>
           </div>
           <div className="page-bottom font-20">
