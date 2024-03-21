@@ -172,7 +172,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         choice: null
       }, {
         type: SixStepSixthChoices.PlayingMusicalInstruments,
-        label: 'playing musical instruments and listening to music',
+        label: 'playing musical instruments<br /> and listening to music',
         choice: null
       }, {
         type: SixStepSixthChoices.PerformingInAShow,
@@ -208,11 +208,11 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         choice: null
       }, {
         type: SixStepSixthChoices.MeetingAndMakingFriends,
-        label: 'meeting and making friends with people from abroad',
+        label: 'meeting and making friends with<br/> people from abroad',
         choice: null
       }, {
         type: SixStepSixthChoices.CollectingRocksFossils,
-        label: 'collecting rocks, fossils, minerals and natural curiosities',
+        label: 'collecting rocks, fossils, minerals<br/> and natural curiosities',
         choice: null
       }, {
         type: SixStepSixthChoices.OrganisingParties,
@@ -224,7 +224,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         choice: null
       }, {
         type: SixStepSixthChoices.OrganisingData,
-        label: 'organising data to discover patterns, trends and outliers',
+        label: 'organising data to discover patterns,<br/> trends and outliers',
         choice: null
       }, {
         type: SixStepSixthChoices.StudyingHumanBehaviour,
@@ -296,7 +296,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         choice: null
       }, {
         type: SixStepSeventhChoices.WorkAtAMajor,
-        label: 'work at a major bank or trading firm in the City of London',
+        label: 'work at a major bank or trading firm <br /> in the City of London',
         choice: null
       }, {
         type: SixStepSeventhChoices.AsALawyer,
@@ -353,7 +353,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
       const { answer } = props.answer;
 
       if (answer.enthusiasmChoices) {
-        enthusiasmChoices = answer.enthusiasmChoices;
+        //enthusiasmChoices = answer.enthusiasmChoices;
       }
 
       if (answer.dreamChoices) {
