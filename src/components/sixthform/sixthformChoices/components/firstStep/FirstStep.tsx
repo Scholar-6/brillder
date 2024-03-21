@@ -188,7 +188,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
         choice: null
       }, {
         type: SixStepSixthChoices.CollectingThings,
-        label: 'collecting things from the past (e.g. old coins, prints, antiques)',
+        label: 'collecting things from the past<br/> (e.g. old coins, prints, antiques)',
         choice: null
       }, {
         type: SixStepSixthChoices.VisitingMuseums,
@@ -353,7 +353,7 @@ class FirstQuestion extends Component<FirstQuestionProps, FirstQuestionState> {
       const { answer } = props.answer;
 
       if (answer.enthusiasmChoices) {
-        //enthusiasmChoices = answer.enthusiasmChoices;
+        enthusiasmChoices = answer.enthusiasmChoices;
       }
 
       if (answer.dreamChoices) {

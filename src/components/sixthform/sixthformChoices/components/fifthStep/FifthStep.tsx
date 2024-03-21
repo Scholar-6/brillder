@@ -97,7 +97,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         choice: null
       }, {
         type: SpeakingChoices.AtHome,
-        label: 'At home, my family talk a lot about what’s going on in the world and we have interesting discussions.',
+        label: 'At home, my family talk a lot about<br/> what’s going on in the world and we have interesting discussions.',
         choice: null
       }, {
         type: SpeakingChoices.WithMyFriends,
@@ -109,7 +109,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         choice: null
       }, {
         type: SpeakingChoices.IPreferPractical,
-        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more solid answers.',
+        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more<br/> solid answers.',
         choice: null
       }, {
         type: SpeakingChoices.ILove,
