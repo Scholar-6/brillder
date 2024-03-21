@@ -59,7 +59,7 @@ const SixStepFinal: React.FC<WelcomeProps> = (props) => {
         </div>
         <div className="flex-center">
           <div className="font-32 text-center">
-            You’ve successfully completed the Course Selector Questionnaire.<br /> Kindly check your email for your detailed report and results.
+            You’ve successfully completed the Course Selector Questionnaire.
           </div>
         </div>
         <div className="flex-center">
