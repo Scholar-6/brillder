@@ -453,7 +453,9 @@
     display: flex;
     align-items: center;
     padding-left: 1vw;
-    height: 5vh;
+    min-height: 4.5vh;
+    padding-top: 0.7vh;
+    padding-bottom: 0.7vh;
     border-bottom: 2px solid rgba(222, 222, 222, 0.1);
   }
 
@@ -3305,5 +3307,12 @@
 
   .bottom-text-s5 {
     padding-top: 2vh;
+  }
+}
+
+// custom margins
+.SixthformChoicesPage {
+  .m-t-343 {
+    margin-top: 2vh;
   }
 }
