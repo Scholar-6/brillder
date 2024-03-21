@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import './ProgressBarSixthform.scss';
-import SpriteIcon from 'components/baseComponents/SpriteIcon';
 
 interface Props {
   step: number;
@@ -26,7 +25,6 @@ const AnimatedDescription: React.FC<Props> = (props) => {
     return (
       <div className="relative animating-right">
         <div>
-          <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
           <div className="font-32 text-center bold animating title-6v2">{description}</div>
         </div>
       </div>
@@ -36,7 +34,6 @@ const AnimatedDescription: React.FC<Props> = (props) => {
   return (
     <div className="relative animating-left">
       <div>
-        <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
         <div className="font-32 text-center bold animating title-6v2">{description}</div>
       </div>
     </div>

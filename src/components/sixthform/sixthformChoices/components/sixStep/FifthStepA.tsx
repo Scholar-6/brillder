@@ -141,7 +141,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-16">
           Match the professional categories with sixth form expectations on the right.
         </div>
-        <div className="question-step-5a">
+        <div className="question-step-5a categories-of-carreer">
           <ProgressBarStep3C1 step={this.state.step} topLabel="" total={this.state.careers.length} subjectDescription={currentAnswer.name} />
           <Grid container direction="row" className="containers-3c1">
             {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
