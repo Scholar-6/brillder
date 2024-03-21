@@ -238,16 +238,18 @@
 }
 
 .progress-content-box-r233 {
-  min-height: 22vh;
+  min-height: 14vh;
   width: 46vw;
   overflow-x: hidden;
   position: relative;
 
   > div {
-    min-height: 22vh;
+    min-height: 14vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
   }
 
   .animating-left {
@@ -262,6 +264,23 @@
     width: 46vw;
     position: absolute;
     animation: move-right 1s;
+  }
+}
+.box-bigger-r343 {
+  .progress-content-box-r233 {
+    min-height: 20vh;
+    > div {
+      min-height: 20vh;
+    }
+  }
+}
+
+.categories-of-carreer .progress-description-container-r3234 {
+  .progress-custom-r32 {
+    min-height: 8vh;
+    > div {
+      min-height: 8vh;
+    }
   }
 }
 
