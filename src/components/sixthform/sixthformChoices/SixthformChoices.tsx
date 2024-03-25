@@ -518,38 +518,37 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderCourseContent() {
     if (this.state.page === Pages.Question1) {
       return <FirstStep
-        answer={this.state.answers.find(a => a.step === Pages.Question1)}
-        saveAnswer={(answer: any) => this.saveFirstAnswer(answer)}
-        moveNext={() => this.setState({ page: Pages.Question2 })}
-      />
-    } else if (this.state.page === Pages.Question2) {
-      return <SecondStep
-        answer={this.state.answers.find(a => a.step === Pages.Question2)}
-        saveAnswer={async (answer: any) => {
-          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
-          if (result) {
-            this.parseAnswer2(result, answer, Pages.Question2);
-            this.setState({
-              subjects: this.filterBySubjectType(answer.subjectType, result.subjectScores),
-              allSubjects: result.subjectScores,
-              subjectType: answer.subjectType
-            });
-          }
-        }}
+        answer={this.state.answers.find(a => a.step === Pages.Question3)}
+        saveAnswer={this.saveThirdAnswer.bind(this)}
         moveNext={async (answer: any) => {
-          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
           if (result) {
-            let subjects = this.state.subjects;
-            this.parseAnswer2(result, answer, Pages.Question2);
-            this.setState({ page: Pages.Question3, subjects: subjects });
+            this.parseAnswer(result, answer, Pages.Question1);
+            this.setState({ page: Pages.Question2 });
           }
         }}
         moveBack={async (answer: any) => {
-          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
           if (result) {
-            this.parseAnswer2(result, answer, Pages.Question2);
-            this.setState({ page: Pages.Question1 });
+            this.parseAnswer(result, answer, Pages.Question1);
+            this.setState({ page: Pages.Question2, answers: [...this.state.answers] })
           }
+        }}
+      />
+    } else if (this.state.page === Pages.Question2) {
+      const firstAnswer = this.state.answers.find(a => a.step === Pages.Question1);
+      return <SecondStep
+        firstAnswer={firstAnswer}
+        subjects={this.state.subjects}
+        answer={this.state.answers.find(a => a.step === Pages.Question2)}
+        saveAnswer={answer => this.saveSecondAnswer(answer)}
+        moveNext={answer => {
+          this.saveFourthAnswer(answer);
+          this.setState({ page: Pages.Question2 });
+        }}
+        moveBack={answer => {
+          this.saveFourthAnswer(answer);
+          this.setState({ page: Pages.Question1 });
         }}
       />
     } else if (this.state.page === Pages.Question3) {
@@ -674,11 +673,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             </div>
           </div>
           <div className="sorted-row">
-            <div className="sort-and-filter-container" onMouseLeave={()=> {
+            <div className="sort-and-filter-container" onMouseLeave={() => {
               if (this.state.popupTimeout != -1) {
                 clearTimeout(this.state.popupTimeout);
               }
-              this.setState({ popupSubject: null, subjectPosition: null }); 
+              this.setState({ popupSubject: null, subjectPosition: null });
             }}>
               {this.state.page <= Pages.Question1 &&
                 <div className="subjects-select-box">
