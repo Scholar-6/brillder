@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import WelcomePage from "../firstStep/welcomePage/WelcomePage";
 import FirstStepWelcome from "../firstStep/FirstStepWelcome";
-import StepEntusiasmStart from "./StepEntusiasmStart";
-import SixStepEntusiasm from "./StepEntusiasm";
-import StepDreams from "./StepDreams";
-import StepDreamsStart from "./StepDreamsStart";
+import StepEntusiasmStart from "../thirdStep/StepEntusiasmStart";
+import SixStepEntusiasm from "../thirdStep/StepEntusiasm";
+import StepDreams from "../thirdStep/StepDreams";
+import StepDreamsStart from "../thirdStep/StepDreamsStart";
 import Step1Name from "./Step1Name";
 import Step1Email from "./Step1Email";
 

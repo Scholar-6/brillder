@@ -17,10 +17,7 @@ const ThirdStepWelcome: React.FC<WelcomeProps> = (props) => {
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />
-      <button
-        className="absolute-contunue-btn font-24"
-        onClick={props.moveNext}
-      >Start</button>
+      <button className="absolute-contunue-btn font-24" onClick={props.moveNext}>Start</button>
     </div>
   );
 }

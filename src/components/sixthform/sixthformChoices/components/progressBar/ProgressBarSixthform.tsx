@@ -30,7 +30,7 @@ const ProgressBarSixthform: React.FC<Props> = (props) => {
       {renderLine(step >= 3)}
       <div>
         {renderStep(3, step === Pages.Question3, step >= 3)}
-        <div className="font-12 progress-label-s6">INSTITUTIONS</div>
+        <div className="font-12 progress-label-s6">INTERESTS AND EXTRACURRICULARS</div>
       </div>
       {renderLine(step >= 4)}
       <div>
