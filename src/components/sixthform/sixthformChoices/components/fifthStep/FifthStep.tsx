@@ -89,47 +89,50 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     let speakingChoices = [
       {
         type: SpeakingChoices.InTheClassroom,
-        label: 'In the classroom, I enjoy contributing ideas and showing what I know.',
+        label: '“In the classroom, I enjoy contributing ideas<br/> and showing what I know.”',
         choice: null
       }, {
         type: SpeakingChoices.ICantStand,
-        label: 'I can’t stand pretentious people who waffle on about stuff which isn’t relevant.',
+        label: '“I can’t stand pretentious people who waffle on<br/> about stuff which isn’t relevant.”',
         choice: null
       }, {
         type: SpeakingChoices.AtHome,
-        label: 'At home, my family talk a lot about<br/> what’s going on in the world and we have interesting discussions.',
+        label: '“At home, my family talk a lot about what’s going on<br/> in the world and we have interesting discussions.”',
         choice: null
       }, {
         type: SpeakingChoices.WithMyFriends,
-        label: 'With my friends I mainly gossip and enjoy the chance to banter and have fun.',
+        label: '“With my friends I mainly gossip and enjoy<br/> the chance to banter and have fun.”',
         choice: null
       }, {
         type: SpeakingChoices.MyFriends,
-        label: 'My friends put forward new ideas and challenge my thinking in ways I value.',
+        label: '“My friends put forward new ideas and challenge<br/> my thinking in ways I value.”',
         choice: null
       }, {
         type: SpeakingChoices.IPreferPractical,
-        label: 'I prefer practical, problem-solving subjects like Maths because there’s less drivel and more<br/> solid answers.',
+        label: `
+          “I prefer practical, problem-solving subjects like Maths<br/>
+          because there’s less drivel and more solid answers.”
+        `,
         choice: null
       }, {
         type: SpeakingChoices.ILove,
-        label: 'I love the chance to put an argument in a proper debate, and I’m good at undermining other people’s arguments.',
+        label: '“I love the chance to put an argument in<br/> a proper debate, and I’m good at undermining<br/> other people’s arguments.”',
         choice: null
       }, {
         type: SpeakingChoices.ImNot,
-        label: 'I’m not a confident communicator - my strengths are in other areas.',
+        label: '“I’m not a confident communicator - my strengths<br/> are in other areas.”',
         choice: null
       }, {
         type: SpeakingChoices.ILikeTalking,
-        label: 'I like talking in depth with others about music, books or about documentaries, plays and films we’ve seen.',
+        label: '“I like talking in depth with others about music,<br/> books or about documentaries, plays and films we’ve seen.”',
         choice: null
       }, {
         type: SpeakingChoices.IPreferToListen,
-        label: 'I prefer to listen carefully and chip in only when something really needs to be said.',
+        label: '“I prefer to listen carefully and chip in only when<br/> something really needs to be said.”',
         choice: null
       }, {
         type: SpeakingChoices.IReallyAdmire,
-        label: 'I really admire people who can communicate effectively in foreign languages.',
+        label: '“I really admire people who can communicate<br/> effectively in foreign languages.”',
         choice: null
       }
     ];
@@ -606,7 +609,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         }
       }
       if (answer.speakingChoices) {
-        speakingChoices = answer.speakingChoices;
+        //speakingChoices = answer.speakingChoices;
       }
     }
 

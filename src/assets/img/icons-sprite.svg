@@ -3860,17 +3860,11 @@
       fill="#30C474" />
   </svg>
   <svg id="AncientHistory-3c2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_8198_4570)">
-      <path d="M8 18L10 5L12 3L14 5L16 18" stroke="#001C58" stroke-width="1.5" stroke-linecap="round"
-        stroke-linejoin="round" />
-      <path d="M5 21V18H19V21" stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M3 21H21" stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <g clip-path="url(#clip0_8672_6547)">
+      <path
+        d="M17.5006 16C17.1823 16.3182 16.6615 16.8393 16.0673 18.2066M17.5006 16C18.0006 15.5 19.0006 15 19.0006 12C19.0006 11.9401 18.9991 11.8807 18.9963 11.8217M17.5006 16H16.0673V11.8217H18.9963M6.50058 16C7.27337 16.6182 7.82221 17.4057 8.20479 18.2066M6.50058 16C4.72317 14.5781 4.65698 12.7876 4.89823 11.8217M6.50058 16H8.20479V11.8217H4.89823M8.50058 5V7.5C7.18161 7.93974 6.30557 8.80248 5.75632 9.65642M8.50058 5V3H15.5006L15.5 5M8.50058 5H6C5 5.16667 3 6 3 8C3 10 4.4152 10.8333 5.12279 11M5.12279 11C5.06469 11.1864 5.02465 11.3557 5.00058 11.5C4.96348 11.5927 4.92845 11.7008 4.89823 11.8217M5.12279 11C5.24603 10.6046 5.45052 10.1318 5.75632 9.65642M15.5 5L15.5006 5.25V7.5C16.2304 7.81279 17.4169 8.55608 18.203 9.65642M15.5 5H18.5C19.5 5 21.5 5.6 21.5 8C21.5 10.4 19.7706 11.1141 18.9058 11.1711M18.9058 11.1711C18.7762 10.6105 18.5227 10.1039 18.203 9.65642M18.9058 11.1711C18.9543 11.3805 18.9854 11.5975 18.9963 11.8217M5.75632 9.65642H18.203M16.0673 18.2066C15.7277 18.9879 15.3642 20.0457 15.0006 21.5H9.00058C9.00058 20.7841 8.81232 19.4784 8.20479 18.2066M16.0673 18.2066H8.20479M10.2282 11.8217H14V16H10.2282V11.8217Z"
+        stroke="#001C55" stroke-width="1.5" stroke-linejoin="round" />
     </g>
-    <defs>
-      <clipPath id="clip0_8198_4570">
-        <rect width="24" height="24" fill="white" />
-      </clipPath>
-    </defs>
   </svg>
   <svg id="FilmStudies-3c2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0_8198_4582)">
@@ -4118,16 +4112,15 @@
     </defs>
   </svg>
   <svg id="ClassicalCivilisation" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_8362_17743)">
+    <g clip-path="url(#clip0_8672_6527)">
       <path
-        d="M3 21H10V18C10 17.4696 10.2107 16.9609 10.5858 16.5858C10.9609 16.2107 11.4696 16 12 16C12.5304 16 13.0391 16.2107 13.4142 16.5858C13.7893 16.9609 14 17.4696 14 18V21H21"
+        d="M6.12643 5C6.62643 5 7.62643 5.2 7.62643 6C7.62643 7 7.12643 7.5 6.62643 7.5C6.12643 7.5 5.12643 7.5 4.12643 6C3.95976 5.5 3.82643 4.3 4.62643 3.5C4.79262 3.33333 5.225 3 5.625 3H17.625C17.9583 3 18.725 3.1 19.125 3.5C19.625 4 20.125 5 19.625 6C19.125 7 18.125 7.5 17.625 7.5C17.125 7.5 16.125 7 16.625 6C16.7917 5.66667 17.325 5 18.125 5"
         stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M6 21V12" stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M18 21V12" stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      <path
-        d="M6 12H18C18.7956 12 19.5587 11.6839 20.1213 11.1213C20.6839 10.5587 21 9.79565 21 9C18.9562 9.05748 16.9513 8.49459 15.3154 7.404C13.6795 6.31342 12.5102 4.76016 12 3C11.4898 4.76016 10.3205 6.31342 8.68463 7.404C7.04875 8.49459 5.04383 9.05748 3 9C3 9.79565 3.31607 10.5587 3.87868 11.1213C4.44129 11.6839 5.20435 12 6 12Z"
-        stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M9.625 9V16M7.625 6.5H16.625V18.5H7.625V6.5Z" stroke="#001C58" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <path d="M17.625 21H6.125V18.5H17.625V21Z" stroke="#001C58" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M12.125 9V16" stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M14.625 9V16" stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
     </g>
   </svg>
-
 </svg>

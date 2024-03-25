@@ -4,6 +4,7 @@ import BackButtonSix from "../BackButtonSix";
 import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 import { Grid } from "@material-ui/core";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import ProgressBarStep3C2 from "../progressBar/ProgressBarStep3C2";
 
 
 interface ThirdProps {
@@ -66,21 +67,53 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     subjects = shuffle(subjects);
 
     let answers = [{
-      name: "“I did History GCSE and considered A-level but I’ve always been drawn to the distant pre-Christian era. I loved studying Roman Britain and visited several sites. It made me interested in archaeology as a degree course.”"
+      name: `
+        “I did History GCSE and considered A-level but I’ve always been drawn to the distant<br/> 
+        pre-Christian era. I loved studying Roman Britain and visited several sites. It made me<br/>
+        interested in archaeology as a degree course.”
+      `
     }, {
-      name: "“Although I’d love to be an advocate, I know the A-level doesn’t give you an edge applying for uni or professional training. But legal history and the concepts are so interesting - and the course is more rigorous than the Criminology diploma.”"
+      name: `
+        “Although I’d love to be an advocate, I know the A-level doesn’t give you an edge applying<br/>
+        for uni or professional training. But legal history and the concepts are so interesting - and<br/>
+        the course is more rigorous than the Criminology diploma.”
+      `
     }, {
-      name: "“I considered Media Studies but I liked the focus on purely one form and the practical opportunities to shoot and edit my own material. I am a huge fan of directors like Martin Scorsese and Jane Campion.”"
+      name: `
+        “I considered Media Studies but I liked the focus on purely one form and the practical<br/>
+        opportunities to shoot and edit my own material. I am a huge fan of directors like<br/>
+        Martin Scorsese and Jane Campion.”
+      `
     }, {
-      name: "“With digital streaming we’re now constantly immersed in news, video gaming, social media and apps for everything: Media Studies is the most relevant subject to my life and I am really interested in content creation and modern advertising and marketing as careers.”"
+      name: `
+        “With digital streaming we’re now constantly immersed in news, video gaming, social media<br/>
+        and apps for everything: Media Studies is the most relevant subject to my life and I am really<br/>
+        interested in content creation and modern advertising and marketing as careers.”
+      `
     }, {
-      name: "“I knew very little Latin and no Greek but all the texts are in translation. I particularly enjoyed the epic literature and the material on the nature of Athenian democracy and the politics of Rome.”"
+      name: `
+        “I knew very little Latin and no Greek but all the texts are in translation.<br/>
+        I particularly enjoyed the epic literature and the material on the nature of<br/>
+        Athenian democracy and the politics of Rome.”
+      `
     }, {
-      name: "“I was intrigued by the course - the nature of knowledge, the nature of morality and debates around the existence of God. I did RS at GCSE so some of the ideas were familiar, but I think philosophy offers a broader, more objective approach to the big questions of life.”"
+      name: `
+        “I was intrigued by the course - the nature of knowledge, the nature of morality and debates<br/>
+        around the existence of God. I did RS at GCSE so some of the ideas were familiar, but<br/>
+        I think philosophy offers a broader, more objective approach to the big questions of life.”
+      `
     }, {
-      name: "“I enjoy analysing poems in English A-level and looking at a painting closely requires a similar approach. I also did GCSE Art, so I feel it complements both and plays to my creative and essay-writing strengths.”"
+      name: `
+        “I enjoy analysing poems in English A-level and looking at a painting closely<br/>
+        requires a similar approach. I also did GCSE Art, so I feel it complements<br/>
+        both and plays to my creative and essay-writing strengths.”
+      `
     }, {
-      name: "“Having done Geography and Combined Science at GCSE, I love the depth and breadth of this course, from physical, chemical and biological processes to political, economic and cultural context. Save the planet!”"
+      name: `
+        “Having done Geography and Combined Science at GCSE, I love the depth and breadth <br/>
+        of this course, from physical, chemical and biological processes to political,<br/>
+        economic and cultural context. Save the planet!”
+      `
     }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length === 8) {

@@ -1,3 +1,7 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
 .progress-bar-sixthform {
   display: flex;
   margin-bottom: 2vh;
@@ -56,6 +60,9 @@
   }
 }
 
+.color-light-blue {
+  color: #4C608A;
+}
 
 .progress-description-container-r3234 {
   margin-top: 2vh;
@@ -63,6 +70,10 @@
   border-radius: 0.5vw;
   box-shadow: 0px 2px 13px 0px #4C608A26;
   position: relative;
+
+  .title-r3234 {
+    margin-bottom: 2vh;
+  }
 
   .progress-bar-sixthform {
     width: 100% !important;
@@ -311,5 +322,50 @@
     width: 65vw;
     position: absolute;
     animation: move-right 1s;
+  }
+}
+
+.qoute-start-r324,
+.qoute-end-r324 {
+  width: 2.5vw !important;
+  height: 2.5vw !important;
+}
+
+.qoute-start-r324 {
+  position: absolute;
+  top: 1vw !important;
+  left: 1.8vw !important;
+}
+
+.qoute-end-r324 {
+  position: absolute;
+  top: calc(14vh - 2vw) !important;
+  right: 1.8vw !important;
+}
+
+
+.box-r33243 {
+  padding-bottom: 0 !important;
+  .qoute-start-r324,
+  .qoute-end-r324 {
+    width: 2.7vw !important;
+    height: 2.7vw !important;
+  }
+  .qoute-start-r324 {
+    padding-top: 0;
+    top: 0vw !important; 
+  }
+
+  .qoute-end-r324 {
+    padding-top: 0;
+    top: calc(20vh - 3.5vw) !important;
+  }
+
+  .progress-content-box-r233 {
+    min-height: 20vh;
+    overflow-y: hidden;
+    > div {
+      align-items: center;
+    }
   }
 }

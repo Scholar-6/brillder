@@ -347,10 +347,12 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
         <div className="absolute-container-3d">
           <div className="font-16 line-d3">
-            These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects.
+            These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be<br/>
+            combined with other subjects.
           </div>
           <div className="font-16 line-d3">
-            T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement.
+            T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a<br/>
+            work placement.
           </div>
           <div className="font-16 bold sub-title-e23">
             Which of the following best applies to you?

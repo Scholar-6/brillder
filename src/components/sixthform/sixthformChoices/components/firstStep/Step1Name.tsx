@@ -48,7 +48,7 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
         <div className="font-16 m-t-343">
           If not, a school or college wanting to enrol you will not be able to.
         </div>
-        <div className="step1-btn-row">
+        <div className="step1-btn-row font-14">
           <div className="btn " onClick={() => {
             setNewName(true);
           }}>No</div>

@@ -3,10 +3,11 @@ import './ProgressBarSixthform.scss';
 
 interface Props {
   step: number;
+  title: string;
   description: string;
 }
 
-const AnimatedDescriptionV2: React.FC<Props> = (props) => {
+const AnimatedDescriptionV5: React.FC<Props> = (props) => {
   const [description, setDescription] = React.useState(props.description);
   const [animateRight, setAnimateRight] = React.useState(false);
   const [prevStep, setPrevStep] = React.useState(props.step);
@@ -25,8 +26,8 @@ const AnimatedDescriptionV2: React.FC<Props> = (props) => {
     return (
       <div className="relative animating-right">
         <div>
-          <div className="flex-center bold font-24">One day I’d like to...</div>
-          <div className="font-32 text-center bold animating title-6v2">{description}</div>
+          <div className="flex-center title-r3234 bold font-16">{props.title}</div>
+          <div className="font-20 text-center bold animating title-6v2" dangerouslySetInnerHTML={{ __html: description }} />
         </div>
       </div>
     );
@@ -35,11 +36,11 @@ const AnimatedDescriptionV2: React.FC<Props> = (props) => {
   return (
     <div className="relative animating-left">
       <div>
-        <div className="flex-center bold font-24">One day I’d like to...</div>
-        <div className="font-32 text-center bold animating title-6v2">{description}</div>
+        <div className="flex-center title-r3234 bold font-16">{props.title}</div>
+        <div className="font-20 text-center bold animating title-6v2" dangerouslySetInnerHTML={{ __html: description }} />
       </div>
     </div>
   );
 }
 
-export default AnimatedDescriptionV2;
+export default AnimatedDescriptionV5;
