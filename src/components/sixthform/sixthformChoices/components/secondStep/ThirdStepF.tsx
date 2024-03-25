@@ -15,7 +15,7 @@ interface ThirdProps {
   subjects: SixthformSubject[];
   answer: any;
   moveBack(answer: any): void;
-  moveToStep4(answer: any): void;
+  moveNext(answer: any): void;
 }
 
 interface TLevelCourse {
@@ -276,7 +276,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
           <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
         </Dialog>}
         <button className="absolute-contunue-btn font-24" onClick={() => {
-          this.props.moveToStep4({
+          this.props.moveNext({
             tLevelCoursesPart1: this.state.tLevelCoursesPart1,
             tLevelCoursesPart2: this.state.tLevelCoursesPart2
           });

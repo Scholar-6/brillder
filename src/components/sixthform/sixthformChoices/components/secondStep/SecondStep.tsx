@@ -74,7 +74,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-    let subStep = ThirdSubStep.First;
+    let subStep = ThirdSubStep.Welcome;
 
     let firstPairResults: any[] = [];
     let secondPairResults: any[] = [];
@@ -86,6 +86,8 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let coursesD: any = null;
     let coursesF: any = null;
+
+    console.log(this.props.answer);
 
     if (this.props.answer) {
       const { answer } = props.answer;
@@ -500,25 +502,27 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               } else {
                 this.setState({ subStep: ThirdSubStep.ThirdE });
               }*/
-              this.setState({ subStep: ThirdSubStep.Fifth });
-            }}
-            moveToStep4={coursesF => {
               let answer = this.getAnswer();
               answer.coursesF = coursesF;
+              this.props.saveAnswer(answer);
+              this.setState({ subStep: ThirdSubStep.Fifth });
+            }}
+            moveNext={coursesF => {
+              let answer = this.getAnswer();
+              answer.coursesF = coursesF;
+              this.props.saveAnswer(answer);
               this.setState({ subStep: ThirdSubStep.Seventh });
-              //this.props.saveThirdAnswer(answer);
-              //this.props.moveNext(answer);
             }}
           />
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.Fifth) {
-      
       return (
         <div className="question">
           <ThirdStepE
             pairAnswers={this.state.ePairResults}
             onChange={(ePairResults: any[]) => {
+              console.log('save e', ePairResults);
               this.setState({ ePairResults });
             }}
             moveBack={() => {
@@ -630,6 +634,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
           <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
             onChange={(firstPairResults: any[]) => {
+              console.log(firstPairResults);
               this.setState({ firstPairResults });
             }}
             moveBack={() => {

@@ -130,7 +130,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
-  renderSubjectBox(subject: any, currentAnswer: any) {
+  renderSubjectBox(subject: any, currentAnswer: any, i: number) {
     let answerStatus = AnswerStatus.None;
 
     if (currentAnswer.subject) {
@@ -142,7 +142,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     return (
-      <Grid item xs={6}>
+      <Grid item xs={6} key={i}>
         <div className={`container-3c1 font-16 ${answerStatus === AnswerStatus.Correct ? 'correct' : answerStatus === AnswerStatus.Incorrect ? 'incorrect' : ''}`} onClick={() => {
           const { answers } = this.state;
           currentAnswer.subject = subject;
@@ -154,8 +154,6 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
           {answerStatus === AnswerStatus.Incorrect && <SpriteIcon className="absolute-svg-3c1" name="bad-answer-3c1" />}
           {answerStatus === AnswerStatus.Correct && <SpriteIcon className="absolute-svg-3c1" name="good-answer-3c1" />}
         </div>
-        <div className="font-16 help-text-3c1 text-orange">{answerStatus === AnswerStatus.Incorrect ? 'Incorrect, please try again' : ''}</div>
-        <div className="font-16 help-text-3c1 text-theme-green">{answerStatus === AnswerStatus.Correct ? 'That’s correct!' : ''}</div>
       </Grid>
     );
   }
@@ -172,7 +170,7 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <ProgressBarStep3C1 step={this.state.step} topLabel="Which subject did the student choose?" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
         <Grid container direction="row" className="containers-3c1">
-          {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
+          {this.state.subjects.map((s, i) => this.renderSubjectBox(s, currentAnswer, i))}
         </Grid>
         <BackButtonSix onClick={() => {
           if (this.state.step <= 0) {
