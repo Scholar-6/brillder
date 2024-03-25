@@ -201,14 +201,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
-        answerR1.answer.choice = answer.choice;
-        answerR1.answer.otherChoice = answer.otherChoice;
         answerR1.answer.subStep = answer.subStep;
-        answerR1.answer.currentSchool = answer.currentSchool;
-        answerR1.answer.schoolName = answer.schoolName;
-        answerR1.answer.sixthformChoice = answer.sixthformChoice;
-        answerR1.answer.readingChoice = answer.readingChoice;
-        answerR1.answer.readingChoicesV2 = answer.readingChoicesV2;
+        answerR1.answer.categories4bc = answer.categories4bc;
+        answerR1.answer.facilitatingSubjects = answer.facilitatingSubjects;
+        answerR1.answer.nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
+        answerR1.answer.categories4c = answer.categories4c;
+        answerR1.answer.categories4e = answer.categories4e;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
         this.state.answers.push(result.result);
@@ -426,20 +424,22 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result) {
       this.parseAnswer(result, answer, Pages.Question1);
       this.setState({
-        subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores),
-        allSubjects: result.subjectScores
+        subjects: this.filterBySubjectType(answer.subjectType, result.subjectScores),
+        allSubjects: result.subjectScores,
+        subjectType: answer.subjectType
       });
     }
   }
 
   async saveSecondAnswer(answer: any) {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
+    console.log(result);
     if (result) {
       this.parseAnswer2(result, answer, Pages.Question2);
+      console.log(this.state.subjectType);
       this.setState({
-        subjects: this.filterBySubjectType(answer.subjectType, result.subjectScores),
-        allSubjects: result.subjectScores,
-        subjectType: answer.subjectType
+        subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores),
+        allSubjects: result.subjectScores
       });
     }
   }
@@ -533,11 +533,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
         saveAnswer={answer => this.saveSecondAnswer(answer)}
         moveNext={answer => {
-          this.saveFourthAnswer(answer);
-          this.setState({ page: Pages.Question2 });
+          this.saveSecondAnswer(answer);
+          this.setState({ page: Pages.Question3 });
         }}
         moveBack={answer => {
-          this.saveFourthAnswer(answer);
+          this.saveSecondAnswer(answer);
           this.setState({ page: Pages.Question1 });
         }}
       />

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Grid } from "@material-ui/core";
+
 import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
-import { Grid } from "@material-ui/core";
+import { shuffle } from "../../services/shuffle";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -27,7 +29,6 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
   constructor(props: ThirdProps) {
     super(props);
 
-
     let subjects = [{
       icon: 'psychology-3c1',
       correctIndex: 0,
@@ -50,6 +51,8 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
       name: "Politics"
     }];
 
+    subjects = shuffle(subjects);
+
     let answers = [{
       name: "“the scientific study of the mind and behaviour, including brain function, decision making,<br/> gender differences and child development”"
     }, {
@@ -63,7 +66,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      //answers = this.props.pairAnswers;
+      answers = this.props.pairAnswers;
     }
 
     this.state = {
@@ -97,8 +100,6 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
           {answerStatus === AnswerStatus.Incorrect && <SpriteIcon className="absolute-svg-3c1" name="bad-answer-3c1" />}
           {answerStatus === AnswerStatus.Correct && <SpriteIcon className="absolute-svg-3c1" name="good-answer-3c1" />}
         </div>
-        <div className="font-16 help-text-3c1 text-orange">{answerStatus === AnswerStatus.Incorrect ? 'Incorrect, please try again' : ''}</div>
-        <div className="font-16 help-text-3c1 text-theme-green">{answerStatus === AnswerStatus.Correct ? 'That’s correct!' : ''}</div>
       </Grid>
     );
   }

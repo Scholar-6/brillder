@@ -646,12 +646,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
           <ThirdStepC2
             pairAnswers={this.state.secondPairResults}
-            onChange={(secondPairResults: any[]) => {
-              this.setState({ secondPairResults });
-            }}
-            moveBack={() => {
-              this.setState({ subStep: ThirdSubStep.ThirdC1 })
-            }}
+            onChange={(secondPairResults: any[]) => this.setState({ secondPairResults })}
+            moveBack={() => this.setState({ subStep: ThirdSubStep.ThirdC1 })}
             moveNext={() => {
               this.props.saveThirdAnswer(this.getAnswer());
               this.setState({ subStep: ThirdSubStep.ThirdC3 });
