@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { shuffle } from "../../services/shuffle";
-import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
+import ProgressBarStep3C2 from "../progressBar/ProgressBarStep3C1";
 import { Grid } from "@material-ui/core";
 
 interface ThirdProps {
@@ -142,7 +142,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
           Match the professional categories with sixth form expectations on the right.
         </div>
         <div className="question-step-5a categories-of-carreer">
-          <ProgressBarStep3C1 step={this.state.step} topLabel="" total={this.state.careers.length} subjectDescription={currentAnswer.name} />
+          <ProgressBarStep3C2 step={this.state.step} topLabel="" total={this.state.careers.length} subjectDescription={currentAnswer.name} />
           <Grid container direction="row" className="containers-3c1">
             {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
           </Grid>

@@ -7,6 +7,13 @@
   $font-scale: 1.14;
   background: var(--theme-dark-blue);
 
+  .absolute-text-34234 {
+    display: none;
+    right: 0;
+    position: absolute;
+    bottom: calc(5vh + 3.4vh + 1.72vw);
+  }
+
   .capitalize {
     text-transform: capitalize;
   }
@@ -87,7 +94,8 @@
   }
 
   .third-step-img-r5 {
-    height: calc(15vh + 7vh + 4vh + 2vw);
+    width: 21vw;
+    height: auto;
   }
 
   .third-step-img-r8 {
@@ -2040,7 +2048,7 @@
     .line-d3 {
       display: flex;
       align-items: center;
-      height: 5vh;
+      height: 6.4vh;
     }
 
     .question-3d-r6 {

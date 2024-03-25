@@ -243,9 +243,10 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
           </div>
         </div>
         <BackButtonSix onClick={this.props.moveBack} />
-        <div>
-          <div>I’m currently not interested in <br /> any of these subjects</div>
-        </div>
+        {canSkip &&
+          <div className="absolute-text-34234">
+            <div>I’m currently not interested in <br /> any of these subjects</div>
+          </div>}
         <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>
           {canSkip ? 'Skip' : 'Continue'}
         </button>

@@ -1,7 +1,7 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import ProgressBarStep6 from "../progressBar/ProgressBarStep6";
+import ProgressBarSpeaking from "../progressBar/ProgressBarSpeaking";
 import ThreeButtons from "../base/ThreeButtons";
 
 export enum WatchingChoice {
@@ -38,7 +38,7 @@ const FiftthStepSpeaking: React.FC<ThirdProps> = (props) => {
       </div>
       <div className="font-16">How true are the following statements of you?</div>
       <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 step={step} total={props.speakingChoices.length} subjectDescription={currentStep.label} isBig={true} />
+      <ProgressBarSpeaking step={step} total={props.speakingChoices.length} subjectDescription={currentStep.label} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="NOT REALLY" middleLabel="SORT OF" lastLabel="DEFINITELY"

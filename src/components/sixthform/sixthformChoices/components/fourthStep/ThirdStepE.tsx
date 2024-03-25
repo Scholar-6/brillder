@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { ReactSortable } from "react-sortablejs";
 import { shuffle } from "../../services/shuffle";
-import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
+import ProgressBarStep3C2 from "../progressBar/ProgressBarStep3C2";
 import BackButtonSix from "../BackButtonSix";
 import { Grid } from "@material-ui/core";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -49,19 +48,23 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
     subjects = shuffle(subjects);
     
     let answers = [{
-      name: "A multi-disciplinary field which draws on psychology, sociology and statistics to evaluate criminal behaviour and the policing, justice and penal systems"
+      name: "A multi-disciplinary field which draws on psychology, sociology and statistics<br/> to evaluate criminal behaviour and the policing, justice and penal systems"
     }, {
-      name: "A comprehensive multi-disciplinary course examining chemical, physical and biological techniques to acquire and analyse evidence relevant to criminal trials"
+      name: "A comprehensive multi-disciplinary course examining chemical, physical and biological<br/> techniques to acquire and analyse evidence relevant to criminal trials"
     }, {
-      name: "The skills in making theatre (or film) productions happen, from costume and make-up to lighting and sound, from set design and scheme painting to and creating and managing props"
+      name: "The skills in making theatre (or film) productions happen, from costume and make-up<br/> to lighting and sound, from set design and scheme painting to and creating and managing props"
     }, {
-      name: "Gaming is a rapidly growing industry as are the lucrative arenas in which top players now compete. This course develops commercial and marketing and teamwork skills alongside game design and	development"
+      name: "Gaming is a rapidly growing industry as are the lucrative arenas in which top players now compete.<br/> This course develops commercial and marketing and teamwork skills alongside game design and	development"
     }, {
-      name: "This course instils qualities of leadership, fitness, teamwork under pressure and a taste for adventure. Students often progress to university or into the armed forces, the police, ambulance or fire service as well as roles in private security and border control"
+      name: `
+        This course instils qualities of leadership, fitness, teamwork under pressure and a taste for adventure.<br/>
+        Students often progress to university or into the armed forces, the police, ambulance or<br/>
+        fire service as well as roles in private security and border control
+      `
     }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      answers = this.props.pairAnswers;
+      //answers = this.props.pairAnswers;
     }
 
 
@@ -116,7 +119,7 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-16">
           Already ruled out all the subjects below? Skip to the next question.
         </div>
-        <ProgressBarStep3C1 step={this.state.step} topLabel="" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
+        <ProgressBarStep3C2 step={this.state.step} topLabel="" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
         <Grid container direction="row" className="containers-3c1">
           {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
         </Grid>

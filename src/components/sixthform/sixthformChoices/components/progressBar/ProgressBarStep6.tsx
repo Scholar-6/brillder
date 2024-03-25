@@ -27,7 +27,7 @@ const ProgressBarStep6: React.FC<Props> = (props) => {
         <SpriteIcon name={props.icon} />
       </div>}
       <div className="flex-center progress-content-box-r233">
-        <AnimatedDescription step={step} description={subjectDescription} />
+        <AnimatedDescription step={step} description={subjectDescription} textClass="bold" />
       </div>
     </div>
   );

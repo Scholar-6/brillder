@@ -57,7 +57,7 @@ const SixStepWriting: React.FC<Props> = (props) => {
       }} />
       <button
         className="absolute-contunue-btn font-24"
-        onClick={props.moveNext}>Skip</button>
+        onClick={props.moveNext}>Finish Course Selector</button>
     </div>
   );
 }

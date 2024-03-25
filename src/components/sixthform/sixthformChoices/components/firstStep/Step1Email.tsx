@@ -43,7 +43,7 @@ const Step1Email: React.FC<ThirdProps> = (props) => {
           Is this correct? If not, a school or college wanting to enrol you will not<br/>
           be able to communicate with you.
         </div>
-        <div className="step1-btn-row">
+        <div className="step1-btn-row font-14">
           <div className="btn " onClick={() => {
             setCorrected(true);
           }}>No</div>

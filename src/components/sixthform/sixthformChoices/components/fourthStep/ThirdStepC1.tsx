@@ -51,19 +51,19 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     let answers = [{
-      name: "the scientific study of the mind and behaviour, including brain function, decision making, gender differences and child development"
+      name: "“the scientific study of the mind and behaviour, including brain function, decision making,<br/> gender differences and child development”"
     }, {
-      name: "the study of how society is organised, including issues such as class, crime, the family, culture, gender and identity"
+      name: "“the study of how society is organised, including issues such as class,<br/> crime, the family, culture, gender and identity”"
     }, {
-      name: "the study of commercial operations, including financing, resource management, and strategy"
+      name: "“the study of commercial operations, including financing, resource management, and strategy”"
     }, {
-      name: "the study of the production, consumption and distribution of goods and services"
+      name: "“the study of the production, consumption and distribution of goods and services”"
     }, {
-      name: "the study of governance, policy, ideology, and power struggles between groups"
+      name: "“the study of governance, policy, ideology, and power struggles between groups”"
     }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      answers = this.props.pairAnswers;
+      //answers = this.props.pairAnswers;
     }
 
     this.state = {
@@ -110,10 +110,15 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
         <div className="bold font-32 question-text-3">
           New Subjects
         </div>
-        <div className="font-16">
+        <div className="font-16 color-light-blue">
           Some subjects are rarely studied before the sixth form. See if you understand what they involve.
         </div>
-        <ProgressBarStep3C1 step={this.state.step} topLabel="Which subject matches this description?" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
+        <ProgressBarStep3C1
+          step={this.state.step}
+          topLabel="Which subject matches this description?"
+          total={this.state.answers.length}
+          subjectDescription={currentAnswer.name}
+        />
         <Grid container direction="row" className="containers-3c1">
           {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
         </Grid>

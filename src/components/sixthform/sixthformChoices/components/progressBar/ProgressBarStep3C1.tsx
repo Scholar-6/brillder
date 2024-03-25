@@ -15,7 +15,7 @@ const ProgressBarStep3C1: React.FC<Props> = (props) => {
     return <div className={`line-r23 ${isActive ? 'active' : ''}`} />
   }
   return (
-    <div className="progress-description-container-r3234">
+    <div className="progress-description-container-r3234 color-light-blue">
       <div className="progress-bar-sixthform">
         {Array.from({length: total}).map((v, i) => renderLine(step >= i))}
       </div>

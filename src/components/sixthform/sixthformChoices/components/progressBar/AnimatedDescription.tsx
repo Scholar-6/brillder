@@ -4,6 +4,7 @@ import './ProgressBarSixthform.scss';
 interface Props {
   step: number;
   description: string;
+  textClass: string;
 }
 
 const AnimatedDescription: React.FC<Props> = (props) => {
@@ -25,8 +26,8 @@ const AnimatedDescription: React.FC<Props> = (props) => {
     return (
       <div className="relative animating-right">
         <div>
-          <div className="font-32 text-center bold animating title-6v2" dangerouslySetInnerHTML={{__html: description}} />  
-        </div>
+          <div className={"font-32 text-center animating title-6v2 " + props.textClass} dangerouslySetInnerHTML={{__html: description}} />  
+        </div>  
       </div>
     );
   }
@@ -34,8 +35,8 @@ const AnimatedDescription: React.FC<Props> = (props) => {
   return (
     <div className="relative animating-left">
       <div>
-        <div className="font-32 text-center bold animating title-6v2" dangerouslySetInnerHTML={{__html: description}} />
-      </div>
+        <div className={"font-32 text-center animating title-6v2 " + props.textClass} dangerouslySetInnerHTML={{__html: description}} />
+      </div> 
     </div>
   );
 }
