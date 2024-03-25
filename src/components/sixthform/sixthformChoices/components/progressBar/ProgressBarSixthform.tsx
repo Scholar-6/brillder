@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ProgressBarSixthform: React.FC<Props> = (props) => {
-  const {step} = props;
+  const { step } = props;
   let renderStep = (stepNum: number, isActive: boolean, isCompleted: boolean) => {
     return <div className={`step-s6 bold font-13 ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}>{stepNum}</div>
   }

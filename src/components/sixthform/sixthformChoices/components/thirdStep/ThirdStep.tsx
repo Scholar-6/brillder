@@ -7,7 +7,10 @@ import ReadingV2 from "./ReadingV2";
 import ReadingV1, { ReadingChoice } from "./ReadingV1";
 import SixStepWritingA, { WritingChoice } from './SixStepWritingA';
 import SixStepWritingB from "./SixStepWritingB";
-
+import FourthStepListening from "./FourthStepListening";
+import FourthStepListenStart from "./FourthStepListenStart";
+import FifthStepSpeaking from "./FifthStepSpeaking";
+import FifthStepSpeakingStart from "./FifthStepSpeakingStart";
 
 enum SubStep {
   Welcome,
@@ -16,7 +19,25 @@ enum SubStep {
   WritingA,
   WritingB,
   WatchingStart,
-  Watching
+  Watching,
+  ListenStart,
+  Listening,
+  SpeakingStart,
+  Speaking,
+}
+
+export enum SpeakingChoices {
+  InTheClassroom = 1,
+  ICantStand,
+  AtHome,
+  WithMyFriends,
+  MyFriends,
+  IPreferPractical,
+  ILove,
+  ImNot,
+  ILikeTalking,
+  IPreferToListen,
+  IReallyAdmire
 }
 
 interface SecondQuestionProps {
@@ -33,6 +54,8 @@ interface SecondQuestionState {
   writingChoice: WritingChoice | null;
   writingChoices: any[];
   watchingChoices: any[];
+  listeningChoices: any[];
+  speakingChoices: any[];
 }
 
 class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
@@ -121,6 +144,85 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
       }
     ];
 
+    let listeningChoices = [
+      {
+        label: 'Current Affairs, News & Talk (e.g. Radio Four)',
+        choice: null
+      }, {
+        label: 'Podcasts (e.g. Joe Rogan)',
+        choice: null
+      }, {
+        label: 'Sport & Sport Talk (e.g. Radio Five)',
+        choice: null
+      }, {
+        label: 'Audiobooks (e.g. Audible)',
+        choice: null
+      }, {
+        label: 'Comedy and Drama (e.g. Radio Four)',
+        choice: null
+      }, {
+        label: 'Mainstream Music (Rock, Rap, Pop & Chart)',
+        choice: null
+      }, {
+        label: 'Music, Folk or Jazz',
+        choice: null
+      }, {
+        label: 'Music, Classical ',
+        choice: null
+      }
+    ];
+
+    let speakingChoices = [
+      {
+        type: SpeakingChoices.InTheClassroom,
+        label: '“In the classroom, I enjoy contributing ideas<br/> and showing what I know.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.ICantStand,
+        label: '“I can’t stand pretentious people who waffle on<br/> about stuff which isn’t relevant.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.AtHome,
+        label: '“At home, my family talk a lot about what’s going on<br/> in the world and we have interesting discussions.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.WithMyFriends,
+        label: '“With my friends I mainly gossip and enjoy<br/> the chance to banter and have fun.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.MyFriends,
+        label: '“My friends put forward new ideas and challenge<br/> my thinking in ways I value.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.IPreferPractical,
+        label: `
+          “I prefer practical, problem-solving subjects like Maths<br/>
+          because there’s less drivel and more solid answers.”
+        `,
+        choice: null
+      }, {
+        type: SpeakingChoices.ILove,
+        label: '“I love the chance to put an argument in<br/> a proper debate, and I’m good at undermining<br/> other people’s arguments.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.ImNot,
+        label: '“I’m not a confident communicator - my strengths<br/> are in other areas.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.ILikeTalking,
+        label: '“I like talking in depth with others about music,<br/> books or about documentaries, plays and films we’ve seen.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.IPreferToListen,
+        label: '“I prefer to listen carefully and chip in only when<br/> something really needs to be said.”',
+        choice: null
+      }, {
+        type: SpeakingChoices.IReallyAdmire,
+        label: '“I really admire people who can communicate<br/> effectively in foreign languages.”',
+        choice: null
+      }
+    ];
+
     if (props.answer) {
       let answer = props.answer.answer;
       subStep = answer.subStep;
@@ -142,6 +244,20 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
       if (answer.watchingChoices && answer.watchingChoices.length > 12) {
         watchingChoices = answer.watchingChoices;
       }
+      if (answer.writingChoice) {
+        writingChoice = answer.writingChoice;
+      }
+
+      if (answer.writingChoices) {
+        writingChoices = answer.writingChoices;
+      }
+
+      if (answer.listeningChoices) {
+        listeningChoices = answer.listeningChoices;
+      }
+      if (answer.speakingChoices) {
+        speakingChoices = answer.speakingChoices;
+      }
     }
 
     this.state = {
@@ -150,7 +266,9 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
       readingChoicesV2,
       writingChoice,
       writingChoices,
-      watchingChoices
+      watchingChoices,
+      listeningChoices,
+      speakingChoices
     };
   }
 
@@ -161,7 +279,9 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
       readingChoicesV2: this.state.readingChoicesV2,
       writingChoice: this.state.writingChoice,
       writingChoices: this.state.writingChoices,
-      watchingChoices: this.state.watchingChoices
+      watchingChoices: this.state.watchingChoices,
+      listeningChoices: this.state.listeningChoices,
+      speakingChoices: this.state.speakingChoices
     }
   }
 
@@ -174,7 +294,35 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === SubStep.Watching) {
+    if (this.state.subStep === SubStep.Speaking) {
+      return <FifthStepSpeaking
+        speakingChoices={this.state.speakingChoices}
+        onChange={speakingChoices => this.setState({ speakingChoices })}
+        moveBack={() => this.setState({ subStep: SubStep.SpeakingStart })}
+        moveNext={() => this.props.moveNext(this.getAnswer())}
+      />
+    } else if (this.state.subStep === SubStep.SpeakingStart) {
+      return <FifthStepSpeakingStart
+        moveBack={() => this.setState({ subStep: SubStep.Listening })}
+        moveNext={() => this.setState({ subStep: SubStep.SpeakingStart })}
+      />
+    } else if (this.state.subStep === SubStep.Listening) {
+      return (
+        <FourthStepListening
+          listeningChoices={this.state.listeningChoices}
+          onChange={listeningChoices => this.setState({ listeningChoices })}
+          moveBack={() => this.setState({ subStep: SubStep.ListenStart })}
+          moveNext={async () => {
+            await this.props.saveAnswer(this.getAnswer());
+            this.moveNext();
+          }} />
+      );
+    } else if (this.state.subStep === SubStep.ListenStart) {
+      return <FourthStepListenStart
+        moveNext={() => this.setState({ subStep: SubStep.Listening })}
+        moveBack={() => this.setState({ subStep: SubStep.Watching })}
+      />
+    } else if (this.state.subStep === SubStep.Watching) {
       return (
         <ThirdStepWatching
           watchingChoices={this.state.watchingChoices}
@@ -182,13 +330,19 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           moveBack={() => this.setState({ subStep: SubStep.WatchingStart })}
           moveNext={async () => {
             await this.props.saveAnswer(this.getAnswer());
-            this.moveNext();
+            this.setState({ subStep: SubStep.ListenStart });
           }} />
       );
     } else if (this.state.subStep === SubStep.WatchingStart) {
       return <ThirdStepWatchStart
         moveNext={() => this.setState({ subStep: SubStep.Watching })}
-        moveBack={() => this.setState({ subStep: SubStep.ReadingV2 })} />
+        moveBack={() => {
+          if (this.state.writingChoice === WritingChoice.first || this.state.writingChoice === WritingChoice.second) {
+            this.setState({ subStep: SubStep.WritingB });
+          } else {
+            this.setState({ subStep: SubStep.WritingA });
+          }
+        }} />
     } else if (this.state.subStep === SubStep.WritingB) {
       return <SixStepWritingB
         choices={this.state.writingChoices}
@@ -231,7 +385,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           readingChoicesV2={this.state.readingChoicesV2}
           onChange={readingChoicesV2 => this.setState({ readingChoicesV2 })}
           moveBack={() => this.setState({ subStep: SubStep.ReadingV1 })}
-          moveNext={() => this.moveNext()}
+          moveNext={() => this.setState({ subStep: SubStep.WritingA })}
         />
       );
     } else if (this.state.subStep === SubStep.ReadingV1) {
