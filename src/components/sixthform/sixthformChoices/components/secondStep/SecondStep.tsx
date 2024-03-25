@@ -25,13 +25,14 @@ export enum ThirdSubStep {
   Welcome = 1,
   First,
   Second,
-  ThirdC1,
-  ThirdC2,
-  ThirdC3,
-  ThirdC4,
-  ThirdD,
-  ThirdE,
-  ThirdF,
+  Third,
+  Fourth,
+  Fifth,
+  Sixth,
+  Seventh,
+  Eight,
+  Ninth,
+  Tenth
 }
 
 interface ThirdProps {
@@ -256,12 +257,13 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
         if (this.props.firstAnswer && this.props.firstAnswer.answer) {
           let choice = this.props.firstAnswer.answer.subjectType;
           if (choice === FirstChoice.ALevel || choice === FirstChoice.ShowMeAll) {
-            this.setState({ subStep: ThirdSubStep.ThirdC1 });
+            //this.setState({ subStep: ThirdSubStep.ThirdC1 });
           } else {
-            this.setState({ subStep: ThirdSubStep.ThirdD });
+            //this.setState({ subStep: ThirdSubStep.ThirdD });
           }
         } else {
-          this.setState({ subStep: ThirdSubStep.ThirdD });
+          //this.setState({ subStep: ThirdSubStep.Eight });
+          //this.setState({ subStep: ThirdSubStep.ThirdD });
         }
       }}>Continue</button>
     );
@@ -437,13 +439,14 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === ThirdSubStep.ThirdF) {
+    if (this.state.subStep === ThirdSubStep.Seventh) {
       return (
         <div className="question question-3d">
           <ThirdStepF
             subjects={this.props.subjects}
             answer={this.state.coursesF}
             moveBack={coursesF => {
+              /*
               this.setState({ coursesF });
               if (
                 this.state.coursesD &&
@@ -454,7 +457,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
                 this.setState({ subStep: ThirdSubStep.ThirdD });
               } else {
                 this.setState({ subStep: ThirdSubStep.ThirdE });
-              }
+              }*/
             }}
             moveToStep4={coursesF => {
               let answer = this.getAnswer();
@@ -465,7 +468,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
           />
         </div>
       );
-    } else if (this.state.subStep === ThirdSubStep.ThirdE) {
+    } else if (this.state.subStep === ThirdSubStep.Sixth) {
       return (
         <div className="question">
           <ThirdStepE
@@ -474,6 +477,9 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ ePairResults });
             }}
             moveBack={() => {
+              this.setState({ subStep: ThirdSubStep.Fifth });
+
+              /*
               if (
                 this.props.firstAnswer &&
                 this.props.firstAnswer.answer &&
@@ -483,16 +489,16 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
                 this.setState({ subStep: ThirdSubStep.ThirdC4 });
               } else {
                 this.setState({ subStep: ThirdSubStep.ThirdD })
-              }
+              }*/
             }}
             moveNext={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.ThirdF });
+              this.setState({ subStep: ThirdSubStep.Seventh });
             }}
           />
         </div>
       );
-    } else if (this.state.subStep === ThirdSubStep.ThirdD) {
+    } else if (this.state.subStep === ThirdSubStep.Fifth) {
       return (
         <div className="question question-3d">
           <ThirdStepD
@@ -507,28 +513,63 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
             }}
             moveBack={coursesD => {
               let choice = this.props.firstAnswer.answer.subjectType;
+
+              /*
               if (choice === FirstChoice.ShowMeAll) {
                 this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
               } else {
                 this.setState({ subStep: ThirdSubStep.Second, coursesD });
-              }
+              }*/
+              this.setState({subStep: ThirdSubStep.Fourth});
             }}
             moveToStepE={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.ThirdE });
+              this.setState({subStep: ThirdSubStep.Seventh});
+              //this.setState({ subStep: ThirdSubStep.ThirdE });
             }}
             moveToStepF={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.ThirdF });
+              this.setState({subStep: ThirdSubStep.Seventh});
+              //this.setState({ subStep: ThirdSubStep.ThirdF });
             }}
             moveToStep4={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.moveNext();
+              this.setState({subStep: ThirdSubStep.Seventh});
+              //this.moveNext();
             }}
           />
         </div>
       );
-    } else if (this.state.subStep === ThirdSubStep.ThirdC4) {
+    } else if (this.state.subStep === ThirdSubStep.Fourth) {
+      return (
+        <div className="question question-c3">
+          <ThirdStepC3
+            answer={this.state.categoriesC3}
+            onChange={categoriesC3 => this.setState({ categoriesC3 })}
+            moveNext={() => {
+              this.props.saveAnswer(this.getAnswer());
+              this.setState({ subStep: ThirdSubStep.Fifth });
+
+              /*
+              if (
+                this.props.firstAnswer &&
+                this.props.firstAnswer.answer &&
+                this.props.firstAnswer.answer.databaseSchool &&
+                this.props.firstAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
+              ) {
+                this.setState({ subStep: ThirdSubStep.ThirdE });
+              } else {
+                this.setState({ subStep: ThirdSubStep.ThirdD });
+              }*/
+            }}
+            moveBack={() => {
+              this.setState({ subStep: ThirdSubStep.Third });
+            }}
+          />
+        </div>
+      );
+      
+    } else if (this.state.subStep === ThirdSubStep.Third) {
       return (
         <div className="question question-c4">
           <ThirdStepC4
@@ -538,6 +579,9 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
             }}
             moveNext={() => {
               this.props.saveAnswer(this.getAnswer());
+              this.setState({ subStep: ThirdSubStep.Fourth });
+
+              /*
               if (this.props.firstAnswer.answer.subjectType === FirstChoice.ALevel) {
                 this.props.moveNext(this.getAnswer());
               } else {
@@ -551,29 +595,13 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
                 } else {
                   this.setState({ subStep: ThirdSubStep.ThirdD });
                 }
-              }
+              }*/
             }}
-            moveBack={() => this.setState({ subStep: ThirdSubStep.ThirdC3 })}
+            moveBack={() => this.setState({ subStep: ThirdSubStep.Second })}
           />
         </div>
       );
-    } else if (this.state.subStep === ThirdSubStep.ThirdC3) {
-      return (
-        <div className="question question-c3">
-          <ThirdStepC3
-            answer={this.state.categoriesC3}
-            onChange={categoriesC3 => this.setState({ categoriesC3 })}
-            moveNext={() => {
-              this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.ThirdC4 });
-            }}
-            moveBack={() => {
-              this.setState({ subStep: ThirdSubStep.ThirdC2 });
-            }}
-          />
-        </div>
-      );
-    } else if (this.state.subStep === ThirdSubStep.ThirdC2) {
+    } else if (this.state.subStep === ThirdSubStep.Second) {
       return (
         <div className="question step3question5">
           <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
@@ -583,11 +611,11 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ secondPairResults });
             }}
             moveBack={() => {
-              this.setState({ subStep: ThirdSubStep.ThirdC1 })
+              this.setState({ subStep: ThirdSubStep.First })
             }}
             moveNext={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.ThirdC3 });
+              this.setState({ subStep: ThirdSubStep.Third });
             }}
           />
         </div>
@@ -602,11 +630,11 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ firstPairResults });
             }}
             moveBack={() => {
-              this.setState({ subStep: ThirdSubStep.Second });
+              this.setState({ subStep: ThirdSubStep.Welcome });
             }}
             moveNext={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.ThirdC2 });
+              this.setState({ subStep: ThirdSubStep.Second });
             }}
           />
         </div>
