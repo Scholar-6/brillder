@@ -207,6 +207,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         answerR1.answer.nonFacilitatingSubjects = answer.nonFacilitatingSubjects;
         answerR1.answer.categories4c = answer.categories4c;
         answerR1.answer.categories4e = answer.categories4e;
+        answerR1.answer.coursesD = answer.coursesD;
+        answerR1.answer.ePairResults = answer.ePairResults;
+        answerR1.answer.coursesF = answer.coursesF;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
         this.state.answers.push(result.result);
