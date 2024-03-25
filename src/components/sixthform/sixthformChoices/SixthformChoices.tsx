@@ -81,7 +81,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     this.state = {
       isLoading: true,
-      subjectType: SubjectType.None,
+      subjectType,
       allSubjects: [],
       subjects: [],
       answers: [],
@@ -105,22 +105,22 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     const subjects = await getSixthformSubjects();
     const answers = await getSixthformAnswers();
 
-    let secondAnswer = null;
+    let firstAnswer = null;
     if (answers) {
       for (let answer of answers) {
         answer.answer = JSON.parse(answer.answer);
       }
-      secondAnswer = answers.find(a => a.step === Pages.Question2);
-      if (secondAnswer && secondAnswer.answer.subjectType) {
-        subjectType = secondAnswer.answer.subjectType;
+      firstAnswer = answers.find(a => a.step === Pages.Question1);
+      if (firstAnswer && firstAnswer.answer.subjectType) {
       } else {
-        secondAnswer = {
+        firstAnswer = {
           answer: {
             subjectType: SubjectType.AllSubjects
           }
         }
       }
     }
+
 
     if (subjects) {
       for (let subject of subjects) {
@@ -129,8 +129,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
-      if (secondAnswer) {
-        await this.saveSecondAnswer(secondAnswer.answer);
+      if (firstAnswer) {
+        await this.saveFirstAnswer(firstAnswer.answer);
       }
     } else {
       this.props.history.push(authRoutes.SignUp);
@@ -183,14 +183,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (result && result.result) {
       const answerR1 = this.state.answers.find(a => a.step === questionPage);
       if (answerR1) {
-        answerR1.answer.email = answer.email;
-        answerR1.answer.emailCorrected = answer.emailCorrected;
-        answerR1.answer.firstName = answer.firstName;
-        answerR1.answer.lastName = answer.lastName;
-        answerR1.answer.nameCorrected = answer.nameCorrected;
         answerR1.answer.subStep = answer.subStep;
-        answerR1.answer.dreamChoices = answer.dreamChoices;
-        answerR1.answer.enthusiasmChoices = answer.enthusiasmChoices;
+        answerR1.answer.subjectType = answer.subjectType;
+        answerR1.answer.sixthformChoice = answer.sixthformChoice;
+        answerR1.answer.schoolName = answer.schoolName;
+        answerR1.answer.subjectSelections = answer.subjectSelections;
+        answerR1.answer.subjectType = answer.subjectType;
       } else {
         result.result.answer = JSON.parse(result.result.answer);
         this.state.answers.push(result.result);
@@ -205,7 +203,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (answerR1) {
         answerR1.answer.choice = answer.choice;
         answerR1.answer.otherChoice = answer.otherChoice;
-        answerR1.answer.subjectType = answer.subjectType;
         answerR1.answer.subStep = answer.subStep;
         answerR1.answer.currentSchool = answer.currentSchool;
         answerR1.answer.schoolName = answer.schoolName;
@@ -518,20 +515,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderCourseContent() {
     if (this.state.page === Pages.Question1) {
       return <FirstStep
-        answer={this.state.answers.find(a => a.step === Pages.Question3)}
-        saveAnswer={this.saveThirdAnswer.bind(this)}
+        answer={this.state.answers.find(a => a.step === Pages.Question1)}
+        saveAnswer={this.saveFirstAnswer.bind(this)}
         moveNext={async (answer: any) => {
           const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
           if (result) {
             this.parseAnswer(result, answer, Pages.Question1);
             this.setState({ page: Pages.Question2 });
-          }
-        }}
-        moveBack={async (answer: any) => {
-          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
-          if (result) {
-            this.parseAnswer(result, answer, Pages.Question1);
-            this.setState({ page: Pages.Question2, answers: [...this.state.answers] })
           }
         }}
       />
@@ -699,16 +689,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                       if (this.state.leavePopupTimeout) {
                         clearTimeout(this.state.leavePopupTimeout);
                       }
-                      console.log('show popup');
                       this.setState({ popupSubject: subject, popupTimeout: -1, subjectPosition });
                     }, 1000);
                     this.setState({ popupTimeout });
                   }} onMouseLeave={(e) => {
-                    console.log('leave started');
                     if (this.state.popupTimeout == -1) {
-                      console.log('leave processing');
                       const leavePopupTimeout = setTimeout(() => {
-                        console.log('leave ended');
                         clearTimeout(this.state.popupTimeout);
                         this.setState({ popupSubject: null, subjectPosition: null });
                       }, 1000);
