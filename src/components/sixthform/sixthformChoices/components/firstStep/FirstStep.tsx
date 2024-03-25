@@ -37,12 +37,10 @@ interface SecondQuestionProps {
   answer: any;
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
-  moveBack(answer: any): void;
 }
 
 interface SecondQuestionState {
   subStep: SubStep;
-  currentSchool: string;
   schools: any[];
   schoolName: string;
   schoolId: number;
@@ -71,15 +69,15 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
 
     let subStep = SubStep.Welcome;
 
-    let currentSchool = '';
     let sixthformChoice = null;
     let schoolName = '';
 
     let subjectType = FirstChoice.ShowMeAll;
 
+    console.log('answer', props.answer);
+
     if (props.answer) {
       let answer = props.answer.answer;
-      currentSchool = answer.currentSchool;
       sixthformChoice = answer.sixthformChoice;
       schoolName = answer.schoolName;
       subStep = answer.subStep;
@@ -88,7 +86,6 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     this.state = {
       subStep,
       schoolId: 0,
-      currentSchool,
       sixthformChoice,
       schoolName,
       schools: [],
@@ -229,15 +226,11 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
   getAnswer() {
     return {
       subStep: this.state.subStep,
-      currentSchool: this.state.currentSchool,
       sixthformChoice: this.state.sixthformChoice,
       schoolName: this.state.schoolName,
+      subjectSelections: this.state.subjectSelections,
       subjectType: this.state.subjectType
     }
-  }
-
-  moveBack() {
-    this.props.moveBack(this.getAnswer());
   }
 
   moveNext() {
