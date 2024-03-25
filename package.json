@@ -49,7 +49,7 @@
     "intro.js-react": "^0.3.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
-    "katex": "^0.12.0",
+    "katex": "^0.16.10",
     "lamejs": "^1.2.0",
     "marked": "^4.0.10",
     "moment": "^2.29.4",
