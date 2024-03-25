@@ -16,7 +16,6 @@ export enum ThirdStepDSubStep {
   Start = 1,
   Message,
   TableLeaf,
-  LastStep
 }
 
 interface ThirdProps {
@@ -25,9 +24,7 @@ interface ThirdProps {
   onChange(answer: any): void;
   saveAnswer(answer: any): void;
   moveBack(answer: any): void;
-  moveToStepE(): void;
-  moveToStepF(): void;
-  moveToStep4(): void;
+  moveNext(): void;
 }
 
 interface TLevelCourse {
@@ -238,42 +235,15 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           this.setState({ subStep: ThirdStepDSubStep.TableLeaf });
         } else {
           this.saveAnswer();
-          this.props.moveToStepF();
+          //this.props.moveToStepF();
+          this.props.moveNext();
         }
       }}>Continue</button>
     )
   }
 
   render() {
-    if (this.state.subStep === ThirdStepDSubStep.LastStep) {
-      return (
-        <div className="font-16 question-3d-r8-r1">
-          <img src="/images/choicesTool/ThirdStepR8.png" className="third-step-img-r8"></img>
-          <div className="question-3d-r8 font-20">
-            <div>
-              <div className="flex-center top-label-r3-r23 bold">
-                Would you like to see other Vocational, Applied and Practical courses?
-              </div>
-              <div className="flex-center">
-                <div className="button-step-d-r23 button-step-dl4-r23">
-                  <div onClick={() => this.props.moveToStepE()}>
-                    Yes, I would.
-                  </div>
-                </div>
-              </div>
-              <div className="flex-center">
-                <div className="button-step-d-r23 button-step-dl4-r23">
-                  <div onClick={() => this.props.moveToStep4()}>
-                    No - if I do a vocational course, it’ll be a T-level.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.TableLeaf })} />
-        </div>
-      );
-    } else if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
+    if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
       return (
         <div className="font-16 question-step-3d-tableleaf">
           <img src="/images/choicesTool/ThirdStepR7.png" className="third-step-img"></img>
@@ -303,7 +273,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                 t.expanded = false;
                 t.subjects.map(s => s.checked = false);
               });
-              this.setState({ tLevelCoursesPart1: this.state.tLevelCoursesPart1, tLevelCoursesPart2: this.state.tLevelCoursesPart2});
+              this.setState({ tLevelCoursesPart1: this.state.tLevelCoursesPart1, tLevelCoursesPart2: this.state.tLevelCoursesPart2 });
             }}>
               <div className="font-16 bold flex">
                 <div className="flex-center nothing-hint">
@@ -318,8 +288,9 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            this.setState({ subStep: ThirdStepDSubStep.LastStep });
+            //this.setState({ subStep: ThirdStepDSubStep.LastStep });
             this.saveAnswer();
+            this.props.moveNext();
           }}>Continue</button>
         </div>
       );
@@ -339,6 +310,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
       </div>
     }
+
     return (
       <div>
         <div className="bold font-32 question-text-3">
@@ -347,11 +319,11 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
         <div className="absolute-container-3d">
           <div className="font-16 line-d3">
-            These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be<br/>
+            These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be<br />
             combined with other subjects.
           </div>
           <div className="font-16 line-d3">
-            T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a<br/>
+            T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a<br />
             work placement.
           </div>
           <div className="font-16 bold sub-title-e23">

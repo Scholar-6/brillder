@@ -158,6 +158,8 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
       ]
     }];
 
+    console.log(props.answer);
+
     if (
       props.answer && props.answer.tLevelCoursesPart1 && props.answer.tLevelCoursesPart1.length > 0 &&
       props.answer.tLevelCoursesPart2 && props.answer.tLevelCoursesPart2.length > 0
