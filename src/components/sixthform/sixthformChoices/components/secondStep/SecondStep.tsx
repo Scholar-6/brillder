@@ -147,12 +147,11 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               } else {
                 this.setState({ subStep: ThirdSubStep.Second, coursesD });
               }*/
-              this.setState({subStep: ThirdSubStep.Fifth});
+              this.setState({subStep: ThirdSubStep.Sixth});
             }}
             moveNext={() => {
               let answer = this.getAnswer();
               this.props.saveAnswer(answer);
-              this.setState({subStep: ThirdSubStep.Seventh});
               this.props.moveNext(answer);
             }}
           />
@@ -187,7 +186,6 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               let answer = this.getAnswer();
               answer.coursesF = coursesF;
               this.props.saveAnswer(answer);
-              console.log('save answer', coursesF, answer);
               this.setState({ subStep: ThirdSubStep.Seventh });
             }}
           />
@@ -199,7 +197,6 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
           <ThirdStepE
             pairAnswers={this.state.ePairResults}
             onChange={(ePairResults: any[]) => {
-              console.log('save e', ePairResults);
               this.setState({ ePairResults });
             }}
             moveBack={() => {

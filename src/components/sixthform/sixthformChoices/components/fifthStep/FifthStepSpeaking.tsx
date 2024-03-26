@@ -25,7 +25,7 @@ const FiftthStepSpeaking: React.FC<ThirdProps> = (props) => {
     <div className="question question-6 question-3-watching question-5-speaking">
       <div className="font-16 question-text">
         <div className="font-32 bold">
-          Speaking?
+          Speaking
         </div>
         <div className="hover-area font-14">
           <SpriteIcon name="help-circle-r1" className="info-icon" />
