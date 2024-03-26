@@ -74,13 +74,12 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
 
     let subjectType = FirstChoice.ShowMeAll;
 
-    console.log('answer', props.answer);
-
     if (props.answer) {
       let answer = props.answer.answer;
+      subStep = answer.subStep;
       sixthformChoice = answer.sixthformChoice;
       schoolName = answer.schoolName;
-      subStep = answer.subStep;
+      subjectType = answer.subjectType;
     }
 
     this.state = {

@@ -112,6 +112,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       }
       firstAnswer = answers.find(a => a.step === Pages.Question1);
       if (firstAnswer && firstAnswer.answer.subjectType) {
+        subjectType = firstAnswer.answer.subjectType;
       } else {
         firstAnswer = {
           answer: {
