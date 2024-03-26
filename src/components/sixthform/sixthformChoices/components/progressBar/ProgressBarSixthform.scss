@@ -277,6 +277,38 @@
     animation: move-right 0.7s;
   }
 }
+
+.progress-content-box-r323 {
+  min-height: 14vh;
+  width: 65vw;
+  overflow-x: hidden;
+  position: relative;
+
+  > div {
+    min-height: 14vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 2vh;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+  }
+
+  .animating-left {
+    top: 0;
+    width: 65vw;
+    position: absolute;
+    animation: run 0.24s;
+  }
+
+  .animating-right {
+    top: 0;
+    width: 65vw;
+    position: absolute;
+    animation: move-right 0.7s;
+  }
+}
+
 .box-bigger-r343 {
   .progress-content-box-r233 {
     min-height: 20vh;
