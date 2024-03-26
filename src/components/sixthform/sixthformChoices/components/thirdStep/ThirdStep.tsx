@@ -13,8 +13,8 @@ import FifthStepSpeaking from "./FifthStepSpeaking";
 import FifthStepSpeakingStart from "./FifthStepSpeakingStart";
 import StepEntusiasmStart from "./StepEntusiasmStart";
 import SixStepEntusiasm from "./StepEntusiasm";
-import StepDreamsStart from "./StepDreamsStart";
-import StepDreams from "./StepDreams";
+import StepDreamsStart from "../sixStep/StepDreamsStart";
+import StepDreams from "../sixStep/StepDreams";
 
 enum SubStep {
   Welcome,
@@ -603,24 +603,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
   }
 
   render() {
-    if (this.state.subStep === SubStep.Dreams) {
-      return (
-        <StepDreams
-          choices={this.state.dreamChoices}
-          onChange={dreamChoices => this.setState({ dreamChoices })}
-          moveBack={() => this.setState({ subStep: SubStep.DreamsStart })}
-          moveNext={() => {
-            this.props.saveAnswer(this.getAnswer());
-            this.props.moveNext(this.getAnswer());
-          }}
-        />
-      );
-    } else if (this.state.subStep === SubStep.DreamsStart) {
-      return <StepDreamsStart
-        moveBack={() => this.setState({ subStep: SubStep.Entusiasm })}
-        moveNext={() => this.setState({ subStep: SubStep.Dreams })}
-      />
-    } else if (this.state.subStep === SubStep.Entusiasm) {
+    if (this.state.subStep === SubStep.Entusiasm) {
       return <SixStepEntusiasm
         choices={this.state.enthusiasmChoices}
         onChange={enthusiasmChoices => this.setState({ enthusiasmChoices })}
@@ -630,7 +613,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
         }}
         moveNext={() => {
           this.props.saveAnswer(this.getAnswer());
-          this.setState({ subStep: SubStep.DreamsStart });
+          this.props.moveNext(this.getAnswer());
         }}
       />
     } else if (this.state.subStep === SubStep.EntusiasmStart) {

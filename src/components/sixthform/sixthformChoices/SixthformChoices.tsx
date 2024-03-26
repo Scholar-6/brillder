@@ -581,10 +581,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }}
       />
     } else if (this.state.page === Pages.Question5) {
-      const secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
-
       return <FifthStep
-        secondAnswer={secondAnswer}
+        history={this.props.history}
         answer={this.state.answers.find(a => a.step === Pages.Question5)}
         saveAnswer={(answer: any) => {
           this.saveFifthAnswer(answer);
@@ -596,13 +594,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         moveBack={answer => {
           this.saveFifthAnswer(answer);
           this.setState({ page: Pages.Question4 });
-        }}
-        saveSecondAnswer={sType => {
-          let answer = this.state.answers.find(a => a.step === Pages.Question2);
-          if (answer && answer.answer) {
-            answer.answer.subjectType = sType;
-            this.saveSecondAnswer(answer.answer);
-          }
         }}
       />
     } else if (this.state.page === Pages.Question6) {
