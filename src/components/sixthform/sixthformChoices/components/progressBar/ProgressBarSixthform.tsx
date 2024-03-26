@@ -20,7 +20,7 @@ const ProgressBarSixthform: React.FC<Props> = (props) => {
     <div className="progress-bar-sixthform">
       <div>
         {renderStep(1, step === Pages.Question1, step >= 1)}
-        <div className="font-12 progress-label-s6">SCHOOLS AND COLLEGES</div>
+        <div className="font-12 progress-label-s6">COLLEGES</div>
       </div>
       {renderLine(step >= 2)}
       <div>
@@ -30,22 +30,22 @@ const ProgressBarSixthform: React.FC<Props> = (props) => {
       {renderLine(step >= 3)}
       <div>
         {renderStep(3, step === Pages.Question3, step >= 3)}
-        <div className="font-12 progress-label-s6">INTERESTS AND EXTRACURRICULARS</div>
+        <div className="font-12 progress-label-s6">EXTRACURRICULARS</div>
       </div>
       {renderLine(step >= 4)}
       <div>
         {renderStep(4, step === Pages.Question4, step >= 4)}
-        <div className="font-12 progress-label-s6">SUBJECTS</div>
+        <div className="font-12 progress-label-s6">HIGHER EDUCATION</div>
       </div>
       {renderLine(step >= 5)}
       <div>
         {renderStep(5, step === Pages.Question5, step >= 5)}
-        <div className="font-12 progress-label-s6">HIGHER EDUCATION</div>
+        <div className="font-12 progress-label-s6">CAREERS</div>
       </div>
       {renderLine(step >= 6)}
       <div>
         {renderStep(6, step === Pages.Question6, false)}
-        <div className="font-12 progress-label-s6">CAREERS</div>
+        <div className="font-12 progress-label-s6">DREAMS</div>
       </div>
       <div className="bold font-16 exit-btn" onClick={props.exit}>Exit</div>
     </div>
