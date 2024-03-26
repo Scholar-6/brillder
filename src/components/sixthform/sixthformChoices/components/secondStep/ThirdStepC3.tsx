@@ -112,7 +112,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
-    if (category.boldText === "Modern Languages" || category.boldText === "Sport & Physical Education, Dance, Music, Theatre Studies") {
+    if (category.boldText === "Modern Languages" || category.boldText === "Physical Education, Dance, Music, or Theatre Studies") {
       if (category.status === ThirdC3Status.None) {
       } else if (category.status === ThirdC3Status.BETWEEN) {
         isCorrect = true;
