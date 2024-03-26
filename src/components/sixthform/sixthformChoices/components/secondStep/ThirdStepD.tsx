@@ -8,13 +8,11 @@ import { Dialog } from "@material-ui/core";
 export enum ThirdStepDChoice {
   First,
   Second,
-  Third,
   Forth
 }
 
 export enum ThirdStepDSubStep {
   Start = 1,
-  Message,
   TableLeaf,
 }
 
@@ -41,6 +39,7 @@ interface ThirdQuestionState {
   tLevelCoursesPart1: TLevelCourse[];
   tLevelCoursesPart2: TLevelCourse[];
   overflowOpen: boolean;
+  popupOpen: boolean;
 }
 
 class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
@@ -63,11 +62,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       icon: 'six-frame3',
       name: 'Education and Early Years',
       subjects: [{ name: 'Education and Early Years' }],
-    }, /*{
-      icon: 'six-frame4',
-      name: 'Hair & Beauty',
-      subjects: [{ name: 'Hairdressing, Barbering and Beauty Therapy' }],
-    },*/ {
+    }, {
       icon: 'six-frame5',
       name: 'Legal, Finance & Accounting',
       subjects: [{ name: 'Accounting' }, { name: 'Finance' }, { name: 'Legal Services' }],
@@ -128,7 +123,8 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       tLevelCoursesPart1: tLevelCourses1,
       tLevelCoursesPart2: tLevelCourses2,
       subStep: ThirdStepDSubStep.Start,
-      overflowOpen: false
+      overflowOpen: false,
+      popupOpen: false
     }
   }
 
@@ -230,7 +226,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <button className={className} disabled={disabled} onClick={() => {
         if (this.state.choice === ThirdStepDChoice.Forth) {
-          this.setState({ subStep: ThirdStepDSubStep.Message });
+          this.setState({ popupOpen: true });
         } else if (this.state.choice === ThirdStepDChoice.First) {
           this.setState({ subStep: ThirdStepDSubStep.TableLeaf });
         } else {
@@ -294,21 +290,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === ThirdStepDSubStep.Message) {
-      return <div className="question-3d-r6">
-        <div className="font-20 bold text-center text-d3-r23">
-          In that case, we’ll show you T-levels, and then we’ll show you other vocational courses.
-        </div>
-        <img src="/images/choicesTool/ThirdStepR6.png" className="image-container-r6"></img>
-        <div className="button-step-d-r23 font-24">
-          <div onClick={() => {
-            this.setState({ subStep: ThirdStepDSubStep.TableLeaf })
-          }}>
-            OK then, let’s have a look.
-          </div>
-        </div>
-        <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
-      </div>
     }
 
     return (
@@ -336,11 +317,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
             />
             <CheckBoxV2
               currentChoice={ThirdStepDChoice.Second} choice={this.state.choice}
-              label="I’d prefer to do a combination of shorter vocational courses." setChoice={choice => this.setChoice(choice)}
-            />
-            <CheckBoxV2
-              currentChoice={ThirdStepDChoice.Third} choice={this.state.choice}
-              label="I’d prefer to do a mixture of vocational courses and A-levels." setChoice={choice => this.setChoice(choice)}
+              label="I don’t think T-levels are right for me." setChoice={choice => this.setChoice(choice)}
             />
             <CheckBoxV2
               currentChoice={ThirdStepDChoice.Forth} choice={this.state.choice}
@@ -351,6 +328,10 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         {this.renderNextDButton()}
+        {this.state.popupOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+          In that case, we’ll show you the different T-level courses on offer.
+          <div className="btn" onClick={() => this.setState({ subStep: ThirdStepDSubStep.TableLeaf })}>Ok</div>
+        </Dialog>}
       </div>
     );
   }
