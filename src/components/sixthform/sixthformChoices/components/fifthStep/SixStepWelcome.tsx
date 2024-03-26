@@ -13,7 +13,7 @@ const SixStepWelcome: React.FC<WelcomeProps> = (props) => {
       <div className="text-container-5432">
         <div>
           <div className="font-20">Step 6</div>
-          <div className="font-48 bold s-text-323">DREAMS</div>
+          <div className="font-48 bold s-text-323">CAREERS</div>
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />

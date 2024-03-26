@@ -3,8 +3,8 @@ import WelcomePage from "../firstStep/welcomePage/WelcomePage";
 import FirstStepWelcome from "../firstStep/FirstStepWelcome";
 import StepEntusiasmStart from "../thirdStep/StepEntusiasmStart";
 import SixStepEntusiasm from "../thirdStep/StepEntusiasm";
-import StepDreams from "../thirdStep/StepDreams";
-import StepDreamsStart from "../thirdStep/StepDreamsStart";
+import StepDreams from "../sixStep/StepDreams";
+import StepDreamsStart from "../sixStep/StepDreamsStart";
 import Step1Name from "./Step1Name";
 import Step1Email from "./Step1Email";
 
