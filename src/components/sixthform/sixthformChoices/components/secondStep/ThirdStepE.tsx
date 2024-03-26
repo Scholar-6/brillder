@@ -109,7 +109,7 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
       <div className="question-step-3e">
         <img src="/images/choicesTool/ThirdStepR9Vaps.png" className="third-step-img"></img>
         <div className="bold font-32 question-text-3">
-          VAPs
+          Vocational, Applied and Practical Courses
         </div>
         <div className="font-16">
           Here are five VAPs which you may need to understand a little better before selecting subjects.

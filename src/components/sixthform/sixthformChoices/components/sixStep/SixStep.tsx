@@ -3,11 +3,9 @@ import React, { Component } from "react";
 import FifthStepWelcome from "./SixStepWelcome";
 import SixStepFinal from "./SixStepFinal";
 import StepDreams from "./StepDreams";
-import StepDreamsStart from "./StepDreamsStart";
 
 enum SubStep {
   welcome,
-  DreamsStart,
   Dreams,
   final,
 }
@@ -60,91 +58,91 @@ class SixStep extends Component<Props, State> {
     let dreamChoices = [
       {
         type: SixStepSeventhChoices.BecomeACouncillor,
-        label: '“become a councillor or an MP so I could help make important changes to society”',
+        label: 'become a councillor or an MP so I could help make important changes to society',
         choice: null
       }, {
         type: SixStepSeventhChoices.BuildMyOwnHouse,
-        label: '“build my own house”',
+        label: 'build my own house',
         choice: null
       }, {
         type: SixStepSeventhChoices.LiveACompletely,
-        label: '“live a completely carbon neutral life”',
+        label: 'live a completely carbon neutral life',
         choice: null
       }, {
         type: SixStepSeventhChoices.OwnARestaurant,
-        label: '“own a restaurant and/or be a successful chef”',
+        label: 'own a restaurant and/or be a successful chef',
         choice: null
       }, {
         type: SixStepSeventhChoices.WorkOnAMajor,
-        label: '“work on a major science or engineering project (e.g. Cern, NASA, Human Genome)”',
+        label: 'work on a major science or engineering project (e.g. Cern, NASA, Human Genome)',
         choice: null
       }, {
         type: SixStepSeventhChoices.WriteANovel,
-        label: '“write a novel, a play or a film script”',
+        label: 'write a novel, a play or a film script',
         choice: null
       }, {
         type: SixStepSeventhChoices.LiveAndWork,
-        label: '“live and work overseas”',
+        label: 'live and work overseas',
         choice: null
       }, {
         type: SixStepSeventhChoices.WorkAsAMedical,
-        label: '“work as a medical professional in a disaster zone like a war or flood”',
+        label: 'work as a medical professional in a disaster zone like a war or flood',
         choice: null
       }, {
         type: SixStepSeventhChoices.HaveAFarm,
-        label: '“have a farm or smallholding, growing crops and keeping livestock - enough to be self-sufficient”',
+        label: 'have a farm or smallholding, growing crops and keeping livestock - enough to be self-sufficient',
         choice: null
       }, {
         type: SixStepSeventhChoices.PlayOrCoach,
-        label: '“play or coach sport, or eSport, professionally”',
+        label: 'play or coach sport, or eSport, professionally',
         choice: null
       }, {
         type: SixStepSeventhChoices.InventAnApp,
-        label: '“invent an app, a computer game, or create a successful online platform”',
+        label: 'invent an app, a computer game, or create a successful online platform',
         choice: null
       }, {
         type: SixStepSeventhChoices.WorkAtAMajor,
-        label: '“work at a major bank or trading firm <br /> in the City of London”',
+        label: 'work at a major bank or trading firm <br /> in the City of London',
         choice: null
       }, {
         type: SixStepSeventhChoices.AsALawyer,
-        label: '“as a lawyer, plead a case in the High Court”',
+        label: 'as a lawyer, plead a case in the High Court',
         choice: null
       }, {
         type: SixStepSeventhChoices.TakePartIn,
-        label: '“take part in an archaeological find (e.g. a dig )”',
+        label: 'take part in an archaeological find (e.g. a dig )',
         choice: null
       }, {
         type: SixStepSeventhChoices.BringACriminalToJustice,
-        label: '“bring a criminal to justice, either by detective work or as a lawyer in court”',
+        label: 'bring a criminal to justice, either by detective work or as a lawyer in court',
         choice: null
       }, {
         type: SixStepSeventhChoices.PerformAtTheRoyalAlbertHall,
-        label: '“perform at the Royal Albert Hall”',
+        label: 'perform at the Royal Albert Hall',
         choice: null
       }, {
         type: SixStepSeventhChoices.RunASuccessfulBusiness,
-        label: '“run a successful business which I founded myself”',
+        label: 'run a successful business which I founded myself',
         choice: null
       }, {
         type: SixStepSeventhChoices.ExhibitMyArtwork,
-        label: '“exhibit my artwork at an influential gallery, or curate an exhibition of a famous artist”',
+        label: 'exhibit my artwork at an influential gallery, or curate an exhibition of a famous artist',
         choice: null
       }, {
         type: SixStepSeventhChoices.AppearInThePages,
-        label: '“appear in the pages of Vogue, either as a designer, a model or a make-up artist”',
+        label: 'appear in the pages of Vogue, either as a designer, a model or a make-up artist',
         choice: null
       }, {
         type: SixStepSeventhChoices.MakeADifference,
-        label: '“make a difference in the lives of young children, the elderly or any vulnerable person”',
+        label: 'make a difference in the lives of young children, the elderly or any vulnerable person',
         choice: null
       }, {
         type: SixStepSeventhChoices.ToGainADeeper,
-        label: '“to gain a deeper understanding of<br/> philosophies and belief systems which shine a light upon our purpose in life”',
+        label: 'to gain a deeper understanding of<br/> philosophies and belief systems which shine a light upon our purpose in life',
         choice: null
       }, {
         type: SixStepSeventhChoices.AcquireADeepUnderstanding,
-        label: '“acquire a deep understanding of the human mind and what makes people tick”',
+        label: 'acquire a deep understanding of the human mind and what makes people tick',
         choice: null
       }
     ];
@@ -155,7 +153,7 @@ class SixStep extends Component<Props, State> {
         subStep = answer.subStep;
       }
       if (answer.dreamChoices) {
-        dreamChoices = answer.dreamChoices;
+        //dreamChoices = answer.dreamChoices;
       }
     }
 
@@ -180,23 +178,18 @@ class SixStep extends Component<Props, State> {
         <StepDreams
           choices={this.state.dreamChoices}
           onChange={dreamChoices => this.setState({ dreamChoices })}
-          moveBack={() => this.setState({ subStep: SubStep.DreamsStart })}
+          moveBack={() => this.setState({ subStep: SubStep.welcome })}
           moveNext={() => {
             this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.final });
           }}
         />
       );
-    } else if (this.state.subStep === SubStep.DreamsStart) {
-      return <StepDreamsStart
-        moveBack={() => this.setState({ subStep: SubStep.welcome })}
-        moveNext={() => this.setState({ subStep: SubStep.Dreams })}
-      />
     }
 
     return (
       <FifthStepWelcome
-        moveNext={() => this.setState({ subStep: SubStep.DreamsStart })}
+        moveNext={() => this.setState({ subStep: SubStep.Dreams })}
         moveBack={() => this.props.moveBack(this.getAnswer())}
       />
     )
