@@ -980,6 +980,18 @@
       .brick-container {
         position: relative;
 
+        .try-taster-btn {
+          z-index: 12;
+          position: absolute;
+          top: 0.5vw;
+          left: 0.5vw;
+          color: white;
+          font-size: 1vw;
+          border-radius: 2vw;
+          padding: 0.5vw 1vw;
+          background: var(--theme-orange);
+        }
+
         .scroll-block {
           margin-top: 2vh;
           margin-bottom: 2vh;
@@ -2468,6 +2480,10 @@
       margin-top: 2vh;
       overflow-y: scroll;
       height: calc(100vh - 5.834vw - 2vw - 4vh - 2vh - 10vh - 5vw - 7vh - 2vw);
+    }
+
+    .d3-table-scroll-container-f4 {
+      height: calc(100vh - 5.834vw - 2vw - 4vh - 2vw - 5vh - 4.6vw - 3.4vh - 2vh) !important;
     }
 
     .coursor-pointer {

@@ -28,6 +28,7 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
     if (subject.brick) {
       return (
         <div className="brick-container">
+          <div className="try-taster-btn">Try a taster topic</div> 
           <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
           <div className="bottom-description-color" />
           <div className="bottom-description font-8 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
