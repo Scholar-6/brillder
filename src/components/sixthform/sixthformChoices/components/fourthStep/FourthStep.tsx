@@ -889,19 +889,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     );
   }
 
-  renderContinueBtn() {
-    let className = "absolute-contunue-btn font-24";
-    let disabled = this.state.categories4bc.length === 0;
-    if (disabled) {
-      className += " disabled";
-    }
-    return (
-      <button className={className} onClick={() => {
-        this.setState({ subStep: SubStep.sub4c });
-      }}>Continue</button>
-    );
-  }
-
   renderList(className: string, list: TLevelCourse[], onChange: Function) {
     return (
       <div>
@@ -980,6 +967,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
+            this.props.moveNext(this.getAnswer());
             //this.setState({ subStep: SubStep.speakingStart });
           }}>Continue</button>
         </div>
