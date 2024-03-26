@@ -54,6 +54,7 @@ interface UserProfileState {
   subjects: SixthformSubject[];
 
   popupSubject: SixthformSubject | null;
+  currentPopupSubject: SixthformSubject | null;
   subjectPosition: any;
   popupTimeout: number | NodeJS.Timeout;
   leavePopupTimeout: number | NodeJS.Timeout;
@@ -89,6 +90,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       popupTimeout: -1,
       leavePopupTimeout: -1,
       popupSubject: null,
+      currentPopupSubject: null,
       subjectPosition: null,
 
       page,
@@ -684,15 +686,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                       }
                       this.setState({ popupSubject: subject, popupTimeout: -1, subjectPosition });
                     }, 1000);
-                    this.setState({ popupTimeout });
+                    this.setState({ popupTimeout, currentPopupSubject: subject });
                   }} onMouseLeave={(e) => {
+
                     if (this.state.popupTimeout == -1) {
                       const leavePopupTimeout = setTimeout(() => {
                         clearTimeout(this.state.popupTimeout);
-                        this.setState({ popupSubject: null, subjectPosition: null });
+                        this.setState({ popupSubject: this.state.currentPopupSubject, subjectPosition: null });
                       }, 1000);
                       this.setState({ leavePopupTimeout });
                     }
+                    this.setState({ currentPopupSubject: null });
                   }}>
                     {this.renderCircle(subject)}
                     <div className="subject-name">{subject.name}</div>

@@ -910,15 +910,11 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                 <div className="flex-y-center course-name-r23">
                   {course.name}
                 </div>
-                <div className="flex-center coursor-pointer" onClick={e => {
-                  e.stopPropagation();
-                  course.expanded = !course.expanded;
-                  onChange();
-                }}>
-                  <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
+                <div className="flex-center coursor-pointer">
+                  <SpriteIcon name={course.active ? "arrow-up" : "arrow-down"} />
                 </div>
               </div>
-              {course.expanded && <div className="course-subjects-r23 font-14">
+              {course.active && <div className="course-subjects-r23 font-14">
                 {course.subjects.map((subject, i) =>
                   <span>
                     {subject.name}{i !== course.subjects.length - 1 ? ", " : "."}
@@ -984,7 +980,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <div>
             Here are fifteen types of vocational degree. Select up to three that interest you.
           </div>
-          <div className="d3-table-scroll-container">
+          <div className="d3-table-scroll-container d3-table-scroll-container-f4">
             <div className="d3-table-leaf">
               {this.renderList("first-b-r-23", this.state.tVocCoursesE1Part1, () => {
                 this.setState({ tVocCoursesE1Part1: [...this.state.tVocCoursesE1Part1] })
