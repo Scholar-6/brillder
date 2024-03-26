@@ -19,7 +19,7 @@ const ProgressBarStep6Entusiasm: React.FC<Props> = (props) => {
       <LinearProgress className="progress-bar-long-r233" variant="determinate" value={value} />
       <div className="font-14 paging-3c1">{step + 1} / {total} items</div>
       <div className="flex-center bold font-24"><SpriteIcon name="heart-six" /> I love...</div>
-      <div className="flex-center progress-content-box-r323">
+      <div className="flex-center progress-content-box-r233">
         <AnimatedDescription step={step} description={props.description} textClass='bold-italic' />
       </div>
     </div>

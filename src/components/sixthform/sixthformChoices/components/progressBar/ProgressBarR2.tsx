@@ -5,11 +5,10 @@ import AnimatedDescriptionV7 from './AnimatedDescriptionV7';
 interface Props {
   step: number;
   total: number;
-  topLabel: string;
   description: string;
 }
 
-const ProgressBarR1: React.FC<Props> = (props) => {
+const ProgressBarR2: React.FC<Props> = (props) => {
   const { step, total } = props;
   let renderLine = (isActive: boolean) => {
     return <div className={`line-r23 ${isActive ? 'active' : ''}`} />
@@ -20,12 +19,11 @@ const ProgressBarR1: React.FC<Props> = (props) => {
         {Array.from({length: total}).map((v, i) => renderLine(step >= i))}
       </div>
       <div className="font-14 paging-3c1">{step + 1}/{total} subjects</div>
-      <div className="flex-center bold font-16">{props.topLabel}</div>
-      <div className="flex-center progress-content-box-r323">
+      <div className="flex-center progress-content-box-r323 bold">
         <AnimatedDescriptionV7 step={step} description={props.description} />
       </div>
     </div>
   );
 }
 
-export default ProgressBarR1;
+export default ProgressBarR2;
