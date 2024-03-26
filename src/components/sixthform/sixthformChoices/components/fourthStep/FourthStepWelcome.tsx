@@ -9,11 +9,11 @@ interface WelcomeProps {
 const FourthStepWelcome: React.FC<WelcomeProps> = (props) => {
   return (
     <div className="question">
-    <img src="/images/choicesTool/Step3background.png" className="step2background-img" />
+    <img src="/images/choicesTool/Step4background.png" className="step2background-img" />
     <div className="text-container-5432">
       <div>
         <div className="font-20">Step 4</div>
-        <div className="font-48 bold s-text-323">SUBJECTS</div>
+        <div className="font-48 bold s-text-323">HIGHER EDUCATION</div>
       </div>
     </div>
     <BackButtonSix onClick={props.moveBack} />

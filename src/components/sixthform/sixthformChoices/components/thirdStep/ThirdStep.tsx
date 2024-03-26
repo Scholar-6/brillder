@@ -304,7 +304,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
     } else if (this.state.subStep === SubStep.SpeakingStart) {
       return <FifthStepSpeakingStart
         moveBack={() => this.setState({ subStep: SubStep.Listening })}
-        moveNext={() => this.setState({ subStep: SubStep.SpeakingStart })}
+        moveNext={() => this.setState({ subStep: SubStep.Speaking })}
       />
     } else if (this.state.subStep === SubStep.Listening) {
       return (
@@ -314,7 +314,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           moveBack={() => this.setState({ subStep: SubStep.ListenStart })}
           moveNext={async () => {
             await this.props.saveAnswer(this.getAnswer());
-            this.moveNext();
+            this.setState({ subStep: SubStep.SpeakingStart });
           }} />
       );
     } else if (this.state.subStep === SubStep.ListenStart) {

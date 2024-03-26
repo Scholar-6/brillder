@@ -1,7 +1,7 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
-import ProgressBarStep6V2 from "../progressBar/ProgressBarStep6V2";
 import ThreeButtons from "../base/ThreeButtons";
+import ProgressBarWriting from "../progressBar/ProgressBarWriting";
 
 export enum WatchingChoice {
   Never = 1,
@@ -31,10 +31,7 @@ const SixStepWriting: React.FC<Props> = (props) => {
         For each type of writing, say how much of it you do.
       </div>
       <img src="/images/choicesTool/Step6R18.png" className="step3watching-img-v2" />
-      <ProgressBarStep6V2
-        icon="writing-sixth" step={step} total={props.choices.length}
-        title={currentStep.name} description={currentStep.description}
-      />
+      <ProgressBarWriting step={step} total={props.choices.length} title={currentStep.name} description={currentStep.description} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="HARDLY<br/> AT ALL" middleLabel="A FAIR BIT" lastLabel="A LOT"
@@ -57,7 +54,7 @@ const SixStepWriting: React.FC<Props> = (props) => {
       }} />
       <button
         className="absolute-contunue-btn font-24"
-        onClick={props.moveNext}>Finish Course Selector</button>
+        onClick={props.moveNext}>Skip</button>
     </div>
   );
 }

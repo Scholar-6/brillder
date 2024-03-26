@@ -69,17 +69,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
     let subStep = ThirdSubStep.First;
 
-    let firstPairResults: any[] = [];
-    let secondPairResults: any[] = [];
-
-    let categoriesC3: any = null;
-    let categoriesC4: any = null;
-
-    let ePairResults: any[] = [];
-
-    let coursesD: any = null;
-    let coursesF: any = null;
-
     let listeningChoices = [
       {
         label: 'Current Affairs, News & Talk (e.g. Radio Four)',
@@ -111,32 +100,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     if (this.props.answer) {
       const { answer } = props.answer;
       subStep = answer.subStep;
-
-      if (answer.firstPairResults) {
-        firstPairResults = answer.firstPairResults;
-      }
-      if (answer.secondPairResults) {
-        secondPairResults = answer.secondPairResults;
-      }
-
-      if (answer.categoriesC3) {
-        categoriesC3 = answer.categoriesC3;
-      }
-      if (answer.categoriesC4) {
-        categoriesC4 = answer.categoriesC4;
-      }
-
-      if (answer.coursesD) {
-        coursesD = answer.coursesD;
-      }
-
-      if (answer.ePairResults) {
-        ePairResults = answer.ePairResults;
-      }
-
-      if (answer.coursesF) {
-        coursesF = answer.coursesF;
-      }
 
       if (answer.listeningChoices) {
         listeningChoices = answer.listeningChoices;
@@ -493,142 +456,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       );
     } else if (this.state.subStep === ThirdSubStep.First) {
-      return (
-        <div className="question question3-first">
-          <img src="/images/choicesTool/ThirdStepR1.png" className="third-step-img" />
-          <div className="bold font-32 question-text-3">
-            What qualifications are you currently doing?
-          </div>
-          <div className="font-16">
-            Choose your GCSEs below, including ones in which you’ve already gained a qualification.<br />
-            Then choose any Vocational and Practical qualifications (e.g. musical performance).
-          </div>
-          <div className="main-subjects-container">
-            <div className="first-box-R21">
-              <div>
-                <div className="toggle-R21 font-12 bold">
-                  <div
-                    className={this.state.subjectGroup === SubjectGroupR21.GCSE ? "active" : ""}
-                    onClick={() => this.activateSubjectGroup(SubjectGroupR21.GCSE)}
-                  >
-                    GCSEs
-                  </div>
-                  <div
-                    className={this.state.subjectGroup === SubjectGroupR21.PracticalVocational ? "active" : ""}
-                    onClick={() => this.activateSubjectGroup(SubjectGroupR21.PracticalVocational)}
-                  >
-                    Practical & Vocational Qualifications
-                  </div>
-                </div>
-                <div className="subjects-box-s6-r21">
-                  <div className="subjects-box-r21">
-                    {this.renderSubjectLozenges(
-                      this.state.subjectGroup === SubjectGroupR21.GCSE ? this.state.GCSESubjects : this.state.vocationalSubjects,
-                      false,
-                      (subject: KeyStage4Subject) => {
-                        if (this.state.subjectSelections.length >= this.state.limit) {
-                          return;
-                        }
-                        const selections = this.state.subjectSelections;
-                        const found = selections.find((s: any) => s.name === subject.name);
-                        if (!found) {
-                          let passedValidation = true;
-
-                          if (subject.name === "Combined Science (Single Award)") {
-                            const found2 = selections.find((s: any) =>
-                              s.name === "Combined Science (Double Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
-                            );
-                            if (found2) {
-                              passedValidation = false;
-                            }
-                          } else if (subject.name === "Combined Science (Double Award)") {
-                            const found2 = selections.find((s: any) =>
-                              s.name === "Combined Science (Single Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
-                            );
-                            if (found2) {
-                              passedValidation = false;
-                            }
-                          } else if (subject.name === "Biology" || subject.name === "Chemistry" || subject.name === "Physics") {
-                            const found2 = selections.find((s: any) =>
-                              s.name === "Combined Science (Single Award)" || s.name === "Combined Science (Double Award)"
-                            );
-                            if (found2) {
-                              passedValidation = false;
-                            }
-                          }
-
-                          if (passedValidation) {
-                            subject.selected = true;
-                            selections.push(subject);
-                            this.setState({ subjectSelections: selections });
-                          }
-                        } else {
-                          subject.selected = false;
-                          let selected = selections.filter(s => s.name !== subject.name);
-                          this.setState({ subjectSelections: selected });
-                        }
-                      })}
-                  </div>
-                  {this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded && <div>
-                    <div className="expanded-label">
-                      <div className="line-r21" />
-                      <div className="expanded-text font-12">More GCSEs</div>
-                      <div className="line-r21" />
-                    </div>
-                    <div className="subjects-box-r21">
-                      {this.renderSubjectLozenges(this.state.otherGCSESubjects, false,
-                        (subject: KeyStage4Subject) => {
-                          if (this.state.subjectSelections.length >= this.state.limit) {
-                            return;
-                          }
-                          const selections = this.state.subjectSelections;
-                          const found = selections.find((s: any) => s.name === subject.name);
-                          if (!found) {
-                            subject.selected = true;
-                            selections.push(subject);
-                            this.setState({ subjectSelections: selections });
-                          }
-                        })}
-                    </div>
-                  </div>}
-                  {this.state.subjectGroup === SubjectGroupR21.GCSE && this.renderSubjectsBox()}
-                </div>
-                {this.renderExpandButton()}
-              </div>
-            </div>
-            <div className="second-box-R21">
-              <div className="flex-center second-box-text">
-                <div className="bold font-16 second-box-title">Your Subject Selections</div>
-                <div className="max-label font-12">Max: 16 subjects</div>
-              </div>
-              {this.renderSubjectLozenges(this.state.subjectSelections, true, (subject: KeyStage4Subject) => {
-                const selections = this.state.subjectSelections;
-                const found = selections.find((s: any) => s.name === subject.name);
-                if (found) {
-                  subject.selected = false;
-                  let selected = selections.filter(s => s.name !== subject.name);
-                  this.setState({ subjectSelections: selected });
-                }
-              })}
-            </div>
-          </div>
-          {this.state.showMinWarning &&
-            <div className="warning-popup-s434 font-16 absolute-popup-s4-r absolute-popup-s4-r2">
-              <SpriteIcon name="cancel-custom" className="close-btn-se23" onClick={() => this.setState({ showMinWarning: false })} />
-              <SpriteIcon name="sixthform-warning" />
-              Select your subjects to continue.
-            </div>}
-          {this.state.showMathWarning &&
-            <div className="warning-popup-s434 font-16 absolute-popup-s4-r absolute-popup-s4-r2 absolute-popup-s4-r3">
-              <SpriteIcon name="cancel-custom" className="close-btn-se23" onClick={() => this.setState({ showMathWarning: false, seenMathWarining: true })} />
-              <SpriteIcon name="sixthform-warning" />
-              You haven’t selected Maths and/or English<br />
-              Language. Are you sure this is correct?
-            </div>}
-          <BackButtonSix onClick={() => this.setState({ subStep: ThirdSubStep.Welcome })} />
-          {this.renderThirdStepAButton()}
-        </div>
-      );
+      
     }
 
     return <FourthStepWelcome
