@@ -619,7 +619,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
             if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
               this.setState({ subStep: SubStep.ReadingV2 })
             } else {
-              this.moveNext();
+              this.setState({ subStep: SubStep.WritingA })
             }
           }}
         />

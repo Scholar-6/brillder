@@ -5,6 +5,7 @@ import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import { shuffle } from "../../services/shuffle";
+import ProgressBarR1 from "../progressBar/ProgressBarR1";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -114,7 +115,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
         <div className="font-16 color-light-blue">
           Some subjects are rarely studied before the sixth form. See if you understand what they involve.
         </div>
-        <ProgressBarStep3C1
+        <ProgressBarR1
           step={this.state.step}
           topLabel="Which subject matches this description?"
           total={this.state.answers.length}
