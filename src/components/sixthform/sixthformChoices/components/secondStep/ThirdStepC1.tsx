@@ -119,7 +119,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
           step={this.state.step}
           topLabel="Which subject matches this description?"
           total={this.state.answers.length}
-          subjectDescription={currentAnswer.name}
+          description={currentAnswer.name}
         />
         <Grid container direction="row" className="containers-3c1">
           {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
