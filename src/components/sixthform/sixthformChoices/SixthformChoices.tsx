@@ -564,15 +564,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }} />
     } else if (this.state.page === Pages.Question4) {
       const secondAnswer = this.state.answers.find(a => a.step === Pages.Question2);
-      const thirdAnswer = this.state.answers.find(a => a.step === Pages.Question3);
       return <FourthStep
         secondAnswer={secondAnswer}
-        thirdAnswer={thirdAnswer}
-        subjects={this.state.subjects}
         answer={this.state.answers.find(a => a.step === Pages.Question4)}
-        saveThirdAnswer={answer => {
+        saveAnswer={answer => {
           this.saveFourthAnswer(answer);
         }}
+        saveSecondAnswer={() => {}}
         moveNext={answer => {
           this.saveFourthAnswer(answer);
           this.setState({ page: Pages.Question5 });
