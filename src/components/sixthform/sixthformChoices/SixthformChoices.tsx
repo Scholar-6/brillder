@@ -411,13 +411,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderSidebarCheckbox(currentSubjectType: SubjectType, label: string) {
     return (
       <label className="check-box-container container font-16" onClick={() => {
-        let answer = this.state.answers.find(a => a.step === Pages.Question2);
+        let answer = this.state.answers.find(a => a.step === Pages.Question1);
         if (!answer) {
           answer = { answer: { subjectType: currentSubjectType } };
         } else {
           answer.answer.subjectType = currentSubjectType;
         }
-        this.saveSecondAnswer(answer.answer);
+        this.saveFirstAnswer(answer.answer);
       }}>
         {label}
         <span className={`checkmark ${currentSubjectType === this.state.subjectType ? "checked" : ""}`}></span>

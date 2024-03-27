@@ -17,7 +17,7 @@ interface ThirdProps {
   moveNext(): void;
 }
 
-const FiftthStepSpeaking: React.FC<ThirdProps> = (props) => {
+const FifthStepSpeaking: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.speakingChoices[step];
 
@@ -37,7 +37,7 @@ const FiftthStepSpeaking: React.FC<ThirdProps> = (props) => {
         </div>
       </div>
       <div className="font-16">How true are the following statements of you?</div>
-      <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
+      <img src="/images/choicesTool/FifthStepSpeaking.png" className="step3watching-img-v2" />
       <ProgressBarSpeaking step={step} total={props.speakingChoices.length} subjectDescription={currentStep.label} />
       <ThreeButtons
         currentChoice={currentStep.choice}
@@ -66,4 +66,4 @@ const FiftthStepSpeaking: React.FC<ThirdProps> = (props) => {
   );
 }
 
-export default FiftthStepSpeaking;
+export default FifthStepSpeaking;

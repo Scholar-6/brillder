@@ -153,7 +153,7 @@ class SixStep extends Component<Props, State> {
         subStep = answer.subStep;
       }
       if (answer.dreamChoices) {
-        //dreamChoices = answer.dreamChoices;
+        dreamChoices = answer.dreamChoices;
       }
     }
 
@@ -178,7 +178,10 @@ class SixStep extends Component<Props, State> {
         <StepDreams
           choices={this.state.dreamChoices}
           onChange={dreamChoices => this.setState({ dreamChoices })}
-          moveBack={() => this.setState({ subStep: SubStep.welcome })}
+          moveBack={() => {
+            this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SubStep.welcome })
+          }}
           moveNext={() => {
             this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.final });
