@@ -969,6 +969,14 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
         </div>
       );
     } else if (this.state.subStep === SubStep.sub4e1) {
+      let disabled = true;
+      for (let t of this.state.tVocCoursesE1Part1) {
+        t.active && (disabled = false);
+      }
+      for (let t of this.state.tVocCoursesE1Part2) {
+        t.active && (disabled = false);
+      }
+
       return (
         <div className="font-16 question-4e1">
           <div className="bold font-32 question-text-3">
@@ -978,7 +986,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             Many students go directly into work or apprenticeships after sixth form. But some begin vocational degrees instead.
           </div>
           <div>
-            Here are fifteen types of vocational degree. Select up to three that interest you.
+            Here are fifteen types of vocational degree. Select up to <span className="bold">three</span> that interest you.
           </div>
           <div className="d3-table-scroll-container d3-table-scroll-container-f4">
             <div className="d3-table-leaf">
@@ -995,7 +1003,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
+          <button className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`} disabled={disabled} onClick={() => {
             this.saveAnswer();
             this.setState({ subStep: SubStep.sub4e2 });
           }}>Continue</button>
@@ -1011,7 +1019,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             In fact, there are many other subjects which will strongly support your university application.
           </div>
           <div className="font-16 margin-bottom-1">
-            Now select the three subjects you would choose if you could only choose from the following.
+            Now select the <span className="bold">three</span> subjects you would choose if you could only choose from the following.
           </div>
           <div className="categories-container-4c-r23 non-facilitation-category font-16">
             <div className="font-16">

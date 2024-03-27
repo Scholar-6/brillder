@@ -29,7 +29,7 @@ const ThreeButtons: React.FC<Props> = (props) => {
         className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
         onClick={() => {
           setCurrentChoice(realChoice);
-          setTimeout(() => props.onClick(realChoice), 400)
+          setTimeout(() => props.onClick(realChoice), 350)
         }}
         dangerouslySetInnerHTML={{ __html: label }}
       />

@@ -18,24 +18,27 @@ const AnimatedDescriptionV7: React.FC<Props> = (props) => {
       setAnimateRight(false);
       setDescription(props.description);
       setPrevStep(props.step);
-    }, 300);
+      console.log('animate');
+    }, 400);
   }, [props.description]);
 
   if (animateRight) {
     return (
       <div className="relative animating-right">
         <div>
-          <div className="font-20 text-center animating title-6v2" dangerouslySetInnerHTML={{__html: description}} />  
-        </div>  
+          <div className="font-20 text-center animating title-6v2" dangerouslySetInnerHTML={{ __html: description }} />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="relative animating-left">
-      <div>
-        <div className="font-20 text-center animating title-6v2" dangerouslySetInnerHTML={{__html: description}} />
-      </div> 
+    <div>
+      <div className="relative animating-left">
+        <div>
+          <div className="font-20 text-center animating title-6v2" dangerouslySetInnerHTML={{ __html: description }} />
+        </div>
+      </div>
     </div>
   );
 }

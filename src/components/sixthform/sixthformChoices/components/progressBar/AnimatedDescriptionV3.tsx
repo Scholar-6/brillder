@@ -20,7 +20,7 @@ const AnimatedDescriptionV3: React.FC<Props> = (props) => {
       setAnimateRight(false);
       setDescription(props.description);
       setPrevStep(props.step);
-    }, 500);
+    }, 400);
   }, [props.description]);
 
   if (animateRight) {
