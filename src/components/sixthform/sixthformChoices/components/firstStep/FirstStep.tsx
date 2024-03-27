@@ -117,6 +117,29 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     this.loadSubjects();
   }
 
+  unshiftSubject(sortedSubjects: KeyStage4Subject[], subjectName: string) {
+    const sIndex = sortedSubjects?.findIndex(s => s.name == subjectName);
+    const subject = sortedSubjects.splice(sIndex, 1)[0];
+    if (subject) {
+      sortedSubjects.unshift(subject);
+    }
+  }
+
+  getGCSESSubjects(subjects: KeyStage4Subject[]) {
+    const sortByName = (a: KeyStage4Subject, b: KeyStage4Subject) => {
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    }
+    const sortedSubjects = subjects.filter(s => s.isGCSE && s.isPopular).sort(sortByName).sort(sortByName);
+
+    this.unshiftSubject(sortedSubjects, 'Combined Science (Single Award)');
+    this.unshiftSubject(sortedSubjects, 'Combined Science (Double Award)');
+    this.unshiftSubject(sortedSubjects, 'English Language');
+    this.unshiftSubject(sortedSubjects, 'English Literature');
+    this.unshiftSubject(sortedSubjects, 'Maths');
+
+    return sortedSubjects;
+  }
+
   async loadSubjects() {
     const subjects = await getKeyStage4Subjects();
     if (subjects) {
@@ -159,7 +182,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       this.setState({
         allSubjects: subjects,
         subjectSelections: realSubjectSelections,
-        GCSESubjects: subjects.filter(s => s.isGCSE && s.isPopular).sort(sortByName).sort(sortByName),
+        GCSESubjects: this.getGCSESSubjects(subjects),
         vocationalSubjects: subjects.filter(s => s.isVocational && s.isPopular).sort(sortByName),
         otherGCSESubjects: subjects.filter(s => s.isGCSE && !s.isPopular).sort(sortByName)
       });

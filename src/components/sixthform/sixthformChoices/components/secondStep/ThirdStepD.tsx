@@ -102,7 +102,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     let choice = null;
-    console.log(props.answer);
     if (props.answer) {
       if (props.answer.choice !== null) {
         choice = props.answer.choice;
@@ -222,8 +221,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     }
     return (
       <button className={className} disabled={disabled} onClick={() => {
-        let answer = this.getAnswer();
-        console.log('save answer 777', answer);
         this.saveAnswer();
         if (this.state.choice === ThirdStepDChoice.Forth) {
           this.setState({ popupOpen: true });
