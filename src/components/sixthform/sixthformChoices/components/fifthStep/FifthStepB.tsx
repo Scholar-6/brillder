@@ -99,7 +99,7 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
           Possible Careers for You
         </div>
         <div className="font-16">
-          Now select up to two career categories that currently interest you.
+          Now select up to <span className="bold">two</span> career categories that currently interest you.
         </div>
         <div className="drag-container-r22 drag-container-5a drag-container-5b">
           <div className="container-r22">

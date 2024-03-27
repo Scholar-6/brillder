@@ -63,7 +63,12 @@ const SixStepWritingA: React.FC<Props> = (props) => {
         />
       </div>
       <BackButtonSix onClick={props.moveBack} />
-      <button className="absolute-contunue-btn font-24" onClick={props.moveNext}>Continue</button>
+      <button
+        className={`absolute-contunue-btn font-24 ${props.writingChoice === null ? 'disabled' : ''}`}
+        disabled={props.writingChoice === null}
+        onClick={props.moveNext}>
+        Continue
+      </button>
     </div>
   );
 }

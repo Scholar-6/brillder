@@ -1088,7 +1088,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             Oops! You’ve tried to pick too many.
             <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4c })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
             this.setState({ subStep: SubStep.sub4d2 });

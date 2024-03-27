@@ -495,8 +495,15 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
       return <FifthStepSpeaking
         speakingChoices={this.state.speakingChoices}
         onChange={speakingChoices => this.setState({ speakingChoices })}
-        moveBack={() => this.setState({ subStep: SubStep.SpeakingStart })}
-        moveNext={() => this.setState({ subStep: SubStep.EntusiasmStart})} />
+        moveBack={() => {
+          this.props.saveAnswer(this.getAnswer());
+          this.setState({ subStep: SubStep.SpeakingStart })
+        }}
+        moveNext={() => {
+          console.log('move next');
+          this.props.saveAnswer(this.getAnswer());
+          this.setState({ subStep: SubStep.EntusiasmStart})
+        }} />
     } else if (this.state.subStep === SubStep.SpeakingStart) {
       return <FifthStepSpeakingStart
         moveBack={() => this.setState({ subStep: SubStep.Listening })}
@@ -508,7 +515,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           onChange={listeningChoices => this.setState({ listeningChoices })}
           moveBack={() => this.setState({ subStep: SubStep.ListenStart })}
           moveNext={async () => {
-            await this.props.saveAnswer(this.getAnswer());
+            this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.SpeakingStart });
           }} />
       );

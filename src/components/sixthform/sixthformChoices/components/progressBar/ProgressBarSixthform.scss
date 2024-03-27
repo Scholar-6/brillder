@@ -92,7 +92,7 @@
 
   .paging-3c1 {
     margin-left: 0.8vw;
-    margin-bottom: 1vw;
+    margin-bottom: 1vh;
   }
 
   svg {
@@ -151,7 +151,7 @@
 
   .paging-3c1 {
     margin-left: 0.3vw;
-    margin-bottom: 1vw;
+    margin-bottom: 1vh;
   }
 }
 
@@ -343,6 +343,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &.big-box-r32 {
+    min-width: 17vh;
+    > div {
+      min-height: 17vh;
+    }
   }
 
   .quotes-and-title-container-r322 {

@@ -21,7 +21,7 @@ const ProgressBarStep3C1: React.FC<Props> = (props) => {
       </div>
       <div className="font-14 paging-3c1">{step + 1}/{total} subjects</div>
 
-      <div className="progress-custom-r32">
+      <div className="progress-custom-r32 big-box-r32">
         <div className="relative">
           <div className="quotes-and-title-container-r322">
             <svg className="qoute-start-r324" viewBox="0 0 47 33" fill="none" xmlns="http://www.w3.org/2000/svg">
