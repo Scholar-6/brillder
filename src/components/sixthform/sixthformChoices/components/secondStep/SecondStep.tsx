@@ -137,7 +137,6 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ coursesD });
               let answer = this.getAnswer();
               answer.coursesD = coursesD;
-              console.log(answer);
               this.props.saveAnswer(answer);
             }}
             moveBack={coursesD => {

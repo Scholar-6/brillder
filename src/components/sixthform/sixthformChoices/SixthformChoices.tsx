@@ -439,10 +439,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   async saveSecondAnswer(answer: any) {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question2);
-    console.log(result);
     if (result) {
       this.parseAnswer2(result, answer, Pages.Question2);
-      console.log(this.state.subjectType);
       this.setState({
         subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores),
         allSubjects: result.subjectScores
