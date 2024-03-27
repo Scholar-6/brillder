@@ -230,21 +230,21 @@
   }
 }
 
-@keyframes run {
+@keyframes fade-out {
   0% {
-    left: 46vw;
+    opacity: 1;
   }
-  50% {
-    left: 0;
+  100% {
+    opacity: 0;
   }
 }
 
-@keyframes move-right {
+@keyframes fade-in {
   0% {
-    left: 0;
+    opacity: 0;
   }
   100% {
-    left: -46vw;
+    opacity: 1;
   }
 }
 
@@ -264,17 +264,19 @@
   }
 
   .animating-left {
+    opacity: 0;
     top: 0;
     width: 46vw;
     position: absolute;
-    animation: run 0.24s;
+    animation: fade-in 0.3s forwards;
   }
 
   .animating-right {
+    opacity: 1;
     top: 0;
     width: 46vw;
     position: absolute;
-    animation: move-right 0.7s;
+    animation: fade-out 0.3s forwards;
   }
 }
 
@@ -285,27 +287,28 @@
   position: relative;
 
   > div {
-    min-height: 14vh;
+    min-height: 12vh;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 2vh;
     padding-left: 0.5vw;
     padding-right: 0.5vw;
   }
 
   .animating-left {
-    top: 0;
+    opacity: 0;
+    top: 2vh;
     width: 65vw;
     position: absolute;
-    animation: run 0.24s;
+    animation: fade-in 0.3s forwards;
   }
 
   .animating-right {
-    top: 0;
+    opacity: 1;
+    top: 2vh;
     width: 65vw;
     position: absolute;
-    animation: move-right 0.7s;
+    animation: fade-out 0.3s forwards;
   }
 }
 
@@ -342,18 +345,26 @@
     justify-content: center;
   }
 
+  .quotes-and-title-container-r322 {
+    position: absolute;
+    top: 0;
+    width: 65vw;
+  }
+
   .animating-left {
+    opacity: 0;
     top: 2vw;
     width: 65vw;
     position: absolute;
-    animation: run 1s;
+    animation: fade-in 0.3s forwards;
   }
 
   .animating-right {
+    opacity: 1;
     top: 2vw;
     width: 65vw;
     position: absolute;
-    animation: move-right 1s;
+    animation: fade-out 0.3s forwards;
   }
 }
 

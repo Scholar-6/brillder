@@ -6,7 +6,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Dialog } from "@material-ui/core";
 
 export enum ThirdStepDChoice {
-  First,
+  First = 1,
   Second,
   Forth
 }
@@ -50,11 +50,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       icon: 'six-frame0',
       name: 'Agriculture, Environmental & Animal Care',
       subjects: [{ name: 'Agriculture, Land Management & Production' }, { name: 'Animal Care & Management' }],
-    }, /*{
-      icon: 'six-frame1',
-      name: 'Catering & Hospitality',
-      subjects: [{ name: 'Catering' }],
-    },*/ {
+    }, {
       icon: 'six-frame2',
       name: 'Creative & Design',
       subjects: [{ name: 'Craft & Design' }, { name: 'Media Broadcast & Production' }],
@@ -106,6 +102,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     let choice = null;
+    console.log(props.answer);
     if (props.answer) {
       if (props.answer.choice !== null) {
         choice = props.answer.choice;
@@ -225,13 +222,14 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     }
     return (
       <button className={className} disabled={disabled} onClick={() => {
+        let answer = this.getAnswer();
+        console.log('save answer 777', answer);
+        this.saveAnswer();
         if (this.state.choice === ThirdStepDChoice.Forth) {
           this.setState({ popupOpen: true });
         } else if (this.state.choice === ThirdStepDChoice.First) {
           this.setState({ subStep: ThirdStepDSubStep.TableLeaf });
         } else {
-          this.saveAnswer();
-          //this.props.moveToStepF();
           this.props.moveNext();
         }
       }}>Continue</button>
@@ -284,7 +282,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
-            //this.setState({ subStep: ThirdStepDSubStep.LastStep });
             this.saveAnswer();
             this.props.moveNext();
           }}>Continue</button>

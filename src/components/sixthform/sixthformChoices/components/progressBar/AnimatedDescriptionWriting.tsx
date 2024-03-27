@@ -21,7 +21,7 @@ const AnimatedDescriptionWriting: React.FC<Props> = (props) => {
       setDescription(props.description);
       setPrevStep(props.step);
       setTitle(props.title);
-    }, 500);
+    }, 400);
   }, [props.description]);
 
   if (animateRight) {

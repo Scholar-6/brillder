@@ -65,7 +65,7 @@ const SixStepFinal: React.FC<WelcomeProps> = (props) => {
         <div className="flex-center">
           <button className="outcome-btn font-24" onClick={() => {
             props.history.push(map.SixthformOutcome);
-          }}>See my outcomes</button>
+          }}>See My Outcomes</button>
         </div>
       </div>
     </div>

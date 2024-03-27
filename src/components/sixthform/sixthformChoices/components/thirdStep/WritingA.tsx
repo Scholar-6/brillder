@@ -9,7 +9,7 @@ export enum WritingChoice {
 }
 
 export enum WritingChoice {
-  first,
+  first = 1,
   second,
   third,
   fourth,
