@@ -17,6 +17,7 @@ enum SubStep {
 interface Props {
   history: any;
   answer: any;
+  canSkip: boolean;
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
   moveBack(answer: any): void;
@@ -311,6 +312,8 @@ class SixStep extends Component<Props, State> {
 
     return (
       <FifthStepWelcome
+        canSkip={this.props.canSkip}
+        onSkip={() => this.props.moveNext(this.getAnswer())}
         moveNext={() => this.setState({ subStep: SubStep.sub5a })}
         moveBack={() => this.props.moveBack(this.getAnswer())}
       />

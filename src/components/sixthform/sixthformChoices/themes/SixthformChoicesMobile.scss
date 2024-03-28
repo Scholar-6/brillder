@@ -1,0 +1,297 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.SixthformChoicesPage {
+  $font-scale: 3;
+  background: white !important;
+
+  .header-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 4;
+    height: 16vw !important;
+    border-bottom-right-radius: 8vw;
+    background: var(--theme-light-blue) !important;
+
+    .header-logo {
+      position: relative;
+
+      .red-shape-r23 {
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        left: 7.4vw;
+        width: 9vw;
+        height: 13vw;
+      }
+
+      .white-logo-r23 {
+        position: absolute;
+        top: 5vw;
+        left: 2.8vw;
+        height: 6vw;
+        width: 19vw;
+        z-index: 2;
+      }
+
+      .course-absolute-text {
+        position: absolute;
+        top: 9vw;
+        left: 2.8vw;
+        z-index: 3;
+        color: white;
+        font-size: 2.8vw;
+      }
+    }
+
+    .logout-container {
+      height: 100%;
+      padding-left: 0 !important;
+      margin-left: 21vw !important;
+      background: unset !important;
+    }
+
+    .progress-bar-sixthform {
+      margin-bottom: 0 !important;
+
+      .step-s6 {
+        width: 7vw !important;
+        height: 7vw !important;
+        font-size: 4.2vw !important;
+      }
+
+      .line-r23 {
+        margin-top: 3vw !important;
+      }
+    }
+  }
+
+  .sixthform-bottom-menu {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    width: 100vw;
+    height: 9vh;
+    background: var(--theme-light-blue);
+    border-top-left-radius: 2vw;
+    border-top-right-radius: 2vw;
+    color: white;
+    transition: all 300ms ease-in-out;
+
+    &.expanded {
+      height: 80vh;
+    }
+
+    > div {
+      margin-top: 2vw;
+    }
+
+    .label-r323 {
+      width: 85vw;
+      margin-left: 3vw;
+    }
+
+    svg {
+      width: 7vw;
+      height: 7vw;
+      transition: all 300ms ease-in-out;
+
+      &.expanded {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+
+
+
+
+  /* fonts */
+  .font-8 {
+    font-size: calc(0.5vw * $font-scale);
+  }
+
+  .font-11 {
+    font-size: calc(0.6875vw * $font-scale);
+  }
+
+  .font-12 {
+    font-size: calc(0.75vw * $font-scale);
+  }
+
+  .font-13 {
+    font-size: calc(0.81vw * $font-scale);
+  }
+
+  .font-14 {
+    font-size: calc(0.875vw * $font-scale) !important;
+  }
+
+  .font-15 {
+    font-size: calc(0.9375vw * $font-scale);
+  }
+
+  .font-16 {
+    font-size: calc(1vw * $font-scale);
+  }
+
+  .font-18 {
+    font-size: calc(1.125vw * $font-scale);
+  }
+
+  .font-20 {
+    font-size: calc(1.25vw * $font-scale);
+  }
+
+  .font-22 {
+    font-size: calc(1.35vw * $font-scale);
+  }
+
+  .font-24 {
+    font-size: calc(1.5vw * $font-scale);
+  }
+
+  .font-25 {
+    font-size: calc(1.56vw * $font-scale);
+  }
+
+  .font-32 {
+    font-size: calc(2vw * $font-scale);
+  }
+
+  .font-36 {
+    font-size: calc(2.25vw * $font-scale);
+  }
+
+  .font-40 {
+    font-size: calc(2.5vw * $font-scale);
+  }
+
+  .font-48 {
+    font-size: calc(2.99vw * $font-scale);
+  }
+
+  .font-58 {
+    font-size: calc(3.48vw * $font-scale);
+  }
+
+
+
+
+
+
+
+
+
+
+
+  // question
+  .brick-row-container {
+    margin-left: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+    height: calc(100% - 15vw) !important;
+
+    .absolute-back-btn {
+      font-size: 5vw !important;
+
+      svg {
+        width: 6vw !important;
+        height: 6vw !important;
+      }
+    }
+
+    .absolute-contunue-btn {
+      width: 60vw !important;
+      border-radius: 3vw;
+      font-size: 5vw;
+      background: var(--theme-orange) !important;
+    }
+  }
+
+  .question {
+    position: relative;
+    margin-top: 15vw;
+  }
+
+  .mask-step-img {
+    height: 37vw !important;
+  }
+  .question-text {
+    padding-left: 4vw;
+  }
+  .boxes-container {
+    margin-left: 4vw;
+    width: 92vw;
+    .check-box-container {
+      border-radius: 2vw !important;
+      max-width: unset !important;
+
+      .main-box {
+        position: relative;
+        padding-left: 7vw !important;
+
+        svg {
+          padding-left: 0 !important;
+        }
+      }
+      svg {
+        top: 0 !important;
+        padding-left: 1vw;
+        width: 5vw;
+        height: 100%;
+      }
+    }
+
+    .current-school-autocomplete {
+      border-radius: 3vw !important;
+      .MuiAutocomplete-root,
+      .MuiFormControl-root,
+      .MuiInputBase-root {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        border-radius: 3vw !important;
+        input {
+          padding-left: 4vw !important;
+        }
+      }
+    }
+  }
+
+  .checkbox-rd1 {
+    padding-left: 9vw !important;
+  }
+
+  .help-without {
+    border-radius: 2vw !important;
+    width: 92vw !important;
+
+    svg {
+      padding-right: 2vw;
+      width: 8vw !important;
+      height: 8vw !important;
+    }
+  }
+
+  .schools-and-colleges-r65 {
+    .absolute-gradient-w-img {
+      position: absolute;
+      z-index: 3;
+      top: 59vw;
+      left: 0;
+      width: 100vw;
+    }
+    .text-container-5432 {
+      z-index: 4;
+      position: absolute;
+      left: 4vw;
+      top: 70vw;
+    }
+  }
+}

@@ -38,6 +38,7 @@ interface TLevelCourse {
 interface ThirdProps {
   secondAnswer: any;
   answer: any;
+  canSkip: boolean;
   moveNext(answer: any): void;
   moveBack(answer: any): void;
   saveAnswer(answer: any): void;
@@ -1206,6 +1207,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     return <FourthStepWelcome
+      canSkip={this.props.canSkip}
+      onSkip={() => this.props.moveNext(this.getAnswer())}
       moveNext={() => this.setState({ subStep: SubStep.sub4a })}
       moveBack={() => this.props.moveBack(this.getAnswer())}
     />;

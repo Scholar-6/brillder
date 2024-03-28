@@ -1,12 +1,33 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
+import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 interface WelcomeProps {
+  canSkip: boolean;
+  onSkip(): void;
   moveNext(): void;
   moveBack(): void;
 }
 
 const SixthStepWelcome: React.FC<WelcomeProps> = (props) => {
+  if (isPhone()) {
+    return (
+      <div className="question schools-and-colleges-r65">
+        <img src="/images/choicesTool/phone/SCHOOLSANDCOLLEGES.png" className="step2background-img" />
+        <img className="absolute-gradient-w-img" src="/images/choicesTool/phone/gradient-white.png" />
+        <div className="text-container-5432">
+          <div>
+            <div className="font-20">Step 1</div>
+            <div className="font-48 bold s-text-323">SCHOOLS AND COLLEGES</div>
+          </div>
+        </div>
+        <BackButtonSix onClick={props.moveBack} />
+        {props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
+        <button className="absolute-contunue-btn font-24" onClick={props.moveNext}>Start</button>
+      </div>
+    );
+  }
   return (
     <div className="question">
       <img src="/images/choicesTool/Step2background.png" className="step2background-img" />
@@ -17,6 +38,7 @@ const SixthStepWelcome: React.FC<WelcomeProps> = (props) => {
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />
+      {props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
       <button className="absolute-contunue-btn font-24" onClick={props.moveNext}>Start</button>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import FifthStepWelcome from "./SixStepWelcome";
+import SixStepWelcome from "./SixStepWelcome";
 import SixStepFinal from "./SixStepFinal";
 import StepDreams from "./StepDreams";
 
@@ -191,7 +191,7 @@ class SixStep extends Component<Props, State> {
     }
 
     return (
-      <FifthStepWelcome
+      <SixStepWelcome
         moveNext={() => this.setState({ subStep: SubStep.Dreams })}
         moveBack={() => this.props.moveBack(this.getAnswer())}
       />

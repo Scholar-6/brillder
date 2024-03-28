@@ -1,0 +1,62 @@
+@import 'src/assets/sass/partials/variables';
+@import 'src/assets/sass/partials/mixins';
+@import 'src/assets/sass/partials/extensions';
+
+.SixthformChoicesPage .WelcomePageChoices {
+  position: relative;
+  .absolute-welcome-img {
+    z-index: 1;
+    position: absolute;
+    top: -10vw;
+    left: 0;
+    width: 100vw;
+    height: unset !important;
+  }
+  .absolute-gradient-w-img {
+    z-index: 2;
+    position: absolute;
+    top: 34.6vw;
+    left: 0;
+    width: 100vw;    
+  }
+
+  .absolute-welcome-content {
+    position: absolute;
+    z-index: 2;
+    top: 50vw;
+    left: 0;
+
+    > div {
+      width: 92vw !important;
+      height: 100% !important;
+    }
+    
+    .big-text-q1 {
+      padding-left: 4vw;
+      text-align: left !important;
+    }
+
+    .choice-steps-svg {
+      padding-left: 4vw;
+      max-width: 92vw !important;
+      height: 20vh !important;
+    }
+
+    .choice-sidebar-svg {
+      padding-left: 4vw;
+      max-width: 92vw !important;
+      height: 20vh !important;
+    }
+  }
+
+  .absolute-contunue-btn {
+    position: absolute;
+    z-index: 2;
+    bottom: 17vw;
+    left: 4vw;
+    width: 92vw !important;
+    height: 10vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+}

@@ -28,6 +28,7 @@ export enum ThirdSubStep {
 interface ThirdProps {
   firstAnswer: any;
   answer: any;
+  canSkip: boolean;
   subjects: SixthformSubject[];
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
@@ -325,6 +326,8 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
     }
 
     return <SecondStepWelcome
+      canSkip={this.props.canSkip}
+      onSkip={() => this.props.moveNext(this.getAnswer())}
       moveNext={() => this.setState({ subStep: ThirdSubStep.First })}
       moveBack={() => this.props.moveBack(this.getAnswer())}
     />

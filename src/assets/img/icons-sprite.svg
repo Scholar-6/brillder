@@ -4123,4 +4123,22 @@
       <path d="M14.625 9V16" stroke="#001C58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
     </g>
   </svg>
+  <svg id="Skip-six" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_8672_5634)">
+      <path d="M4 5V19L16 12L4 5Z" stroke="#4C608A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M20 5V19" stroke="#4C608A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+  </svg>
+  <svg id="double-arrows-r342" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#clip0_8548_11772)">
+      <path d="M7 11L12 6L17 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M7 17L12 12L17 17" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <defs>
+      <clipPath id="clip0_8548_11772">
+        <rect width="24" height="24" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+
 </svg>
