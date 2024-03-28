@@ -183,6 +183,6 @@ const mapDispatch = (dispatch: any) => ({
   loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-const connector = connect(null, mapDispatch)
+const connector = connect(null, mapDispatch);
 
 export default connector(SixthformLoginPage);

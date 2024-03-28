@@ -55,15 +55,15 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     subjects = shuffle(subjects);
 
     let answers = [{
-      name: "“the scientific study of the mind and behaviour, including brain function, decision making,<br/> gender differences and child development”"
+      name: "the scientific study of the mind and behaviour, including brain function, decision making,<br/> gender differences and child development"
     }, {
-      name: "“the study of how society is organised, including issues such as class,<br/> crime, the family, culture, gender and identity”"
+      name: "the study of how society is organised, including issues such as class,<br/> crime, the family, culture, gender and identity"
     }, {
-      name: "“the study of commercial operations, including financing, resource management, and strategy”"
+      name: "the study of commercial operations, including financing, resource management, and strategy"
     }, {
-      name: "“the study of the production, consumption and distribution of goods and services”"
+      name: "the study of the production, consumption and distribution of goods and services"
     }, {
-      name: "“the study of governance, policy, ideology, and power struggles between groups”"
+      name: "the study of governance, policy, ideology, and power struggles between groups"
     }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {

@@ -7,6 +7,7 @@ import './SixthformLoginPage.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import { login } from "services/axios/auth";
 import userActions from 'redux/actions/user';
+import actions from "redux/actions/auth";
 import { User } from 'model/user';
 import map from 'components/map';
 import routes from './routes';
@@ -14,6 +15,7 @@ import routes from './routes';
 
 interface Props {
   getUser(): Promise<User>;
+  loginSuccess(): void;
 }
 
 const SixthformSignInPage: React.FC<Props> = (props) => {
@@ -29,16 +31,17 @@ const SixthformSignInPage: React.FC<Props> = (props) => {
     let data = await login(email, password);
     if (!data.isError) {
       if (data === "OK") {
+        props.loginSuccess();
         history.push(map.SixthformChoices);
-        return;
+      } else {
+        let { msg } = data;
+        if (!msg) {
+          const { errors } = data;
+          msg = errors[0].msg;
+        }
+        toggleAlertMessage(true);
+        setAlertMessage(msg);
       }
-      let { msg } = data;
-      if (!msg) {
-        const { errors } = data;
-        msg = errors[0].msg;
-      }
-      toggleAlertMessage(true);
-      setAlertMessage(msg);
     } else {
       const { response } = data;
       if (response) {
@@ -51,6 +54,8 @@ const SixthformSignInPage: React.FC<Props> = (props) => {
             setAlertMessage("Email or Password is wrong");
             // register(email, password);
           }
+        } else {
+          history.push()
         }
       } else {
         // register
@@ -125,8 +130,10 @@ const SixthformSignInPage: React.FC<Props> = (props) => {
 
 const mapDispatch = (dispatch: any) => ({
   getUser: () => dispatch(userActions.getUser()),
+  loginSuccess: () => dispatch(actions.loginSuccess()),
 });
 
-const connector = connect(null, mapDispatch)
+
+const connector = connect(null, mapDispatch);
 
 export default connector(SixthformSignInPage);
