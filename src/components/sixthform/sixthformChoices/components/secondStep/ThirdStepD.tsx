@@ -153,30 +153,31 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     }
   }
 
+  toggleSubject(course: TLevelCourse, onChange: Function) {
+    const checked = course.subjects.find(s => s.checked);
+    if (!course.expanded) {
+      course.expanded = !course.expanded;
+      onChange();
+    } else if (!checked) {
+      course.expanded = !course.expanded;
+      onChange();
+    }
+  }
+
   renderList(className: string, list: TLevelCourse[], onChange: Function) {
     return (
       <div>
         {list.map((course, i) => {
           return (
             <div key={i} className={"course-box-r-23 " + className}>
-              <div className="font-16 bold flex">
+              <div className="font-16 clickable-box-r23 bold flex" onClick={() => this.toggleSubject(course, onChange)}>
                 <div className="flex-center big-r-23">
                   <SpriteIcon name={course.icon} />
                 </div>
                 <div className="flex-y-center course-name-r23">
                   {course.name}
                 </div>
-                <div className="flex-center coursor-pointer" onClick={() => {
-                  const checked = course.subjects.find(s => s.checked);
-
-                  if (!course.expanded) {
-                    course.expanded = !course.expanded;
-                    onChange();
-                  } else if (!checked) {
-                    course.expanded = !course.expanded;
-                    onChange();
-                  }
-                }}>
+                <div className="flex-center coursor-pointer">
                   <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
                 </div>
               </div>
