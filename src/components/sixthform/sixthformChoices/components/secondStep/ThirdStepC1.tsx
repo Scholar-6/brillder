@@ -50,6 +50,10 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
       icon: 'politics-3c1',
       correctIndex: 4,
       name: "Politics"
+    }, {
+      icon: 'Law-3c2',
+      correctIndex: 4,
+      name: "Law"
     }];
 
     subjects = shuffle(subjects);
