@@ -12,6 +12,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getSixthformSchools } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";
 import ThirdStepBTable from "./ThirdStepBTable";
+import { isPhone } from "services/phone";
 
 
 enum SubStep {
@@ -35,6 +36,7 @@ enum SixthformChoice {
 
 interface SecondQuestionProps {
   answer: any;
+  canSkip: boolean;
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
 }
@@ -643,9 +645,15 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       return (
         <div className="question">
           <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
+          {isPhone() ? <div className="bold font-32 question-text">
+            Some schools and<br />
+            colleges share the<br />
+            courses they offer with<br />
+            our database.
+          </div> :
           <div className="bold font-32 question-text">
             Some schools and colleges share the courses they offer<br /> with our database.
-          </div>
+          </div>}
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
             <CheckBoxV2
@@ -704,6 +712,8 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       );
     } else if (this.state.subStep === SubStep.Start) {
       return <FirstStepWelcome
+        canSkip={this.props.canSkip}
+        onSkip={() => this.props.moveNext(this.getAnswer())}
         moveNext={() => this.setState({ subStep: SubStep.First })}
         moveBack={() => this.setState({ subStep: SubStep.Welcome })}
       />

@@ -84,6 +84,7 @@ export enum SixStepSixthChoices {
 
 interface SecondQuestionProps {
   answer: any;
+  canSkip: boolean;
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
   moveBack(answer: any): void;
@@ -618,6 +619,8 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
       );
     }
     return <ThirdStepWelcome
+      canSkip={this.props.canSkip}
+      onSkip={() => this.props.moveNext(this.getAnswer())}
       moveBack={() => this.moveBack()}
       moveNext={() => this.setState({ subStep: SubStep.ReadingV1 })}
     />
