@@ -67,7 +67,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     }];
 
     if (this.props.pairAnswers && this.props.pairAnswers.length > 0) {
-      answers = this.props.pairAnswers;
+      //answers = this.props.pairAnswers;
     }
 
     this.state = {
