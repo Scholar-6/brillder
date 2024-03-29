@@ -18,6 +18,7 @@ import SubjectTasters from "./subjectTasters/SubjectTasters";
 import { Pages, SubjectType } from "../sixthformChoices/SixthformChoices";
 import ProgressBox from "./ProgressBox";
 import TopMenu from "./TopMenu";
+import ProfilePage from "./ProfilePage";
 
 
 interface UserProfileProps {
@@ -27,10 +28,10 @@ interface UserProfileProps {
   match: any;
 }
 
-enum SixActiveTab {
-  Survey,
+export enum SixActivePage {
   SubjectTasters,
-  Outcome
+  Outcome,
+  Profile,
 }
 
 interface UserProfileState {
@@ -40,7 +41,7 @@ interface UserProfileState {
   possibleList: SixthformSubject[];
   subjects: SixthformSubject[];
   otherSubjects: SixthformSubject[];
-  activeTab: SixActiveTab;
+  activePage: SixActivePage;
   canPutDefinites: boolean;
   definitiesSortKey: number;
   loading: boolean;
@@ -50,10 +51,12 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   constructor(props: UserProfileProps) {
     super(props);
 
-    let activeTab = SixActiveTab.Outcome;
+    let activePage = SixActivePage.Outcome;
 
     if (props.match.path === map.SixthformTaster) {
-      activeTab = SixActiveTab.SubjectTasters;
+      activePage = SixActivePage.SubjectTasters;
+    } else if (props.match.path === map.SixthformProfile) {
+      activePage = SixActivePage.Profile;
     }
 
     this.state = {
@@ -64,7 +67,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       possibleList: [],
       subjects: [],
       otherSubjects: [],
-      activeTab,
+      activePage,
       canPutDefinites: true,
       definitiesSortKey: 1,
     }
@@ -576,7 +579,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderOutcomeTabContent(progressScore: number) {
-    let answer2 = null;
     let lastStep = 0;
     let answers = this.state.answers;
 
@@ -586,25 +588,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           lastStep = answer.step;
         }
       }
-
-      answer2 = answers.find(a => a.step === 2);
     }
 
     return (
       <div className="top-part-e354">
         <div className="tab-content-e354-container">
           <div className="tab-content-e354">
+            <div className="font-32 bold">My Outcomes</div>
             <div className="font-16 light">
               Below, you’ll find your Scholar 6 details and course outcomes based on your survey. You will also find taster subjects that you can take based on your survey results and subject rankings.
             </div>
             <div className="boxes-e354">
-              <div className="box-box box-first">
-                <SpriteIcon name="edit-icon-sixthform" />
-                <div className="opacity-04 font-16">ACCOUNT DETAILS</div>
-                <div className="font-16">{this.props.user.firstName} {this.props.user.lastName}</div>
-                <div className="font-16">{this.props.user.email}</div>
-                {this.renderCollegeName(answer2)}
-              </div>
               <ProgressBox progress={progressScore} history={this.props.history} answers={this.state.answers} loading={this.state.loading} />
             </div>
             <div className="box-e354-big">
@@ -636,38 +630,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
-  renderSurveyTabContent() {
-    return (
-      <div className="top-part-e354">
-        <div className="tab-content-e354 tab-content-survey">
-          <div className="flex-center">
-            <img alt="brill" className="brills-icon" src="/images/SixthformSurvey.png" />
-          </div>
-          <div className="flex-center font-36 bold">
-            Take our Six-Step Course Selector Survey
-          </div>
-          <div className="flex-center font-20">
-            Rank and score the options you are considering with a comprehensive assessment.
-          </div>
-          <div className="flex-center">
-            <div className="btn-orange font-20" onClick={() => {
-              this.props.history.push(map.SixthformChoices);
-            }}>
-              Take the Survey
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   renderTabContent(progressScore: number) {
-    if (this.state.activeTab === SixActiveTab.SubjectTasters) {
+    if (this.state.activePage === SixActivePage.SubjectTasters) {
       return this.renderTatersTabContent();
-    } else if (this.state.activeTab === SixActiveTab.Survey) {
-      return this.renderSurveyTabContent();
-    } else if (this.state.activeTab === SixActiveTab.Outcome) {
+    } else if (this.state.activePage === SixActivePage.Outcome) {
       return this.renderOutcomeTabContent(progressScore);
+    } else if (this.state.activePage === SixActivePage.Profile) {
+      return <ProfilePage user={this.props.user} />;
     }
   }
 
@@ -685,38 +654,14 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 </div>
               </div>
             </div>
-            <TopMenu progress={progressScore} history={this.props.history} />
+            <TopMenu
+              activePage={this.state.activePage} 
+              setActivePage={activePage => this.setState({activePage})}
+              progress={progressScore} history={this.props.history}
+            />
           </div>
           <div className="content-container-e354">
-            <div>
-              <div className="tab-container-e354 font-24">
-                <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Survey ? "active bold" : "not-active"}`}
-                  onClick={() => {
-                    this.setState({ activeTab: SixActiveTab.Survey });
-                  }}
-                >
-                  Six-Step Survey
-                </div>
-                <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.SubjectTasters ? "active bold" : "not-active"}`}
-                  onClick={() => {
-                    this.setState({ activeTab: SixActiveTab.SubjectTasters });
-                  }}
-                >
-                  Subject Tasters
-                </div>
-                <div
-                  className={`tab-e354 ${this.state.activeTab === SixActiveTab.Outcome ? "active bold" : "not-active"}`}
-                  onClick={() => {
-                    this.setState({ activeTab: SixActiveTab.Outcome });
-                  }}
-                >
-                  My Outcomes
-                </div>
-              </div>
-              {this.renderTabContent(progressScore)}
-            </div>
+            {this.renderTabContent(progressScore)}
           </div>
         </div>
       </React.Suspense>

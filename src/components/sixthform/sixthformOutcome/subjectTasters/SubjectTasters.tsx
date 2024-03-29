@@ -167,9 +167,10 @@ class SixthformTasters extends Component<UserProfileProps, UserProfileState> {
         <div className="tab-content-e354-container">
           <div className="tab-content-e354 taster-content font-28">
             <div className="flex-center">
-              <div className="bold title-above">
-                Try a new subject or test yourself against<br />
-                sixth form content and concepts in subjects you know.
+              <div className="title-above font-24">
+                <span className="font-32 bold">Subject Tasters</span><br/>
+                Try a new subject or test yourself against sixth form content <br />
+                and concepts in subjects you know.
               </div>
               <div className="search-box">
                 <SpriteIcon name="search-tasters" />

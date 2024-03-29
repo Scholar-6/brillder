@@ -2,29 +2,31 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { CircularProgressbar } from "react-circular-progressbar";
+import ReactDOM from 'react-dom';
 
 import { User } from 'model/user';
 import { Notification } from 'model/notifications';
 import { ReduxCombinedState } from 'redux/reducers';
 import notificationActions from 'redux/actions/notifications';
 
-import BrillIconAnimated from 'components/baseComponents/BrillIconAnimated';
-import MoreButton from 'components/baseComponents/pageHeader/MoreButton';
 import { isAuthenticated } from 'model/assignment';
 import BellButton from 'components/baseComponents/pageHeader/bellButton/BellButton';
-import MenuDropdown from 'components/baseComponents/pageHeader/MenuDropdown';
+import MenuDropdown from './MenuDropdown';
 import { PageEnum } from 'components/baseComponents/pageHeader/PageHeadWithMenu';
 import LogoutDialog from 'components/baseComponents/logoutDialog/LogoutDialog';
 import NotificationPanel from 'components/baseComponents/notificationPanel/NotificationPanel';
 import NotificationPopup from 'components/baseComponents/notificationPopup/NotificationPopup';
 import { isPhone } from 'services/phone';
-import ReactDOM from 'react-dom';
 import map from 'components/map';
+import { SixActivePage } from './SixthformOutcome';
 
 
 interface Props {
   history: any;
   progress: number;
+
+  activePage: SixActivePage;
+  setActivePage(page: SixActivePage): void;
 
   user: User | null;
   isAuthenticated: any;
@@ -34,6 +36,8 @@ interface Props {
 
 const TopMenu: React.FC<Props> = (props) => {
   const { user } = props;
+
+  const { activePage } = props;
 
   const pageHeader = React.useRef(null);
 
@@ -48,10 +52,28 @@ const TopMenu: React.FC<Props> = (props) => {
   }
 
   if (user) {
+    let rName = (user.firstName ? user.firstName[0] : '') + (user.lastName[0] ? user.lastName[0] : '');
     return (
       <div className="logout-container" ref={pageHeader}>
-        <div className="search-container font-32">
-          {user.firstName} Dashboard
+        <div className="top-buttons-r32 font-20">
+          <div
+            className={activePage === SixActivePage.Outcome ? 'active bold' : ''}
+            onClick={() => {
+              props.setActivePage(SixActivePage.Outcome);
+              props.history.push(map.SixthformOutcome);
+            }}
+          >
+            MY OUTCOMES
+          </div>
+          <div
+            className={activePage === SixActivePage.SubjectTasters ? 'active bold' : ''}
+            onClick={() => {
+              props.setActivePage(SixActivePage.SubjectTasters);
+              props.history.push(map.SixthformTaster);
+            }}
+          >
+            SUBJECT TASTERS
+          </div>
         </div>
         {user &&
           <Grid container direction="row" className="action-container">
@@ -70,20 +92,23 @@ const TopMenu: React.FC<Props> = (props) => {
                 value={props.progress}
               />
             </div>
-            <BrillIconAnimated />
             <BellButton
               notificationCount={notificationCount}
               onClick={() => setShowNotifications(true)}
             />
-            <MoreButton onClick={() => setMenuDropdown(true)} />
+            <div className="menu-btn flex-center bold font-24" onClick={() => setMenuDropdown(true)}>
+              {rName}
+            </div>
           </Grid>
         }
         {menuDropdown && <MenuDropdown
           dropdownShown={menuDropdown}
           hideDropdown={() => setMenuDropdown(false)}
-          user={user}
           page={PageEnum.SixthformOutcomes}
-          history={props.history}
+          moveToProfilePage={() => {
+            props.history.push(map.SixthformProfile);
+            props.setActivePage(SixActivePage.Profile);
+          }}
           onLogout={() => setLogoutOpen(true)}
         />}
         {props.user &&
@@ -114,7 +139,6 @@ const TopMenu: React.FC<Props> = (props) => {
     </div>
   );
 }
-
 
 const mapState = (state: ReduxCombinedState) => ({
   isAuthenticated: state.auth.isAuthenticated,

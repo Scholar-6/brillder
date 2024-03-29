@@ -14,6 +14,7 @@ export const ActivateAccount = '/activateAccount';
 export const SixthformChoices = '/sixthform-choices';
 export const SixthformOutcome = '/sixthform-outcome';
 export const SixthformTaster = "/sixthform-tasters";
+export const SixthformProfile = "/sixthform-profile";
 export const ActivateAccountEmail = ActivateAccount + '/email';
 export const ResetPassword = '/resetPassword';
 export const Build = '/build';
@@ -205,6 +206,7 @@ export default {
   SixthformChoices,
   SixthformOutcome,
   SixthformTaster,
+  SixthformProfile,
 
   NewBrick,
   ProposalStart,
