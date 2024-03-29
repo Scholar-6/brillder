@@ -25,6 +25,7 @@ import SubjectSidebarPopup from "./components/SubjectSidebarPopup";
 import { isPhone } from "services/phone";
 import PhoneBottomMenu from "./components/base/PhoneBottomMenu";
 import { hideZendesk } from "services/zendesk";
+import ZeroStep from "./components/zeroStep/ZeroStep";
 
 const MobileTheme = React.lazy(() => import('./themes/SixthformChoicesMobileTheme'));
 
@@ -37,7 +38,8 @@ interface UserProfileProps {
 }
 
 export enum Pages {
-  Question1 = 1,
+  Question0 = 1,
+  Question1,
   Question2,
   Question3,
   Question4,
@@ -78,7 +80,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     let subjectType = SubjectType.AllSubjects;
 
-    let page = Pages.Question1;
+    let page = Pages.Question0;
 
     // if step in params load from cash
     if (this.props.match.params.step) {
@@ -185,6 +187,24 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return 0;
     });
     return subjects;
+  }
+
+  parseZeroAnswer(result: any, answer: any, questionPage: Pages) {
+    if (result && result.result) {
+      const answerR1 = this.state.answers.find(a => a.step === questionPage);
+      if (answerR1) {
+        answerR1.answer.subStep = answer.subStep;
+        answerR1.answer.email = answer.email;
+        answerR1.answer.emailCorrected = answer.emailCorrected;
+        answerR1.answer.firstName = answer.firstName;
+        answerR1.answer.lastName = answer.lastName;
+        answerR1.answer.nameCorrected = answer.nameCorrected;
+      } else {
+        result.result.answer = JSON.parse(result.result.answer);
+        this.state.answers.push(result.result);
+        this.setState({ answers: [...this.state.answers] });
+      }
+    }
   }
 
   parseAnswer(result: any, answer: any, questionPage: Pages) {
@@ -430,6 +450,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     );
   }
 
+  async saveZeroAnswer(answer: any) {
+    const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question0);
+    if (result) {
+      this.parseAnswer(result, answer, Pages.Question0);
+      this.setState({
+        subjects: this.filterBySubjectType(this.state.subjectType, result.subjectScores),
+        allSubjects: result.subjectScores,
+      });
+    }
+  }
+
   async saveFirstAnswer(answer: any) {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
     if (result) {
@@ -522,7 +553,19 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderCourseContent() {
-    if (this.state.page === Pages.Question1) {
+    if (this.state.page === Pages.Question0) {
+      return <ZeroStep
+        answer={this.state.answers.find(a => a.step === Pages.Question0)}
+        saveAnswer={this.saveZeroAnswer.bind(this)}
+        moveNext={async (answer: any) => {
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question0);
+          if (result) {
+            this.parseZeroAnswer(result, answer, Pages.Question0);
+            this.setState({ page: Pages.Question1 });
+          }
+        }}
+      />
+    } else if (this.state.page === Pages.Question1) {
       return <FirstStep
         answer={this.state.answers.find(a => a.step === Pages.Question1)}
         canSkip={this.state.answers.find(s => s.step === Pages.Question2) !== undefined}
@@ -532,6 +575,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           if (result) {
             this.parseAnswer(result, answer, Pages.Question1);
             this.setState({ page: Pages.Question2 });
+          }
+        }}
+        moveBack={async (answer: any) => {
+          const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question1);
+          if (result) {
+            this.parseAnswer(result, answer, Pages.Question1);
+            this.setState({ page: Pages.Question0 });
           }
         }}
       />
@@ -747,63 +797,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         <div className="sidebar-footer"></div>
       </div>
     );
-  }
-
-  renderPhoneBottomMenu() {
-    /*
-    return (
-      <div className="sixthform-bottom-menu">
-        {this.state.page <= Pages.Question1 &&
-          <div className="subjects-select-box">
-            <div className="bold sidebar-title font-18">Show me:</div>
-            {this.renderSidebarCheckbox(SubjectType.ALevels, 'A-levels Only')}
-            {this.renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
-            {this.renderSidebarCheckbox(SubjectType.AllSubjects, 'All Subjects')}
-          </div>}
-        <div className="font-18 ranking-label">Your subject rankings <span className="score-lable-r23 font-16">Score</span></div>
-        <div className={`subjects-scrollbar font-16 ${this.state.page > Pages.Question1 ? 'big-subjects-sidebar' : ''}`}>
-          {this.state.subjects.map((subject, i) => {
-            return <div key={i} className="subject-box-r1" onMouseEnter={(event) => {
-              if (this.state.popupTimeout) {
-                clearTimeout(this.state.popupTimeout);
-              }
-              // get position of the element and calculate where to show the popup
-              const subjectPosition = (event.target as any).getBoundingClientRect();
-              const popupTimeout = setTimeout(() => {
-                if (this.state.leavePopupTimeout) {
-                  clearTimeout(this.state.leavePopupTimeout);
-                }
-                this.setState({ popupSubject: subject, popupTimeout: -1, subjectPosition });
-              }, 1000);
-              this.setState({ popupTimeout, currentPopupSubject: subject });
-            }} onMouseLeave={(e) => {
-
-              if (this.state.popupTimeout == -1) {
-                const leavePopupTimeout = setTimeout(() => {
-                  clearTimeout(this.state.popupTimeout);
-                  this.setState({ popupSubject: this.state.currentPopupSubject, subjectPosition: null });
-                }, 1000);
-                this.setState({ leavePopupTimeout });
-              }
-              this.setState({ currentPopupSubject: null });
-            }}>
-              {this.renderCircle(subject)}
-              <div className="subject-name">{subject.name}</div>
-              <div className="level-round font-12">{this.renderSubjectGroup(subject)}</div>
-              <div className="score-container">{subject.score}</div>
-              <SubjectSidebarPopup
-                subject={subject}
-                popupSubject={this.state.popupSubject}
-                subjectPosition={this.state.subjectPosition}
-                showPopup={() => this.setState({ brickPopup: { isOpen: true, brick: subject.brick } })}
-                updateSubject={() => this.updateSubject(subject)}
-              />
-            </div>
-          })}
-        </div>
-        <div className="sidebar-footer"></div>
-      </div>
-    );*/
   }
 
   render() {
