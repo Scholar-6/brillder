@@ -21,30 +21,30 @@ const ProgressBarSixthform: React.FC<Props> = (props) => {
   return (
     <div className="progress-bar-sixthform">
       <div>
-        {renderStep(1, step === Pages.Question1, step >= 1)}
+        {renderStep(1, step === Pages.Question1, step >= 2)}
         {isDesktop && <div className="font-12 progress-label-s6">COLLEGES</div>}
-      </div>
-      {renderLine(step >= 2)}
-      <div>
-        {renderStep(2, step === Pages.Question2, step >= 2)}
-        {isDesktop && <div className="font-12 progress-label-s6">SUBJECTS</div>}
       </div>
       {renderLine(step >= 3)}
       <div>
-        {renderStep(3, step === Pages.Question3, step >= 3)}
-        {isDesktop && <div className="font-12 progress-label-s6">EXTRACURRICULARS</div>}
+        {renderStep(2, step === Pages.Question2, step >= 3)}
+        {isDesktop && <div className="font-12 progress-label-s6">SUBJECTS</div>}
       </div>
       {renderLine(step >= 4)}
       <div>
-        {renderStep(4, step === Pages.Question4, step >= 4)}
-        {isDesktop && <div className="font-12 progress-label-s6">HIGHER EDUCATION</div>}
+        {renderStep(3, step === Pages.Question3, step >= 4)}
+        {isDesktop && <div className="font-12 progress-label-s6">EXTRACURRICULARS</div>}
       </div>
       {renderLine(step >= 5)}
       <div>
-        {renderStep(5, step === Pages.Question5, step >= 5)}
-        {isDesktop && <div className="font-12 progress-label-s6">CAREERS</div>}
+        {renderStep(4, step === Pages.Question4, step >= 5)}
+        {isDesktop && <div className="font-12 progress-label-s6">HIGHER EDUCATION</div>}
       </div>
       {renderLine(step >= 6)}
+      <div>
+        {renderStep(5, step === Pages.Question5, step >= 6)}
+        {isDesktop && <div className="font-12 progress-label-s6">CAREERS</div>}
+      </div>
+      {renderLine(step >= 7)}
       <div>
         {renderStep(6, step === Pages.Question6, false)}
         {isDesktop && <div className="font-12 progress-label-s6">DREAMS</div>}

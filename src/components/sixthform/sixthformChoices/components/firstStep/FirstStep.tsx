@@ -5,7 +5,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { enterPressed } from "components/services/key";
 import StepCourseSelect, { FirstChoice } from "./StepCourseSelect";
 import { KeyStage4Subject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
-import WelcomePage from "./welcomePage/WelcomePage";
 import FirstStepWelcome from "./FirstStepWelcome";
 import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
@@ -16,8 +15,7 @@ import { isPhone } from "services/phone";
 
 
 enum SubStep {
-  Welcome = 1,
-  Start,
+  Start = 1,
   First,
   Second,
   Third,
@@ -39,6 +37,7 @@ interface SecondQuestionProps {
   canSkip: boolean;
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
+  moveBack(answer: any): void;
 }
 
 interface SecondQuestionState {
@@ -69,7 +68,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
   constructor(props: SecondQuestionProps) {
     super(props);
 
-    let subStep = SubStep.Welcome;
+    let subStep = SubStep.Start;
 
     let sixthformChoice = null;
     let schoolName = '';
@@ -442,7 +441,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             this.setState({ showMathWarning: true });
           } else {
             this.props.saveAnswer(this.getAnswer());
-            this.setState({subStep: SubStep.Third});
+            this.setState({ subStep: SubStep.Third });
           }
         }
       }}>Continue</button>
@@ -462,7 +461,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     return (
       <button className={className} disabled={disabled} onClick={() => {
         this.props.saveAnswer(this.getAnswer());
-        this.setState({subStep: SubStep.Fourth});
+        this.setState({ subStep: SubStep.Fourth });
       }}>Continue</button>
     );
   }
@@ -651,9 +650,9 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             courses they offer with<br />
             our database.
           </div> :
-          <div className="bold font-32 question-text">
-            Some schools and colleges share the courses they offer<br /> with our database.
-          </div>}
+            <div className="bold font-32 question-text">
+              Some schools and colleges share the courses they offer<br /> with our database.
+            </div>}
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
             <CheckBoxV2
@@ -710,16 +709,13 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
           >Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.Start) {
-      return <FirstStepWelcome
-        canSkip={this.props.canSkip}
-        onSkip={() => this.props.moveNext(this.getAnswer())}
-        moveNext={() => this.setState({ subStep: SubStep.First })}
-        moveBack={() => this.setState({ subStep: SubStep.Welcome })}
-      />
     }
-
-    return <WelcomePage moveNext={() => this.setState({ subStep: SubStep.Start })} />;
+    return <FirstStepWelcome
+      canSkip={this.props.canSkip}
+      onSkip={() => this.props.moveNext(this.getAnswer())}
+      moveNext={() => this.setState({ subStep: SubStep.First })}
+      moveBack={() => this.props.moveBack(this.getAnswer())}
+    />
   }
 }
 
