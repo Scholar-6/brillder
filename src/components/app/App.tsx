@@ -418,6 +418,7 @@ const App: React.FC<AppProps> = props => {
             <AllUsersRouteSixthform path={map.SixthformChoices} component={SixthFormChoices} />
             <AllUsersRouteSixthform path={map.SixthformOutcome} component={SixthformOutcome} />
             <AllUsersRouteSixthform path={map.SixthformTaster} component={SixthformOutcome} />
+            <AllUsersRouteSixthform path={map.SixthformProfile} component={SixthformOutcome} />
             <Route path={map.SixthformAuth} component={SixthformAuth} />
             
             <Route component={AuthRedirectRoute} />

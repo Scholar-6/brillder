@@ -5,6 +5,7 @@ import "./SixthformOutcome.scss";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProgressBarSixthformV2 from "../sixthformChoices/components/progressBar/ProgressBarSixthformV2";
 import map from "components/map";
+import { Pages } from "../sixthformChoices/SixthformChoices";
 
 
 interface ProgressProps {
@@ -37,15 +38,15 @@ class ProgressBox extends Component<ProgressProps> {
       );
     }
 
-    if (answers.length > 0) {
-      let lastStep = 0;
+    if (answers.length > 1) {
+      let lastStep = Pages.Question1;
       for (const answer of answers) {
         if (answer.step > lastStep) {
           lastStep = answer.step;
         }
       }
 
-      if (lastStep === 6) {
+      if (lastStep === Pages.Question6) {
         return (
           <div className="box-box box-second">
             <div className="second-box-top-text">
@@ -80,7 +81,7 @@ class ProgressBox extends Component<ProgressProps> {
             {this.renderStepper(lastStep)}
           </div>
           <div className="flex-end">
-            <div className="survey-button font-20" onClick={() => this.moveToStep(lastStep)}>
+            <div className="survey-button font-16" onClick={() => this.moveToStep(lastStep)}>
               Continue Survey
             </div>
           </div>
@@ -91,7 +92,7 @@ class ProgressBox extends Component<ProgressProps> {
         <div className="box-box box-second">
           <div className="opacity-04 font-16">SIXTH FORM COURSE SELECTOR:</div>
           <div className="opacity-04 font-15 flex-center not-started-label m-t-2-e3">
-            <SpriteIcon name="alert-triangle" />
+            <SpriteIcon name="alert-triangle" className="alert-triangle" />
             NOT STARTED
           </div>
           <div className="flex-center">
