@@ -809,7 +809,15 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         <div className="page1 dashboard-page SixthformChoicesPage">
           {isPhone() ? this.renderMobileHeader() : this.renderDesktopHeader()}
           <div className="sorted-row">
-            {isPhone() ? <PhoneBottomMenu /> : this.renderDesktopSidebar()}
+            {isPhone() 
+              ? <PhoneBottomMenu
+                page={this.state.page}
+                subjects={this.state.subjects}
+                subjectType={this.state.subjectType}
+                firstAnswer={this.state.answers.find(s => s.step === Pages.Question1)}
+                saveFirstAnswer={(answer) => this.saveFirstAnswer(answer)}
+              /> 
+              : this.renderDesktopSidebar()}
             <div className="brick-row-container">
               {this.renderCourseContent()}
             </div>
