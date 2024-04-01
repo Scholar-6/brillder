@@ -64,6 +64,8 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
+    console.log('subjects', subjects);
+
     const langNames = [
       "Arabic", "Bengali", "Chinese (Mandarin)", "Modern Greek", "Irish", "Gujarati",
       "Modern Hebrew", "Japanese", "Panjabi", "Persian", "Polish",
@@ -84,19 +86,19 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
     if (props.categoriesC4) {
       let categoriesC4 = props.categoriesC4;
       if (categoriesC4.subjects) {
-        subjects = categoriesC4.subjects;
+        //subjects = categoriesC4.subjects;
       }
       if (categoriesC4.interestedSubjects) {
-        interestedSubjects = categoriesC4.interestedSubjects;
+        //interestedSubjects = categoriesC4.interestedSubjects;
       }
       if (categoriesC4.quiteInterestedSubjects) {
-        quiteInterestedSubjects = categoriesC4.quiteInterestedSubjects;
+        //quiteInterestedSubjects = categoriesC4.quiteInterestedSubjects;
       }
       if (categoriesC4.modernLanguages) {
-        modernLanguages = categoriesC4.modernLanguages;
+        //modernLanguages = categoriesC4.modernLanguages;
       }
       if (categoriesC4.modernLanguagesExpanded) {
-        modernLanguagesExpanded = modernLanguagesExpanded;
+        //modernLanguagesExpanded = modernLanguagesExpanded;
       }
     }
 

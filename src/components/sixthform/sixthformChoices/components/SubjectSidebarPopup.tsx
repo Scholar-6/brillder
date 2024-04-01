@@ -48,7 +48,7 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
     return (
       <div className="switch-button font-12 bold">
         <div
-          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green' : ''}`}
+          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green green-switch' : 'green-switch'}`}
           onClick={() => {
             if (!subject.score) {
               subject.score = 0;
@@ -64,7 +64,7 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
             props.updateSubject(subject);
           }}>Definitely!</div>
         <div
-          className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow' : ''}`}
+          className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow yellow-switch' : 'yellow-switch'}`}
           onClick={() => {
             if (!subject.score) {
               subject.score = 0;
@@ -81,7 +81,7 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
             props.updateSubject(subject);
           }}>Maybe</div>
         <div
-          className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red' : ''}`}
+          className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red red-switch' : 'red-switch'}`}
           onClick={() => {
             if (!subject.score) {
               subject.score = 0;

@@ -590,7 +590,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       return <SecondStep
         firstAnswer={firstAnswer}
         canSkip={this.state.answers.find(s => s.step === Pages.Question3) !== undefined}
-        subjects={this.state.subjects}
+        subjects={this.state.allSubjects}
         answer={this.state.answers.find(a => a.step === Pages.Question2)}
         saveAnswer={answer => this.saveSecondAnswer(answer)}
         moveNext={answer => {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
+import ButtonR34 from "../ButtonR34";
 
 interface FirstQuestionProps {
   choice: FirstChoice;
@@ -70,22 +71,22 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
         <div className="bold font-32 question-text">
           What type of courses are you considering for the sixth form?
         </div>
-        <div className="boxes-container font-24">
-          <CheckBoxV2
+        <div className="font-24">
+          <ButtonR34
             currentChoice={FirstChoice.ALevel} choice={this.state.choice}
             label="A-level courses only" setChoice={choice => this.setChoice(choice)}
           />
-          <CheckBoxV2
+          <ButtonR34
             currentChoice={FirstChoice.Vocational} choice={this.state.choice} 
             label="Vocational courses only (e.g. BTEC, T-level)" setChoice={choice => this.setChoice(choice)} 
           />
-          <CheckBoxV2
+          <ButtonR34
             currentChoice={FirstChoice.ShowMeAll} choice={this.state.choice}
-            label="A-levels and vocational courses" setChoice={choice => this.setChoice(choice)}
+            label="All types of course" setChoice={choice => this.setChoice(choice)}
           />
-          <CheckBoxV2
+          <ButtonR34
             currentChoice={FirstChoice.Other} choice={this.state.choice}
-            label="Are there other types of sixth form courses?*"
+            label="A different kind of qualification,e.g. International Baccalaureate"
             setChoice={() => this.setState({ choice: FirstChoice.Other, popup: true })}
           />
         </div>
