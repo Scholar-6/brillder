@@ -814,6 +814,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 page={this.state.page}
                 subjects={this.state.subjects}
                 subjectType={this.state.subjectType}
+                updateSubject={(subject) => this.updateSubject(subject)}
                 firstAnswer={this.state.answers.find(s => s.step === Pages.Question1)}
                 saveFirstAnswer={(answer) => this.saveFirstAnswer(answer)}
               /> 

@@ -22,15 +22,15 @@ const WelcomePage: React.FC<TasterProps> = (props) => {
         <div className="absolute-welcome-content">
           <div className="relative">
             <div className="bold big-text-q1 font-58">Start to shape your future.</div>
-            <div className="flex-right margin-top-3vh">
+            <div className="flex-center margin-top-3vh">
               <ChoiceStepsSvgM />
             </div>
-            <div className="flex-right">
+            <div className="flex-center">
               <ChoiceSidebarSvgM />
             </div>
           </div>
         </div>
-        <button className="absolute-contunue-btn font-24" onClick={props.moveNext}>Let’s start</button>
+        <button className="absolute-contunue-btn flex-center font-24" onClick={props.moveNext}>Let’s start</button>
       </div>
     )
   }
