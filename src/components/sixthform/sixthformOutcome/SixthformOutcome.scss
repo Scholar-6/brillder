@@ -520,7 +520,7 @@
               align-items: center;
               justify-content: center;
               text-align: center;
-              width: 28.8vw;
+              width: 27.2vw;
               background: #193266B2;
               border: 2px solid #E5E6ED66;
               border-radius: 0.5vw;
@@ -569,17 +569,8 @@
                 }
               }
 
-              .subject-sixth-card> {
-                border-radius: 0.5vw;
-                background: white;
-
-                div {
-                  background: linear-gradient(255.62deg, #30C474 -138.07%, #FFFFFF 98.24%);
-
-                  .box-v32 {
-                    background: white;
-                  }
-                }
+              .subject-sixth-card> div {
+                border-top: 0.6vw solid var(--theme-green);
               }
             }
           }
@@ -946,8 +937,7 @@
   }
 
   .subject-sixth-card {
-    width: 28.8vw;
-    min-width: 28.5vw;
+    width: 27.2vw;
 
     >div {
       color: var(--theme-dark-blue);
