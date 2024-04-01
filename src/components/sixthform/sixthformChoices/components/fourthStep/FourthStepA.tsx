@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { Dialog } from "@material-ui/core";
 
 import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
-import { FirstChoice } from "../secondStep/StepCourseSelect";
-import { Dialog } from "@material-ui/core";
+import { FirstChoice } from "../firstStep/StepCourseSelect";
 
 interface FourthAProps {
   choice: FirstChoice;
@@ -51,7 +51,7 @@ class FourthStepA extends Component<FourthAProps, FourthAState> {
           <div className="bold font-32 question-text-4">
             Based on your answers, we think you are . . .
           </div>
-          <div className="boxes-container font-20">
+          <div className="boxes-container checkbox-container-r64 font-20">
             <CheckBoxV2
               currentChoice={FirstChoice.ALevel} choice={this.state.choice}
               label="Someone who will go to university after completing A-levels"

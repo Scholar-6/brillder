@@ -194,8 +194,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     return (
       <div className={`check-box-container container ${this.state.sixthformChoice === SixthformChoice.SixthForm ? "bold" : ""}`}>
         <div className="main-box" onClick={() => this.setState({ sixthformChoice: SixthformChoice.SixthForm })}>
-          Write the name of your chosen institution in the search box and press enter.
-          <SpriteIcon name={this.state.sixthformChoice === SixthformChoice.SixthForm ? 'radio-btn-active' : 'radio-btn-blue'} />
+          Select your chosen school or college from the list below.
         </div>
         <div className="current-school-autocomplete font-24">
           <Autocomplete
@@ -651,16 +650,13 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             our database.
           </div> :
             <div className="bold font-32 question-text">
-              Some schools and colleges share the courses they offer<br /> with our database.
+              Some schools and colleges share the courses they offer<br /> with us.
             </div>}
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
-            <CheckBoxV2
-              currentChoice={SixthformChoice.Forbid}
-              choice={this.state.sixthformChoice}
-              label="I have not chosen, or do not wish to disclose, my sixth form."
-              setChoice={sixthformChoice => this.setState({ sixthformChoice })}
-            />
+            <div className={this.state.sixthformChoice === SixthformChoice.Forbid ? 'active forbid-btn' : 'forbid-btn'} onClick={() => this.setState({ sixthformChoice: SixthformChoice.Forbid })}>
+              I haven’t yet chosen where to study, or my choice is not listed.
+            </div>
             {this.state.sixthformChoice === SixthformChoice.Forbid &&
               <div className="help-without font-16">
                 <div>

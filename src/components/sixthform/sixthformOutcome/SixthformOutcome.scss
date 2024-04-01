@@ -1081,8 +1081,18 @@
         padding-bottom: 0.6vh;
       }
 
-      .active {
-        border-radius: 0.5vw;
+      border-radius: 0.5vw;
+
+      .green-switch {
+        border: 1px solid var(--theme-green);
+      }
+
+      .yellow-switch {
+        border: 1px solid var(--theme-yellow);
+      }
+
+      .red-switch {
+        border: 1px solid var(--theme-orange);
       }
 
       .active-yellow {

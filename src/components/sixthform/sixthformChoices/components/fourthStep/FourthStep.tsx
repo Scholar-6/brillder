@@ -2,11 +2,11 @@ import React, { Component } from "react";
 
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
-import { FirstChoice } from "../secondStep/StepCourseSelect";
 import CheckBoxB from "../CheckBoxB";
 import FourthStepA from "./FourthStepA";
 import { Dialog } from "@material-ui/core";
 import FourthStepWelcome from "./FourthStepWelcome";
+import { FirstChoice } from "../firstStep/StepCourseSelect";
 
 enum SubStep {
   welcome,

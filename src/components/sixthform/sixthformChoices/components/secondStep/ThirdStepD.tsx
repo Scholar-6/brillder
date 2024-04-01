@@ -4,6 +4,7 @@ import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Dialog } from "@material-ui/core";
+import ButtonR34 from "../ButtonR34";
 
 export enum ThirdStepDChoice {
   First = 1,
@@ -305,16 +306,16 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           <div className="font-16 bold sub-title-e23">
             Which of the following best applies to you?
           </div>
-          <div className="boxes-container font-24">
-            <CheckBoxV2
+          <div className="font-24">
+            <ButtonR34
               currentChoice={ThirdStepDChoice.First} choice={this.state.choice}
               label="If the right T-level is available, I’d be interested." setChoice={choice => this.setChoice(choice)}
             />
-            <CheckBoxV2
+            <ButtonR34
               currentChoice={ThirdStepDChoice.Second} choice={this.state.choice}
               label="I don’t think T-levels are right for me." setChoice={choice => this.setChoice(choice)}
             />
-            <CheckBoxV2
+            <ButtonR34
               currentChoice={ThirdStepDChoice.Forth} choice={this.state.choice}
               label="I’m not really sure yet."
               setChoice={() => this.setState({ choice: ThirdStepDChoice.Forth })}

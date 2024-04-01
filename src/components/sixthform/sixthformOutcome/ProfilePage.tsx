@@ -16,11 +16,16 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
 
   const [isEditing, setEditing] = React.useState(false);
 
+  const save = () => {
+    // saving 
+    
+  }
+
   let rName = (firstName ? firstName[0] : '') + (lastName[0] ? lastName[0] : '');
   return <div className="profile-container">
     <div className="text-center bold font-28">My Profile</div>
     {isEditing ? <div className="top-btn-container">
-      <div className="save-btn font-16">Save</div>
+      <div className="save-btn font-16" onClick={() => save()}>Save</div>
     </div> :
     <div className="top-btn-container" onClick={() => setEditing(true)}>
       <SpriteIcon name="edit-icon-sixthform" className="pencil-btn" />

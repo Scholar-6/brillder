@@ -76,7 +76,7 @@ const ReadingV2: React.FC<ReadingV1Props> = (props) => {
       </div>
       <Grid container direction="row">
         <Grid item xs={6}>
-          <div className="boxes-container start font-16">
+          <div className="boxes-container checkbox-container-r64 start font-16">
             {renderReadingChoiceV2("Fiction", ReadingChoiceV2.Fiction)}
             {renderReadingChoiceV2("Science & Technology", ReadingChoiceV2.Science)}
             {renderReadingChoiceV2("Sport & Coaching", ReadingChoiceV2.Sport)}
@@ -86,7 +86,7 @@ const ReadingV2: React.FC<ReadingV1Props> = (props) => {
           </div>
         </Grid>
         <Grid item xs={6}>
-          <div className="boxes-container end font-16">
+          <div className="boxes-container checkbox-container-r64 end font-16">
             {renderReadingChoiceV2("History", ReadingChoiceV2.History)}
             {renderReadingChoiceV2("Biography / Autobiographies", ReadingChoiceV2.Biography)}
             {renderReadingChoiceV2("Art, Design and Architecture", ReadingChoiceV2.Art)}
