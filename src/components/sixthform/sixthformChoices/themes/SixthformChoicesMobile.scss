@@ -82,11 +82,7 @@
     color: white;
     transition: all 300ms ease-in-out;
 
-    &.expanded {
-      height: 80vh;
-    }
-
-    > div {
+    >div {
       margin-top: 2vw;
     }
 
@@ -102,6 +98,50 @@
 
       &.expanded {
         transform: rotate(180deg);
+      }
+    }
+
+    &.expanded {
+      height: calc(98% - 16vw);
+
+      .checkbox-m-r43 {
+        display: flex;
+        align-items: center;
+        margin-left: 3vw;
+
+        svg {
+          width: 3vw;
+          height: 3vw;
+          margin-right: 2vw;
+        }
+      }
+
+      .top-part-r54 {
+        height: 5%;
+      }
+
+      .bottom-part-r54 {
+        height: 91%;
+
+        .subjects-select-box {
+          height: 16vw;
+        }
+  
+        .label-r323 {
+          margin-top: 1vw;
+          height: 6vw;
+        }
+        .subjects-scrollbar {
+          height: calc(100% - 16vw - 7vw);
+          margin-left: 3vw;
+          margin-right: 3vw;
+          border-radius: 2.4vw;
+  
+          .subject-circle {
+            width: 2vw;
+            height: 2vw;
+          }
+        }
       }
     }
   }
@@ -223,12 +263,15 @@
   .mask-step-img {
     height: 37vw !important;
   }
+
   .question-text {
     padding-left: 4vw;
   }
+
   .boxes-container {
     margin-left: 4vw;
     width: 92vw;
+
     .check-box-container {
       border-radius: 2vw !important;
       max-width: unset !important;
@@ -241,6 +284,7 @@
           padding-left: 0 !important;
         }
       }
+
       svg {
         top: 0 !important;
         padding-left: 1vw;
@@ -251,12 +295,14 @@
 
     .current-school-autocomplete {
       border-radius: 3vw !important;
+
       .MuiAutocomplete-root,
       .MuiFormControl-root,
       .MuiInputBase-root {
         padding-right: 0 !important;
         padding-left: 0 !important;
         border-radius: 3vw !important;
+
         input {
           padding-left: 4vw !important;
         }
@@ -287,6 +333,7 @@
       left: 0;
       width: 100vw;
     }
+
     .text-container-5432 {
       z-index: 4;
       position: absolute;
