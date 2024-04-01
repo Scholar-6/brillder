@@ -2,6 +2,7 @@ import React from 'react';
 
 import { User } from 'model/user';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { updateUser } from 'services/axios/user';
 
 
 interface Props {
@@ -16,9 +17,22 @@ const ProfilePage: React.FC<Props> = ({ user }) => {
 
   const [isEditing, setEditing] = React.useState(false);
 
-  const save = () => {
+  const save = async () => {
+    let data = {
+      id: user.id,
+      firstName,
+      lastName,
+      email,
+      roles: user.roles.map(r => r.roleId),
+    } as any;
+    if (newPassword && newPassword.length > 6) {
+      data.password = newPassword;
+    }
     // saving 
-    
+    const saved = await updateUser(data);
+    if (saved) {
+      setEditing(false);
+    }
   }
 
   let rName = (firstName ? firstName[0] : '') + (lastName[0] ? lastName[0] : '');
