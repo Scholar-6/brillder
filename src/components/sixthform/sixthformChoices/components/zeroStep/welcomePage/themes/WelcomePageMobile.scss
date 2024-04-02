@@ -3,7 +3,9 @@
 @import 'src/assets/sass/partials/extensions';
 
 .SixthformChoicesPage .WelcomePageChoices {
-  position: relative;
+  height: 100%;
+  width: 100vw;
+  position: inherit;
   .absolute-welcome-img {
     z-index: 1;
     position: absolute;
@@ -53,14 +55,22 @@
     }
   }
 
-  .absolute-contunue-btn {
-    position: absolute;
-    z-index: 2;
-    bottom: 1%;
-    left: 4vw;
-    width: 92vw !important;
-    height: 10vw;
-    padding-left: 4vw;
-    padding-right: 4vw;
+  .welcome-page-top-part {
+    height: 84%;
+  }
+
+  .welcome-part-bottom-part {
+    height: 16%;
+    width: 100%;
+    .absolute-contunue-btn {
+      position: relative;
+      z-index: 2;
+      bottom: 0;
+      left: 4vw;
+      width: 92vw !important;
+      height: 10vw;
+      padding-left: 4vw;
+      padding-right: 4vw;
+    }
   }
 }
