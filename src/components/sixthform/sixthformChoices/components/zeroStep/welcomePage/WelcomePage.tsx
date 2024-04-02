@@ -17,20 +17,24 @@ const WelcomePage: React.FC<TasterProps> = (props) => {
     return (
       <div className="WelcomePageChoices">
         <MobileTheme />
-        <img className="absolute-welcome-img" src="/images/choicesTool/phone/instruction.png" />
-        <img className="absolute-gradient-w-img" src="/images/choicesTool/phone/gradient-white.png" />
-        <div className="absolute-welcome-content">
-          <div className="relative">
-            <div className="bold big-text-q1 font-58">Start to shape your future.</div>
-            <div className="flex-center margin-top-3vh">
-              <ChoiceStepsSvgM />
-            </div>
-            <div className="flex-center">
-              <ChoiceSidebarSvgM />
+        <div className="welcome-page-top-part">
+          <img className="absolute-welcome-img" src="/images/choicesTool/phone/instruction.png" />
+          <img className="absolute-gradient-w-img" src="/images/choicesTool/phone/gradient-white.png" />
+          <div className="absolute-welcome-content">
+            <div className="relative">
+              <div className="bold big-text-q1 font-58">Start to shape your future.</div>
+              <div className="flex-center margin-top-3vh">
+                <ChoiceStepsSvgM />
+              </div>
+              <div className="flex-center">
+                <ChoiceSidebarSvgM />
+              </div>
             </div>
           </div>
         </div>
-        <button className="absolute-contunue-btn flex-center font-24" onClick={props.moveNext}>Let’s start</button>
+        <div className="welcome-part-bottom-part">
+          <button className="absolute-contunue-btn flex-center font-24" onClick={props.moveNext}>Let’s start</button>
+        </div>
       </div>
     )
   }
