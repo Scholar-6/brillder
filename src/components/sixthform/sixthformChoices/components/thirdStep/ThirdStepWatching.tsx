@@ -18,8 +18,12 @@ interface ThirdProps {
 }
 
 const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
+  const { watchingChoices } = props;
   const [step, setStep] = React.useState(0);
-  let currentStep = props.watchingChoices[step];
+  let currentStep = watchingChoices[step];
+
+  const [animatedData, setAnimatedData] = React.useState(currentStep)
+  const [animatedStep, setAnimatedStep] = React.useState(0);
 
   return (
     <div className="question question-6 question-3-watching">
@@ -38,24 +42,35 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
         </div>
       </div>
       <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 icon="watching-start" step={step} total={props.watchingChoices.length} subjectDescription={currentStep.label} isBig={false} />
+      <ProgressBarStep6 icon="watching-start" step={animatedStep} total={watchingChoices.length} subjectDescription={animatedData.label} isBig={false} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="NEVER OR<br/> HARDLY EVER" middleLabel="SOMETIMES" lastLabel="A LOT"
         onClick={realChoice => {
-          currentStep.choice = realChoice;
-          props.onChange(props.watchingChoices);
-          if (step >= props.watchingChoices.length - 1) {
-            props.moveNext()
+          if (step >= watchingChoices.length - 1) {
           } else {
-            setStep(step + 1);
+            setAnimatedData(watchingChoices[step + 1]);
+            setAnimatedStep(step + 1);
           }
+
+          currentStep.choice = realChoice;
+          props.onChange(watchingChoices);
+
+          setTimeout(() => {
+            if (step >= watchingChoices.length - 1) {
+              props.moveNext()
+            } else {
+              setStep(step + 1);
+            }
+          }, 350);
         }}
       />
       <BackButtonSix onClick={() => {
         if (step <= 0) {
           props.moveBack();
         } else {
+          setAnimatedData(watchingChoices[step - 1]);
+          setAnimatedStep(step - 1);
           setStep(step - 1);
         }
       }} />
