@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import WelcomePage from "./welcomePage/WelcomePage";
 import Step1Name from "./Step1Name";
 import Step1Email from "./Step1Email";
-import ZeroWelcome from "./ZeroWelcome";
 
 
 enum SubStep {
@@ -137,18 +136,13 @@ class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
           saveNameAnswer(firstName, lastName, nameCorrected);
         }}
         moveBack={(firstName, lastName, nameCorrected) => {
-          this.setState({ subStep: SubStep.Start });
+          this.setState({ subStep: SubStep.Welcome });
           saveNameAnswer(firstName, lastName, nameCorrected);
         }}
       />
-    } else if (this.state.subStep === SubStep.Start) {
-      return <ZeroWelcome
-        moveNext={() => this.setState({ subStep: SubStep.Name })}
-        moveBack={() => this.setState({ subStep: SubStep.Welcome })}
-      />
     }
 
-    return <WelcomePage moveNext={() => this.setState({ subStep: SubStep.Start })} />;
+    return <WelcomePage moveNext={() => this.setState({ subStep: SubStep.Name })} />;
   }
 }
 

@@ -2,8 +2,18 @@
 @import 'src/assets/sass/partials/mixins';
 @import 'src/assets/sass/partials/extensions';
 
+// fix for height
 .SixthformChoicesPage {
-  $font-scale: 3;
+  height: 100%;
+
+  .sorted-row {
+    height: 100%;
+  }
+}
+
+
+.SixthformChoicesPage {
+  $font-scale: 3.5;
   background: white !important;
 
   .header-top {
@@ -336,6 +346,56 @@
       }
     }
 
+    .step2background-img {
+      //top: -10vw;
+    }
+
+    .welcome-0 {
+      .step2background-img {
+        top: -10vw;
+      }
+      .absolute-gradient-w-img-s0 {
+        width: 100vw;
+        position: absolute;
+        top: 31vw;
+        z-index: 3;
+      }
+      .font-20 {
+        font-size: 5vw;
+      }
+      .font-48 {
+        font-size: 15vw;
+      }
+      .text-container-5432 {
+        top: 45vw;
+        left: 0;
+        width: 100vw;
+        z-index: 5;
+        justify-content: center;
+      }
+
+      .phone-button-row {
+
+      }
+    }
+
+    .question-top-part {
+      height: 90%;
+    }
+
+    .phone-button-row {
+      position: relative;
+      height: 10%;
+
+      .absolute-back-btn {
+        bottom: 2vh;
+      }
+
+      .absolute-contunue-btn {
+        bottom: 2vh;
+      }
+    }
+
     .absolute-contunue-btn {
       width: 60vw !important;
       border-radius: 3vw;
@@ -344,9 +404,51 @@
     }
   }
 
+  .question-1-name {
+    .step3watching-img-v2 {
+      width: 30vw;
+      height: unset;
+    }
+    .space-r1-34 {
+      height: 8vw;
+    }
+    .title-r1-34 {
+      padding-left: 4vw;
+    }
+    .text-r1-34 {
+      padding-left: 4vw;
+      width: 65vw;
+    }
+
+    .step1-name-box {
+      border-radius: 2vw;
+      margin-top: 15vw;
+      margin-left: 4vw;
+      width: 90vw;
+      .step1-input-row {
+        display: block;
+
+        .space-r1-343 {
+          height: 2vh;
+        }
+
+        input {
+          padding-left: 3vw;
+          border-radius: 2vw;
+          //width: 84vw;
+        }
+
+      }
+    }
+    .absolute-name-s1 {
+      margin-left: 4vw;
+    }
+  }
+
   .question {
+    margin-top: 16vw;
+    height: calc(91% - 16vw);
     position: relative;
-    margin-top: 15vw;
   }
 
   .mask-step-img {

@@ -5,6 +5,7 @@ import BackButtonSix from "../BackButtonSix";
 import { ReduxCombinedState } from "redux/reducers";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 export enum ChoiceEnum {
   Never = 1,
@@ -35,6 +36,7 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
           </div>
           <div className="step1-input-row font-16">
             <input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="First Name" />
+            <div className="space-r1-343" />
             <input value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Last Name" />
           </div>
         </div>
@@ -56,6 +58,34 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
             props.moveNext(firstName, lastName, newName);
           }}>Yes</div>
         </div>
+      </div>
+    );
+  }
+
+  if (isPhone()) {
+    return (
+      <div className="question question-6 question-3-watching question-1-name">
+        <img src="/images/choicesTool/Step1R25.png" className="step3watching-img-v2" />
+        <div className="space-r1-34"></div>
+        <div className="font-32 title-r1-34 bold">Your Names</div>
+        <div className="font-16 text-r1-34">We have you down as <span className="text-orange capitalize">{props.user.firstName} {props.user.lastName}</span> (using info from sign up)</div>
+        {renderFullNameBox()}
+        <div className="help-without absolute-name-s1 font-16">
+          <div>
+            <SpriteIcon name="help-without" />
+          </div>
+          <div className="text-dark-gray-s1">
+            Remember: We <span className="bold">NEVER</span> sell your data. With your permission, we only share it with a school or college which you tell us is connected to your education.
+          </div>
+        </div>
+        <BackButtonSix onClick={() => {
+          props.moveBack(firstName, lastName, newName);
+        }} />
+        <button
+          className="absolute-contunue-btn font-24"
+          onClick={() => {
+            props.moveNext(firstName, lastName, newName);
+          }}>Continue</button>
       </div>
     );
   }

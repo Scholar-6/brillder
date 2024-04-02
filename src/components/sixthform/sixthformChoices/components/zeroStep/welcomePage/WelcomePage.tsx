@@ -36,7 +36,7 @@ const WelcomePage: React.FC<TasterProps> = (props) => {
           <button className="absolute-contunue-btn flex-center font-24" onClick={props.moveNext}>Let’s start</button>
         </div>
       </div>
-    )
+    );
   }
   return (
     <div className="WelcomePageChoices">
