@@ -253,7 +253,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <div className="font-16">
           Click on any of the fourteen categories to reveal more than fifty course options. Select a maximum of<br/>
-          <span className="bold">five</span> courses which interest you (you won’t be able to do them all).
+          <span className="bold ">five</span> courses which interest you (you won’t be able to do them all).
         </div>
         <div className="d3-table-scroll-container">
           <div className="d3-table-leaf">

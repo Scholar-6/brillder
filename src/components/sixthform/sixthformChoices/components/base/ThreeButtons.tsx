@@ -15,11 +15,7 @@ interface Props {
 }
 
 const ThreeButtons: React.FC<Props> = (props) => {
-  let [currentChoice, setCurrentChoice] = React.useState<ChoiceEnum>(props.currentChoice);
-
-  useEffect(() => {
-    setCurrentChoice(props.currentChoice);
-  }, [props.currentChoice]);
+  const {currentChoice} = props;
 
   const renderBtn = (choice: ChoiceEnum, realChoice: ChoiceEnum, className: string, label: string) => {
     const isEmpty = choice === null;
@@ -27,10 +23,7 @@ const ThreeButtons: React.FC<Props> = (props) => {
     return (
       <div
         className={`btn ${isEmpty ? 'empty' : isActive ? 'active' : "not-active"} ${className}`}
-        onClick={() => {
-          setCurrentChoice(realChoice);
-          setTimeout(() => props.onClick(realChoice), 350)
-        }}
+        onClick={() => props.onClick(realChoice)}
         dangerouslySetInnerHTML={{ __html: label }}
       />
     )
