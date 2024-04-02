@@ -198,8 +198,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
           Common Misunderstandings
         </div>
         <div className="font-16 margin-text-c3">
-          There are a few A-levels which need careful thought because there may be more to them than first meets the eye. Decide whether<br />
-          the statement which follows each of the following subjects is ‘TRUE’, ‘FALSE’ or ‘SOMEWHERE IN BETWEEN’.
+          There are a few A-levels which need careful thought because there may be more to them than first meets the eye.
         </div>
         <ProgressBarStepsR1 step={this.state.step} total={this.state.categories.length} />
         <div className="tick-container-c3-r23">
