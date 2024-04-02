@@ -32,7 +32,7 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
       return (
         <div className="step1-name-box">
           <div className="font-16">
-            Alright, kindly tell us your full name
+            Alright, kindly tell us your full name.
           </div>
           <div className="step1-input-row font-16">
             <input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="First Name" />
@@ -52,11 +52,11 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
         </div>
         <div className="step1-btn-row font-14">
           <div className="btn " onClick={() => {
-            setNewName(true);
-          }}>No</div>
-          <div className="btn " onClick={() => {
             props.moveNext(firstName, lastName, newName);
           }}>Yes</div>
+          <div className="btn " onClick={() => {
+            setNewName(true);
+          }}>No</div>
         </div>
       </div>
     );
