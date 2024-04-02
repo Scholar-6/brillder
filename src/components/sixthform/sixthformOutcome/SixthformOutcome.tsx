@@ -108,9 +108,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       if (answers) {
         var firstAnswer = answers.find(a => a.step === Pages.Question1);
         if (firstAnswer && firstAnswer.answer) {
-          if (firstAnswer.answer.choice === SubjectType.ALevels) {
+          if (firstAnswer.answer.subjectType === SubjectType.ALevels) {
             possibleList = subjectsR1.filter(s => s.isALevel).splice(0, 6);
-          } else if (firstAnswer.answer.choice === SubjectType.VocationalSubjects) {
+          } else if (firstAnswer.answer.subjectType === SubjectType.VocationalSubjects) {
             possibleList = subjectsR1.filter(s => s.isVocational).splice(0, 6);
           }
         }
@@ -430,7 +430,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderDefinities(lastStep: number) {
-    if (lastStep === 6) {
+    if (lastStep === Pages.Question6) {
       return (
         <ReactSortable
           list={this.state.definetlyList}
@@ -528,7 +528,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   renderPossibles(lastStep: number) {
-    if (lastStep === 6) {
+    if (lastStep === Pages.Question6) {
       return (
         <ReactSortable
           list={this.state.possibleList}
