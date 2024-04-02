@@ -21,6 +21,9 @@ const SixStepEntusiasm: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.choices[step];
 
+  const [animatedData, setAnimatedData] = React.useState(currentStep)
+  const [animatedStep, setAnimatedStep] = React.useState(0);
+
   return (
     <div className="question question-6 question-3-watching">
       <div className="font-16 question-text">
@@ -38,26 +41,36 @@ const SixStepEntusiasm: React.FC<ThirdProps> = (props) => {
         </div>
       </div>
       <img src="/images/choicesTool/Step6R19.png" className="step3watching-img-v2" />
-      <ProgressBarStep6Entusiasm step={step} total={props.choices.length} description={currentStep.label} />
+      <ProgressBarStep6Entusiasm step={animatedStep} total={props.choices.length} description={animatedData.label} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="NOT REALLY<br/> TRUE"
         middleLabel="QUITE TRUE"
         lastLabel="VERY TRUE!"
         onClick={realChoice => {
+          if (step >= props.choices.length - 1) {
+          } else {
+            setAnimatedData(props.choices[step + 1]);
+            setAnimatedStep(step + 1);
+          }
+
           currentStep.choice = realChoice;
           props.onChange(props.choices);
-          if (step >= props.choices.length - 1) {
-            props.moveNext();
-          } else {
-            setStep(step + 1);
-          }
+          setTimeout(() => {
+            if (step >= props.choices.length - 1) {
+              props.moveNext()
+            } else {
+              setStep(step + 1);
+            }
+          }, 350);
         }}
       />
       <BackButtonSix onClick={() => {
         if (step <= 0) {
           props.moveBack();
         } else {
+          setAnimatedData(props.choices[step - 1]);
+          setAnimatedStep(step - 1);
           setStep(step - 1);
         }
       }} />
