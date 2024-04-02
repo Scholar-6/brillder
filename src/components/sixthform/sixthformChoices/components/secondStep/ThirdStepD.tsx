@@ -245,7 +245,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           </div>
           <div>
             These are the different T-level categories. Expand them to view different courses.<br />
-            Which interest you? Select up to three courses.
+            Which interest you? Select up to <span className="bold">three</span> courses.
           </div>
           <div className="d3-table-scroll-container">
             <div className="d3-table-leaf">

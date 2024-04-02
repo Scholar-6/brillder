@@ -72,7 +72,7 @@ const ReadingV2: React.FC<ReadingV1Props> = (props) => {
         </div>
       </div>
       <div className="font-16">
-        What sort of reading do you enjoy most? Select up to four.
+        What sort of reading do you enjoy most? Select up to <span className="bold">four</span>.
       </div>
       <Grid container direction="row">
         <Grid item xs={6}>
