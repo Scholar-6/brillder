@@ -87,8 +87,8 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       name: `
         “With digital streaming we’re now constantly immersed in news, video gaming, social media<br/>
-        and apps for everything: Media Studies is the most relevant subject to my life and I am really<br/>
-        interested in content creation and modern advertising and marketing as careers.”
+        and apps for everything: this is the most relevant subject to my life and I am really<br/>
+        interested in content creation and marketing as careers.”
       `
     }, {
       name: `

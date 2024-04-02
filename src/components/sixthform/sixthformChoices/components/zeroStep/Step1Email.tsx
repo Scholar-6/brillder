@@ -5,6 +5,7 @@ import BackButtonSix from "../BackButtonSix";
 import { ReduxCombinedState } from "redux/reducers";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 export enum ChoiceEnum {
   Never = 1,
@@ -51,6 +52,32 @@ const Step1Email: React.FC<ThirdProps> = (props) => {
             setCorrected(true);
           }}>No</div>
         </div>
+      </div>
+    );
+  }
+
+  if (isPhone()) {
+    return (
+      <div className="question question-6 question-3-watching question-1-name">
+        <img src="/images/choicesTool/Step1R25.png" className="step3watching-img-v2" />
+        <div className="space-r1-34"></div>
+        <div className="font-32 bold title-r1-34">Email</div>
+        <div className="font-16 text-r1-34">
+          We have your personal email down as <span className="text-orange">{props.user.email}</span> (using info from sign up)
+        </div>
+        {renderEmailBox()}
+        <div className="help-without absolute-name-s1 absolute-name-s2 font-16">
+          <div>
+            <SpriteIcon name="help-without" />
+          </div>
+          <div className="text-dark-gray-s1">
+            Our guarantee: We store your data with complete <span className="bold">NEVER</span> sell your data. With your permission, we only share it with a school or college which you tell us is connected to your education.
+          </div>
+        </div>
+        <BackButtonSix onClick={() => props.moveBack(email, emailCorrected)} />
+        <button
+          className="absolute-contunue-btn font-24"
+          onClick={() => props.moveNext(email, emailCorrected)}>Continue</button>
       </div>
     );
   }
