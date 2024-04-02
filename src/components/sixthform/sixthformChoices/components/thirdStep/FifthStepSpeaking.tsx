@@ -21,6 +21,9 @@ const FifthStepSpeaking: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.speakingChoices[step];
 
+  const [animatedData, setAnimatedData] = React.useState(currentStep)
+  const [animatedStep, setAnimatedStep] = React.useState(0);
+
   return (
     <div className="question question-6 question-3-watching question-5-speaking">
       <div className="font-16 question-text">
@@ -38,24 +41,35 @@ const FifthStepSpeaking: React.FC<ThirdProps> = (props) => {
       </div>
       <div className="font-16">How true are the following statements of you?</div>
       <img src="/images/choicesTool/FifthStepSpeaking.png" className="step3watching-img-v2" />
-      <ProgressBarSpeaking step={step} total={props.speakingChoices.length} subjectDescription={currentStep.label} />
+      <ProgressBarSpeaking step={animatedStep} total={props.speakingChoices.length} subjectDescription={animatedData.label} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="NOT REALLY" middleLabel="SORT OF" lastLabel="DEFINITELY"
         onClick={realChoice => {
+          if (step >= props.speakingChoices.length - 1) {
+          } else {
+            setAnimatedData(props.speakingChoices[step + 1]);
+            setAnimatedStep(step + 1);
+          }
+
           currentStep.choice = realChoice;
           props.onChange(props.speakingChoices);
-          if (step >= props.speakingChoices.length - 1) {
-            props.moveNext()
-          } else {
-            setStep(step + 1);
-          }
+
+          setTimeout(() => {
+            if (step >= props.speakingChoices.length - 1) {
+              props.moveNext()
+            } else {
+              setStep(step + 1);
+            }
+          }, 350);
         }}
       />
       <BackButtonSix onClick={() => {
         if (step <= 0) {
           props.moveBack();
         } else {
+          setAnimatedData(props.speakingChoices[step - 1]);
+          setAnimatedStep(step - 1);
           setStep(step - 1);
         }
       }} />

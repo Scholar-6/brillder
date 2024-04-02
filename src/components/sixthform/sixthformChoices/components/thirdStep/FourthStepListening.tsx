@@ -21,6 +21,9 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.listeningChoices[step];
 
+  const [animatedData, setAnimatedData] = React.useState(currentStep)
+  const [animatedStep, setAnimatedStep] = React.useState(0);
+
   return (
     <div className="question question-6 question-3-watching question-6-third">
       <div className="font-16 question-text">
@@ -37,24 +40,35 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
         </div>
       </div>
       <img src="/images/choicesTool/FourthStepListening.png" className="step3watching-img-v2" />
-      <ProgressBarStep6 icon="listening-sixth" step={step} total={props.listeningChoices.length} subjectDescription={currentStep.label} isBig={false} />
+      <ProgressBarStep6 icon="listening-sixth" step={animatedStep} total={props.listeningChoices.length} subjectDescription={animatedData.label} isBig={false} />
       <ThreeButtons
         currentChoice={currentStep.choice}
         firstLabel="NEVER OR<br/> HARDLY EVER" middleLabel="SOMETIMES" lastLabel="A LOT"
         onClick={realChoice => {
+          if (step >= props.listeningChoices.length - 1) {
+          } else {
+            setAnimatedData(props.listeningChoices[step + 1]);
+            setAnimatedStep(step + 1);
+          }
+
           currentStep.choice = realChoice;
           props.onChange(props.listeningChoices);
-          if (step >= props.listeningChoices.length - 1) {
-            props.moveNext()
-          } else {
-            setStep(step + 1);
-          }
+
+          setTimeout(() => {
+            if (step >= props.listeningChoices.length - 1) {
+              props.moveNext()
+            } else {
+              setStep(step + 1);
+            }
+          }, 350);
         }}
       />
       <BackButtonSix onClick={() => {
         if (step <= 0) {
           props.moveBack();
         } else {
+          setAnimatedData(props.listeningChoices[step - 1]);
+          setAnimatedStep(step - 1);
           setStep(step - 1);
         }
       }} />
