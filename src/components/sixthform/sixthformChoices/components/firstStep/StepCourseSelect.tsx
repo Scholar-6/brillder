@@ -86,7 +86,7 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
           />
           <ButtonR34
             currentChoice={FirstChoice.Other} choice={this.state.choice}
-            label="A different kind of qualification,e.g. International Baccalaureate"
+            label="A different kind of qualification (e.g. International Baccalaureate)"
             setChoice={() => this.setState({ choice: FirstChoice.Other, popup: true })}
           />
         </div>

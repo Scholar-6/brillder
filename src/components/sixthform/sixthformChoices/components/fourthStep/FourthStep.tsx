@@ -939,7 +939,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             Vocational Degrees
           </div>
           <div className="font-16">
-            View the courses available for the categories you selected. Select up to five that interest you.
+            View the courses available for the categories you selected. Select up to <span className="bold">five</span> that interest you.
           </div>
           <div className="categories-container categories-container-r342">
             {selected.map((course, i) => {
@@ -1066,7 +1066,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             Some universities can be a bit picky about A-levels. The Russell Group represents most of the UK’s top universities. It does not dismiss any sixth-form qualification, but its universities may be more likely to make offers to students taking some of the following subjects.
           </div>
           <div className="font-16 margin-bottom-1">
-            As an experiment, imagine you could only pick from this list. Which three subjects would you choose?
+            As an experiment, imagine you could only pick from this list. Which <span className="bold">three</span> subjects would you choose?
           </div>
           <div className="categories-container-4c-r23 facilitation-category font-16">
             <div className="font-16">
