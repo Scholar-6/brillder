@@ -111,8 +111,6 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
               isCorrect = true;
             }
           }
-
-          this.setState({ popupDetails: { open: true, isCorrect } });
         }}>
           <SpriteIcon name={subject.icon} />
           {subject.name}
@@ -120,25 +118,6 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
           {answerStatus === AnswerStatus.Correct && <SpriteIcon className="absolute-svg-3c1" name="good-answer-3c1" />}
         </div>
       </Grid>
-    );
-  }
-
-  renderPopup() {
-    if (this.state.popupDetails.open && this.state.popupDetails.isCorrect) {
-      return (
-        <div className="top-popup-custom-r654 bold font-16 correct-popup" onClick={() => this.setState({popupDetails: {open: false, isCorrect: false}})}>
-          <SpriteIcon name="correct-tick-r454" />
-          <div>That’s correct!</div>
-          <div className="lighter-gray">Dismiss</div>
-        </div>
-      );
-    }
-    return (
-      <div className="top-popup-custom-r654 bold font-16 fail-popup" onClick={() => this.setState({popupDetails: {open: false, isCorrect: false}})}>
-        <SpriteIcon name="correct-cross-r454" />
-        <div>Try again</div>
-        <div className="lighter-gray">Dismiss</div>
-      </div>
     );
   }
 
@@ -161,19 +140,18 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
         <Grid container direction="row" className="containers-3c1">
           {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
         </Grid>
-        {this.state.popupDetails.open && this.renderPopup()}
         <BackButtonSix onClick={() => {
           if (this.state.step <= 0) {
             this.props.moveBack();
           } else {
-            this.setState({ step: this.state.step - 1, popupDetails: {open: false, isCorrect: false} });
+            this.setState({ step: this.state.step - 1 });
           }
         }} />
         <button className="absolute-contunue-btn font-24" onClick={() => {
           if (this.state.step >= 4) {
             this.props.moveNext();
           } else {
-            this.setState({ step: this.state.step + 1, popupDetails: {open: false, isCorrect: false} });
+            this.setState({ step: this.state.step + 1 });
           }
         }}>Next</button>
       </div>

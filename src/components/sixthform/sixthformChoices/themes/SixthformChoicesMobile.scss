@@ -424,7 +424,7 @@
       border-radius: 2vw;
       margin-top: 15vw;
       margin-left: 4vw;
-      width: 90vw;
+      width: 92vw !important;
       .step1-input-row {
         display: block;
 
@@ -435,13 +435,19 @@
         input {
           padding-left: 3vw;
           border-radius: 2vw;
-          //width: 84vw;
+          width: 78vw;
         }
 
       }
     }
     .absolute-name-s1 {
       margin-left: 4vw;
+      padding-right: 2vw;
+
+      svg {
+        margin-left: 2vw;
+        margin-right: 2vw;
+      }
     }
   }
 
@@ -503,6 +509,12 @@
 
   .checkbox-rd1 {
     padding-left: 9vw !important;
+  }
+
+  .question-1-name {
+    .help-without {
+      width: 92vw !important;
+    }
   }
 
   .help-without {
