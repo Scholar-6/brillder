@@ -171,7 +171,11 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
 
       for (let s of realSubjectSelections) {
         if (!s.predicedStrength) {
-          s.predicedStrength = 0;
+          if (s.isVocational) {
+            s.predicedStrength = 3; // merit by default
+          } else {
+            s.predicedStrength = 6;
+          }
         }
       }
 
@@ -294,6 +298,9 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                 const found = subjects.find(s => s.name === v.name);
                 const selected = this.state.subjectSelections;
                 if (!found) {
+                  if (v.isVocational) {
+                    v.predictedS
+                  }
                   v.selected = true;
                   subjects.push(v);
                   selected.push(v);
@@ -465,6 +472,55 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     );
   }
 
+  onSubjectClicked(subject: KeyStage4Subject) {
+    if (this.state.subjectSelections.length >= this.state.limit) {
+      return;
+    }
+    const selections = this.state.subjectSelections;
+    const found = selections.find((s: any) => s.name === subject.name);
+    if (!found) {
+      let passedValidation = true;
+
+      if (subject.name === "Combined Science (Single Award)") {
+        const found2 = selections.find((s: any) =>
+          s.name === "Combined Science (Double Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
+        );
+        if (found2) {
+          passedValidation = false;
+        }
+      } else if (subject.name === "Combined Science (Double Award)") {
+        const found2 = selections.find((s: any) =>
+          s.name === "Combined Science (Single Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
+        );
+        if (found2) {
+          passedValidation = false;
+        }
+      } else if (subject.name === "Biology" || subject.name === "Chemistry" || subject.name === "Physics") {
+        const found2 = selections.find((s: any) =>
+          s.name === "Combined Science (Single Award)" || s.name === "Combined Science (Double Award)"
+        );
+        if (found2) {
+          passedValidation = false;
+        }
+      }
+
+      if (passedValidation) {
+        if (subject.isVocational) {
+          subject.predicedStrength = 'merit'; // merit by default
+        } else {
+          subject.predicedStrength = 6;
+        }
+        subject.selected = true;
+        selections.push(subject);
+        this.setState({ subjectSelections: selections });
+      }
+    } else {
+      subject.selected = false;
+      let selected = selections.filter(s => s.name !== subject.name);
+      this.setState({ subjectSelections: selected });
+    }
+  }
+
   render() {
     let disabled = false;
 
@@ -481,6 +537,19 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
         moveBack={() => this.setState({ subStep: SubStep.Third })}
       />
     } else if (this.state.subStep === SubStep.Third) {
+      if (isPhone()) {
+        return (
+          <div className="question question-step1gcses2">
+            <img src="/images/choicesTool/phone/step1gcses2.png" className="third-step-img" />
+            <ThirdStepBTable
+              subjectSelections={this.state.subjectSelections}
+              setSubjectSelections={subjectSelections => this.setState({ subjectSelections })}
+            />
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.Second })} />
+            {this.renderThirdStepBButton()}
+          </div>
+        );
+      }
       return (
         <div className="question">
           <img src="/images/choicesTool/ThirdStepR2.png" className="third-step-img" />
@@ -501,8 +570,8 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
               What qualifications are you currently doing?
             </div>
             <div className="font-16 text-container-r3">
-              Choose your GCSEs below, including<br/> any you’ve already done.<div className="space-r44" />
-              Then choose any Vocational and Practical<br/> qualifications (e.g. musical performance).
+              Choose your GCSEs below, including<br /> any you’ve already done.<div className="space-r44" />
+              Then choose any Vocational and Practical<br /> qualifications (e.g. musical performance).
             </div>
             <div className="main-subjects-container">
               <div className="first-box-R21">
@@ -526,49 +595,8 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                       {this.renderSubjectLozenges(
                         this.state.subjectGroup === SubjectGroupR21.GCSE ? this.state.GCSESubjects : this.state.vocationalSubjects,
                         false,
-                        (subject: KeyStage4Subject) => {
-                          if (this.state.subjectSelections.length >= this.state.limit) {
-                            return;
-                          }
-                          const selections = this.state.subjectSelections;
-                          const found = selections.find((s: any) => s.name === subject.name);
-                          if (!found) {
-                            let passedValidation = true;
-
-                            if (subject.name === "Combined Science (Single Award)") {
-                              const found2 = selections.find((s: any) =>
-                                s.name === "Combined Science (Double Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
-                              );
-                              if (found2) {
-                                passedValidation = false;
-                              }
-                            } else if (subject.name === "Combined Science (Double Award)") {
-                              const found2 = selections.find((s: any) =>
-                                s.name === "Combined Science (Single Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
-                              );
-                              if (found2) {
-                                passedValidation = false;
-                              }
-                            } else if (subject.name === "Biology" || subject.name === "Chemistry" || subject.name === "Physics") {
-                              const found2 = selections.find((s: any) =>
-                                s.name === "Combined Science (Single Award)" || s.name === "Combined Science (Double Award)"
-                              );
-                              if (found2) {
-                                passedValidation = false;
-                              }
-                            }
-
-                            if (passedValidation) {
-                              subject.selected = true;
-                              selections.push(subject);
-                              this.setState({ subjectSelections: selections });
-                            }
-                          } else {
-                            subject.selected = false;
-                            let selected = selections.filter(s => s.name !== subject.name);
-                            this.setState({ subjectSelections: selected });
-                          }
-                        })}
+                        this.onSubjectClicked.bind(this)
+                      )}
                     </div>
                     {this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded && <div>
                       <div className="expanded-label">
@@ -620,11 +648,13 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                 <span className="text-center bold">Select your subjects to continue.</span>
               </div>}
             {this.state.showMathWarning &&
-              <div className="warning-popup-s434 font-16 absolute-popup-s4-r absolute-popup-s4-r2 absolute-popup-s4-r3">
+              <div className="warning-popup-s434  font-16 absolute-popup-s4-r absolute-popup-s4-r2 absolute-popup-s4-r3">
                 <SpriteIcon name="cancel-custom" className="close-btn-se23" onClick={() => this.setState({ showMathWarning: false, seenMathWarining: true })} />
                 <SpriteIcon name="sixthform-warning" />
-                You haven’t selected Maths and/or English<br />
-                Language. Are you sure this is correct?
+                <span className="bold">
+                  You haven’t selected Maths and/or English<br />
+                  Language. Are you sure this is correct?
+                </span>
               </div>}
             <BackButtonSix onClick={() => this.setState({ subStep: SubStep.First })} />
             {this.renderThirdStepAButton()}
@@ -663,49 +693,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                     {this.renderSubjectLozenges(
                       this.state.subjectGroup === SubjectGroupR21.GCSE ? this.state.GCSESubjects : this.state.vocationalSubjects,
                       false,
-                      (subject: KeyStage4Subject) => {
-                        if (this.state.subjectSelections.length >= this.state.limit) {
-                          return;
-                        }
-                        const selections = this.state.subjectSelections;
-                        const found = selections.find((s: any) => s.name === subject.name);
-                        if (!found) {
-                          let passedValidation = true;
-
-                          if (subject.name === "Combined Science (Single Award)") {
-                            const found2 = selections.find((s: any) =>
-                              s.name === "Combined Science (Double Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
-                            );
-                            if (found2) {
-                              passedValidation = false;
-                            }
-                          } else if (subject.name === "Combined Science (Double Award)") {
-                            const found2 = selections.find((s: any) =>
-                              s.name === "Combined Science (Single Award)" || s.name === "Biology" || s.name === "Chemistry" || s.name === "Physics"
-                            );
-                            if (found2) {
-                              passedValidation = false;
-                            }
-                          } else if (subject.name === "Biology" || subject.name === "Chemistry" || subject.name === "Physics") {
-                            const found2 = selections.find((s: any) =>
-                              s.name === "Combined Science (Single Award)" || s.name === "Combined Science (Double Award)"
-                            );
-                            if (found2) {
-                              passedValidation = false;
-                            }
-                          }
-
-                          if (passedValidation) {
-                            subject.selected = true;
-                            selections.push(subject);
-                            this.setState({ subjectSelections: selections });
-                          }
-                        } else {
-                          subject.selected = false;
-                          let selected = selections.filter(s => s.name !== subject.name);
-                          this.setState({ subjectSelections: selected });
-                        }
-                      })}
+                      this.onSubjectClicked.bind(this))}
                   </div>
                   {this.state.subjectGroup === SubjectGroupR21.GCSE && this.state.GCSESexpanded && <div>
                     <div className="expanded-label">

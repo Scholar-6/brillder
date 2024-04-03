@@ -9,6 +9,7 @@ import ThirdStepD, { ThirdStepDChoice } from "./ThirdStepD";
 import ThirdStepE from "./ThirdStepE";
 import ThirdStepF from "./ThirdStepF";
 import SecondStepWelcome from "./SecondStepWelcome";
+import { FirstChoice } from "../firstStep/StepCourseSelect";
 
 
 export enum ThirdSubStep {
@@ -142,12 +143,6 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
             }}
             moveBack={coursesD => {
               let choice = this.props.firstAnswer.answer.subjectType;
-              /*
-              if (choice === FirstChoice.ShowMeAll) {
-                this.setState({ subStep: ThirdSubStep.ThirdC4, coursesD });
-              } else {
-                this.setState({ subStep: ThirdSubStep.Second, coursesD });
-              }*/
               this.setState({subStep: ThirdSubStep.Sixth});
             }}
             moveNext={() => {
@@ -202,15 +197,15 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
             }}
             moveBack={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.Fourth });
 
+              if (this.props.firstAnswer.answer.subjectType === FirstChoice.Vocational) {
+                this.setState({ subStep: ThirdSubStep.Welcome });
+              } else {
+                this.setState({ subStep: ThirdSubStep.Fourth });
+              }
+      
               /*
-              if (
-                this.props.firstAnswer &&
-                this.props.firstAnswer.answer &&
-                this.props.firstAnswer.answer.databaseSchool &&
-                this.props.firstAnswer.answer.databaseSchool.name === "Hereford Sixth Form College"
-              ) {
+              if (this.props.firstAnswer.answer.databaseSchool) {
                 this.setState({ subStep: ThirdSubStep.ThirdC4 });
               } else {
                 this.setState({ subStep: ThirdSubStep.ThirdD })
@@ -231,7 +226,12 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
             onChange={categoriesC3 => this.setState({ categoriesC3 })}
             moveNext={() => {
               this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: ThirdSubStep.Fifth });
+
+              if (this.props.firstAnswer.answer.subjectType === FirstChoice.ALevel) {
+                this.props.moveNext(this.getAnswer());
+              } else {
+                this.setState({ subStep: ThirdSubStep.Fifth });
+              }
 
               /*
               if (
@@ -309,13 +309,8 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
           <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
           <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
-            onChange={(firstPairResults: any[]) => {
-              console.log(firstPairResults);
-              this.setState({ firstPairResults });
-            }}
-            moveBack={() => {
-              this.setState({ subStep: ThirdSubStep.Welcome });
-            }}
+            onChange={(firstPairResults: any[]) => { this.setState({ firstPairResults }); }}
+            moveBack={() => { this.setState({ subStep: ThirdSubStep.Welcome }); }}
             moveNext={() => {
               this.props.saveAnswer(this.getAnswer());
               this.setState({ subStep: ThirdSubStep.Second });
@@ -328,7 +323,13 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
     return <SecondStepWelcome
       canSkip={this.props.canSkip}
       onSkip={() => this.props.moveNext(this.getAnswer())}
-      moveNext={() => this.setState({ subStep: ThirdSubStep.First })}
+      moveNext={() => {
+        if (this.props.firstAnswer.answer.subjectType === FirstChoice.Vocational) {
+          this.setState({ subStep: ThirdSubStep.Fifth })
+        } else {
+          this.setState({ subStep: ThirdSubStep.First });
+        }
+      }}
       moveBack={() => this.props.moveBack(this.getAnswer())}
     />
   }

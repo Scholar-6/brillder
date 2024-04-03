@@ -84,8 +84,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
     // if step in params load from cash
     if (this.props.match.params.step) {
-      page = parseInt(this.props.match.params.step);
+      page = parseInt(this.props.match.params.step) + 1;
     }
+
+    console.log(page);
 
     this.state = {
       isLoading: true,

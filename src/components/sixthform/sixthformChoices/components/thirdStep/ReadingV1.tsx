@@ -1,6 +1,5 @@
 import React from "react";
 
-import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import ButtonR34 from "../ButtonR34";
@@ -9,8 +8,7 @@ export enum ReadingChoice {
   first = 1,
   second,
   third,
-  fourth,
-  fifth,
+  fourth
 }
 
 interface ReadingV1Props {
@@ -58,11 +56,6 @@ const ReadingV1: React.FC<ReadingV1Props> = (props) => {
         <ButtonR34
           currentChoice={ReadingChoice.fourth} choice={props.readingChoice}
           label="I get very little pleasure from reading and I don’t enjoy reading for school."
-          setChoice={props.onChange}
-        />
-        <ButtonR34
-          currentChoice={ReadingChoice.fifth} choice={props.readingChoice}
-          label="I hate reading and hardly ever touch a book."
           setChoice={props.onChange}
         />
       </div>

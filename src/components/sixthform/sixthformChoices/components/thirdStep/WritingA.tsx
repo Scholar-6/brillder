@@ -1,6 +1,5 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
-import CheckBoxV2 from "../CheckBox";
 import ButtonR34 from "../ButtonR34";
 
 export enum WritingChoice {
@@ -14,7 +13,6 @@ export enum WritingChoice {
   second,
   third,
   fourth,
-  fifth,
 }
 
 interface Props {
@@ -54,12 +52,7 @@ const SixStepWritingA: React.FC<Props> = (props) => {
         />
         <ButtonR34
           currentChoice={WritingChoice.fourth} choice={props.writingChoice}
-          label="I’m not a natural communicator on paper: writing is a chore I’d rather do without."
-          setChoice={props.setWritingChoice}
-        />
-        <ButtonR34
-          currentChoice={WritingChoice.fifth} choice={props.writingChoice}
-          label="I hate writing and much prefer subjects have little or no need for it."
+          label="I don’t enjoy writing and much prefer subjects that have little or no need for it."
           setChoice={props.setWritingChoice}
         />
       </div>

@@ -237,6 +237,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
+      let oneOrMore = this.state.tLevelCoursesPart1.some(course => course.subjects.some(s => s.checked)) || this.state.tLevelCoursesPart2.some(course => course.subjects.some(s => s.checked));
       return (
         <div className="font-16 question-step-3d-tableleaf">
           <img src="/images/choicesTool/ThirdStepR7.png" className="third-step-img"></img>
@@ -256,24 +257,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                 this.setState({ tLevelCoursesPart2: [...this.state.tLevelCoursesPart2] })
               })}
             </div>
-            <div className="course-box-r-23 big-b-r-23" onClick={() => {
-              // nothing
-              this.state.tLevelCoursesPart1.forEach(t => {
-                t.expanded = false;
-                t.subjects.map(s => s.checked = false);
-              });
-              this.state.tLevelCoursesPart2.forEach(t => {
-                t.expanded = false;
-                t.subjects.map(s => s.checked = false);
-              });
-              this.setState({ tLevelCoursesPart1: this.state.tLevelCoursesPart1, tLevelCoursesPart2: this.state.tLevelCoursesPart2 });
-            }}>
-              <div className="font-16 bold flex">
-                <div className="flex-center nothing-hint">
-                  Not sure. None of these really interests me.
-                </div>
-              </div>
-            </div>
           </div>
           {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
             Oops! You’ve tried to pick too many.
@@ -283,7 +266,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
             this.props.moveNext();
-          }}>Continue</button>
+          }}>{oneOrMore ? 'Continue' : 'Skip'}</button>
         </div>
       );
     }

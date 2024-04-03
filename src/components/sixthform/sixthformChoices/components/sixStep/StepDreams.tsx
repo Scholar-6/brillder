@@ -31,6 +31,7 @@ const SixStepDreams: React.FC<ThirdProps> = (props) => {
   return (
     <div className="question question-6 question-3-watching question-6-third">
       <img src="/images/choicesTool/Step6R20.png" className="step3watching-img-v2" />
+      <div className="font-16 question-text">How much do these statements reflect your dreams and ambitions?</div>
       <div className="progress-description-container-r3234 progress-watching-bar progress-entusiasm-bar box-bigger-r343">
         <LinearProgress className="progress-bar-long-r233" variant="determinate" value={value} />
         <div className="font-14 paging-3c1">{step + 1} / {props.choices.length} items</div>

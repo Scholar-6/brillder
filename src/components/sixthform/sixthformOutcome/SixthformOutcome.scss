@@ -531,10 +531,11 @@
 
             &.definities-list {
               .T-level {
-                width: 88.5vw;
+                width: 83.7vw;
+                margin-right: 0 !important;
 
                 .subject-name {
-                  width: 87vw !important;
+                  width: 81vw !important;
 
                   .left-part-e323 {
                     width: 52vw;
@@ -546,7 +547,8 @@
                   }
 
                   .right-part-e323 {
-                    width: 34vw;
+                    text-align: right;
+                    width: 37vw;
                   }
                 }
 
