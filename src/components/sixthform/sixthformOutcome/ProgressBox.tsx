@@ -46,8 +46,6 @@ class ProgressBox extends Component<ProgressProps> {
         }
       }
 
-      console.log(lastStep);
-
       if (lastStep === Pages.Question6) {
         return (
           <div className="box-box box-second">
