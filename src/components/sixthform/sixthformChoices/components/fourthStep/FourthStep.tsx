@@ -954,7 +954,16 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                     <div className="bold font-16">{course.name}</div>
                     <div>
                       <div className="lozengies-container font-11 first-lozengies lozengies-r232">
-                        {course.subjects.map(s => <div>{s.name}</div>)}
+                        {course.subjects.map(s => <div className={s.active ? 'active' : ''} onClick={() => {
+                          if (s.active === false) {
+                            let activeCount = this.state.tVocCoursesE1Part1.map(s => s.subjects.filter(s => s.active).length).reduce((a, b) => a + b, 0) + this.state.tVocCoursesE1Part2.map(s => s.subjects.filter(s => s.active).length).reduce((a, b) => a + b, 0);
+                            if (activeCount >= 5) {
+                              return;
+                            }
+                          }
+                          s.active = !s.active;
+                          this.setState({ tVocCoursesE1Part1: [...this.state.tVocCoursesE1Part1], tVocCoursesE1Part2: [...this.state.tVocCoursesE1Part2] });
+                        }}>{s.name}</div>)}
                       </div>
                     </div>
                   </div>
@@ -965,7 +974,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4e1 })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.props.moveNext(this.getAnswer());
-            //this.setState({ subStep: SubStep.speakingStart });
           }}>Continue</button>
         </div>
       );
@@ -1157,10 +1165,6 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <img src="/images/choicesTool/FourthStepR11.png" className="third-step-img fourth-step-img-r11"></img>
           <div className="bold font-32 question-text-4">
             Types of Degree Course
-          </div>
-          <div className="font-16 margin-bottom-1">
-            You probably don’t yet know what degree you are going to do. However, it makes sense to think about it,<br />
-            because you can’t do some degrees without certain qualifications.
           </div>
           <div className="font-16 margin-bottom-1">
             Below are five broad categories of degree. Select up to <span className="bold">three</span> categories that you think you might fall into.

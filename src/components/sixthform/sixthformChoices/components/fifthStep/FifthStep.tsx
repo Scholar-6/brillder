@@ -118,7 +118,7 @@ class SixStep extends Component<Props, State> {
       advisory: ['Chemistry', 'Physics', 'Maths'],
       handy: ['Environmental Science']
     }, {
-      jobName: 'None are for me',
+      jobName: 'None of the above',
       description: 'I could be ruling out, or making very difficult, the above career paths by choosing other A-levels, and I’m happy with that.'
     }];
 

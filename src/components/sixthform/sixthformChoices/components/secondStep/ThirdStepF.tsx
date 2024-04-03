@@ -189,26 +189,26 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
         {list.map((course, i) => {
           return (
             <div key={i} className={"course-box-r-23 " + className}>
-              <div className="font-16 bold flex">
+              <div className="font-16 bold flex" onClick={() => {
+                const checked = course.subjects.find(s => s.checked);
+
+                if (!course.expanded) {
+                  course.expanded = !course.expanded;
+                  onChange();
+                } else if (!checked) {
+                  course.expanded = !course.expanded;
+                  onChange();
+                }
+
+                this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] });
+              }}>
                 <div className="flex-center big-r-23">
                   <SpriteIcon name={course.icon} />
                 </div>
                 <div className="flex-y-center course-name-r23">
                   {course.name}
                 </div>
-                <div className="flex-center coursor-pointer" onClick={() => {
-                  const checked = course.subjects.find(s => s.checked);
-
-                  if (!course.expanded) {
-                    course.expanded = !course.expanded;
-                    onChange();
-                  } else if (!checked) {
-                    course.expanded = !course.expanded;
-                    onChange();
-                  }
-
-                  this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] });
-                }}>
+                <div className="flex-center coursor-pointer">
                   <SpriteIcon name={course.expanded ? "arrow-up" : "arrow-down"} />
                 </div>
               </div>
@@ -252,7 +252,7 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
           Vocational, Applied and Practical Courses
         </div>
         <div className="font-16">
-          Click on any of the fourteen categories to reveal more than fifty course options. Select a maximum of<br/>
+          Click on any of the fourteen categories to reveal more than fifty course options. Select a maximum of<br />
           <span className="bold ">five</span> courses which interest you (you won’t be able to do them all).
         </div>
         <div className="d3-table-scroll-container">

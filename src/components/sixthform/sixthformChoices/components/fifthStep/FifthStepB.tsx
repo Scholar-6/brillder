@@ -152,7 +152,7 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ none: true, subjects: this.state.subjects });
             }}>
               <SpriteIcon name={this.state.none === true ? 'radio-btn-active' : 'radio-btn-blue'} className="absolute-correct-check" />
-              <div className="bold-italic">My career interested don’t fit any of these categories.</div>
+              <div className="bold-italic">My career interests don’t fit any of these categories.</div>
             </div>
           </div>
           <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />

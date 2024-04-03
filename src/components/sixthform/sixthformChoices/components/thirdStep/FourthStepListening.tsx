@@ -43,7 +43,7 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
       <ProgressBarStep6 icon="listening-sixth" step={animatedStep} total={props.listeningChoices.length} subjectDescription={animatedData.label} isBig={false} />
       <ThreeButtons
         currentChoice={currentStep.choice}
-        firstLabel="NEVER OR<br/> HARDLY EVER" middleLabel="SOMETIMES" lastLabel="A LOT"
+        firstLabel="RARELY" middleLabel="SOMETIMES" lastLabel="OFTEN"
         onClick={realChoice => {
           if (step >= props.listeningChoices.length - 1) {
           } else {

@@ -45,7 +45,7 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
       <ProgressBarStep6 icon="watching-start" step={animatedStep} total={watchingChoices.length} subjectDescription={animatedData.label} isBig={false} />
       <ThreeButtons
         currentChoice={currentStep.choice}
-        firstLabel="NEVER OR<br/> HARDLY EVER" middleLabel="SOMETIMES" lastLabel="A LOT"
+        firstLabel="RARELY" middleLabel="SOMETIMES" lastLabel="OFTEN"
         onClick={realChoice => {
           if (step >= watchingChoices.length - 1) {
           } else {

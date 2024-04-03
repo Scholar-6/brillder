@@ -32,13 +32,13 @@ const SixStepWriting: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="font-16">
-        For each type of writing, say how much of it you do.
+        How often do you write the following?
       </div>
       <img src="/images/choicesTool/Step6R18.png" className="step3watching-img-v2" />
       <ProgressBarWriting step={animatedStep} total={props.choices.length} title={animatedData.name} description={animatedData.description} />
       <ThreeButtons
         currentChoice={currentStep.choice}
-        firstLabel="HARDLY<br/> AT ALL" middleLabel="A FAIR BIT" lastLabel="A LOT"
+        firstLabel="RARELY" middleLabel="SOMETIMES" lastLabel="OFTEN"
         onClick={choice => {
           if (step >= props.choices.length - 1) {
           } else {

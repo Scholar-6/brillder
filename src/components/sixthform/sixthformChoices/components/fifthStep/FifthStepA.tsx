@@ -135,10 +135,10 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
           For many careers, you can study almost any combination of subjects in sixth form.
         </div>
         <div className="font-16">
-          However, a number of professions have specific expectations for post-16 education. Some really do require careful choices in the sixth form.
+          However, a number of professions have specific expectations for post-16 education.
         </div>
         <div className="font-16">
-          Match the professional categories with sixth form expectations on the right.
+          Match the statement with the professional category.
         </div>
         <div className="question-step-5a categories-of-carreer">
           <ProgressBarR2 step={this.state.step} total={this.state.careers.length} description={currentAnswer.name} />

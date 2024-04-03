@@ -255,7 +255,7 @@
       border: 1px solid #EDEDED;
       box-shadow: 0px 0px 6px 0px #001C551A;
       width: 35vw;
-      padding: 2.4vh 3vw;
+      padding: 2.4vh 1.3vw;
       border-radius: 0.6vw;
 
       .step1-btn-row {
@@ -2540,6 +2540,11 @@
             >div {
               margin-top: 0.7vh;
               margin-bottom: 0.7vh;
+            }
+
+            > div.active {
+              color: white;
+              background: var(--theme-dark-blue);
             }
           }
 

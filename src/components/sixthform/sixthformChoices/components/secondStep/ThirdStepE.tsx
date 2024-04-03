@@ -43,6 +43,11 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       correctIndex: 4,
       name: "Uniformed Services"
+    },
+    // just filler data 
+    {
+      correctIndex: 10,
+      name: 'Forestry'
     }];
     
     subjects = shuffle(subjects);
@@ -52,7 +57,7 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
     }, {
       name: "A comprehensive multi-disciplinary course examining chemical, physical and biological<br/> techniques to acquire and analyse evidence relevant to criminal trials"
     }, {
-      name: "The skills in making theatre (or film) productions happen, from costume and make-up<br/> to lighting and sound, from set design and scheme painting to and creating and managing props"
+      name: "The skills in making theatre (or film) productions happen, from costume and make-up<br/> to lighting and sound, from set design and scene painting to and creating and managing props"
     }, {
       name: "Gaming is a rapidly growing industry as are the lucrative arenas in which top players now compete.<br/> This course develops commercial and marketing and teamwork skills alongside game design and	development"
     }, {
