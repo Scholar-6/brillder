@@ -102,8 +102,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       let subjectsSorted = this.sortByScore(subjects);
       let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
       let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
-
-      let possibleList = subjectsR1.splice(0, 6);
+      let possibleList:any[] = [];
 
       if (answers) {
         var firstAnswer = answers.find(a => a.step === Pages.Question1);
