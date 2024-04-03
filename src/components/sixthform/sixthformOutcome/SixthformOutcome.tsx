@@ -109,9 +109,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         var firstAnswer = answers.find(a => a.step === Pages.Question1);
         if (firstAnswer && firstAnswer.answer) {
           if (firstAnswer.answer.subjectType === SubjectType.ALevels) {
-            possibleList = subjectsR1.filter(s => s.isALevel).splice(0, 6);
+            subjectsR1 = subjectsR1.filter(s => s.isALevel);
+            possibleList = subjectsR1.splice(0, 6);
           } else if (firstAnswer.answer.subjectType === SubjectType.VocationalSubjects) {
-            possibleList = subjectsR1.filter(s => s.isVocational).splice(0, 6);
+            subjectsR1 = subjectsR1.filter(s => s.isVocational);
+            possibleList = subjectsR1.splice(0, 6);
           }
         }
       }
@@ -508,6 +510,13 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               }
             }
 
+            // filter same type of subjects
+            possibleList = possibleList.filter((value: any, index: number, self) =>
+              index === self.findIndex((t) => (
+                t.id === value.id
+              ))
+            )
+
             if (canPutDefinites !== this.state.canPutDefinites) {
               this.setState({
                 definetlyList, possibleList,
@@ -655,8 +664,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               </div>
             </div>
             <TopMenu
-              activePage={this.state.activePage} 
-              setActivePage={activePage => this.setState({activePage})}
+              activePage={this.state.activePage}
+              setActivePage={activePage => this.setState({ activePage })}
               progress={progressScore} history={this.props.history}
             />
           </div>
