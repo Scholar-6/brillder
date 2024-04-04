@@ -780,4 +780,22 @@
       }
     }
   }
+  .question-popup {
+    svg {
+      width: 9vw;
+      height: 9vw;
+    }
+    width: 90vw !important;
+    border-radius: 3vw;
+  }
+
+  .question-text-t4 {
+    margin-left: 4vw;
+
+    > div {
+      padding-left: 3vw;
+      border-radius: 2vw;
+      max-width: 92vw;
+    }
+  }
 }

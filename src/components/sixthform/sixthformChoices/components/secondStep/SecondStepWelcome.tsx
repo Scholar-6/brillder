@@ -1,6 +1,7 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
 
 interface WelcomeProps {
   canSkip: boolean;
@@ -12,7 +13,10 @@ interface WelcomeProps {
 const SecondStepWelcome: React.FC<WelcomeProps> = (props) => {
   return (
     <div className="question">
-    <img src="/images/choicesTool/Step3background.png" className="step2background-img" />
+    {isPhone()
+      ? <img src="/images/choicesTool/phone/subjects.png" className="step2background-img" />
+      : <img src="/images/choicesTool/Step3background.png" className="step2background-img" />
+    }
     <div className="text-container-5432">
       <div>
         <div className="font-20">Step 2</div>
