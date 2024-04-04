@@ -649,7 +649,17 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   }
 
   render() {
-    const progressScore = Math.round((this.state.answers.length / 7) * 100);
+    let lastStep = 0;
+    let answers = this.state.answers;
+
+    if (answers.length > 0) {
+      for (let answer of answers) {
+        if (answer.step > lastStep) {
+          lastStep = answer.step;
+        }
+      }
+    }
+    const progressScore = Math.round((lastStep / 7) * 100);
     return (
       <React.Suspense fallback={<></>}>
         <div className="SixthformOutcomePage">
