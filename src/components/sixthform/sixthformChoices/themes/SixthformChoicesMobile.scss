@@ -476,6 +476,7 @@
       top: -10.6vw;
       height: 35vw !important;
     }
+
     .question-text-3 {
       padding-left: 4vw;
       line-height: 1;
@@ -483,6 +484,7 @@
       margin-top: 2vh;
       margin-bottom: 2vh;
     }
+
     .text-container-r3 {
       font-size: 4vw;
       margin-left: 4vw;
@@ -495,29 +497,36 @@
 
     .main-subjects-container {
       display: block;
+
       .first-box-R21 {
         height: calc(16vh + 5.2vh) !important;
         border-radius: 2vw;
         overflow-y: auto;
         margin-left: 4vw;
         width: 92vw;
+
         .toggle-R21 {
           width: 70vw;
+
           div:nth-child(2) {
             border-radius: 1vw;
             width: 50vw !important;
           }
         }
+
         .subjects-box-s6-r21 {
           height: 16vh;
         }
+
         .expand-subjects-button {
           border-radius: 2vw;
         }
+
         .subjects-typer-r21 input {
           font-size: 4vw !important;
         }
       }
+
       .second-box-R21 {
         border-radius: 2vw;
         margin-top: 2vh;
@@ -555,6 +564,7 @@
         svg {
           top: calc(1vh + 2vw);
         }
+
         .close-btn-se23 {
           top: 0.5vh;
         }
@@ -579,6 +589,29 @@
 
   .question-step1gcses2 {
     margin-left: 4vw;
+
+    .question-step1gcses24 {
+      height: 100%;
+    }
+
+    .height-1 {
+      height: 10% !important;
+    }
+
+    .height-2 {
+      height: 10% !important;
+    }
+
+    .question-top-step1 {
+      overflow-y: scroll;
+      height: 15% !important;
+    }
+
+    .question-text-3 {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
     .third-step-img {
       top: -4vw;
     }
@@ -699,6 +732,52 @@
       position: absolute;
       left: 0;
       top: 74vw;
+    }
+  }
+
+  .phone-subjects {
+    width: 92vw;
+    height: 70%;
+    overflow-y: scroll;
+  }
+
+  .subject-container-r33 {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    border-radius: 4vw;
+    background: var(--theme-orange);
+    box-shadow: 0px 0px 6px 0px #001C551A;
+
+    .subject-top-r33 {
+      padding-top: 3vh;
+      padding-bottom: 3vh;
+      font-size: 4vw;
+      color: white;
+      text-align: center;
+    }
+
+    .second-column-34 {
+      border-radius: 3.8vw;
+      display: flex;
+      background: white;
+      overflow:hidden;
+
+      .center-column {
+        text-align: center;
+        padding-top: 3vh;
+        padding-bottom: 3vh;
+        width: 23vw;
+        border-left: 1px solid #EDEDED;
+
+        &.active {
+          color: white;
+          background: #4C608A;
+        }
+
+        &:first-child {
+          border-left: none;
+        }
+      }
     }
   }
 }

@@ -44,57 +44,107 @@ class ThirdStepBTable extends Component<ThirdProps> {
   render() {
     if (isPhone()) {
       return (
-        <div>
-          <div className="bold font-32 question-text-3">
-            What are your strengths?
-          </div>
-          <div className="font-16">
-            Now tell us whether you are likely to<br />
-            do very well, well, okay, or not so well<br />
-            in each of your current subjects. Alternatively,<br />
-            for GCSEs, you can input your predicted grades.
+        <div className="question-step1gcses24">
+          <div className="question-top-step1">
+            <div className="height-1" />
+            <div className="bold font-32 question-text-3">
+              What are your strengths?
+            </div>
+            <div className="height-2" />
+            <div className="font-16">
+              Now tell us whether you are likely to<br />
+              do very well, well, okay, or not so well<br />
+              in each of your current subjects. Alternatively,<br />
+              for GCSEs, you can input your predicted grades.
+            </div>
           </div>
           <div className="phone-subjects">
             {this.props.subjectSelections.map((subject, index) => {
               if (subject.isVocational) {
                 return (
-                  <div key={index}>
+                  <div key={index} className="subject-container-r33">
                     <div>
-                      <div className="bold subject-top-r33 font-20">
+                      <div className="bold subject-top-r33 font-24">
                         {subject.name}
                       </div>
-                      <div className="second-column center-column">
-                        Distinction
-                      </div>
-                      <div className="third-column center-column">
-                        Merit
-                      </div>
-                      <div className="fourth-column center-column">
-                        Pass
-                      </div>
-                      <div className="fifth-column center-column">
-                        Fail
+                      <div className="second-column-34 font-20">
+                        <div
+                          className={`center-column ${subject.predicedStrength == 'distinction' ? 'active' : ''}`}
+                          onClick={() => {
+                            subject.predicedStrength = 'distinction';
+                            this.props.setSubjectSelections(this.props.subjectSelections);
+                          }}>
+                          Distinction
+                        </div>
+                        <div
+                          className={`center-column ${subject.predicedStrength == 'merit' ? 'active' : ''}`}
+                          onClick={() => {
+                            subject.predicedStrength = 'merit';
+                            this.props.setSubjectSelections(this.props.subjectSelections);
+                          }}
+                        >
+                          Merit
+                        </div>
+                        <div
+                          className={`center-column ${subject.predicedStrength == 'pass' ? 'active' : ''}`}
+                          onClick={() => {
+                            subject.predicedStrength = 'pass';
+                            this.props.setSubjectSelections(this.props.subjectSelections);
+                          }}
+                        >
+                          Pass
+                        </div>
+                        <div
+                          className={`center-column ${subject.predicedStrength == 'fail' ? 'active' : ''}`}
+                          onClick={() => {
+                            subject.predicedStrength = 'fail';
+                            this.props.setSubjectSelections(this.props.subjectSelections);
+                          }}
+                        >
+                          Fail
+                        </div>
                       </div>
                     </div>
                   </div>
                 );
               } else {
                 return (
-                  <div key={index} className="subject-">
-                    <div className="bold subject-top-r33 font-20">
+                  <div key={index} className="subject-container-r33">
+                    <div className="bold subject-top-r33 font-24">
                       {subject.name}
                     </div>
-                    <div>
-                      <div className="second-column center-column">
+                    <div className="second-column-34 font-20">
+                      <div className={`second-column center-column ${subject.predicedStrength >= 8 ? 'active' : ''}`} onClick={() => {
+                        subject.predicedStrength = 8;
+                        this.props.setSubjectSelections(this.props.subjectSelections);
+                      }}>
                         Very well
                       </div>
-                      <div className="third-column center-column">
+                      <div
+                        className={`third-column center-column ${(subject.predicedStrength >= 6 && subject.predicedStrength <= 7) ? 'active' : ''}`}
+                        onClick={() => {
+                          subject.predicedStrength = 6;
+                          this.props.setSubjectSelections(this.props.subjectSelections);
+                        }}
+                      >
                         Well
                       </div>
-                      <div className="fourth-column center-column">
+                      <div
+                        className={`fourth-column center-column ${(subject.predicedStrength >= 4 && subject.predicedStrength <= 5) ? 'active' : ''}`}
+                        onClick={() => {
+                          subject.predicedStrength = 4;
+                          this.props.setSubjectSelections(this.props.subjectSelections);
+                        }}
+                      >
                         Ok
                       </div>
-                      <div className="fifth-column center-column">
+                      <div
+                        className={`fifth-column center-column ${subject.predicedStrength <= 3 ? 'active' : ''}`}
+                        onClick={() => {
+                          subject.predicedStrength = 2;
+                          this.props.setSubjectSelections(this.props.subjectSelections);
+                        }}
+                      >
                         Not so well
                       </div>
                     </div>
