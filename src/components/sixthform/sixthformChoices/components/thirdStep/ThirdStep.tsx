@@ -193,7 +193,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
         label: 'Current Affairs, News & Talk (e.g. Radio Four)',
         choice: null
       }, {
-        label: 'Podcasts (e.g. Joe Rogan)',
+        label: 'Podcasts (e.g. The Infinite Monkey Cage)',
         choice: null
       }, {
         label: 'Sport & Sport Talk (e.g. Radio Five)',

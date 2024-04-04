@@ -34,7 +34,7 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
           <SpriteIcon name="help-circle-r1" className="info-icon" />
           <div className="hover-content regular">
             <div className="triangle-popup" />
-            The average teemager spends more than two hours per<br />
+            The average teenager spends more than two hours per<br />
             day streaming music or podcasts, or listening to radio.
           </div>
         </div>

@@ -567,7 +567,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
           <div className="question question3-first question-step-1gcses">
             <img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" />
             <div className="bold font-32 question-text-3">
-              What qualifications are you currently doing?
+              What qualifications are you currently taking?
             </div>
             <div className="font-16 text-container-r3">
               Choose your GCSEs below, including<br /> any you’ve already done.<div className="space-r44" />
@@ -665,7 +665,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
         <div className="question question3-first">
           <img src="/images/choicesTool/ThirdStepR1.png" className="third-step-img" />
           <div className="bold font-32 question-text-3">
-            What qualifications are you currently doing?
+            What qualifications are you currently taking?
           </div>
           <div className="font-16">
             Choose your GCSEs below, including ones in which you’ve already gained a qualification.<br />
