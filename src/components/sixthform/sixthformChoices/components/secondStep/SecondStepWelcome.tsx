@@ -12,7 +12,7 @@ interface WelcomeProps {
 
 const SecondStepWelcome: React.FC<WelcomeProps> = (props) => {
   return (
-    <div className="question">
+    <div className="question question-subject-welcome">
     {isPhone()
       ? <img src="/images/choicesTool/phone/subjects.png" className="step2background-img" />
       : <img src="/images/choicesTool/Step3background.png" className="step2background-img" />
@@ -24,7 +24,7 @@ const SecondStepWelcome: React.FC<WelcomeProps> = (props) => {
       </div>
     </div>
     <BackButtonSix onClick={props.moveBack} />
-    {props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
+    {!isPhone() && props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
     <button
       className="absolute-contunue-btn font-24"
       onClick={props.moveNext}

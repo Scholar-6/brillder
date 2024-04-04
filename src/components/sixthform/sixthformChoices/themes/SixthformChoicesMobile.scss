@@ -798,4 +798,16 @@
       max-width: 92vw;
     }
   }
+
+  .question-subject-welcome {
+    .text-container-5432 {
+      left: 4vw;
+      text-align: center;
+      height: 100vw;
+
+      > div {
+        width: 92vw;
+      }
+    }
+  }
 }
