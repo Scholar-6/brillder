@@ -60,7 +60,7 @@ class ThirdStepBTable extends Component<ThirdProps> {
                 return (
                   <div key={index}>
                     <div>
-                      <div className="bold first-column subject-box-r21 font-12">
+                      <div className="bold subject-top-r33 font-20">
                         {subject.name}
                       </div>
                       <div className="second-column center-column">
@@ -80,9 +80,9 @@ class ThirdStepBTable extends Component<ThirdProps> {
                 );
               } else {
                 return (
-                  <div key={index}>
-                    <div className="bold first-column subject-box-r21 font-12">
-                      <div className="subject-lozengue">{subject.name}</div>
+                  <div key={index} className="subject-">
+                    <div className="bold subject-top-r33 font-20">
+                      {subject.name}
                     </div>
                     <div>
                       <div className="second-column center-column">
