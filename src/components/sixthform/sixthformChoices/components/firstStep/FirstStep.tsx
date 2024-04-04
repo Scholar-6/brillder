@@ -6,7 +6,6 @@ import { enterPressed } from "components/services/key";
 import StepCourseSelect, { FirstChoice } from "./StepCourseSelect";
 import { KeyStage4Subject, getKeyStage4Subjects } from "services/axios/sixthformChoices";
 import FirstStepWelcome from "./FirstStepWelcome";
-import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { getSixthformSchools } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";

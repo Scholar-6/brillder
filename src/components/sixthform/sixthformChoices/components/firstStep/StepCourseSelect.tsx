@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
 import ButtonR34 from "../ButtonR34";
+import { isPhone } from "services/phone";
 
 interface FirstQuestionProps {
   choice: FirstChoice;
@@ -66,19 +67,21 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
 
   render() {
     return (
-      <div className="question">
+      <div className="question question-subject-type">
         <img src="/images/choicesTool/MaskGroup.png" alt="step1" className="mask-step-img" />
         <div className="bold font-32 question-text">
-          What type of courses are you considering for the sixth form?
+          {isPhone()
+            ? <span>What type of courses<br /> are you considering<br /> for the sixth form?</span>
+            : 'What type of courses are you considering for the sixth form?'}
         </div>
-        <div className="font-24">
+        <div className="font-24 question-text-t4">
           <ButtonR34
             currentChoice={FirstChoice.ALevel} choice={this.state.choice}
             label="A-level courses only" setChoice={choice => this.setChoice(choice)}
           />
           <ButtonR34
-            currentChoice={FirstChoice.Vocational} choice={this.state.choice} 
-            label="Vocational courses only (e.g. BTEC, T-level)" setChoice={choice => this.setChoice(choice)} 
+            currentChoice={FirstChoice.Vocational} choice={this.state.choice}
+            label="Vocational courses only (e.g. BTEC, T-level)" setChoice={choice => this.setChoice(choice)}
           />
           <ButtonR34
             currentChoice={FirstChoice.ShowMeAll} choice={this.state.choice}
