@@ -5,12 +5,12 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { KeyStage4Subject } from "services/axios/sixthformChoices";
 import CheckBoxV2 from "../CheckBoxM1";
 import CheckBoxV3 from "../CheckBoxM2";
+import { isPhone } from "services/phone";
 
 interface ThirdProps {
   subjectSelections: KeyStage4Subject[];
   setSubjectSelections(subjects: KeyStage4Subject[]): void;
 }
-
 
 class ThirdStepBTable extends Component<ThirdProps> {
   renderValue(subject: KeyStage4Subject) {
@@ -42,13 +42,78 @@ class ThirdStepBTable extends Component<ThirdProps> {
   }
 
   render() {
+    if (isPhone()) {
+      return (
+        <div>
+          <div className="bold font-32 question-text-3">
+            What are your strengths?
+          </div>
+          <div className="font-16">
+            Now tell us whether you are likely to<br />
+            do very well, well, okay, or not so well<br />
+            in each of your current subjects. Alternatively,<br />
+            for GCSEs, you can input your predicted grades.
+          </div>
+          <div className="phone-subjects">
+            {this.props.subjectSelections.map((subject, index) => {
+              if (subject.isVocational) {
+                return (
+                  <div key={index}>
+                    <div>
+                      <div className="bold first-column subject-box-r21 font-12">
+                        {subject.name}
+                      </div>
+                      <div className="second-column center-column">
+                        Distinction
+                      </div>
+                      <div className="third-column center-column">
+                        Merit
+                      </div>
+                      <div className="fourth-column center-column">
+                        Pass
+                      </div>
+                      <div className="fifth-column center-column">
+                        Fail
+                      </div>
+                    </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index}>
+                    <div className="bold first-column subject-box-r21 font-12">
+                      <div className="subject-lozengue">{subject.name}</div>
+                    </div>
+                    <div>
+                      <div className="second-column center-column">
+                        Very well
+                      </div>
+                      <div className="third-column center-column">
+                        Well
+                      </div>
+                      <div className="fourth-column center-column">
+                        Ok
+                      </div>
+                      <div className="fifth-column center-column">
+                        Not so well
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div>
         <div className="bold font-32 question-text-3">
           What are your strengths?
         </div>
         <div className="font-16">
-          Now tell us whether you are likely to do very well, well, okay, or not so well in each of your <br/>
+          Now tell us whether you are likely to do very well, well, okay, or not so well in each of your <br />
           current subjects. Alternatively, for GCSEs, you can input your predicted grades.
         </div>
         <div className="subjects-table">
