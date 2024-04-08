@@ -10,6 +10,7 @@ import ThirdStepE from "./ThirdStepE";
 import ThirdStepF from "./ThirdStepF";
 import SecondStepWelcome from "./SecondStepWelcome";
 import { FirstChoice } from "../firstStep/StepCourseSelect";
+import { isPhone } from "services/phone";
 
 
 export enum ThirdSubStep {
@@ -305,8 +306,11 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === ThirdSubStep.First) {
       return (
-        <div className="question">
-          <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
+        <div className="question question-new-subjects">
+          {isPhone()
+            ? <img src="/images/choicesTool/phone/newSubjects.png" className="third-step-img" />
+            : <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img" />
+          }
           <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
             onChange={(firstPairResults: any[]) => { this.setState({ firstPairResults }); }}

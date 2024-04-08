@@ -760,7 +760,7 @@
       border-radius: 3.8vw;
       display: flex;
       background: white;
-      overflow:hidden;
+      overflow: hidden;
 
       .center-column {
         text-align: center;
@@ -780,11 +780,13 @@
       }
     }
   }
+
   .question-popup {
     svg {
       width: 9vw;
       height: 9vw;
     }
+
     width: 90vw !important;
     border-radius: 3vw;
   }
@@ -792,7 +794,7 @@
   .question-text-t4 {
     margin-left: 4vw;
 
-    > div {
+    >div {
       padding-left: 3vw;
       border-radius: 2vw;
       max-width: 92vw;
@@ -800,14 +802,97 @@
   }
 
   .question-subject-welcome {
+    .step2background-img {
+      top: -9vw;
+    }
+
     .text-container-5432 {
       left: 4vw;
       text-align: center;
       height: 100vw;
 
-      > div {
+      >div {
         width: 92vw;
       }
+    }
+  }
+
+  .question-new-subjects {
+    .third-step-img {
+      top: -10vw;
+    }
+
+    .question-step-3c1 {
+      height: 100%;
+    }
+
+    .top-part {
+      padding-left: 4vw;
+      height: 15%;
+
+      .question-text-3 {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .color-light-blue {
+        margin-top: 2vh;
+      }
+    }
+
+    .height-4 {
+      height: 8%;
+    }
+
+    .animating-left {
+      width: 93vw !important;
+    }
+
+    .progress-bar-sixthform {
+      width: 100% !important;
+
+      .line-r23 {
+        border-radius: 1vw;
+        height: 1vw;
+        width: 20.3vw;
+      }
+    }
+
+    .progress-description-container-r3234 {
+      margin-left: 4vw;
+      width: 92vw !important;
+    } 
+
+    .progress-content-box-r323 {
+      width: 96%;
+    }
+
+    .containers-3c1 {
+      padding-left: 4vw !important;
+      width: 96vw;
+      border-radius: 4vw;
+      svg {
+        width: 5vw !important;
+        height: 5vw !important;
+      }
+      font-size: 4vw !important;
+    }
+
+    .container-3c1 {
+      border-radius: 4vw;
+      svg {
+        width: 5vw !important;
+        height: 5vw !important;
+      }
+      font-size: 4vw !important;
+    }
+  }
+}
+
+.progress-description-container-r3234 {
+  .title-6v2 {
+    br {
+      display: none;
     }
   }
 }

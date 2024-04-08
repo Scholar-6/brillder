@@ -6,6 +6,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import { shuffle } from "../../services/shuffle";
 import ProgressBarR1 from "../progressBar/ProgressBarR1";
+import { isPhone } from "services/phone";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -123,6 +124,48 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     const currentAnswer = this.state.answers[this.state.step];
+
+    if (isPhone()) {
+      return (
+        <div className="question-step-3c1">
+          <div className="top-part">
+            <div className="height-4" />
+            <div className="bold font-32 question-text-3">
+              New Subjects
+            </div>
+            <div className="font-16 color-light-blue">
+              Some subjects are rarely studied<br/>
+              before the sixth form. See if you<br/>
+              understand what they involve.
+            </div>
+          </div>
+          <ProgressBarR1
+            step={this.state.step}
+            topLabel="Which subject matches this description?"
+            total={this.state.answers.length}
+            description={currentAnswer.name}
+          />
+          <Grid container direction="row" className="containers-3c1">
+            {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
+          </Grid>
+          <BackButtonSix onClick={() => {
+            if (this.state.step <= 0) {
+              this.props.moveBack();
+            } else {
+              this.setState({ step: this.state.step - 1 });
+            }
+          }} />
+          <button className="absolute-contunue-btn font-24" onClick={() => {
+            if (this.state.step >= 4) {
+              this.props.moveNext();
+            } else {
+              this.setState({ step: this.state.step + 1 });
+            }
+          }}>Next</button>
+        </div>
+      );
+    }
+
     return (
       <div className="question-step-3c1">
         <div className="bold font-32 question-text-3">
