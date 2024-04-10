@@ -6,6 +6,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import { shuffle } from "../../services/shuffle";
 import ProgressBarR1 from "../progressBar/ProgressBarR1";
+import { isPhone } from "services/phone";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -125,12 +126,21 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     const currentAnswer = this.state.answers[this.state.step];
     return (
       <div className="question-step-3c1">
-        <div className="bold font-32 question-text-3">
+        <div className="bold font-32 question-text-3 margin-left-4">
           New Subjects
         </div>
-        <div className="font-16 color-light-blue">
-          Some subjects are rarely studied before the sixth form. See if you understand what they involve.
-        </div>
+        {isPhone() ?
+          <div className="font-16 color-light-blue margin-left-4">
+            Some subjects are rarely studied<br />
+            before the sixth form. See if you<br />
+            understand what they involve.
+          </div>
+          : <div className="font-16 color-light-blue">
+            Some subjects are rarely studied
+            before the sixth form. See if you
+            understand what they involve.
+          </div>
+        }
         <ProgressBarR1
           step={this.state.step}
           topLabel="Which subject matches this description?"
