@@ -16,6 +16,10 @@
   $font-scale: 3.5;
   background: white !important;
 
+  .margin-left-4 {
+    margin-left: 4vw;
+  }
+
   .header-top {
     position: absolute;
     top: 0;
@@ -840,6 +844,7 @@
       }
 
       .color-light-blue {
+        margin-left: 4vw;
         margin-top: 2vh;
       }
     }
@@ -868,13 +873,13 @@
     }
 
     .progress-content-box-r323 {
-      width: 96%;
+      width: 100%;
     }
 
     .containers-3c1 {
       padding-left: 4vw !important;
       width: 96vw;
-      border-radius: 4vw;
+      border-radius: 2vw;
 
       svg {
         width: 5vw !important;
@@ -916,10 +921,10 @@
     width: 100vw;
 
     .animating-left {
-      width: 80vw;
+      width: 86vw;
 
       .title-6v2 {
-        width: 80vw;
+        width: 86vw;
 
         br {
           display: none;
@@ -928,5 +933,30 @@
     }
 
     animation: fade-in 0.3s forwards;
+  }
+}
+
+.question-step-3c1 .progress-description-container-r3234 {
+  margin-left: 4vw;
+  margin-right: 4vw;
+  border-radius: 2vw;
+}
+
+.SixthformChoicesPage .question-step-3c1 .containers-3c1 {
+  .container-3c1 {
+    border-radius: 4vw;
+
+    svg {
+      width: 7vw;
+      height: 7vw;
+    }
+  }
+}
+
+// new subjects
+.SixthformChoicesPage .question-new-subjects {
+  .third-step-img {
+    top: -14vw !important;
+    height: 37vw;
   }
 }

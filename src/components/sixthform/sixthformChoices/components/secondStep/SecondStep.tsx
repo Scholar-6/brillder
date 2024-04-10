@@ -10,6 +10,7 @@ import ThirdStepE from "./ThirdStepE";
 import ThirdStepF from "./ThirdStepF";
 import SecondStepWelcome from "./SecondStepWelcome";
 import { FirstChoice } from "../firstStep/StepCourseSelect";
+import { isPhone } from "services/phone";
 
 
 export enum ThirdSubStep {
@@ -143,7 +144,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
             }}
             moveBack={coursesD => {
               let choice = this.props.firstAnswer.answer.subjectType;
-              this.setState({subStep: ThirdSubStep.Sixth});
+              this.setState({ subStep: ThirdSubStep.Sixth });
             }}
             moveNext={() => {
               let answer = this.getAnswer();
@@ -203,7 +204,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
               } else {
                 this.setState({ subStep: ThirdSubStep.Fourth });
               }
-      
+
               /*
               if (this.props.firstAnswer.answer.databaseSchool) {
                 this.setState({ subStep: ThirdSubStep.ThirdC4 });
@@ -251,7 +252,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
           />
         </div>
       );
-      
+
     } else if (this.state.subStep === ThirdSubStep.Third) {
       return (
         <div className="question question-c4">
@@ -287,7 +288,10 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
     } else if (this.state.subStep === ThirdSubStep.Second) {
       return (
         <div className="question step3question5">
-          <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
+          {isPhone()
+            ? <img src="/images/choicesTool/phone/newSubjects.png" className="third-step-img"></img>
+            : <img src="/images/choicesTool/phone/newSubjects.png" className="third-step-img" />
+          }
           <ThirdStepC2
             pairAnswers={this.state.secondPairResults}
             onChange={(secondPairResults: any[]) => {
@@ -305,8 +309,11 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === ThirdSubStep.First) {
       return (
-        <div className="question">
-          <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img"></img>
+        <div className="question question-new-subjects">
+          {isPhone()
+            ? <img src="/images/choicesTool/phone/newSubjects.png" className="third-step-img" />
+            : <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img" />
+          }
           <ThirdStepC1
             pairAnswers={this.state.firstPairResults}
             onChange={(firstPairResults: any[]) => { this.setState({ firstPairResults }); }}
