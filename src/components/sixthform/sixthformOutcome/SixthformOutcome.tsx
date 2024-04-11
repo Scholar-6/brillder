@@ -100,8 +100,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         }
       }
       let subjectsSorted = this.sortByScore(subjects);
-      let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Definetly);
-      let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Definetly);
+      let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Favourite);
+      let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Favourite);
       let possibleList:any[] = [];
 
       if (answers) {
@@ -142,7 +142,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderCircle(subject: SixthformSubject) {
     let colorClass = 'subject-circle yellow-circle';
-    if (subject.userChoice === UserSubjectChoice.Definetly) {
+    if (subject.userChoice === UserSubjectChoice.Favourite) {
       colorClass = 'subject-circle green-circle';
     } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
       colorClass = 'subject-circle red-circle';
@@ -444,8 +444,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             // find subject that don`t have definetly and send request to server
             if (definetlyList.length > this.state.definetlyList.length) {
               for (let subject of definetlyList) {
-                if (!subject.isEmpty && subject.userChoice !== UserSubjectChoice.Definetly) {
-                  subject.userChoice = UserSubjectChoice.Definetly;
+                if (!subject.isEmpty && subject.userChoice !== UserSubjectChoice.Favourite) {
+                  subject.userChoice = UserSubjectChoice.Favourite;
                   setSixthformSubjectChoice(subject);
                 }
               }
@@ -549,7 +549,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             // find subject that have definetly and send request to server
             if (possibleList.length > this.state.possibleList.length) {
               for (let subject of possibleList) {
-                if (!subject.isEmpty && subject.userChoice === UserSubjectChoice.Definetly) {
+                if (!subject.isEmpty && subject.userChoice === UserSubjectChoice.Favourite) {
                   subject.userChoice = UserSubjectChoice.Maybe;
                   setSixthformSubjectChoice(subject);
                 }

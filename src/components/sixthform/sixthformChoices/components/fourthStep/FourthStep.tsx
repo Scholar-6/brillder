@@ -13,8 +13,8 @@ enum SubStep {
   sub4a,
   sub4b,
   sub4c,
-  sub4d1,
-  sub4d2,
+  sub4d1, // hidden
+  sub4d2, // hidden
   sub4e1,
   sub4e2,
 }
@@ -938,6 +938,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <div className="bold font-32 question-text-3">
             Vocational Degrees
           </div>
+          <img src="/images/choicesTool/VocationDegrees.png" className="third-step-img fourth-step-img-r4324"></img>
           <div className="font-16">
             View the courses available for the categories you selected. Select up to <span className="bold">five</span> that interest you.
           </div>
@@ -988,9 +989,10 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
 
       return (
         <div className="font-16 question-4e1">
-          <div className="bold font-32 question-text-3">
+          <div className="bold font-32 question-text-3 padding-b-1d5vh">
             Types of Vocational Degree
           </div>
+          <img src="/images/choicesTool/TypesOfVocationalDegree.png" className="third-step-img fourth-step-img-r4325"></img>
           <div>
             Many students go directly into work or apprenticeships after sixth form. But some begin vocational degrees instead.
           </div>
@@ -1011,14 +1013,14 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             Oops! You’ve tried to pick too many.
             <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d2 })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4c })} />
           <button className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`} disabled={disabled} onClick={() => {
             this.saveAnswer();
             this.setState({ subStep: SubStep.sub4e2 });
           }}>Continue</button>
         </div>
       );
-    } else if (this.state.subStep === SubStep.sub4d2) {
+    /* } else if (this.state.subStep === SubStep.sub4d2) {
       return (
         <div className="question question-step-4d2">
           <div className="bold font-32 question-text-4">
@@ -1051,7 +1053,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             Oops! You’ve tried to pick too many.
             <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
-          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4d1 })} />
+          <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4c })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
             let choice = this.props.secondAnswer.answer.subjectType;
@@ -1103,7 +1105,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
             this.setState({ subStep: SubStep.sub4d2 });
           }}>Continue</button>
         </div>
-      );
+      ); */
     } else if (this.state.subStep === SubStep.sub4c) {
       return (
         <div className="question">
@@ -1154,7 +1156,7 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub4b })} />
           <button className="absolute-contunue-btn font-24" onClick={() => {
             this.saveAnswer();
-            this.setState({ subStep: SubStep.sub4d1 });
+            this.setState({ subStep: SubStep.sub4e1 });
           }}>Continue</button>
         </div>
       );

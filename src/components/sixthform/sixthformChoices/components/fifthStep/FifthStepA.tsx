@@ -7,6 +7,7 @@ import { shuffle } from "../../services/shuffle";
 import ProgressBarStep3C2 from "../progressBar/ProgressBarStep3C1";
 import { Grid } from "@material-ui/core";
 import ProgressBarR2 from "../progressBar/ProgressBarR2";
+import NextButtonSix from "../NextButtonSix";
 
 interface ThirdProps {
   careers: any;
@@ -152,13 +153,13 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
               this.setState({ step: this.state.step - 1 });
             }
           }} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
+          <NextButtonSix label="Continue" onClick={() => {
             if (this.state.step >= this.state.careers.length - 1) {
               this.props.moveNext(this.getAnswer());
             } else {
               this.setState({ step: this.state.step + 1 });
             }
-          }}>Continue</button>
+          }} />
         </div>
       </div>
     );

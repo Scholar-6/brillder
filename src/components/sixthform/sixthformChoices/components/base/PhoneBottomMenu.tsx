@@ -48,7 +48,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
 
   const renderCircle = (subject: SixthformSubject) => {
     let colorClass = 'subject-circle yellow-circle';
-    if (subject.userChoice === UserSubjectChoice.Definetly) {
+    if (subject.userChoice === UserSubjectChoice.Favourite) {
       colorClass = 'subject-circle green-circle';
     } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
       colorClass = 'subject-circle red-circle';
@@ -89,7 +89,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
     return (
       <div className="switch-button font-12 bold">
         <div
-          className={`${subject.userChoice === UserSubjectChoice.Definetly ? 'active active-green green-switch' : 'green-switch'}`}
+          className={`${subject.userChoice === UserSubjectChoice.Favourite ? 'active active-green green-switch' : 'green-switch'}`}
           onClick={() => {
             if (!subject.score) {
               subject.score = 0;
@@ -101,7 +101,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
             } else {
               subject.score += 5;
             }
-            subject.userChoice = UserSubjectChoice.Definetly;
+            subject.userChoice = UserSubjectChoice.Favourite;
             props.updateSubject(subject);
           }}>Definitely!</div>
         <div
@@ -111,7 +111,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
               subject.score = 0;
             }
 
-            if (subject.userChoice === UserSubjectChoice.Definetly) {
+            if (subject.userChoice === UserSubjectChoice.Favourite) {
               subject.score -= 2;
             } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
               subject.score += 13;
@@ -128,7 +128,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
               subject.score = 0;
             }
 
-            if (subject.userChoice === UserSubjectChoice.Definetly) {
+            if (subject.userChoice === UserSubjectChoice.Favourite) {
               subject.score -= 15;
             } else if (subject.userChoice === UserSubjectChoice.Maybe) {
               subject.score -= 13;

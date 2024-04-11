@@ -3,6 +3,7 @@ import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
 import ButtonR34 from "../ButtonR34";
 import { isPhone } from "services/phone";
+import NextButtonSix from "../NextButtonSix";
 
 interface FirstQuestionProps {
   choice: FirstChoice;
@@ -94,13 +95,9 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
           />
         </div>
         <BackButtonSix onClick={this.props.moveBack} />
-        <button
-          className={`absolute-contunue-btn font-24 ${this.state.choice === null ? 'disabled' : ''}`}
-          disabled={this.state.choice === null}
+        <NextButtonSix disabled={this.state.choice === null} label="Continue to Step 2"
           onClick={this.props.moveNext}
-        >
-          Continue to Step 2
-        </button>
+        />
         {this.state.popup && this.renderPopup()}
       </div>
     );

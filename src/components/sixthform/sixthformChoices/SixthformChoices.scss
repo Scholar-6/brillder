@@ -217,11 +217,19 @@
   }
 
   .fourth-step-img-r11 {
-    height: calc(4vh + 4.5vh + 1.7vh + 1.7vh + 5vw);
+    height: calc(4vh + 4.5vh + 1vh + 3.3vw);
   }
 
   .fourth-step-img-r12 {
     height: calc(4vh + 4.5vh + 1.7vh + 1.7vh + 3.2vw);
+  }
+
+  .fourth-step-img-r4324 {
+    height: calc(12vh + 1vw);
+  }
+
+  .fourth-step-img-r4325 {
+    height: calc(5.5vh + 5vw);
   }
 
   .fifth-step-img-r14 {
@@ -776,7 +784,7 @@
       }
 
       input::placeholder {
-        color: $placeholder-color;
+        color: #4C608A;
       }
     }
   }
@@ -1277,8 +1285,14 @@
   }
 
 
+  // paddings
+  .padding-b-1d5vh {
+    padding-bottom: 1.5vh;
+  }
 
-
+  .padding-left-02vw {
+    padding-left: 0.2vw;
+  }
 
 
 
@@ -1586,7 +1600,7 @@
           border-radius: 0.5vw;
           color: $placeholder-color;
 
-          width: 21.5vw;
+          width: 22vw;
 
           >div {
             cursor: pointer;
@@ -1607,7 +1621,7 @@
           position: relative;
           overflow-y: scroll;
           width: calc(100% - 0.3vw);
-          height: calc(100vh - 5.834vw - 22vh - 1vh - 1.4vh - 7vw - 0.6vw - 0.9vw);
+          height: calc(100vh - 5.834vw - 22.7vh - 1vh - 1.4vh - 7vw - 1vw - 0.9vw);
         }
 
         .expand-subjects-button {
@@ -2661,7 +2675,7 @@
     }
 
     .d3-table-scroll-container-f4 {
-      height: calc(100vh - 5.834vw - 2vw - 4vh - 2vw - 5vh - 4.6vw - 3.4vh - 2vh) !important;
+      height: calc(100vh - 5.834vw - 2vw - 4vh - 2vw - 5vh - 4.6vw - 3.4vh - 2vh - 1.3vh) !important;
     }
 
     .coursor-pointer {

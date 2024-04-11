@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 
-import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import { shuffle } from "../../services/shuffle";
 import ProgressBarR1 from "../progressBar/ProgressBarR1";
 import { isPhone } from "services/phone";
+import NextButtonSix from "../NextButtonSix";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -126,7 +126,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     const currentAnswer = this.state.answers[this.state.step];
     return (
       <div className="question-step-3c1">
-        <div className="bold font-32 question-text-3 margin-left-4">
+        <div className="bold font-32 question-text-3 margin-bottom-2 margin-left-4">
           New Subjects
         </div>
         {isPhone() ?
@@ -157,13 +157,13 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
             this.setState({ step: this.state.step - 1 });
           }
         }} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
+        <NextButtonSix label="Next" onClick={() => {
           if (this.state.step >= 4) {
             this.props.moveNext();
           } else {
             this.setState({ step: this.state.step + 1 });
           }
-        }}>Next</button>
+        }} />
       </div>
     );
   }

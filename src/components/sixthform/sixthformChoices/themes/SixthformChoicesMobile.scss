@@ -596,7 +596,10 @@
   }
 
   .question-step1gcses2 {
-    margin-left: 4vw;
+
+    > div {
+      margin-left: 4vw;
+    }
 
     .question-step1gcses24 {
       height: 100%;
@@ -853,8 +856,14 @@
       height: 8%;
     }
 
-    .animating-left {
+    .animating-left, .animating-right {
+      padding-left: 2vw;
+      padding-right: 2vw;
       width: 93vw !important;
+
+      .title-6v2 {
+        width: 100% !important;
+      }
     }
 
     .progress-bar-sixthform {
@@ -958,5 +967,33 @@
   .third-step-img {
     top: -14vw !important;
     height: 37vw;
+  }
+}
+
+// bottom buttons 
+.SixthformChoicesPage {
+  .bottom-back-btn-container {
+    position: absolute;
+    bottom: 0;
+    margin-left: 0 !important;
+    height: 7%;
+    .absolute-back-btn {
+      bottom: unset !important;
+      position: relative;
+    }
+  }
+  .bottom-next-btn-container {
+    position: absolute;
+    bottom: 0;
+    height: 9%;
+    margin-left: 40vw !important;
+    width: 60vw;
+    .absolute-contunue-btn {
+      bottom: unset !important;
+      position: relative;
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 70%;
+    }
   }
 }

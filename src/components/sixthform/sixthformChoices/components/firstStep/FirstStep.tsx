@@ -11,6 +11,7 @@ import { getSixthformSchools } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";
 import ThirdStepBTable from "./ThirdStepBTable";
 import { isPhone } from "services/phone";
+import NextButtonSix from "../NextButtonSix";
 
 
 enum SubStep {
@@ -50,7 +51,6 @@ interface SecondQuestionState {
   subjectGroup: SubjectGroupR21;
   GCSESubjects: KeyStage4Subject[];
   GCSESexpanded: boolean;
-  limit: number;
   allSubjects: KeyStage4Subject[];
   vocationalSubjects: KeyStage4Subject[];
   subjectSelections: KeyStage4Subject[];
@@ -93,7 +93,6 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       subjectGroup: SubjectGroupR21.GCSE,
       GCSESubjects: [],
       GCSESexpanded: false,
-      limit: 16,
       vocationalSubjects: [],
       subjectSelections: [],
       allSubjects: [],
@@ -197,7 +196,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     return (
       <div className={`check-box-container container ${this.state.sixthformChoice === SixthformChoice.SixthForm ? "bold" : ""}`}>
         <div className="main-box" onClick={() => this.setState({ sixthformChoice: SixthformChoice.SixthForm })}>
-          Select your chosen school or college from the list below.
+          Select my college.
         </div>
         <div className="current-school-autocomplete font-24">
           <Autocomplete
@@ -239,7 +238,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                     }
                     this.setState({ schoolName: e.target.value, sixthformChoice: SixthformChoice.SixthForm, schoolId });
                   }}
-                  placeholder="Type to start browsing our database"
+                  placeholder="Start typing to search for a college"
                 />);
             }}
           />
@@ -421,7 +420,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
         className="expand-subjects-button subjects-typer-r21 font-14 text-center"
         onClick={() => this.setState({ GCSESexpanded: !this.state.GCSESexpanded })}
       >
-        Click here if you’re doing subjects which are not on this list
+        See more subjects and qualifications, including musical instruments and languages
       </div>
     }
   }
@@ -436,7 +435,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     }
 
     return (
-      <button className={className} onClick={() => {
+      <NextButtonSix disabled={disabled} label="Continue" onClick={() => {
         if (disabled) {
           this.setState({ showMinWarning: true });
         } else {
@@ -449,7 +448,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             this.setState({ subStep: SubStep.Third });
           }
         }
-      }}>Continue</button>
+      }} />
     );
   }
 
@@ -464,17 +463,14 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     }
 
     return (
-      <button className={className} disabled={disabled} onClick={() => {
+      <NextButtonSix disabled={disabled} label="Continue" onClick={() => {
         this.props.saveAnswer(this.getAnswer());
         this.setState({ subStep: SubStep.Fourth });
-      }}>Continue</button>
+      }} />
     );
   }
 
   onSubjectClicked(subject: KeyStage4Subject) {
-    if (this.state.subjectSelections.length >= this.state.limit) {
-      return;
-    }
     const selections = this.state.subjectSelections;
     const found = selections.find((s: any) => s.name === subject.name);
     if (!found) {
@@ -566,7 +562,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
           <div className="question question3-first question-step-1gcses">
             <img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" />
             <div className="bold font-32 question-text-3">
-              What qualifications are you currently taking?
+              Which subjects are you currently studying?
             </div>
             <div className="font-16 text-container-r3">
               Choose your GCSEs below, including<br /> any you’ve already done.<div className="space-r44" />
@@ -586,7 +582,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                       className={this.state.subjectGroup === SubjectGroupR21.PracticalVocational ? "active" : ""}
                       onClick={() => this.activateSubjectGroup(SubjectGroupR21.PracticalVocational)}
                     >
-                      Practical & Vocational Qualifications
+                      Vocational and Technical Qualifications
                     </div>
                   </div>
                   <div className="subjects-box-s6-r21">
@@ -606,9 +602,6 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                       <div className="subjects-box-r21">
                         {this.renderSubjectLozenges(this.state.otherGCSESubjects, false,
                           (subject: KeyStage4Subject) => {
-                            if (this.state.subjectSelections.length >= this.state.limit) {
-                              return;
-                            }
                             const selections = this.state.subjectSelections;
                             const found = selections.find((s: any) => s.name === subject.name);
                             if (!found) {
@@ -627,7 +620,6 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
               <div className="second-box-R21">
                 <div className="flex-center second-box-text">
                   <div className="bold font-16 second-box-title">Your Subject Selections</div>
-                  <div className="max-label font-12">Max: 16 subjects</div>
                 </div>
                 {this.renderSubjectLozenges(this.state.subjectSelections, true, (subject: KeyStage4Subject) => {
                   const selections = this.state.subjectSelections;
@@ -664,11 +656,11 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
         <div className="question question3-first">
           <img src="/images/choicesTool/ThirdStepR1.png" className="third-step-img" />
           <div className="bold font-32 question-text-3">
-            What qualifications are you currently taking?
+            Which subjects are you currently studying?
           </div>
           <div className="font-16">
-            Choose your GCSEs below, including ones in which you’ve already gained a qualification.<br />
-            Then choose any Vocational and Practical qualifications (e.g. musical performance).
+            Select your GCSEs and any Vocational or Technical qualifications that you are currently studying for, or that<br/>
+            you have already completed.  If you do not see the exact subject, select the closest subject to it.
           </div>
           <div className="main-subjects-container">
             <div className="first-box-R21">
@@ -684,7 +676,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                     className={this.state.subjectGroup === SubjectGroupR21.PracticalVocational ? "active" : ""}
                     onClick={() => this.activateSubjectGroup(SubjectGroupR21.PracticalVocational)}
                   >
-                    Practical & Vocational Qualifications
+                    Vocational and Technical Qualifications
                   </div>
                 </div>
                 <div className="subjects-box-s6-r21">
@@ -703,9 +695,6 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                     <div className="subjects-box-r21">
                       {this.renderSubjectLozenges(this.state.otherGCSESubjects, false,
                         (subject: KeyStage4Subject) => {
-                          if (this.state.subjectSelections.length >= this.state.limit) {
-                            return;
-                          }
                           const selections = this.state.subjectSelections;
                           const found = selections.find((s: any) => s.name === subject.name);
                           if (!found) {
@@ -724,7 +713,6 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             <div className="second-box-R21">
               <div className="flex-center second-box-text">
                 <div className="bold font-16 second-box-title">Your Subject Selections</div>
-                <div className="max-label font-12">Max: 16 subjects</div>
               </div>
               {this.renderSubjectLozenges(this.state.subjectSelections, true, (subject: KeyStage4Subject) => {
                 const selections = this.state.subjectSelections;
@@ -775,7 +763,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             with us.
           </div> :
             <div className="bold font-32 question-text">
-              Some schools and colleges share the courses they offer<br /> with us.
+              Where will you study in the sixth form?
             </div>}
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
@@ -820,14 +808,10 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             }
           </div>
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.Start })} />
-          <button
-            className={`absolute-contunue-btn font-24 ${disabled ? "disabled" : ""}`}
-            disabled={disabled}
-            onClick={() => {
-              this.props.saveAnswer(this.getAnswer());
-              this.setState({ subStep: SubStep.Second });
-            }}
-          >Continue</button>
+          <NextButtonSix disabled={disabled} label="Continue" onClick={() => {
+            this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SubStep.Second });
+          }} />
         </div>
       );
     }
