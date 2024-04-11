@@ -6,6 +6,7 @@ import { ReduxCombinedState } from "redux/reducers";
 import { User } from "model/user";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { isPhone } from "services/phone";
+import NextButtonSix from "../NextButtonSix";
 
 export enum ChoiceEnum {
   Never = 1,
@@ -75,9 +76,7 @@ const Step1Email: React.FC<ThirdProps> = (props) => {
           </div>
         </div>
         <BackButtonSix onClick={() => props.moveBack(email, emailCorrected)} />
-        <button
-          className="absolute-contunue-btn font-24"
-          onClick={() => props.moveNext(email, emailCorrected)}>Continue</button>
+        <NextButtonSix label="Continue" onClick={() => props.moveNext(email, emailCorrected)} />
       </div>
     );
   }
@@ -99,9 +98,7 @@ const Step1Email: React.FC<ThirdProps> = (props) => {
         </div>
       </div>
       <BackButtonSix onClick={() => props.moveBack(email, emailCorrected)} />
-      <button
-        className="absolute-contunue-btn font-24"
-        onClick={() => props.moveNext(email, emailCorrected)}>Continue</button>
+      <NextButtonSix label="Continue" onClick={() => props.moveNext(email, emailCorrected)} />
     </div>
   );
 }

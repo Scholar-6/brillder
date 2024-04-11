@@ -87,8 +87,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       page = parseInt(this.props.match.params.step) + 1;
     }
 
-    console.log(page);
-
     this.state = {
       isLoading: true,
       subjectType,
@@ -415,7 +413,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   renderCircle(subject: SixthformSubject) {
     let colorClass = 'subject-circle yellow-circle';
-    if (subject.userChoice === UserSubjectChoice.Definetly) {
+    if (subject.userChoice === UserSubjectChoice.Favourite) {
       colorClass = 'subject-circle green-circle';
     } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
       colorClass = 'subject-circle red-circle';
@@ -772,7 +770,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               }, 1000);
               this.setState({ popupTimeout, currentPopupSubject: subject });
             }} onMouseLeave={(e) => {
-
               if (this.state.popupTimeout == -1) {
                 const leavePopupTimeout = setTimeout(() => {
                   clearTimeout(this.state.popupTimeout);

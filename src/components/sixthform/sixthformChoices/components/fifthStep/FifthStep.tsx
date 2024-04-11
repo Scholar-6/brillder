@@ -6,6 +6,7 @@ import FifthStepA from "./FifthStepA";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FifthStepWelcome from "./SixStepWelcome";
 import FifthStepB from "./FifthStepB";
+import NextButtonSix from "../NextButtonSix";
 
 enum SubStep {
   welcome,
@@ -266,10 +267,10 @@ class SixStep extends Component<Props, State> {
             <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5b })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
+          <NextButtonSix label="Continue" onClick={() => {
             this.props.saveAnswer(this.getAnswer());
             this.props.moveNext(this.getAnswer());
-          }}>Continue</button>
+          }} />
         </div >
       );
     } else if (this.state.subStep === SubStep.sub5b) {

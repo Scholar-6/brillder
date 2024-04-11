@@ -5,7 +5,7 @@ import { sendSixthformError } from 'components/play/services/errorService';
 
 export enum UserSubjectChoice {
   Maybe, // null or 0 or undefined
-  Definetly,
+  Favourite,
   NotForMe
 }
 
