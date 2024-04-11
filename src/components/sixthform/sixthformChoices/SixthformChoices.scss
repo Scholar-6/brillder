@@ -195,7 +195,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    height: calc(2vw + 4vh + 7vh + 2vh);
+    height: calc(2vw + 6vh + 7vh);
   }
 
   .third-step-img-r4 {
@@ -1405,7 +1405,7 @@
 
       .first-column {
         padding-left: 1vw;
-        width: 18vw;
+        width: 20vw;
       }
 
       .subject-box-r21 {
@@ -1414,58 +1414,19 @@
       }
 
       .second-column {
-        width: 10vw;
+        width: 11.3vw;
       }
 
       .third-column {
-        width: 10vw;
+        width: 11.3vw;
       }
 
       .fourth-column {
-        width: 10vw;
+        width: 11.3vw;
       }
 
       .fifth-column {
-        width: 10vw;
-      }
-
-      .six-column {
-        width: 20vw;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .MuiInputBase-root {
-          border-radius: 0.4vw;
-          background: var(--white);
-          color: var(--theme-dark-blue);
-          font-size: 1.2vw;
-
-          .MuiSelect-root {
-            width: 6.7vw;
-            text-align: center;
-            padding-left: 0;
-            padding-top: 0.3vh;
-            padding-bottom: 0.3vh;
-            padding-right: 0.8vw;
-
-            font-family: $font-family-regular !important;
-          }
-
-          &::before,
-          &::after {
-            display: none;
-          }
-
-          .MuiSelect-icon {
-            top: calc(50% - 1vw);
-            color: var(--theme-dark-blue);
-            width: 2vw;
-            height: 2vw;
-          }
-        }
-
+        width: 11.3vw;
       }
 
       .center-column {

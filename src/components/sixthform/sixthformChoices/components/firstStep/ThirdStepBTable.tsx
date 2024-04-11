@@ -13,34 +13,6 @@ interface ThirdProps {
 }
 
 class ThirdStepBTable extends Component<ThirdProps> {
-  renderValue(subject: KeyStage4Subject) {
-    return <Select
-      className="selected-date"
-      value={subject.predicedStrength}
-      MenuProps={{ classes: { paper: 'select-time-list' } }}
-      onChange={e => {
-        subject.predicedStrength = e.target.value as any;
-        this.props.setSubjectSelections(this.props.subjectSelections);
-      }}
-    >
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((c, i) => <MenuItem value={c as any} key={i}>{c === 0 ? 'Value' : c}</MenuItem>)}
-    </Select>
-  }
-
-  renderVocationalValue(subject: KeyStage4Subject) {
-    return <Select
-      className="selected-date"
-      value={subject.predicedStrength}
-      MenuProps={{ classes: { paper: 'select-time-list' } }}
-      onChange={e => {
-        subject.predicedStrength = e.target.value as any;
-        this.props.setSubjectSelections(this.props.subjectSelections);
-      }}
-    >
-      {[0, 'fail', 'pass', 'merit', 'distinction'].map((c, i) => <MenuItem value={c as any} key={i}>{c === 0 ? 'Value' : c}</MenuItem>)}
-    </Select>
-  }
-
   render() {
     if (isPhone()) {
       return (
@@ -52,10 +24,7 @@ class ThirdStepBTable extends Component<ThirdProps> {
             </div>
             <div className="height-2" />
             <div className="font-16">
-              Now tell us whether you are likely to<br />
-              do very well, well, okay, or not so well<br />
-              in each of your current subjects. Alternatively,<br />
-              for GCSEs, you can input your predicted grades.
+            How are you doing in the subjects you’re taking? You can base your answer on your predicted grades, or on qualifications you’ve already completed.
             </div>
           </div>
           <div className="phone-subjects">
@@ -163,8 +132,8 @@ class ThirdStepBTable extends Component<ThirdProps> {
           What are your strengths?
         </div>
         <div className="font-16">
-          Now tell us whether you are likely to do very well, well, okay, or not so well in each of your <br />
-          current subjects. Alternatively, for GCSEs, you can input your predicted grades.
+          How are you doing in the subjects you’re taking? You can base your answer on your predicted grades, or on<br/>
+          qualifications you’ve already completed.
         </div>
         <div className="subjects-table">
           <div className="table-head bold font-16">
@@ -200,9 +169,6 @@ class ThirdStepBTable extends Component<ThirdProps> {
                 <div className="hover-content">(you might struggle to get a 4 or a pass)</div>
                 <div className="hover-arrow-bottom" />
               </div>
-            </div>
-            <div className="six-column center-column">
-              <div>Prediction or Grade (If Known)</div>
             </div>
           </div>
           <div className="table-body">
@@ -245,9 +211,6 @@ class ThirdStepBTable extends Component<ThirdProps> {
                         }} />
                       </div>
                     </div>
-                    <div className="six-column">
-                      {this.renderVocationalValue(subject)}
-                    </div>
                   </div>
                 );
               } else {
@@ -287,9 +250,6 @@ class ThirdStepBTable extends Component<ThirdProps> {
                           this.props.setSubjectSelections(this.props.subjectSelections);
                         }} />
                       </div>
-                    </div>
-                    <div className="six-column">
-                      {this.renderValue(subject)}
                     </div>
                   </div>
                 );

@@ -127,18 +127,18 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div className="question-step-3c1">
         <div className="bold font-32 question-text-3 margin-bottom-2 margin-left-4">
-          New Subjects
+          New Subjects at A-level
         </div>
         {isPhone() ?
           <div className="font-16 color-light-blue margin-left-4">
-            Some subjects are rarely studied<br />
-            before the sixth form. See if you<br />
-            understand what they involve.
+            Some subjects are rarely studied<br/>
+            before the sixth form. See if you<br/>
+            understand what they involve - could<br/>
+            any be a fit for you?
           </div>
           : <div className="font-16 color-light-blue">
-            Some subjects are rarely studied
-            before the sixth form. See if you
-            understand what they involve.
+            Some subjects are rarely studied before the sixth form. See if you understand what they<br/>
+            involve - could any be a fit for you?
           </div>
         }
         <ProgressBarR1

@@ -72,8 +72,8 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
         <img src="/images/choicesTool/MaskGroup.png" alt="step1" className="mask-step-img" />
         <div className="bold font-32 question-text">
           {isPhone()
-            ? <span>What type of courses<br /> are you considering<br /> for the sixth form?</span>
-            : 'What type of courses are you considering for the sixth form?'}
+            ? <span>What type of course<br /> are you considering<br /> for the sixth form?</span>
+            : 'What type of course are you considering for the sixth form?'}
         </div>
         <div className="font-24 question-text-t4">
           <ButtonR34
