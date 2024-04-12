@@ -4,6 +4,7 @@ import CheckBoxV2 from "../CheckBox";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import { Dialog, Grid } from "@material-ui/core";
+import NextButtonSix from "../NextButtonSix";
 
 export enum ReadingChoiceV2 {
   Fiction = 1,
@@ -101,7 +102,7 @@ const ReadingV2: React.FC<ReadingV1Props> = (props) => {
         <div className="btn" onClick={() => setOverflow(false)}>Close</div>
       </Dialog>}
       <BackButtonSix onClick={() => props.moveBack()} />
-      <button className="absolute-contunue-btn font-24" onClick={() => props.moveNext()}>Continue</button>
+      <NextButtonSix label="Continue" onClick={props.moveNext} />
     </div>
   );
 }

@@ -356,6 +356,10 @@
     position: absolute;
     top: 0;
     width: 65vw;
+
+    .animating-left, .animating-right {
+      top: 5vw;
+    }
   }
 
   .animating-left {

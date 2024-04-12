@@ -4,7 +4,7 @@ import { Dialog } from "@material-ui/core";
 import BackButtonSix from "../BackButtonSix";
 import FifthStepA from "./FifthStepA";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import FifthStepWelcome from "./SixStepWelcome";
+import FifthStepWelcome from "./FifthStepWelcome";
 import FifthStepB from "./FifthStepB";
 import NextButtonSix from "../NextButtonSix";
 

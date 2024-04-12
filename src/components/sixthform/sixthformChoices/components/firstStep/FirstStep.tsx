@@ -756,7 +756,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       return (
         <div className="question">
           <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
-          {isPhone() ? <div className="bold font-32 question-text">
+          {isPhone() ? <div className="bold font-24 question-text">
             Some schools and<br />
             colleges share the<br />
             courses they offer<br />

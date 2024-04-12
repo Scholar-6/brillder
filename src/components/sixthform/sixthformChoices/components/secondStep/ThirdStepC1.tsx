@@ -127,7 +127,7 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div className="question-step-3c1">
         <div className="bold font-32 question-text-3 margin-bottom-2 margin-left-4">
-          New Subjects at A-level
+          New Subjects {!isPhone() && 'at A-level'}
         </div>
         {isPhone() ?
           <div className="font-16 color-light-blue margin-left-4">

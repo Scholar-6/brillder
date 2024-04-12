@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
 import ButtonR34 from "../ButtonR34";
 import { isPhone } from "services/phone";
@@ -67,13 +66,47 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
   }
 
   render() {
+    if (isPhone()) {
+      return (
+        <div className="question question-subject-type">
+          <img src="/images/choicesTool/MaskGroup.png" alt="step1" className="mask-step-img" />
+          <div className="before-title-space-3444"/>
+          <div className="bold font-24 question-text">
+            <span>What type of course<br /> are you considering<br /> for the sixth form?</span>
+          </div>
+          <div className="after-title-space-3444"/>
+          <div className="font-16 question-text-t4">
+            <ButtonR34
+              currentChoice={FirstChoice.ALevel} choice={this.state.choice}
+              label="A-level courses only" setChoice={choice => this.setChoice(choice)}
+            />
+            <ButtonR34
+              currentChoice={FirstChoice.Vocational} choice={this.state.choice}
+              label="Vocational courses only (e.g. BTEC, T-level)" setChoice={choice => this.setChoice(choice)}
+            />
+            <ButtonR34
+              currentChoice={FirstChoice.ShowMeAll} choice={this.state.choice}
+              label="All types of course" setChoice={choice => this.setChoice(choice)}
+            />
+            <ButtonR34
+              currentChoice={FirstChoice.Other} choice={this.state.choice}
+              label="A different kind of qualification, e.g.<br/> International Baccalaureate"
+              setChoice={() => this.setState({ choice: FirstChoice.Other, popup: true })}
+            />
+          </div>
+          <BackButtonSix onClick={this.props.moveBack} />
+          <NextButtonSix disabled={this.state.choice === null} label="Continue to Step 2"
+            onClick={this.props.moveNext}
+          />
+          {this.state.popup && this.renderPopup()}
+        </div>
+      );
+    }
     return (
       <div className="question question-subject-type">
         <img src="/images/choicesTool/MaskGroup.png" alt="step1" className="mask-step-img" />
         <div className="bold font-32 question-text">
-          {isPhone()
-            ? <span>What type of course<br /> are you considering<br /> for the sixth form?</span>
-            : 'What type of course are you considering for the sixth form?'}
+          What type of course are you considering for the sixth form?
         </div>
         <div className="font-24 question-text-t4">
           <ButtonR34
@@ -90,7 +123,7 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
           />
           <ButtonR34
             currentChoice={FirstChoice.Other} choice={this.state.choice}
-            label="A different kind of qualification (e.g. International Baccalaureate)"
+            label="A different kind of qualification, e.g. International Baccalaureate"
             setChoice={() => this.setState({ choice: FirstChoice.Other, popup: true })}
           />
         </div>

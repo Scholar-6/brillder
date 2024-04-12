@@ -3,6 +3,7 @@ import { SixthformSubject } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Dialog } from "@material-ui/core";
+import NextButtonSix from "../NextButtonSix";
 
 export enum ThirdStepDSubStep {
   Start = 1,
@@ -275,12 +276,12 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
           You can’t select more than five courses.<br /> Deselect another course before selecting a new one.
           <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
         </Dialog>}
-        <button className="absolute-contunue-btn font-24" onClick={() => {
+        <NextButtonSix label="Continue" onClick={() => {
           this.props.moveNext({
             tLevelCoursesPart1: this.state.tLevelCoursesPart1,
             tLevelCoursesPart2: this.state.tLevelCoursesPart2
           });
-        }}>Continue</button>
+        }} />
       </div>
     );
   }

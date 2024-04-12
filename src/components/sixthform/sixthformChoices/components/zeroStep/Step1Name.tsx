@@ -71,7 +71,7 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
         <div className="font-32 title-r1-34 bold">Your Names</div>
         <div className="font-16 text-r1-34">We have you down as <span className="text-orange capitalize">{props.user.firstName} {props.user.lastName}</span> (using info from sign up)</div>
         {renderFullNameBox()}
-        <div className="help-without absolute-name-s1 font-16">
+        <div className="help-without absolute-name-s1 font-13">
           <div>
             <SpriteIcon name="help-without" />
           </div>

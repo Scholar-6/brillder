@@ -19,12 +19,12 @@ class ThirdStepBTable extends Component<ThirdProps> {
         <div className="question-step1gcses24">
           <div className="question-top-step1">
             <div className="height-1" />
-            <div className="bold font-32 question-text-3">
+            <div className="bold font-23 question-text-3">
               What are your strengths?
             </div>
             <div className="height-2" />
             <div className="font-16">
-            How are you doing in the subjects you’re taking? You can base your answer on your predicted grades, or on qualifications you’ve already completed.
+            How are you doing in the subjects you’re<br/> taking? You can base your answer on your<br/> predicted grades, or on qualifications you’ve<br/> already completed.
             </div>
           </div>
           <div className="phone-subjects">
@@ -36,7 +36,7 @@ class ThirdStepBTable extends Component<ThirdProps> {
                       <div className="bold subject-top-r33 font-24">
                         {subject.name}
                       </div>
-                      <div className="second-column-34 font-20">
+                      <div className="second-column-34 font-14">
                         <div
                           className={`center-column ${subject.predicedStrength == 'distinction' ? 'active' : ''}`}
                           onClick={() => {
@@ -82,7 +82,7 @@ class ThirdStepBTable extends Component<ThirdProps> {
                     <div className="bold subject-top-r33 font-24">
                       {subject.name}
                     </div>
-                    <div className="second-column-34 font-20">
+                    <div className="second-column-34 font-14">
                       <div className={`second-column center-column ${subject.predicedStrength >= 8 ? 'active' : ''}`} onClick={() => {
                         subject.predicedStrength = 8;
                         this.props.setSubjectSelections(this.props.subjectSelections);
