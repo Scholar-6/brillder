@@ -2,6 +2,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
 import ProgressBarStepsR1 from "../progressBar/ProgressBarStepsR1";
 import BackButtonSix from "../BackButtonSix";
+import NextButtonSix from "../NextButtonSix";
 
 
 interface ThirdProps {
@@ -211,13 +212,13 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
             this.props.moveBack();
           }
         }} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
+        <NextButtonSix label="Continue" onClick={() => {
           if (this.state.step < this.state.categories.length - 1) {
             this.setState({ step: this.state.step + 1 });
           } else {
             this.props.moveNext();
           }
-        }}>Continue</button>
+        }} />
       </div>
     );
   }

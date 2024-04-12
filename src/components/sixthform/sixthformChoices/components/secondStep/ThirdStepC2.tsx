@@ -5,6 +5,8 @@ import { shuffle } from "../../services/shuffle";
 import BackButtonSix from "../BackButtonSix";
 import ProgressBarStep3C1 from "../progressBar/ProgressBarStep3C1";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 
 interface ThirdProps {
@@ -160,6 +162,40 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     const currentAnswer = this.state.answers[this.state.step];
+    if (isPhone()) {
+      return (
+        <div className="question-step-3c2">
+          <div className="bold font-32 question-text-3 margin-left-4">
+            New Subjects
+          </div>
+          <div className="font-16 margin-left-4">
+            Here are some students’ thoughts about<br />
+            why they chose particular subjects.
+          </div>
+          <ProgressBarStep3C1
+            step={this.state.step} topLabel="Which subject did the student choose?"
+            total={this.state.answers.length} subjectDescription={currentAnswer.name}
+          />
+          <Grid container direction="row" className="containers-3c1">
+            {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
+          </Grid>
+          <BackButtonSix onClick={() => {
+            if (this.state.step <= 0) {
+              this.props.moveBack();
+            } else {
+              this.setState({ step: this.state.step - 1 });
+            }
+          }} />
+          <NextButtonSix label="Continue" onClick={() => {
+            if (this.state.step >= 7) {
+              this.props.moveNext();
+            } else {
+              this.setState({ step: this.state.step + 1 });
+            }
+          }} />
+        </div>
+      );
+    }
     return (
       <div className="question-step-3c2">
         <div className="bold font-32 question-text-3">
@@ -179,13 +215,13 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
             this.setState({ step: this.state.step - 1 });
           }
         }} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
+        <NextButtonSix label="Continue" onClick={() => {
           if (this.state.step >= 7) {
             this.props.moveNext();
           } else {
             this.setState({ step: this.state.step + 1 });
           }
-        }}>Continue</button>
+        }} />
       </div>
     );
   }

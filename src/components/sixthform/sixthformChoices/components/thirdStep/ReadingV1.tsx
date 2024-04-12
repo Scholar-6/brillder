@@ -3,6 +3,7 @@ import React from "react";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import BackButtonSix from "../BackButtonSix";
 import ButtonR34 from "../ButtonR34";
+import NextButtonSix from "../NextButtonSix";
 
 export enum ReadingChoice {
   first = 1,
@@ -60,10 +61,7 @@ const ReadingV1: React.FC<ReadingV1Props> = (props) => {
         />
       </div>
       <BackButtonSix onClick={props.moveBack} />
-      <button
-        className={`absolute-contunue-btn font-24 ${props.readingChoice === null ? 'disabled' : ''}`}
-        disabled={props.readingChoice === null}
-        onClick={props.moveNext}>Continue</button>
+      <NextButtonSix label="Continue" disabled={props.readingChoice === null} onClick={props.moveNext} />
     </div>
   );
 }

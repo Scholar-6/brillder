@@ -4,6 +4,7 @@ import ProgressBarStep3C2 from "../progressBar/ProgressBarStep3C2";
 import BackButtonSix from "../BackButtonSix";
 import { Grid } from "@material-ui/core";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import NextButtonSix from "../NextButtonSix";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -133,13 +134,13 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
             this.props.moveBack();
           }
         }} />
-        <button className="absolute-contunue-btn font-24" onClick={() => {
+        <NextButtonSix label="Continue" onClick={() => {
           if (this.state.step < this.state.answers.length - 1) {
             this.setState({step: this.state.step + 1});
           } else {
             this.props.moveNext();
           }
-        }}>Continue</button>
+        }} />
       </div>
     );
   }

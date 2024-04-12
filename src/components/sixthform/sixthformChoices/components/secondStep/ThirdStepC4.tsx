@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { SixthformSubject } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";
+import NextButtonSix from "../NextButtonSix";
 
 interface ThirdCategoriesC4 {
   subjects: any[];
@@ -165,8 +166,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
         </div>
         <img src="/images/choicesTool/ThirdStepR4.png" className="third-step-img third-step-img-r4"></img>
         <div className="font-16">
-          Now consider whether you are interested in taking any of these subjects. Select those you’re very<br />
-          interested or quite interested in. Leave the others where they are.
+          Which of these new subjects would you consider studying? Select any that you’d be  interested in.
         </div>
         <div className="drag-container-r23">
           <div className="container-r23 first font-12 bold">
@@ -184,6 +184,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
                 >
                   {this.state.subjects.map(this.renderSubjectBox.bind(this))}
                 </ReactSortableV1>
+                {/* 
                 <div className={`drag-box-r23 other-language ${this.state.modernLanguagesExpanded ? 'expanded' : ''}`}>
                   <div className="drag-item-r24">
                     <div className="other-language-label" onClick={() => {
@@ -203,7 +204,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
                         {this.state.modernLanguages.map(this.renderSubjectBox.bind(this))}
                       </ReactSortableV1>}
                   </div>
-                </div>
+                </div>*/}
               </div>
             </div>
           </div>
@@ -249,9 +250,7 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
           <div className="absolute-text-34234">
             <div>I’m currently not interested in <br /> any of these subjects</div>
           </div>}
-        <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>
-          {canSkip ? 'Skip' : 'Continue'}
-        </button>
+        <NextButtonSix label={canSkip ? 'Skip' : 'Continue'} onClick={this.props.moveNext} />
       </div>
     );
   }

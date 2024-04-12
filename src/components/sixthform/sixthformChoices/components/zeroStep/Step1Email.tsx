@@ -67,7 +67,7 @@ const Step1Email: React.FC<ThirdProps> = (props) => {
           We have your personal email down as <span className="text-orange">{props.user.email}</span> (using info from sign up)
         </div>
         {renderEmailBox()}
-        <div className="help-without absolute-name-s1 absolute-name-s2 font-16">
+        <div className="help-without absolute-name-s1 absolute-name-s2 font-13">
           <div>
             <SpriteIcon name="help-without" />
           </div>

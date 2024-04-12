@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './ProgressBarSixthform.scss';
+import { isPhone } from 'services/phone';
 
 interface Props {
   step: number;
@@ -24,14 +25,14 @@ const AnimatedDescriptionV4: React.FC<Props> = (props) => {
   if (animateRight) {
     return (
       <div className="animating-right">
-        <div className="font-20 text-center bold-italic animating title-6v2" dangerouslySetInnerHTML={{ __html: description }} />
+        <div className={`text-center bold-italic animating title-6v2 ${isPhone() ? 'font-16' : 'font-20'}`} dangerouslySetInnerHTML={{ __html: description }} />
       </div>
     );
   }
 
   return (
     <div className="animating-left">
-      <div className="font-20 text-center bold-italic animating title-6v2" dangerouslySetInnerHTML={{ __html: description }} />
+      <div className={`text-center bold-italic animating title-6v2 ${isPhone() ? 'font-16' : 'font-20'}`} dangerouslySetInnerHTML={{ __html: description }} />
     </div>
   );
 }

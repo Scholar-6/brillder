@@ -11,9 +11,11 @@ const ButonR34:React.FC<Props> = (props) => {
   const {currentChoice, label, choice} = props;
 
   return (
-    <div className={`button-r34 ${currentChoice === choice ? "active bold" : "not-active"}`} onClick={() => props.setChoice(currentChoice)}>
-      {label}
-    </div>
+    <div
+      className={`button-r34 ${currentChoice === choice ? "active bold" : "not-active"}`}
+      onClick={() => props.setChoice(currentChoice)}
+      dangerouslySetInnerHTML={{__html: label ? label : ''}}
+    />
   );
 }
 

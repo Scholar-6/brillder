@@ -5,6 +5,7 @@ import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Dialog } from "@material-ui/core";
 import ButtonR34 from "../ButtonR34";
+import NextButtonSix from "../NextButtonSix";
 
 export enum ThirdStepDChoice {
   First = 1,
@@ -221,8 +222,9 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       disabled = true;
       className += ' disabled';
     }
+
     return (
-      <button className={className} disabled={disabled} onClick={() => {
+      <NextButtonSix label="Continue" disabled={disabled} onClick={() => {
         this.saveAnswer();
         if (this.state.choice === ThirdStepDChoice.Forth) {
           this.setState({ popupOpen: true });
@@ -231,7 +233,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         } else {
           this.props.moveNext();
         }
-      }}>Continue</button>
+      }} />
     )
   }
 
@@ -263,10 +265,10 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
             <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
           </Dialog>}
           <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
+          <NextButtonSix label={oneOrMore ? 'Continue' : 'Skip'} onClick={() => {
             this.saveAnswer();
             this.props.moveNext();
-          }}>{oneOrMore ? 'Continue' : 'Skip'}</button>
+          }} />
         </div>
       );
     }

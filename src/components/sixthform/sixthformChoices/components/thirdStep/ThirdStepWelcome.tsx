@@ -1,6 +1,8 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 interface WelcomeProps {
   canSkip: boolean;
@@ -16,12 +18,12 @@ const ThirdStepWelcome: React.FC<WelcomeProps> = (props) => {
       <div className="text-container-5432">
         <div>
           <div className="font-20">Step 3</div>
-          <div className="font-48 bold s-text-323">INTERESTS AND EXTRACURRICULARS</div>
+          <div className="font-48 bold s-text-323">INTERESTS AND EXTRACURRICULAR ACTIVITIES</div>
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />
-      {props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
-      <button className="absolute-contunue-btn font-24" onClick={props.moveNext}>Start</button>
+      {!isPhone() && props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
+      <NextButtonSix label="Start" onClick={props.moveNext} />
     </div>
   );
 }

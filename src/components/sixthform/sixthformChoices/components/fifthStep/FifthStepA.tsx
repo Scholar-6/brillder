@@ -3,11 +3,10 @@ import React, { Component } from "react";
 
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { shuffle } from "../../services/shuffle";
-import ProgressBarStep3C2 from "../progressBar/ProgressBarStep3C1";
 import { Grid } from "@material-ui/core";
 import ProgressBarR2 from "../progressBar/ProgressBarR2";
 import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 interface ThirdProps {
   careers: any;
@@ -126,10 +125,53 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     const currentAnswer = this.state.careers[this.state.step];
+    if (isPhone()) {
+      return (
+        <div className="question-career-container-5a">
+          <img src="/images/choicesTool/phone/Career1.png" className="third-step-img fifth-step-img-r13" />
+          <div className="question question-step-5a question-career-5a">
+            <div className="bold question-text-4 font-23">
+              Categories of Career
+            </div>
+            <div className="font-16">
+              For many careers, you can study <br /> almost any combination of subjects in <br /> sixth form.
+            </div>
+            <div className="between-texts-er3434" />
+            <div className="font-16">
+              However, a number of professions have specific <br /> expectations for post-16 education.
+            </div>
+            <div className="between-texts-er3434" />
+            <div className="font-16">
+              Match the statement with the professional category.
+            </div>
+            <div className="question-step-5a categories-of-carreer">
+              <ProgressBarR2 step={this.state.step} total={this.state.careers.length} description={currentAnswer.name} />
+              <Grid container direction="row" className="containers-3c1">
+                {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
+              </Grid>
+              <BackButtonSix onClick={() => {
+                if (this.state.step <= 0) {
+                  this.props.moveBack(this.getAnswer());
+                } else {
+                  this.setState({ step: this.state.step - 1 });
+                }
+              }} />
+              <NextButtonSix label="Continue" onClick={() => {
+                if (this.state.step >= this.state.careers.length - 1) {
+                  this.props.moveNext(this.getAnswer());
+                } else {
+                  this.setState({ step: this.state.step + 1 });
+                }
+              }} />
+            </div>
+          </div>
+        </div>
+      )
+    }
     return (
-      <div className="question question-step-5a">
-        <img src="/images/choicesTool/FifthStepR13.png" className="third-step-img fifth-step-img-r13"></img>
-        <div className="bold font-32 question-text-4">
+      <div className="question question-step-5a question-career-5a">
+        <img src="/images/choicesTool/FifthStepR13.png" className="third-step-img fifth-step-img-r13" />
+        <div className="bold question-text-4 font-32">
           Categories of Career
         </div>
         <div className="font-16">

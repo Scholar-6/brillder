@@ -287,10 +287,10 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === ThirdSubStep.Second) {
       return (
-        <div className="question step3question5">
+        <div className="question step3question5 question-new-subjects">
           {isPhone()
             ? <img src="/images/choicesTool/phone/newSubjects.png" className="third-step-img"></img>
-            : <img src="/images/choicesTool/phone/newSubjects.png" className="third-step-img" />
+            : <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img" />
           }
           <ThirdStepC2
             pairAnswers={this.state.secondPairResults}
@@ -309,7 +309,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
       );
     } else if (this.state.subStep === ThirdSubStep.First) {
       return (
-        <div className="question question-new-subjects">
+        <div className="question question-new-subjects just-new-subjects">
           {isPhone()
             ? <img src="/images/choicesTool/phone/newSubjects.png" className="third-step-img" />
             : <img src="/images/choicesTool/ThirdStepR3.png" className="third-step-img" />
