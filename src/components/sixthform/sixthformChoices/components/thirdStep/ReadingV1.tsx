@@ -27,6 +27,7 @@ const ReadingV1: React.FC<ReadingV1Props> = (props) => {
         <div>
           Reading
         </div>
+        {/* 
         <div className="hover-area font-14">
           <SpriteIcon name="help-circle-r1" className="info-icon" />
           <div className="hover-content regular">
@@ -35,7 +36,7 @@ const ReadingV1: React.FC<ReadingV1Props> = (props) => {
             enjoy studying. Some very able students don’t read much, but a deep-<br />
             rooted love of reading is a good indicator of academic aptitude.
           </div>
-        </div>
+        </div>*/}
       </div>
       <div className="font-16">
         Which of the following statements best describes your attitude to reading?

@@ -1,6 +1,5 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ProgressBarStep6 from "../progressBar/ProgressBarStep6";
 import ThreeButtons from "../base/ThreeButtons";
 
@@ -17,7 +16,7 @@ interface ThirdProps {
   moveNext(): void;
 }
 
-const FourthStepListening: React.FC<ThirdProps> = (props) => {
+const Listening: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.listeningChoices[step];
 
@@ -25,19 +24,10 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
   const [animatedStep, setAnimatedStep] = React.useState(0);
 
   return (
-    <div className="question question-6 question-3-watching question-6-third">
+    <div className="question question-6 question-3-watching question-6-third question-listening-r545">
+      <div className="font-32 bold question-title-44">Listening</div>
       <div className="font-16 question-text">
-        <div>
-          How often do you listen to the following?
-        </div>
-        <div className="hover-area font-14">
-          <SpriteIcon name="help-circle-r1" className="info-icon" />
-          <div className="hover-content regular">
-            <div className="triangle-popup" />
-            The average teenager spends more than two hours per<br />
-            day streaming music or podcasts, or listening to radio.
-          </div>
-        </div>
+        How often do you listen to the following kinds of programme or podcast?
       </div>
       <img src="/images/choicesTool/FourthStepListening.png" className="step3watching-img-v2" />
       <ProgressBarStep6 icon="listening-sixth" step={animatedStep} total={props.listeningChoices.length} subjectDescription={animatedData.label} isBig={false} />
@@ -79,4 +69,4 @@ const FourthStepListening: React.FC<ThirdProps> = (props) => {
   );
 }
 
-export default FourthStepListening;
+export default Listening;

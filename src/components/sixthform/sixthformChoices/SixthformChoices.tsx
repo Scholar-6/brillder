@@ -555,6 +555,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   renderCourseContent() {
     if (this.state.page === Pages.Question0) {
       return <ZeroStep
+        user={this.props.user}
         answer={this.state.answers.find(a => a.step === Pages.Question0)}
         saveAnswer={this.saveZeroAnswer.bind(this)}
         moveNext={async (answer: any) => {

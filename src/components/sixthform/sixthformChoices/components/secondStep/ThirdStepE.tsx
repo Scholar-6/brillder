@@ -118,10 +118,7 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
           Vocational, Applied and Practical Courses
         </div>
         <div className="font-16">
-          Here are five VAPs which you may need to understand a little better before selecting subjects.
-        </div>
-        <div className="font-16">
-          Already ruled out all the subjects below? Skip to the next question.
+          In the sixth form, some new subjects are offered as vocational or technical qualifications.
         </div>
         <ProgressBarStep3C2 step={this.state.step} topLabel="" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
         <Grid container direction="row" className="containers-3c1">

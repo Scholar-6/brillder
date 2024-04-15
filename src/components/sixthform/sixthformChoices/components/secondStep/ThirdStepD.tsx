@@ -1,16 +1,15 @@
 import React, { Component } from "react";
+import { Dialog } from "@material-ui/core";
+
 import { SixthformSubject } from "services/axios/sixthformChoices";
-import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
-import { Dialog } from "@material-ui/core";
 import ButtonR34 from "../ButtonR34";
 import NextButtonSix from "../NextButtonSix";
 
 export enum ThirdStepDChoice {
   First = 1,
   Second,
-  Forth
 }
 
 export enum ThirdStepDSubStep {
@@ -41,7 +40,6 @@ interface ThirdQuestionState {
   tLevelCoursesPart1: TLevelCourse[];
   tLevelCoursesPart2: TLevelCourse[];
   overflowOpen: boolean;
-  popupOpen: boolean;
 }
 
 class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
@@ -122,7 +120,6 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       tLevelCoursesPart2: tLevelCourses2,
       subStep: ThirdStepDSubStep.Start,
       overflowOpen: false,
-      popupOpen: false
     }
   }
 
@@ -226,9 +223,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <NextButtonSix label="Continue" disabled={disabled} onClick={() => {
         this.saveAnswer();
-        if (this.state.choice === ThirdStepDChoice.Forth) {
-          this.setState({ popupOpen: true });
-        } else if (this.state.choice === ThirdStepDChoice.First) {
+        if (this.state.choice === ThirdStepDChoice.First) {
           this.setState({ subStep: ThirdStepDSubStep.TableLeaf });
         } else {
           this.props.moveNext();
@@ -247,8 +242,8 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
             T-level Courses
           </div>
           <div>
-            These are the different T-level categories. Expand them to view different courses.<br />
-            Which interest you? Select up to <span className="bold">three</span> courses.
+            Below are the currently offered T-level categories. Expand them to view individual courses. Select any<br/>
+            that you would be interested in studying.
           </div>
           <div className="d3-table-scroll-container">
             <div className="d3-table-leaf">
@@ -276,43 +271,29 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
     return (
       <div>
         <div className="bold font-32 question-text-3">
-          T-levels
+          Technical Levels (T-levels)
         </div>
         <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
         <div className="absolute-container-3d">
           <div className="font-16 line-d3">
-            These are the new two-year vocational courses worth three A-levels: you only take one, and they can’t be<br />
-            combined with other subjects.
+            T-levels are new, two-year vocational courses worth three A-levels: you only take one, and<br/>
+            they can’t be combined with other subjects. T-levels focus on the skills required for a<br/>
+            particular sector or job. As part of the course, students undertake a work placement. 
           </div>
-          <div className="font-16 line-d3">
-            T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a<br />
-            work placement.
-          </div>
-          <div className="font-16 bold sub-title-e23">
-            Which of the following best applies to you?
-          </div>
+          <div className="font-20 bold text-before-btns-r56">Would you be interested in knowing more about T-levels?</div>
           <div className="font-24">
             <ButtonR34
               currentChoice={ThirdStepDChoice.First} choice={this.state.choice}
-              label="If the right T-level is available, I’d be interested." setChoice={choice => this.setChoice(choice)}
+              label="I’d be interested in taking a T-level." setChoice={choice => this.setChoice(choice)}
             />
             <ButtonR34
               currentChoice={ThirdStepDChoice.Second} choice={this.state.choice}
               label="I don’t think T-levels are right for me." setChoice={choice => this.setChoice(choice)}
             />
-            <ButtonR34
-              currentChoice={ThirdStepDChoice.Forth} choice={this.state.choice}
-              label="I’m not really sure yet."
-              setChoice={() => this.setState({ choice: ThirdStepDChoice.Forth })}
-            />
           </div>
         </div>
         <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
         {this.renderNextDButton()}
-        {this.state.popupOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
-          In that case, we’ll show you the different T-level courses on offer.
-          <div className="btn" onClick={() => this.setState({ subStep: ThirdStepDSubStep.TableLeaf })}>Ok</div>
-        </Dialog>}
       </div>
     );
   }

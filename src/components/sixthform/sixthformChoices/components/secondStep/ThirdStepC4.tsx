@@ -4,6 +4,7 @@ import { ReactSortable } from "react-sortablejs";
 import { SixthformSubject } from "services/axios/sixthformChoices";
 import BackButtonSix from "../BackButtonSix";
 import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 interface ThirdCategoriesC4 {
   subjects: any[];
@@ -158,6 +159,103 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
     const ReactSortableV1 = ReactSortable as any;
 
     let canSkip = this.state.interestedSubjects.length === 0 && this.state.quiteInterestedSubjects.length === 0;
+
+    if (isPhone()) {
+      return (
+        <div>
+          <div className="bold font-23 question-text-3 margin-left-4">
+            New Subjects - Your<br/> Interests
+          </div>
+          <img src="/images/choicesTool/ThirdStepR4.png" className="your-interests-img"></img>
+          <div className="font-16 margin-left-4">
+            Which of these new subjects would you consider studying? Select any that you’d be interested in.
+          </div>
+          <div className="drag-container-r23">
+            <div className="container-r23 first font-12 bold">
+              <div>
+                <div className="sort-category-r23 font-16">
+                  Subjects
+                </div>
+                <div className="sort-category-list-container-r23">
+                  <ReactSortableV1
+                    list={this.state.subjects as any[]}
+                    animation={150}
+                    className="sortable-list-r23"
+                    group={{ name: "cloning-group-name" }}
+                    setList={(list: any[]) => this.updateSubjects(list)}
+                  >
+                    {this.state.subjects.map(this.renderSubjectBox.bind(this))}
+                  </ReactSortableV1>
+                  {/* 
+                  <div className={`drag-box-r23 other-language ${this.state.modernLanguagesExpanded ? 'expanded' : ''}`}>
+                    <div className="drag-item-r24">
+                      <div className="other-language-label" onClick={() => {
+                        this.setState({ modernLanguagesExpanded: !this.state.modernLanguagesExpanded });
+                      }}>
+                        <SpriteIcon name="arrow-right" />
+                        Other Modern Language
+                      </div>
+                      {this.state.modernLanguagesExpanded &&
+                        <ReactSortableV1
+                          list={this.state.modernLanguages as any[]}
+                          animation={150}
+                          className="sortable-list-r23"
+                          group={{ name: "cloning-group-name" }}
+                          setList={(list: any[]) => this.updateModernLanguages(list)}
+                        >
+                          {this.state.modernLanguages.map(this.renderSubjectBox.bind(this))}
+                        </ReactSortableV1>}
+                    </div>
+                  </div>*/}
+                </div>
+              </div>
+            </div>
+            <div className="container-r23 second bold font-12">
+              <div>
+                <div className="sort-category-r23 font-16">
+                  Very Interested
+                </div>
+                <div className="sort-category-list-container-r23">
+                  <ReactSortableV1
+                    list={this.state.interestedSubjects as any[]}
+                    animation={150}
+                    className="sortable-list-r23 full-height-r23"
+                    group={{ name: "cloning-group-name" }}
+                    setList={(list: any[]) => this.updateInterestedSubjects(list)}
+                  >
+                    {this.state.interestedSubjects.map(this.renderSubjectBox.bind(this))}
+                  </ReactSortableV1>
+                </div>
+              </div>
+            </div>
+            <div className="container-r23 third bold font-12">
+              <div>
+                <div className="sort-category-r23 font-16">
+                  Quite Interested
+                </div>
+                <div className="sort-category-list-container-r23">
+                  <ReactSortableV1
+                    list={this.state.quiteInterestedSubjects as any[]}
+                    animation={150}
+                    className="sortable-list-r23 full-height-r23"
+                    group={{ name: "cloning-group-name" }}
+                    setList={(list: any[]) => this.updateQuiteInterestedSubjects(list)}
+                  >
+                    {this.state.quiteInterestedSubjects.map(this.renderSubjectBox.bind(this))}
+                  </ReactSortableV1>
+                </div>
+              </div>
+            </div>
+          </div>
+          <BackButtonSix onClick={this.props.moveBack} />
+          {canSkip &&
+            <div className="absolute-text-34234">
+              <div>I’m currently not interested in <br /> any of these subjects</div>
+            </div>}
+          <NextButtonSix label={canSkip ? 'Skip' : 'Continue'} onClick={this.props.moveNext} />
+        </div>
+      );
+    }
 
     return (
       <div>

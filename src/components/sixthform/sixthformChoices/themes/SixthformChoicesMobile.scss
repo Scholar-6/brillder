@@ -984,6 +984,20 @@
       }
     }
   }
+
+  .your-interests-question {
+    .your-interests-img {
+      position: absolute;
+      top: 15vw !important;
+      right: 0;
+      width: 30vw;
+      height: auto !important;
+    }
+
+    .question-text-3 {
+      line-height: 1.2 !important;
+    }
+  }
 }
 
 .progress-description-container-r3234 {

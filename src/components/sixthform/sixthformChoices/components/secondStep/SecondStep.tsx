@@ -255,7 +255,7 @@ class SecondStep extends Component<ThirdProps, ThirdQuestionState> {
 
     } else if (this.state.subStep === ThirdSubStep.Third) {
       return (
-        <div className="question question-c4">
+        <div className="question question-c4 question-new-subjects your-interests-question">
           <ThirdStepC4
             subjects={this.props.subjects} categoriesC4={this.state.categoriesC4}
             onChange={categoriesC4 => {

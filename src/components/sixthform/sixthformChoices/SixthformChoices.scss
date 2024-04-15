@@ -2205,6 +2205,12 @@
   }
 
   .question.question-3d {
+    .text-before-btns-r56 {
+      margin-top: 6vh;
+      margin-bottom: 2vh;
+    }
+
+
     .line-d3 {
       display: flex;
       align-items: center;
@@ -2241,7 +2247,7 @@
     }
 
     .question-text-3 {
-      margin-bottom: 3vh;
+      margin-bottom: 4vh !important;
     }
 
     .button-step-d-r23 {
@@ -2863,6 +2869,16 @@
     }
   }
 
+  .collenge-selection-question {
+    .question-text {
+      margin-bottom: 2vh;
+    }
+
+    .text-between-r44 {
+      margin-bottom: 5vh;
+    }
+  }
+
   // step 5
   .question .subjects-table-5c {
     height: auto;
@@ -3346,8 +3362,23 @@
   }
 
   .question-3-watching {
+    .question-title-44 {
+      margin-top: 3vh;
+    }
+    .question-text {
+      margin-top: 3vh !important;
+    }
     .info-icon {
       margin-top: 0.1vw !important;
+    }
+  }
+
+  .question-listening-r545 {
+    .question-title-44 {
+      margin-top: 3vh;
+    }
+    .question-text {
+      margin-top: 3vh !important;
     }
   }
 
