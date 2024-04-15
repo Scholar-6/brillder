@@ -420,7 +420,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
         className="expand-subjects-button subjects-typer-r21 font-14 text-center"
         onClick={() => this.setState({ GCSESexpanded: !this.state.GCSESexpanded })}
       >
-        See more subjects and qualifications, including musical instruments and languages
+        {isPhone() ? 'See more subjects' : 'See more subjects and qualifications, including musical instruments and languages'}
       </div>
     }
   }
@@ -560,7 +560,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       if (isPhone()) {
         return (
           <div className="question question3-first question-step-1gcses">
-            <img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" />
+            {isPhone() ? <div className="relative"><img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" /></div> : <img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" />}
             <div className="bold font-32 question-text-3">
               Which subjects are you currently studying?
             </div>
@@ -755,7 +755,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
 
       return (
         <div className="question collenge-selection-question">
-          <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
+          {isPhone() ? <div className="relative"><img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" /></div> : <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />}
           {isPhone() ? <div className="bold font-24 question-text">
             Some schools and<br />
             colleges share the<br />

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import ProgressBarStepsR1 from "../progressBar/ProgressBarStepsR1";
 import BackButtonSix from "../BackButtonSix";
 import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 
 interface ThirdProps {
@@ -146,7 +147,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
               <div className="flex-center">
                 <SpriteIcon name="thumb-up-3c3" />
               </div>
-              <div className="text-center font-20">TRUE</div>
+              <div className={`text-center bold ${isPhone() ? 'font-16' : 'font-20' }`}>TRUE</div>
             </div>
           </div>
           <div
@@ -162,7 +163,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
               <div className="flex-center">
                 <SpriteIcon name="circled-question-icon-v1" />
               </div>
-              <div className="text-cente bold font-20">IN BETWEEN</div>
+              <div className={`text-center bold ${isPhone() ? 'font-16' : 'font-20' }`}>IN BETWEEN</div>
             </div>
           </div>
           <div
@@ -181,7 +182,7 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
               <div className="flex-center">
                 <SpriteIcon name="thumb-down-3c3" />
               </div>
-              <div className="text-center font-20">FALSE</div>
+              <div className={`text-center bold ${isPhone() ? 'font-16' : 'font-20' }`}>FALSE</div>
             </div>
           </div>
         </div>
@@ -193,6 +194,37 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     let category = this.state.categories[this.state.step];
+
+    if (isPhone()) {
+      return (
+        <div>
+          <div className="bold font-23 question-text-3 margin-left-4">
+            Common Misunderstandings
+          </div>
+          <div className="font-16 margin-text-c3 margin-left-4">
+            There are a few A-levels which need careful thought because there may be more to them than first<br/> meets the eye.
+          </div>
+          <ProgressBarStepsR1 step={this.state.step} total={this.state.categories.length} />
+          <div className="tick-container-c3-r23">
+            {this.renderBox(category)}
+          </div>
+          <BackButtonSix onClick={() => {
+            if (this.state.step > 0) {
+              this.setState({ step: this.state.step - 1 });
+            } else {
+              this.props.moveBack();
+            }
+          }} />
+          <NextButtonSix label="Continue" onClick={() => {
+            if (this.state.step < this.state.categories.length - 1) {
+              this.setState({ step: this.state.step + 1 });
+            } else {
+              this.props.moveNext();
+            }
+          }} />
+        </div>
+      );
+    }
     return (
       <div>
         <div className="bold font-32 question-text-3">

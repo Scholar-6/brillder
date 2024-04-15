@@ -8,7 +8,7 @@ import WritingA, { WritingChoice } from './WritingA';
 import WritingB from "./WritingB";
 import FourthStepListening from "./Listening";
 import FifthStepSpeaking from "./Speaking";
-import SixStepEntusiasm from "./StepEntusiasm";
+import Entusiasm from "./Entusiasm";
 
 enum SubStep {
   Welcome,
@@ -467,7 +467,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
 
   render() {
     if (this.state.subStep === SubStep.Entusiasm) {
-      return <SixStepEntusiasm
+      return <Entusiasm
         choices={this.state.enthusiasmChoices}
         onChange={enthusiasmChoices => this.setState({ enthusiasmChoices })}
         moveBack={() => {

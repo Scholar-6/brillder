@@ -1129,8 +1129,8 @@ class FourthStep extends Component<ThirdProps, ThirdQuestionState> {
                     {catData.description ? <div className="font-14">{catData.description}</div> : ""}
                   </div>
                   <div className="checkbox-container-r23">
-                    {catData.subjects.map((subject: any) => <div>
-                      <CheckBoxB currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
+                    {catData.subjects.map((subject: any, index: number) => <div>
+                      <CheckBoxB key={index} currentChoice={subject.selected} label={subject.name} toggleChoice={() => {
                         let selected: any[] = [];
                         this.state.cetegoriesData.forEach((c: any) => {
                           selected.push(...c.subjects.filter((s: any) => s.selected));

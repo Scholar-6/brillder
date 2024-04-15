@@ -1,4 +1,3 @@
-import SpriteIcon from "components/baseComponents/SpriteIcon";
 import React, { Component } from "react";
 import { ReactSortable } from "react-sortablejs";
 import { SixthformSubject } from "services/axios/sixthformChoices";
@@ -104,6 +103,8 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
       }
     }
 
+    console.log(subjects);
+
     this.state = {
       subjects,
       modernLanguagesExpanded,
@@ -155,6 +156,40 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
     );
   }
 
+  renderMobileSubject(s: any, i: number) {
+    const isInterested = this.state.interestedSubjects.find(sr => sr.id === s.id);
+    const isQuiteInterested = this.state.quiteInterestedSubjects.find(sr => sr.id === s.id);
+
+    return (
+      <div className="mobile-subject-c-343 bold" key={i}>
+        <div className="font-20 subject-title-c-343 text-center">{s.name}</div>
+        <div className="flex-center text-center">
+          <div className={`very-interested-c-343 interested-btn-c-343 ${isInterested ? 'active' : ''}`} onClick={() => {
+            const quiteInterestedSubjects = this.state.quiteInterestedSubjects.filter(sr => sr.id !== s.id);
+            const interestedSubjects = this.state.interestedSubjects;
+            let found = interestedSubjects.find(sr => sr.id === s.id);
+            if (!found) {
+              console.log('add very subject', s);
+              interestedSubjects.push(s);
+            }
+            console.log(interestedSubjects, quiteInterestedSubjects);
+            this.setState({ interestedSubjects: [...interestedSubjects], quiteInterestedSubjects: [...quiteInterestedSubjects] });
+          }}>Very Interested</div>
+          <div className={`quite-interested-c-343 interested-btn-c-343 ${isQuiteInterested ? 'active' : ''}`} onClick={() => {
+            const interestedSubjects = this.state.interestedSubjects.filter(sr => sr.id !== s.id);
+            const quiteInterestedSubjects = this.state.quiteInterestedSubjects;
+            let found = quiteInterestedSubjects.find(sr => sr.id === s.id);
+            if (!found) {
+              console.log('add quite subject', s);
+              quiteInterestedSubjects.push(s);
+            }
+            this.setState({ interestedSubjects, quiteInterestedSubjects });
+          }}>Quite Interested</div>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     const ReactSortableV1 = ReactSortable as any;
 
@@ -162,91 +197,22 @@ class ThirdStepC4 extends Component<ThirdProps, ThirdQuestionState> {
 
     if (isPhone()) {
       return (
-        <div>
+        <div className="mobile-interests-c-343">
+          <div className="relative">
+            <img src="/images/choicesTool/ThirdStepR4.png" className="your-interests-img"></img>
+          </div>
           <div className="bold font-23 question-text-3 margin-left-4">
-            New Subjects - Your<br/> Interests
+            New Subjects - Your<br /> Interests
           </div>
-          <img src="/images/choicesTool/ThirdStepR4.png" className="your-interests-img"></img>
           <div className="font-16 margin-left-4">
-            Which of these new subjects would you consider studying? Select any that you’d be interested in.
+            Which of these new subjects would you<br />
+            consider studying? Select any that<br />
+            you’d be interested in.
           </div>
-          <div className="drag-container-r23">
-            <div className="container-r23 first font-12 bold">
-              <div>
-                <div className="sort-category-r23 font-16">
-                  Subjects
-                </div>
-                <div className="sort-category-list-container-r23">
-                  <ReactSortableV1
-                    list={this.state.subjects as any[]}
-                    animation={150}
-                    className="sortable-list-r23"
-                    group={{ name: "cloning-group-name" }}
-                    setList={(list: any[]) => this.updateSubjects(list)}
-                  >
-                    {this.state.subjects.map(this.renderSubjectBox.bind(this))}
-                  </ReactSortableV1>
-                  {/* 
-                  <div className={`drag-box-r23 other-language ${this.state.modernLanguagesExpanded ? 'expanded' : ''}`}>
-                    <div className="drag-item-r24">
-                      <div className="other-language-label" onClick={() => {
-                        this.setState({ modernLanguagesExpanded: !this.state.modernLanguagesExpanded });
-                      }}>
-                        <SpriteIcon name="arrow-right" />
-                        Other Modern Language
-                      </div>
-                      {this.state.modernLanguagesExpanded &&
-                        <ReactSortableV1
-                          list={this.state.modernLanguages as any[]}
-                          animation={150}
-                          className="sortable-list-r23"
-                          group={{ name: "cloning-group-name" }}
-                          setList={(list: any[]) => this.updateModernLanguages(list)}
-                        >
-                          {this.state.modernLanguages.map(this.renderSubjectBox.bind(this))}
-                        </ReactSortableV1>}
-                    </div>
-                  </div>*/}
-                </div>
-              </div>
-            </div>
-            <div className="container-r23 second bold font-12">
-              <div>
-                <div className="sort-category-r23 font-16">
-                  Very Interested
-                </div>
-                <div className="sort-category-list-container-r23">
-                  <ReactSortableV1
-                    list={this.state.interestedSubjects as any[]}
-                    animation={150}
-                    className="sortable-list-r23 full-height-r23"
-                    group={{ name: "cloning-group-name" }}
-                    setList={(list: any[]) => this.updateInterestedSubjects(list)}
-                  >
-                    {this.state.interestedSubjects.map(this.renderSubjectBox.bind(this))}
-                  </ReactSortableV1>
-                </div>
-              </div>
-            </div>
-            <div className="container-r23 third bold font-12">
-              <div>
-                <div className="sort-category-r23 font-16">
-                  Quite Interested
-                </div>
-                <div className="sort-category-list-container-r23">
-                  <ReactSortableV1
-                    list={this.state.quiteInterestedSubjects as any[]}
-                    animation={150}
-                    className="sortable-list-r23 full-height-r23"
-                    group={{ name: "cloning-group-name" }}
-                    setList={(list: any[]) => this.updateQuiteInterestedSubjects(list)}
-                  >
-                    {this.state.quiteInterestedSubjects.map(this.renderSubjectBox.bind(this))}
-                  </ReactSortableV1>
-                </div>
-              </div>
-            </div>
+          <div>
+            {this.state.subjects.map(this.renderMobileSubject.bind(this))}
           </div>
+
           <BackButtonSix onClick={this.props.moveBack} />
           {canSkip &&
             <div className="absolute-text-34234">

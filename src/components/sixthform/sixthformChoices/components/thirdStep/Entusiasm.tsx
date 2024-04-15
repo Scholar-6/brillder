@@ -17,7 +17,7 @@ interface ThirdProps {
   moveNext(): void;
 }
 
-const SixStepEntusiasm: React.FC<ThirdProps> = (props) => {
+const Entusiasm: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.choices[step];
 
@@ -26,19 +26,11 @@ const SixStepEntusiasm: React.FC<ThirdProps> = (props) => {
 
   return (
     <div className="question question-6 question-3-watching">
+      <div className="font-32 bold question-title-44">
+        Enthusiasms, Passions and Interests
+      </div>
       <div className="font-16 question-text">
-        <div>
-          How true are the following statements of you?
-        </div>
-        <div className="hover-area font-14 hover-area-entusiasm">
-          <SpriteIcon name="help-circle-r1" className="info-icon" />
-          <div className="hover-content regular">
-            <div className="triangle-popup" />
-            Please be assured that we NEVER give your data to companies which<br />
-            might try to sell you stuff. The reason we are asking this is because<br />
-            sometimes the things you love doing complement what you might study.
-          </div>
-        </div>
+        How true are the following statements of you?
       </div>
       <img src="/images/choicesTool/Step6R19.png" className="step3watching-img-v2" />
       <ProgressBarStep6Entusiasm step={animatedStep} total={props.choices.length} description={animatedData.label} />
@@ -81,4 +73,4 @@ const SixStepEntusiasm: React.FC<ThirdProps> = (props) => {
   );
 }
 
-export default SixStepEntusiasm;
+export default Entusiasm;
