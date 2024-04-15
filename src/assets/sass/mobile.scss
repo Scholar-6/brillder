@@ -409,14 +409,14 @@ html {
 
           img {
             margin-left: 1.3vw;
-            width: 24vw;
+            width: 27vw;
             transition: all 200ms ease-in-out;
           }
 
           .brillder-image {
             padding-top: 1vw;
             margin-left: 0 !important;
-            width: 5vw;
+            width: 6vw;
           }
         }
       }
@@ -462,194 +462,27 @@ html {
     }
   }
 
-  .content-container-e354 {
-    margin-left: 4vw;
-    margin-right: 4vw;
-    width: 92vw;
+  .content-container-e359 {
     color: white;
-
-    .tab-container-e354 {
-      display: flex;
-      width: 100%;
-      height: auto;
-
-      .tab-e354 {
-        $tab-size: 10vw;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        width: 34%;
-        background: #193266;
-        height: $tab-size;
-        border-top-left-radius: 2vw;
-        border-top-right-radius: 2vw;
-        border: 2px solid #526AA5;
-
-        &.active {
-          height: calc(#{$tab-size} + 3vw);
-          background: #526AA5;
-        }
-
-        &.not-active {
-          margin-top: 3vw;
-          height: $tab-size;
-        }
-      }
+    position: relative;
+    svg {
+      width: 100vw;
     }
 
-    .tab-content-e354 {
-      overflow-y: auto;
-      padding-bottom: 6vh;
-      padding-top: 3vh;
-      color: white;
-      border-bottom-left-radius: 1.2vw;
-      border-bottom-right-radius: 1.2vw;
-      padding-left: 4vw;
-      padding-right: 4vw;
-      height: 115vw;
-      background: #526AA5;
-
-      .content-title {
-        margin-bottom: 2vh;
-        margin-top: 2vh;
-      }
+    #svg-like-search {
+      position: absolute;
+      top: 15vw;
+      left: 9vw;
+      width: 82vw;
     }
 
-    ::-webkit-scrollbar {
-      width: 2vw;
-      display: block !important;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-      background: #4C608A;
-      display: block !important;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      border-radius: 1vw;
-      height: 8vh;
-      background: #6981B3;
-      display: block !important;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: #6981B3;
-      display: block !important;
-    }
-
-    .tab-content-survey {
-      img {
-        margin-top: 4vh;
-        width: 70vw;
-      }
-
-      .btn-orange {
-        cursor: pointer;
-        margin-top: 3vh;
-        border-radius: 3vw;
-        padding: 2vw 4vw;
-        background: var(--theme-orange);
-      }
-    }
-
-    .taster-content {
-      padding-left: 2vw;
-      padding-right: 2vw;
-
-      ::-webkit-scrollbar {
-        width: 2vw;
-        display: block !important;
-      }
-
-      /* Track */
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        display: block !important;
-      }
-
-      /* Handle */
-      ::-webkit-scrollbar-thumb {
-        background: #888;
-        display: block !important;
-      }
-
-      /* Handle on hover */
-      ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-        display: block !important;
-      }
-
-      .title-above {
-        margin-left: 1vw;
-      }
-
-      .bricks-container {
-        display: flex;
-        flex-wrap: wrap;
-
-        .brick-container-23 {
-          position: relative;
-          margin-left: 1vw;
-          margin-right: 1vw;
-
-          .brick-container {
-            cursor: pointer;
-
-            .scroll-block {
-              margin-top: 2.5vw;
-              margin-bottom: 2.5vw;
-              width: 41vw;
-              height: 22.5vw;
-              border-radius: 1vw;
-              background-size: cover;
-              background-position: center center;
-
-              flex-flow: column nowrap;
-              background-repeat: no-repeat;
-              position: relative;
-              margin-left: auto;
-              margin-right: auto;
-            }
-
-            .bottom-description,
-            .bottom-description-color {
-              position: absolute;
-              bottom: 2.5vw;
-              text-align: center;
-              height: 6vw;
-              width: 100%;
-            }
-
-            .bottom-description-color {
-              opacity: 0.85;
-              z-index: 10;
-              border-bottom-right-radius: 1vw;
-              border-bottom-left-radius: 1vw;
-            }
-
-            .bottom-description {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              z-index: 11;
-            }
-          }
-
-          .subjectName {
-            width: 28vw;
-            white-space: nowrap;
-            overflow-x: hidden;
-            text-overflow: ellipsis;
-            bottom: -2vw;
-            position: absolute;
-          }
-        }
-      }
+    .btn-orange {
+      margin-top: 3vw;
+      padding: 3.5vw;
+      border-radius: 3vw;
+      width: 50vw;
+      text-align: center;
+      background: var(--theme-orange);
     }
   }
 
@@ -677,6 +510,8 @@ html {
       }
 
       .btn-orange {
+        width: 50vw;
+        text-align: center;
         margin-top: 8vw;
         cursor: pointer;
         padding: 3.5vw 3.5vw;
@@ -684,10 +519,6 @@ html {
         border-radius: 3vw;
         background: var(--theme-orange);
         transition: opacity 200ms ease-in-out;
-
-        &:hover {
-          opacity: 0.8;
-        }
       }
     }
   }
@@ -710,6 +541,7 @@ html {
   }
 
   .page-5 {
+    padding-top: 5vh;
     color: white;
 
     .line-long-e322 {
@@ -866,40 +698,6 @@ html {
       padding-left: 5vw;
       line-height: 1.3;
       padding-bottom: 15vw;
-    }
-  }
-
-  .page-8 {
-    color: white;
-
-    .first-column {
-      color: var(--theme-dark-blue);
-      background: white;
-      padding-top: 6vw;
-      padding-left: 4vw;
-      padding-right: 4vw;
-      line-height: 1.3;
-
-      .bold {
-        line-height: 1;
-      }
-
-      width: 100vw;
-      padding-bottom: 15vw;
-    }
-
-    .second-column {
-      height: 97vw;
-      overflow-y: hidden;
-      width: 100vw;
-      position: relative;
-
-      img {
-        top: -10vw;
-        left: 0;
-        position: absolute;
-        width: 100vw;
-      }
     }
   }
 
@@ -1290,6 +1088,8 @@ html {
         }
 
         .btn-orange {
+          width: 50vw;
+          text-align: center;
           margin-top: 0.3vw;
           cursor: pointer;
           color: white;
@@ -1299,10 +1099,6 @@ html {
           text-align: center;
           border-radius: 3vw;
           transition: opacity 200ms ease-in-out;
-
-          &:hover {
-            opacity: 0.8;
-          }
         }
       }
 

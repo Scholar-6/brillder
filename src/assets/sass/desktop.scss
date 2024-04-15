@@ -2552,23 +2552,24 @@
         display: flex;
 
         >div {
-          margin-top: 2vh;
-          margin-left: 3vw;
+          margin-top: 3vh;
         }
 
         .menu-item {
-          margin-top: calc(2vh + 0.48vw);
-
           &.clickable {
             cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
 
         .absolute-partner-btn {
           cursor: pointer;
           position: absolute;
-          top: 0;
-          right: 2.5vw;
+          top: 0.2vw;
+          left: 2vw;
           display: flex;
           align-items: center;
     
@@ -2587,13 +2588,41 @@
             width: 2.2vw;
           }
         }
+
+        .absolute-menu-container {
+          position: absolute;
+          top: 0;
+          right: 2.5vw;
+          display: flex;
+
+          .menu-item {
+            margin-top: 0.2vw;
+          }
+
+          .sign-in-btn {
+            cursor: pointer;
+            padding-top: 0.2vw;
+            padding-bottom: 0.2vw;
+            margin-left: 2.4vw;
+            padding-left: 1.5vw;
+            padding-right: 1.5vw;
+            border-radius: 0.6vw;
+            border: 1px solid #A7B1BC;
+            text-align: center;
+            transition: all 200ms ease-in-out;
+
+            &:hover {
+              background: var(--theme-light-blue);
+            }
+          }
+        }
       }
 
       .page-content-r322 {
         width: 100vw;
         color: white;
         text-align: center;
-        padding-top: 53vh;
+        padding-top: 57vh;
 
         .btn-orange {
           cursor: pointer;
@@ -2628,184 +2657,18 @@
     }
   }
 
-  .content-container-e354 {
-    margin-left: 2vw;
-    margin-right: 2vw;
-    width: 96vw;
+  .content-container-e358 {
     color: white;
-
-    .tab-container-e354 {
-      display: flex;
-      width: 100%;
-      height: auto;
-
-      .tab-e354 {
-        $tab-size: 3.5vw;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        width: 34%;
-        background: #193266;
-        height: $tab-size;
-        border-top-left-radius: 1.2vw;
-        border-top-right-radius: 1.2vw;
-        border: 2px solid #526AA5;
-
-        &.active {
-          height: calc(#{$tab-size} + 1.3vw);
-          background: #526AA5;
-        }
-
-        &.not-active {
-          margin-top: 1.3vw;
-          height: $tab-size;
-        }
-      }
+    svg {
+      width: 100vw;
     }
-
-    .tab-content-e354 {
-      overflow-y: auto;
-      padding-bottom: 6vh;
-      padding-top: 3vh;
-      color: white;
-      border-bottom-left-radius: 1.2vw;
-      border-bottom-right-radius: 1.2vw;
-      padding-left: 4vw;
-      padding-right: 4vw;
-      height: calc(100vh - 5.834vw - 2vw - 2vh - 2vw);
-      background: #526AA5;
-
-      .content-title {
-        margin-bottom: 2vh;
-        margin-top: 2vh;
-      }
-    }
-
-    ::-webkit-scrollbar {
-      width: 10px;
-      display: block !important;
-    }
-    /* Track */
-    ::-webkit-scrollbar-track {
-      background: #4C608A;
-      display: block !important;
-    }
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      border-radius: 1vw;
-      height: 8vh;
-      background: #6981B3;
-      display: block !important;
-    }
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: #6981B3;
-      display: block !important;
-    }
-
-    .tab-content-survey {
-      img {
-        margin-top: 4vh;
-        height: 30vh;
-      }
-
-      .btn-orange {
-        cursor: pointer;
-        margin-top: 3vh;
-        border-radius: 0.5vw;
-        padding: 0.6vw 1.4vw;
-        background: var(--theme-orange);
-      }
-    }
-
-    .taster-content {
-      padding-left: 2vw;
-      padding-right: 2vw;
-
-      ::-webkit-scrollbar {
-        width: 10px;
-        display: block !important;
-      }
-      /* Track */
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        display: block !important;
-      }
-      /* Handle */
-      ::-webkit-scrollbar-thumb {
-        background: #888;
-        display: block !important;
-      }
-      /* Handle on hover */
-      ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-        display: block !important;
-      }
-
-      .title-above {
-        margin-left: 1vw;
-      }
-
-      .bricks-container {
-        display: flex;
-        flex-wrap: wrap;
-
-        .brick-container-23 {
-          position: relative;
-          margin-left: 1vw;
-          margin-right: 1vw;
-
-          .brick-container {
-            cursor: pointer;
-
-            .scroll-block {
-              margin-top: 2.5vw;
-              margin-bottom: 2.5vw;
-              width: 20vw;
-              height: 11vw;
-              border-radius: 1vw;
-              background-size: cover;
-              background-position: center center;
-
-              flex-flow: column nowrap;
-              background-repeat: no-repeat;
-              position: relative;
-              margin-left: auto;
-              margin-right: auto;
-            }
-
-            .bottom-description,
-            .bottom-description-color {
-              position: absolute;
-              bottom: 2.5vw;
-              text-align: center;
-              height: 3vw;
-              width: 100%;
-            }
-
-            .bottom-description-color {
-              opacity: 0.85;
-              z-index: 10;
-              border-bottom-right-radius: 1vw;
-              border-bottom-left-radius: 1vw;
-            }
-
-            .bottom-description {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              z-index: 11;
-            }
-          }
-
-          .subjectName {
-            bottom: 1vw;
-            position: absolute;
-          }
-        }
-      }
+    .orange-btn {
+      margin-top: 2vh;
+      cursor: pointer;
+      padding: 0.6vw 2vw;
+      border-radius: 0.6vw;
+      background: var(--theme-orange);
+      transition: all 200ms ease-in-out;
     }
   }
 
@@ -2867,6 +2730,7 @@
   }
 
   .page-5 {
+    padding-top: 4vh;
     color: white;
 
     .line-long-e322 {
@@ -3005,32 +2869,6 @@
       padding-top: 9vw;
       padding-left: 5vw;
       line-height: 1.3;
-    }
-  }
-
-  .page-8 {
-    color: white;
-    display: flex;
-    height: 44vw;
-    overflow-y: hidden;
-    .first-column {
-      color: var(--theme-dark-blue);
-      background: white;
-      padding-top: 6vw;
-      padding-left: 5vw;
-      line-height: 1.3;
-
-      .bold {
-        line-height: 1;
-      }
-
-      width: 70vw;
-    }
-    .second-column {
-      width: 34vw;
-      img {
-        width: 34vw;
-      }
     }
   }
 
