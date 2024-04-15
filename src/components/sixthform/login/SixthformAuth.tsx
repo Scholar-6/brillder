@@ -13,7 +13,9 @@ import { ReduxCombinedState } from 'redux/reducers';
 import map from 'components/map';
 import { isAuthenticated } from 'model/brick';
 import SixthformSignIn from './SixthformSignIn';
+import { isPhone } from 'services/phone';
 
+const MobileTheme = React.lazy(() => import('./themes/MobileTheme'));
 
 interface Props {
   user: User;
@@ -23,6 +25,27 @@ interface Props {
 
 const SixthformAuth: React.FC<Props> = (props) => {
   if (props.isAuthenticated === isAuthenticated.None || props.isAuthenticated === isAuthenticated.False) {
+    if (isPhone()) {
+      return (
+        <React.Suspense fallback={<></>}>
+          <MobileTheme />
+          <div className="LoginSixthformPage">
+            <Switch>
+              <Route path={routes.SignUp}>
+                <SixthformSignUp />
+              </Route>
+              <Route path={routes.EmailSignUp}>
+                <SixthformSignUpEmail />
+              </Route>
+              <Route path={routes.SignIn}>
+                <SixthformSignIn />
+              </Route>
+            </Switch>
+          </div>
+        </React.Suspense>
+      );
+    }
+
     return (
       <div className="LoginSixthformPage">
         <div>
