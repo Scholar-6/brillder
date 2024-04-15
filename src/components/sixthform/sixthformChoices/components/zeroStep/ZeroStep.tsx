@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import WelcomePage from "./welcomePage/WelcomePage";
 import Step1Name from "./Step1Name";
 import Step1Email from "./Step1Email";
+import { User } from "model/user";
+import user from "redux/reducers/user";
 
 
 enum SubStep {
@@ -13,6 +15,7 @@ enum SubStep {
 }
 
 interface SecondQuestionProps {
+  user: User;
   answer: any;
   saveAnswer(answer: any): void;
   moveNext(answer: any): void;
@@ -26,6 +29,16 @@ interface SecondQuestionState {
   nameCorrected: boolean;
   emailCorrected: boolean;
   popup: boolean;
+}
+function checkFromInstitution(email: string, domains: string[]) {
+  const userEmailDomain = email.split("@")[1];
+
+    for (const domain of domains) {
+      if (domain === userEmailDomain) {
+        return true;
+      }
+    }
+    return false;
 }
 
 class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
@@ -142,7 +155,14 @@ class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
       />
     }
 
-    return <WelcomePage moveNext={() => this.setState({ subStep: SubStep.Name })} />;
+    return <WelcomePage moveNext={() => {
+      // if user just signed up don`t show name and email screens
+      if (this.props.user.isFromInstitution) {
+        this.setState({ subStep: SubStep.Name })
+      } else {
+        this.props.moveNext(this.getAnswer());
+      }
+    }} />;
   }
 }
 

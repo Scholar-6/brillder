@@ -754,7 +754,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       }
 
       return (
-        <div className="question">
+        <div className="question collenge-selection-question">
           <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
           {isPhone() ? <div className="bold font-24 question-text">
             Some schools and<br />
@@ -765,6 +765,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             <div className="bold font-32 question-text">
               Where will you study in the sixth form?
             </div>}
+          <div className="font-16 text-between-r44">If you are planning on studying at one of our partner colleges, please select it on this page.</div>
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
             <div className={this.state.sixthformChoice === SixthformChoice.Forbid ? 'active forbid-btn' : 'forbid-btn'} onClick={() => this.setState({ sixthformChoice: SixthformChoice.Forbid })}>

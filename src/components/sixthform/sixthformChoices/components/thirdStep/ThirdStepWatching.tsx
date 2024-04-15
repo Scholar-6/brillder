@@ -27,19 +27,9 @@ const ThirdStepWatching: React.FC<ThirdProps> = (props) => {
 
   return (
     <div className="question question-6 question-3-watching">
+      <div className="bold font-32 question-title-44">TV, Video & Social Media</div>
       <div className="font-16 question-text">
-        <div>
-          How often do you watch the following?
-        </div>
-        <div className="hover-area font-14">
-          <SpriteIcon name="help-circle-r1" className="info-icon" />
-          <div className="hover-content regular">
-            <div className="triangle-popup" />
-            What you choose to watch reflects your interests and, to some<br />
-            extent, your capacity to challenge yourself with content which might<br />
-            seek to inform or educate as well as simply entertain.
-          </div>
-        </div>
+        How often do you watch programmes or videos on the following topics?
       </div>
       <img src="/images/choicesTool/ThirdStepWatching.png" className="step3watching-img-v2" />
       <ProgressBarStep6 icon="watching-start" step={animatedStep} total={watchingChoices.length} subjectDescription={animatedData.label} isBig={false} />

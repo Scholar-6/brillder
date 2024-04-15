@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 
-import ThirdStepWatchStart from "./ThirdStepWatchStart";
 import ThirdStepWelcome from "./ThirdStepWelcome";
 import ThirdStepWatching from "./ThirdStepWatching";
 import ReadingV2 from "./ReadingV2";
 import ReadingV1, { ReadingChoice } from "./ReadingV1";
 import WritingA, { WritingChoice } from './WritingA';
 import WritingB from "./WritingB";
-import FourthStepListening from "./FourthStepListening";
-import FourthStepListenStart from "./FourthStepListenStart";
-import FifthStepSpeaking from "./FifthStepSpeaking";
-import FifthStepSpeakingStart from "./FifthStepSpeakingStart";
-import StepEntusiasmStart from "./StepEntusiasmStart";
+import FourthStepListening from "./Listening";
+import FifthStepSpeaking from "./Speaking";
 import SixStepEntusiasm from "./StepEntusiasm";
 
 enum SubStep {
@@ -20,13 +16,9 @@ enum SubStep {
   ReadingV2,
   WritingA,
   WritingB,
-  WatchingStart,
   Watching,
-  ListenStart,
   Listening,
-  SpeakingStart,
   Speaking,
-  EntusiasmStart,
   Entusiasm,
 }
 
@@ -480,70 +472,47 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
         onChange={enthusiasmChoices => this.setState({ enthusiasmChoices })}
         moveBack={() => {
           this.props.saveAnswer(this.getAnswer());
-          this.setState({ subStep: SubStep.EntusiasmStart });
+          this.setState({ subStep: SubStep.Speaking });
         }}
         moveNext={() => {
           this.props.saveAnswer(this.getAnswer());
           this.props.moveNext(this.getAnswer());
         }}
       />
-    } else if (this.state.subStep === SubStep.EntusiasmStart) {
-      return <StepEntusiasmStart
-        moveBack={() => this.setState({ subStep: SubStep.Speaking })}
-        moveNext={() => this.setState({ subStep: SubStep.Entusiasm })} />
     } else if (this.state.subStep === SubStep.Speaking) {
       return <FifthStepSpeaking
         speakingChoices={this.state.speakingChoices}
         onChange={speakingChoices => this.setState({ speakingChoices })}
         moveBack={() => {
           this.props.saveAnswer(this.getAnswer());
-          this.setState({ subStep: SubStep.SpeakingStart })
+          this.setState({ subStep: SubStep.Listening })
         }}
         moveNext={() => {
           this.props.saveAnswer(this.getAnswer());
-          this.setState({ subStep: SubStep.EntusiasmStart})
+          this.setState({ subStep: SubStep.Entusiasm})
         }} />
-    } else if (this.state.subStep === SubStep.SpeakingStart) {
-      return <FifthStepSpeakingStart
-        moveBack={() => this.setState({ subStep: SubStep.Listening })}
-        moveNext={() => this.setState({ subStep: SubStep.Speaking })} />
     } else if (this.state.subStep === SubStep.Listening) {
       return (
         <FourthStepListening
           listeningChoices={this.state.listeningChoices}
           onChange={listeningChoices => this.setState({ listeningChoices })}
-          moveBack={() => this.setState({ subStep: SubStep.ListenStart })}
+          moveBack={() => this.setState({ subStep: SubStep.Watching })}
           moveNext={async () => {
             this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.SpeakingStart });
+            this.setState({ subStep: SubStep.Speaking });
           }} />
       );
-    } else if (this.state.subStep === SubStep.ListenStart) {
-      return <FourthStepListenStart
-        moveNext={() => this.setState({ subStep: SubStep.Listening })}
-        moveBack={() => this.setState({ subStep: SubStep.Watching })}
-      />
     } else if (this.state.subStep === SubStep.Watching) {
       return (
         <ThirdStepWatching
           watchingChoices={this.state.watchingChoices}
           onChange={watchingChoices => this.setState({ watchingChoices })}
-          moveBack={() => this.setState({ subStep: SubStep.WatchingStart })}
+          moveBack={() => this.setState({ subStep: SubStep.WritingB })}
           moveNext={async () => {
             await this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.ListenStart });
+            this.setState({ subStep: SubStep.Listening });
           }} />
       );
-    } else if (this.state.subStep === SubStep.WatchingStart) {
-      return <ThirdStepWatchStart
-        moveNext={() => this.setState({ subStep: SubStep.Watching })}
-        moveBack={() => {
-          if (this.state.writingChoice === WritingChoice.first || this.state.writingChoice === WritingChoice.second) {
-            this.setState({ subStep: SubStep.WritingB });
-          } else {
-            this.setState({ subStep: SubStep.WritingA });
-          }
-        }} />
     } else if (this.state.subStep === SubStep.WritingB) {
       return <WritingB
         choices={this.state.writingChoices}
@@ -554,7 +523,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
         }}
         moveNext={() => {
           this.props.saveAnswer(this.getAnswer());
-          this.setState({ subStep: SubStep.WatchingStart });
+          this.setState({ subStep: SubStep.Watching });
         }}
       />
     } else if (this.state.subStep === SubStep.WritingA) {
@@ -575,7 +544,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
             if (this.state.writingChoice === WritingChoice.first || this.state.writingChoice === WritingChoice.second) {
               this.setState({ subStep: SubStep.WritingB });
             } else {
-              this.setState({ subStep: SubStep.WatchingStart });
+              this.setState({ subStep: SubStep.Watching });
             }
           }}
         />

@@ -18,7 +18,7 @@ const ThirdStepWelcome: React.FC<WelcomeProps> = (props) => {
       <div className="text-container-5432">
         <div>
           <div className="font-20">Step 3</div>
-          <div className="font-48 bold s-text-323">INTERESTS AND EXTRACURRICULAR ACTIVITIES</div>
+          <div className="font-40 bold s-text-323">INTERESTS & EXTRACURRICULAR ACTIVITIES</div>
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />

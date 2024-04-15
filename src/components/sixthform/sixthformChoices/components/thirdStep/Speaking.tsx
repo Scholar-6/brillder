@@ -17,7 +17,7 @@ interface ThirdProps {
   moveNext(): void;
 }
 
-const FifthStepSpeaking: React.FC<ThirdProps> = (props) => {
+const Speaking: React.FC<ThirdProps> = (props) => {
   const [step, setStep] = React.useState(0);
   let currentStep = props.speakingChoices[step];
 
@@ -26,18 +26,8 @@ const FifthStepSpeaking: React.FC<ThirdProps> = (props) => {
 
   return (
     <div className="question question-6 question-3-watching question-5-speaking">
-      <div className="font-16 question-text">
-        <div className="font-32 bold">
-          Speaking
-        </div>
-        <div className="hover-area font-14">
-          <SpriteIcon name="help-circle-r1" className="info-icon" />
-          <div className="hover-content regular">
-            <div className="triangle-popup" />
-            We talk about what we’re interested in, and the way we engage in<br />
-            discussion and take opportunities to speak reflects our character.
-          </div>
-        </div>
+      <div className="font-32 bold question-text">
+        Speaking
       </div>
       <div className="font-16">How true are the following statements of you?</div>
       <img src="/images/choicesTool/FifthStepSpeaking.png" className="step3watching-img-v2" />
@@ -80,4 +70,4 @@ const FifthStepSpeaking: React.FC<ThirdProps> = (props) => {
   );
 }
 
-export default FifthStepSpeaking;
+export default Speaking;

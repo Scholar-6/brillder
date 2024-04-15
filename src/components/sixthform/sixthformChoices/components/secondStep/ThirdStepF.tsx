@@ -250,11 +250,10 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
       <div className="font-16 question-step-3f">
         <img src="/images/choicesTool/ThirdStepR10.png" className="third-step-img"></img>
         <div className="bold font-32 question-text-3">
-          Vocational, Applied and Practical Courses
+          Vocational and Technical Subjects
         </div>
         <div className="font-16">
-          Click on any of the fourteen categories to reveal more than fifty course options. Select a maximum of<br />
-          <span className="bold ">five</span> courses which interest you (you won’t be able to do them all).
+          Click on any of the categories below to reveal more than fifty course options. Select any that you would be interested in studying.
         </div>
         <div className="d3-table-scroll-container">
           <div className="d3-table-leaf">
