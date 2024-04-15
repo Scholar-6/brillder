@@ -1,0 +1,115 @@
+@use "sass:math";
+
+@import "src/assets/sass/partials/variables";
+@import "src/assets/sass/partials/mixins";
+@import "src/assets/sass/partials/extensions";
+
+.LoginSixthformPage .second-column .abolute-form-container > div {
+  margin-left: 10vw;
+  width: 80vw;
+
+  button {
+    border-radius: 3vw;
+  }
+
+  input {
+    border-radius: 3vw;
+    width: 100% !important;
+  }
+  a {
+    border-radius: 3vw;
+
+    svg {
+      width: 8vw;
+      height: 8vw;
+    }
+  }
+
+  .google-button-desktop {
+    svg {
+      top: 2vh;
+      width: calc(5vw + 2vh);
+      height: calc(5vw + 2vh);
+    }
+  }
+
+  .microsoft-button-v5 {
+    img {
+      top: 2.5vh;
+      width: calc(4.8vw + 1vh);
+      height: calc(4.8vw + 1vh);
+    }
+  }
+
+  .sixth-login-hand {
+    width: 3vw;
+    height: 3vw;
+  }
+
+  $font-scale: 3;
+
+   /* fonts */
+   .font-8 {
+    font-size: calc(0.5vw * $font-scale);
+  }
+
+  .font-11 {
+    font-size: calc(0.6875vw * $font-scale);
+  }
+
+  .font-12 {
+    font-size: calc(0.75vw * $font-scale);
+  }
+
+  .font-13 {
+    font-size: calc(0.81vw * $font-scale);
+  }
+
+  .font-14 {
+    font-size: calc(0.875vw * $font-scale) !important;
+  }
+
+  .font-15 {
+    font-size: calc(0.9375vw * $font-scale);
+  }
+
+  .font-16 {
+    font-size: calc(1vw * $font-scale);
+  }
+
+  .font-18 {
+    font-size: calc(1.125vw * $font-scale);
+  }
+
+  .font-20 {
+    font-size: calc(1.25vw * $font-scale);
+  }
+
+  .font-22 {
+    font-size: calc(1.35vw * $font-scale);
+  }
+
+  .font-24 {
+    font-size: calc(1.5vw * $font-scale);
+  }
+
+  .font-25 {
+    font-size: calc(1.56vw * $font-scale);
+  }
+
+  .font-28 {
+    font-size: calc(1.75vw * $font-scale);
+  }
+
+  .font-30 {
+    font-size: calc(1.875vw * $font-scale);
+  }
+
+  .font-36 {
+    font-size: calc(2.25vw * $font-scale);
+  }
+
+  .font-40 {
+    font-size: calc(2.5vw * $font-scale);
+  }
+}

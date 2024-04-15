@@ -80,6 +80,8 @@
       display: inline !important;
     }
     .bold-on-hover {
+      margin-left: 0.2vw;
+      margin-right: 0.2vw;
       white-space: nowrap;
       display: inline !important;
       align-items: center;
@@ -88,6 +90,8 @@
       padding-right: 0.3vw;
       border-radius: 3vw;
       &:hover {
+        margin-left: 0;
+        margin-right: 0;
         background: var(--tab-gray);
       }
     }
