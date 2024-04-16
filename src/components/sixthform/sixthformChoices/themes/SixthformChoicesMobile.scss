@@ -139,7 +139,7 @@
         height: 91%;
 
         .subjects-select-box {
-          height: 16vw;
+          height: 20vw;
         }
 
         .label-r323 {
@@ -165,7 +165,7 @@
         }
 
         .subjects-scrollbar {
-          height: calc(100% - 16vw - 8vw);
+          height: calc(100% - 20vw - 8vw);
           margin-left: 3vw;
           margin-right: 3vw;
           border-radius: 2.4vw;
@@ -396,8 +396,6 @@
         z-index: 5;
         justify-content: center;
       }
-
-      .phone-button-row {}
     }
 
     .question-top-part {
@@ -423,6 +421,37 @@
       font-size: 5vw;
       background: var(--theme-orange) !important;
     }
+  }
+
+  .question {
+    overflow-y: scroll;
+  }
+
+  .before-title-space {
+    height: 5%;
+  }
+
+  .mobile-space-2 {
+    height: 2%;
+  }
+
+  .mobile-space-6 {
+    height: 6%;
+  }
+
+  .collenge-selection-question .mobile-img-r34 {
+    top: -4vw;
+    right: 0;
+    height: calc(4vw + 18vw + 7vh) !important;
+  }
+
+  .question-text {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .text-between-r44 {
+    margin-bottom: 0 !important;
   }
 
   .question-1-name {
@@ -489,6 +518,10 @@
       height: 35vw !important;
     }
 
+    .warning-popup-s434 {
+      margin-top: 20vw;
+    }
+
     .question-text-3 {
       padding-left: 4vw;
       line-height: 1;
@@ -511,27 +544,46 @@
       display: block;
 
       .first-box-R21 {
-        height: calc(16vh + 5.2vh) !important;
+        height: auto !important;
         border-radius: 2vw;
         overflow-y: auto;
         margin-left: 4vw;
         width: 92vw;
 
         .toggle-R21 {
-          width: 70vw;
+          margin-left: 1.5vw;
+          margin-top: 1.5vw;
+          border-radius: 1.7vw;
+          width: 50vw;
+          text-align: center;
+
+          > div {
+            margin: 0.8vw;
+            width: 22vw;
+            padding-top: 1.3vw;
+            padding-bottom: 1.3vw;
+            border-radius: 2vw;
+          }
 
           div:nth-child(2) {
-            border-radius: 1vw;
-            width: 50vw !important;
           }
         }
 
         .subjects-box-s6-r21 {
-          height: 16vh;
+          padding-top: 2vw;
+          padding-left: 2vw;
+          padding-right: 2vw;
+          height: 26vh;
+          padding-bottom: 6vh;
         }
 
         .expand-subjects-button {
           border-radius: 2vw;
+          bottom: 0.4vw !important;
+
+          &:hover {
+            opacity: 1 !important;
+          }
         }
 
         .subjects-typer-r21 input {
@@ -544,7 +596,7 @@
         margin-top: 2vh;
         margin-left: 4vw;
         width: 92vw;
-        height: 13vh !important;
+        height: 18vh !important;
 
         svg {
           margin-left: 1vw !important;
@@ -674,6 +726,7 @@
         width: calc(100% - 4vw);
 
         input {
+          font-size: 4.2vw !important;
           &:focus {
             border-radius: 2vw;
             border: 1px solid var(--theme-green) !important;

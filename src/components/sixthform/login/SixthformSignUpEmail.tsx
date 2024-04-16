@@ -153,7 +153,7 @@ const SixthformLoginPage: React.FC<Props> = (props) => {
                 By signing up, I agree to the Scholar6 <span className="text-underline">Terms and Conditions</span>
               </div>
             </div>
-            <button className="font-30 btn">Sign Up</button>
+            <button className="font-30 btn sign-up-btn">Sign Up</button>
             <div className="button-box-v2">
               <div className="back-button font-25 bold" onClick={() => {
                 history.push(routes.SignUp);

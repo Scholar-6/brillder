@@ -94,7 +94,7 @@ const SixthformSignInPage: React.FC<Props> = (props) => {
               <div>Welcome back!</div>
             </div>
             <div className="font-24 text-center">Sign in to your account</div>
-            <input className="font-28" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
+            <input className="font-28 first-input-r434" placeholder="Email" onChange={e => setEmail(e.target.value)} type="email" />
             <input className="font-28" placeholder="Password" onChange={e => setPassword(e.target.value)} type="password" />
             <button className="font-30 btn sign-in-btn">Sign In</button>
             <div className="line-container flex-center">

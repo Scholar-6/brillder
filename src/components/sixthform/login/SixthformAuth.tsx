@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import './SixthformLoginPage.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import userActions from 'redux/actions/user';
 import { User } from 'model/user';
-import { Redirect, Route, Switch } from 'react-router-dom';
 import routes from './routes';
 import SixthformSignUpEmail from './SixthformSignUpEmail';
 import SixthformSignUp from './SixthformSignUp';
@@ -14,6 +14,7 @@ import map from 'components/map';
 import { isAuthenticated } from 'model/brick';
 import SixthformSignIn from './SixthformSignIn';
 import { isPhone } from 'services/phone';
+import { hideZendesk } from "services/zendesk";
 
 const MobileTheme = React.lazy(() => import('./themes/MobileTheme'));
 
@@ -24,12 +25,24 @@ interface Props {
 }
 
 const SixthformAuth: React.FC<Props> = (props) => {
+
+  useEffect(() => {
+    hideZendesk();
+    setTimeout(() => hideZendesk(), 500);
+    setTimeout(() => hideZendesk(), 1000);
+  }, []);
+
   if (props.isAuthenticated === isAuthenticated.None || props.isAuthenticated === isAuthenticated.False) {
     if (isPhone()) {
       return (
         <React.Suspense fallback={<></>}>
           <MobileTheme />
           <div className="LoginSixthformPage">
+            <div className="sixth-mobile-login">
+              <SpriteIcon name="scholar6-white-logo" className="white-logo-r23" />
+              <SpriteIcon name="red-shape-icon-r1" className="red-shape-r23" />
+              <img src="/images/choicesTool/login-background.png" />
+            </div>
             <Switch>
               <Route path={routes.SignUp}>
                 <SixthformSignUp />

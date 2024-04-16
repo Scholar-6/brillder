@@ -198,7 +198,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
         <div className="main-box" onClick={() => this.setState({ sixthformChoice: SixthformChoice.SixthForm })}>
           Select my college.
         </div>
-        <div className="current-school-autocomplete font-24">
+        <div className={`current-school-autocomplete {isPhone() ? 'font-16' : 'font-24'}`}>
           <Autocomplete
             freeSolo
             options={this.state.schools}
@@ -560,13 +560,18 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
       if (isPhone()) {
         return (
           <div className="question question3-first question-step-1gcses">
-            {isPhone() ? <div className="relative"><img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" /></div> : <img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" />}
-            <div className="bold font-32 question-text-3">
+            <div className="relative">
+              <img src="/images/choicesTool/phone/step1gcses.png" className="third-step-img" />
+            </div>
+            <div className="bold font-23 question-text-3">
               Which subjects are you currently studying?
             </div>
             <div className="font-16 text-container-r3">
-              Choose your GCSEs below, including<br /> any you’ve already done.<div className="space-r44" />
-              Then choose any Vocational and Practical<br /> qualifications (e.g. musical performance).
+              Select your GCSEs and any Vocational<br/>
+              or Technical qualifications that you are<br/>
+              currently studying for, or that you have already<br/>
+              completed. If you do not see the exact subject, select<br/>
+              the closest subject to it.
             </div>
             <div className="main-subjects-container">
               <div className="first-box-R21">
@@ -576,13 +581,13 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
                       className={this.state.subjectGroup === SubjectGroupR21.GCSE ? "active" : ""}
                       onClick={() => this.activateSubjectGroup(SubjectGroupR21.GCSE)}
                     >
-                      GCSEs
+                      GCSE’s
                     </div>
                     <div
                       className={this.state.subjectGroup === SubjectGroupR21.PracticalVocational ? "active" : ""}
                       onClick={() => this.activateSubjectGroup(SubjectGroupR21.PracticalVocational)}
                     >
-                      Vocational and Technical Qualifications
+                      VAPS
                     </div>
                   </div>
                   <div className="subjects-box-s6-r21">
@@ -659,7 +664,7 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
             Which subjects are you currently studying?
           </div>
           <div className="font-16">
-            Select your GCSEs and any Vocational or Technical qualifications that you are currently studying for, or that<br/>
+            Select your GCSEs and any Vocational or Technical qualifications that you are currently studying for, or that<br />
             you have already completed.  If you do not see the exact subject, select the closest subject to it.
           </div>
           <div className="main-subjects-container">
@@ -753,19 +758,81 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
         }
       }
 
+      if (isPhone()) {
+        return (
+          <div className="question collenge-selection-question">
+            <div className="relative"><img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img mobile-img-r34" /></div>
+            <div className="before-title-space" />
+            <div className="bold font-24 question-text">
+              Where will you study<br />
+              in the sixth form?
+            </div>
+            <div className="mobile-space-2" />
+            <div className="font-16 text-between-r44 margin-left-4">
+              If you are planning on studying at one<br />
+              of our partner colleges, please select<br />
+              it on this page.</div>
+            <div className="mobile-space-6" />
+            <div className="boxes-container font-16">
+              {this.renderDatabaseSchool()}
+              <div className={this.state.sixthformChoice === SixthformChoice.Forbid ? 'active forbid-btn' : 'forbid-btn'} onClick={() => this.setState({ sixthformChoice: SixthformChoice.Forbid })}>
+                I haven’t yet chosen where to study, or my<br/> choice is not listed.
+              </div>
+              {this.state.sixthformChoice === SixthformChoice.Forbid &&
+                <div className="help-without font-16">
+                  <div>
+                    <SpriteIcon name="help-without" />
+                  </div>
+                  <div>
+                    No problem - you can still identify suitable courses. Just remember, some may not be offered by the sixth form you choose.
+                  </div>
+                </div>
+              }
+              {
+                this.state.sixthformChoice === SixthformChoice.SixthForm
+                && this.state.schoolId > 0
+                && (this.state.schoolName === 'Hereford Sixth Form College' || this.state.schoolName === 'Worcester Sixth Form College') &&
+                <div className="help-without font-16">
+                  <div>
+                    <SpriteIcon name="help-without" />
+                  </div>
+                  <div>
+                    Your subject choices have been narrowed to the courses offered by {this.state.schoolName}
+                  </div>
+                </div>
+              }
+              {this.state.sixthformChoice === SixthformChoice.SixthForm
+                && this.state.schoolName !== 'Hereford Sixth Form College'
+                && this.state.schoolName !== 'Worcester Sixth Form College'
+                && this.state.schoolName !== '' &&
+                <div className="help-without font-16">
+                  <div>
+                    <SpriteIcon name="help-without" />
+                  </div>
+                  <div>
+                    {this.state.schoolName} has not uploaded its courses yet. No problem - you can still identify courses you’re suited to by completing this process, but remember that some may not be offered by your chosen sixth form.
+                  </div>
+                </div>
+              }
+            </div>
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.Start })} />
+            <NextButtonSix disabled={disabled} label="Continue" onClick={() => {
+              this.props.saveAnswer(this.getAnswer());
+              this.setState({ subStep: SubStep.Second });
+            }} />
+          </div>
+        );
+      }
+
       return (
         <div className="question collenge-selection-question">
-          {isPhone() ? <div className="relative"><img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" /></div> : <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />}
-          {isPhone() ? <div className="bold font-24 question-text">
-            Some schools and<br />
-            colleges share the<br />
-            courses they offer<br />
-            with us.
-          </div> :
-            <div className="bold font-32 question-text">
-              Where will you study in the sixth form?
-            </div>}
-          <div className="font-16 text-between-r44">If you are planning on studying at one of our partner colleges, please select it on this page.</div>
+          <img src="/images/choicesTool/SecondStep.png" alt="step1" className="mask-step-img" />
+          <div className="bold font-32 question-text">
+            Where will you study in the sixth form?
+          </div>
+          <div className="font-16 text-between-r44 margin-left-4">
+            If you are planning on studying at one of our partner colleges, please select it on this page.
+          </div>
           <div className="boxes-container font-24">
             {this.renderDatabaseSchool()}
             <div className={this.state.sixthformChoice === SixthformChoice.Forbid ? 'active forbid-btn' : 'forbid-btn'} onClick={() => this.setState({ sixthformChoice: SixthformChoice.Forbid })}>

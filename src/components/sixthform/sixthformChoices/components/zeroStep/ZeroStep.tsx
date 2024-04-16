@@ -4,11 +4,12 @@ import WelcomePage from "./welcomePage/WelcomePage";
 import Step1Name from "./Step1Name";
 import Step1Email from "./Step1Email";
 import { User } from "model/user";
-import user from "redux/reducers/user";
+import Step1SchoolName from "./Step1SchoolName";
 
 
 enum SubStep {
   Welcome = 1,
+  SchoolName,
   Start,
   Name,
   Email
@@ -23,6 +24,7 @@ interface SecondQuestionProps {
 
 interface SecondQuestionState {
   subStep: SubStep;
+  schoolName: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -33,12 +35,12 @@ interface SecondQuestionState {
 function checkFromInstitution(email: string, domains: string[]) {
   const userEmailDomain = email.split("@")[1];
 
-    for (const domain of domains) {
-      if (domain === userEmailDomain) {
-        return true;
-      }
+  for (const domain of domains) {
+    if (domain === userEmailDomain) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
@@ -53,6 +55,8 @@ class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
     let nameCorrected = false;
     let email = '';
     let emailCorrected = false;
+
+    let schoolName = '';
 
     if (props.answer && props.answer.answer) {
       const { answer } = props.answer;
@@ -77,11 +81,15 @@ class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
       if (answer.subStep) {
         subStep = answer.subStep;
       }
+      if (answer.schoolName) {
+        schoolName = answer.schoolName;
+      }
     }
 
 
     this.state = {
       subStep,
+      schoolName,
       email,
       firstName,
       lastName,
@@ -94,6 +102,7 @@ class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
 
   getAnswer() {
     return {
+      schoolName: this.state.schoolName,
       email: this.state.email,
       emailCorrected: this.state.emailCorrected,
       firstName: this.state.firstName,
@@ -149,20 +158,36 @@ class ZeroStep extends Component<SecondQuestionProps, SecondQuestionState> {
           saveNameAnswer(firstName, lastName, nameCorrected);
         }}
         moveBack={(firstName, lastName, nameCorrected) => {
-          this.setState({ subStep: SubStep.Welcome });
+          this.setState({ subStep: SubStep.SchoolName });
           saveNameAnswer(firstName, lastName, nameCorrected);
+        }}
+      />
+    } else if (this.state.subStep === SubStep.SchoolName) {
+      return <Step1SchoolName
+        user={this.props.user}
+        schoolName={this.state.schoolName}
+        moveNext={schoolName => {
+          const answer = this.getAnswer();
+          answer.schoolName = schoolName;
+          this.props.saveAnswer(answer);
+
+          // if user just signed up don`t show name and email screens
+          if (this.props.user.isFromInstitution) {
+            this.setState({ subStep: SubStep.Name, schoolName });
+          } else {
+            this.props.moveNext(answer);
+          }
+        }}
+        moveBack={schoolName => {
+          const answer = this.getAnswer();
+          answer.schoolName = schoolName;
+          this.props.saveAnswer(answer);
+          this.setState({ subStep: SubStep.Welcome, schoolName });
         }}
       />
     }
 
-    return <WelcomePage moveNext={() => {
-      // if user just signed up don`t show name and email screens
-      if (this.props.user.isFromInstitution) {
-        this.setState({ subStep: SubStep.Name })
-      } else {
-        this.props.moveNext(this.getAnswer());
-      }
-    }} />;
+    return <WelcomePage moveNext={() => this.setState({ subStep: SubStep.SchoolName })} />;
   }
 }
 
