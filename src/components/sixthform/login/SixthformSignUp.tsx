@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import './SixthformLoginPage.scss';
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
+import { isPhone } from 'services/phone';
 
 
 const SixthformSignUp: React.FC<any> = () => {
@@ -41,6 +42,10 @@ const SixthformSignUp: React.FC<any> = () => {
             <span>Register with Email</span>
           </div>
           <div className="button-box">
+            {isPhone() ? <div className="text-box gg-text-box font-25" onClick={() => {
+                history.push(routes.SignIn);
+              }}>Already have an account <span className="underline bold">Sign in</span></div>
+            : 
             <div className="text-box gg-text-box font-25">
               <span>Already a member?</span>
               <div className="join-button fe-sign-in bold" onClick={() => {
@@ -49,7 +54,7 @@ const SixthformSignUp: React.FC<any> = () => {
                 <SpriteIcon name="arrow-left" />
                 Sign in
               </div>
-            </div>
+            </div>}
           </div>
         </div>
       </div>
