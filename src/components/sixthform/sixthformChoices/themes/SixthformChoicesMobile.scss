@@ -1842,6 +1842,190 @@
   }
 }
 
+.SixthformChoicesPage .question-step4-a {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+  height: 83% !important;
+
+  .step2background-img {
+    top: -5.5vw !important;
+  }
+  .step-4a-absolute-box {
+    left: 0 !important;
+    top: 50vw;
+  }
+  .check-box-container {
+    padding-right: 10vw !important;
+
+    &.active {
+      color: white;
+      background: #4C608A;
+    
+    }
+  }
+}
+
+.SixthformChoicesPage .question-step4-degrees {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+  height: 83% !important;
+  .third-step-img {
+    top: -5vw !important;
+    height: unset !important;
+    width: 27vw !important;
+  }
+  .question-text-4 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 7vw !important;
+    padding-bottom: 3vw !important;
+  }
+  .categories-container {
+    margin-top: 5vw !important;
+    margin-left: 4vw;
+    display: block !important;
+    width: 92vw;
+    > div > div {
+      border-radius: 2vw !important;
+      width: 92vw !important;
+    }
+  }
+}
+
+.SixthformChoicesPage .question-step4fourth {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+  height: 83% !important;
+  .third-step-img {
+    top: -7vw !important;
+    height: unset !important;
+    width: 37vw !important;
+  }
+  .margin-top-2vw {
+    margin-top: 2vw;
+  }
+  .margin-bottom-4vw {
+    margin-bottom: 4vw;
+  }
+  .question-text-4 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 7vw !important;
+    padding-bottom: 3vw !important;
+  }
+  .categories-container-4c-r23 {
+    margin-left: 4vw;
+    width: 92vw;
+    height: unset !important;
+
+    > div {
+      border-radius: 2vw;
+      padding-left: 4vw;
+      padding-right: 4vw;
+
+      .checkbox-container-r23 {
+        display: block !important;
+
+        .check-box-container {
+          width: 84vw !important;
+        }
+      }
+    }
+  }
+}
+
+.SixthformChoicesPage .question-4e1 {
+  padding-top: 16vw !important;
+  height: 83% !important;
+  overflow-y: auto;
+
+  .third-step-img {
+    top: -1vw;
+    height: unset !important;
+    width: 35vw !important;
+  }
+
+  .margin-top-2vw {
+    margin-top: 2vw;
+  }
+
+  .question-text-3 {
+    padding-top: 7vw;
+    padding-bottom: 3vw;
+  }
+
+  .d3-table-scroll-container-f4 {
+    height: unset !important;
+    .d3-table-leaf {
+      display: block !important;
+
+      > div {
+        margin-left: 4vw !important;
+        width: 92vw !important;
+
+        .course-box-r-23 {
+          border-radius: 2vw !important;
+        }
+
+        .big-r-23 svg {
+          margin-left: 3vw;
+          margin-right: 3vw;
+          width: 5vw;
+          height: 5vw;
+        }
+        .course-name-r23 {
+          width: 74vw;
+        }
+        .coursor-pointer {
+          svg {
+            width: 4vw;
+            height: 4vw;
+          }
+        }
+      }
+    }
+  }
+}
+
+.SixthformChoicesPage .question-vocational-degrees {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+  height: 83% !important;
+  overflow-y: auto;
+
+  .third-step-img {
+    top: -8vw;
+    height: unset !important;
+    width: 35vw !important;
+  }
+
+  .margin-top-2vw {
+    margin-top: 2vw;
+  }
+
+  .question-text-3 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 7vw;
+    padding-bottom: 3vw;
+  }
+  
+  .categories-container {
+    margin-top: 5vw !important;
+    display: block !important;
+
+    > div {
+      margin-left: 4vw !important;
+      width: 92vw !important;
+
+      .hovered-category {
+        border-radius: 2vw !important;
+        width: 92vw !important;
+      }
+    }
+  }
+}
+
 // final
 .SixthformChoicesPage .question-6-final {
   .background-confetti-sixthform .confeti-sixthform {
