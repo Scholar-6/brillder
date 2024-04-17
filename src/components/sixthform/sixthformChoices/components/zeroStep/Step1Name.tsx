@@ -66,8 +66,8 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
   if (isPhone()) {
     return (
       <div className="question question-6 question-3-watching question-1-name">
-        <img src="/images/choicesTool/Step1R25.png" className="step3watching-img-v2" />
-        <div className="space-r1-34"></div>
+        <img src="/images/choicesTool/Step1R25.png" className="step-zero-img" />
+        <div className="space-r1-34"/>
         <div className="font-32 title-r1-34 bold">Your Names</div>
         <div className="font-16 text-r1-34">We have you down as <span className="text-orange capitalize">{props.user.firstName} {props.user.lastName}</span> (using info from sign up)</div>
         {renderFullNameBox()}
@@ -92,6 +92,7 @@ const Step1Name: React.FC<ThirdProps> = (props) => {
   return (
     <div className="question question-6 question-3-watching question-1-name">
       <img src="/images/choicesTool/Step1R25.png" className="step3watching-img-v2" />
+      <div className='space-r133-34' />
       <div className="font-32 bold">Your Names</div>
       <div className="font-16">We have you down as <span className="text-orange capitalize">{props.user.firstName} {props.user.lastName}</span> (using info from sign up)</div>
       {renderFullNameBox()}

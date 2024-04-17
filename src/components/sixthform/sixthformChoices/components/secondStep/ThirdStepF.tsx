@@ -4,6 +4,7 @@ import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { Dialog } from "@material-ui/core";
 import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 export enum ThirdStepDSubStep {
   Start = 1,
@@ -230,10 +231,11 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
                     }
                     onChange();
                   }}>
-                    <div className="flex-center">
-                      <SpriteIcon name={subject.checked ? 'radio-btn-active' : 'radio-btn-blue'} />
-                    </div>
-                    <div className="flex-y-center text-container-r23 font-15">
+                    {!isPhone() &&
+                      <div className="flex-center">
+                        <SpriteIcon name={subject.checked ? 'radio-btn-active' : 'radio-btn-blue'} />
+                      </div>}
+                    <div className={`flex-y-center text-container-r23 font-15 ${subject.checked ? 'active' : ''}`}>
                       {subject.name}
                     </div>
                   </div>)}
@@ -246,6 +248,48 @@ class ThirdStepF extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
+    if (isPhone()) {
+      return (
+        <div className="font-16 question-step-3f">
+          <div className="relative">
+            <img src="/images/choicesTool/ThirdStepR10.png" className="third-step-img" />
+          </div>
+          <div className="bold font-23 question-text-3 margin-left-4">
+            Vocational and Technical<br /> Subjects
+          </div>
+          <div className="font-16 margin-left-4">
+            Click on any of the categories below to reveal more<br />
+            than fifty course options. Select any that you would<br /> be interested in studying.
+          </div>
+          <div className="d3-table-scroll-container">
+            <div className="d3-table-leaf">
+              {this.renderList("first-b-r-23", this.state.tLevelCoursesPart1, () => {
+                this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] })
+              })}
+              {this.renderList("second-b-r-23", this.state.tLevelCoursesPart2, () => {
+                this.setState({ tLevelCoursesPart2: [...this.state.tLevelCoursesPart2] })
+              })}
+            </div>
+          </div>
+          <BackButtonSix onClick={() => {
+            this.props.moveBack({
+              tLevelCoursesPart1: this.state.tLevelCoursesPart1,
+              tLevelCoursesPart2: this.state.tLevelCoursesPart2
+            })
+          }} />
+          {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+            You can’t select more than five courses.<br /> Deselect another course before selecting a new one.
+            <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+          </Dialog>}
+          <NextButtonSix label="Continue" onClick={() => {
+            this.props.moveNext({
+              tLevelCoursesPart1: this.state.tLevelCoursesPart1,
+              tLevelCoursesPart2: this.state.tLevelCoursesPart2
+            });
+          }} />
+        </div>
+      );
+    }
     return (
       <div className="font-16 question-step-3f">
         <img src="/images/choicesTool/ThirdStepR10.png" className="third-step-img"></img>

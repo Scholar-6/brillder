@@ -692,6 +692,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
   componentDidMount() {
     if (isPhone()) {
       hideZendesk();
+      setTimeout(() => hideZendesk(), 500);
+      setTimeout(() => hideZendesk(), 1000);
     }
   }
 

@@ -18,13 +18,14 @@ class ThirdStepBTable extends Component<ThirdProps> {
       return (
         <div className="question-step1gcses24">
           <div className="question-top-step1">
-            <div className="height-1" />
-            <div className="bold font-23 question-text-3">
-              What are your strengths?
-            </div>
-            <div className="height-2" />
-            <div className="font-16">
-            How are you doing in the subjects you’re<br/> taking? You can base your answer on your<br/> predicted grades, or on qualifications you’ve<br/> already completed.
+            <div>
+              <div className="bold font-23 question-text-3">
+                What are your strengths?
+              </div>
+              <div className="height-2" />
+              <div className="font-16">
+                How are you doing in the subjects you’re<br /> taking? You can base your answer on your<br /> predicted grades, or on qualifications you’ve<br /> already completed.
+              </div>
             </div>
           </div>
           <div className="phone-subjects">
@@ -132,7 +133,7 @@ class ThirdStepBTable extends Component<ThirdProps> {
           What are your strengths?
         </div>
         <div className="font-16">
-          How are you doing in the subjects you’re taking? You can base your answer on your predicted grades, or on<br/>
+          How are you doing in the subjects you’re taking? You can base your answer on your predicted grades, or on<br />
           qualifications you’ve already completed.
         </div>
         <div className="subjects-table">

@@ -22,7 +22,7 @@ const WelcomePage: React.FC<TasterProps> = (props) => {
           <img className="absolute-gradient-w-img" src="/images/choicesTool/phone/gradient-white.png" />
           <div className="absolute-welcome-content">
             <div className="relative">
-              <div className="bold big-text-q1 font-50">Start to shape<br/> your future.</div>
+              <div className="bold big-text-q1 font-40">Start to shape<br/> your future.</div>
               <div className="flex-center margin-top-3vh">
                 <ChoiceStepsSvgM />
               </div>
