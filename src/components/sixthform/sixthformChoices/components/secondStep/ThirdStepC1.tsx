@@ -124,23 +124,57 @@ class ThirdStepC1 extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     const currentAnswer = this.state.answers[this.state.step];
+
+    if (isPhone()) {
+      return (
+        <div className="question-step-3c1">
+          <div className="before-title-space" />
+          <div className="bold font-23 question-text-3 margin-bottom-2 margin-left-4">
+            New Subjects at<br /> A-level
+          </div>
+          <div className="mobile-space-2" />
+          <div className="font-16 color-light-blue margin-left-4">
+            Some subjects are rarely studied<br />
+            before the sixth form. See if you<br />
+            understand what they involve - could<br />
+            any be a fit for you?
+          </div>
+          <ProgressBarR1
+            step={this.state.step}
+            topLabel="Which subject matches this description?"
+            total={this.state.answers.length}
+            description={currentAnswer.name}
+          />
+          <Grid container direction="row" className="containers-3c1">
+            {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
+          </Grid>
+          <BackButtonSix onClick={() => {
+            if (this.state.step <= 0) {
+              this.props.moveBack();
+            } else {
+              this.setState({ step: this.state.step - 1 });
+            }
+          }} />
+          <NextButtonSix label="Next" onClick={() => {
+            if (this.state.step >= 4) {
+              this.props.moveNext();
+            } else {
+              this.setState({ step: this.state.step + 1 });
+            }
+          }} />
+        </div>
+      );
+    }
+
     return (
       <div className="question-step-3c1">
         <div className="bold font-32 question-text-3 margin-bottom-2 margin-left-4">
-          New Subjects {!isPhone() && 'at A-level'}
+          New Subjects at A-level
         </div>
-        {isPhone() ?
-          <div className="font-16 color-light-blue margin-left-4">
-            Some subjects are rarely studied<br/>
-            before the sixth form. See if you<br/>
-            understand what they involve - could<br/>
-            any be a fit for you?
-          </div>
-          : <div className="font-16 color-light-blue">
-            Some subjects are rarely studied before the sixth form. See if you understand what they<br/>
-            involve - could any be a fit for you?
-          </div>
-        }
+        <div className="font-16 color-light-blue">
+          Some subjects are rarely studied before the sixth form. See if you understand what they<br />
+          involve - could any be a fit for you?
+        </div>
         <ProgressBarR1
           step={this.state.step}
           topLabel="Which subject matches this description?"

@@ -70,51 +70,51 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
 
     let answers = [{
       name: `
-        “I did History GCSE and considered A-level but I’ve always been drawn to the distant<br/> 
+        I did History GCSE and considered A-level but I’ve always been drawn to the distant<br/> 
         pre-Christian era. I loved studying Roman Britain and visited several sites. It made me<br/>
-        interested in archaeology as a degree course.”
+        interested in archaeology as a degree course.
       `
     }, {
       name: `
-        “Although I’d love to be an advocate, I know the A-level doesn’t give you an edge applying<br/>
+        Although I’d love to be an advocate, I know the A-level doesn’t give you an edge applying<br/>
         for uni or professional training. But legal history and the concepts are so interesting - and<br/>
-        the course is more rigorous than the Criminology diploma.”
-      `
+        the course is more rigorous than the Criminology diploma.
+              `
     }, {
       name: `
-        “I considered Media Studies but I liked the focus on purely one form and the practical<br/>
+        I considered Media Studies but I liked the focus on purely one form and the practical<br/>
         opportunities to shoot and edit my own material. I am a huge fan of directors like<br/>
-        Martin Scorsese and Jane Campion.”
+        Martin Scorsese and Jane Campion.
       `
     }, {
       name: `
-        “With digital streaming we’re now constantly immersed in news, video gaming, social media<br/>
+        With digital streaming we’re now constantly immersed in news, video gaming, social media<br/>
         and apps for everything: this is the most relevant subject to my life and I am really<br/>
-        interested in content creation and marketing as careers.”
+        interested in content creation and marketing as careers.
       `
     }, {
       name: `
-        “I knew very little Latin and no Greek but all the texts are in translation.<br/>
+        I knew very little Latin and no Greek but all the texts are in translation.<br/>
         I particularly enjoyed the epic literature and the material on the nature of<br/>
-        Athenian democracy and the politics of Rome.”
+        Athenian democracy and the politics of Rome.
       `
     }, {
       name: `
-        “I was intrigued by the course - the nature of knowledge, the nature of morality and debates<br/>
+        I was intrigued by the course - the nature of knowledge, the nature of morality and debates<br/>
         around the existence of God. I did RS at GCSE so some of the ideas were familiar, but<br/>
-        I think philosophy offers a broader, more objective approach to the big questions of life.”
-      `
+        I think philosophy offers a broader, more objective approach to the big questions of life.
+              `
     }, {
       name: `
-        “I enjoy analysing poems in English A-level and looking at a painting closely<br/>
+        I enjoy analysing poems in English A-level and looking at a painting closely<br/>
         requires a similar approach. I also did GCSE Art, so I feel it complements<br/>
-        both and plays to my creative and essay-writing strengths.”
+        both and plays to my creative and essay-writing strengths.
       `
     }, {
       name: `
-        “Having done Geography and Combined Science at GCSE, I love the depth and breadth <br/>
+        Having done Geography and Combined Science at GCSE, I love the depth and breadth <br/>
         of this course, from physical, chemical and biological processes to political,<br/>
-        economic and cultural context. Save the planet!”
+        economic and cultural context. Save the planet!
       `
     }];
 
@@ -165,9 +165,11 @@ class ThirdStepC2 extends Component<ThirdProps, ThirdQuestionState> {
     if (isPhone()) {
       return (
         <div className="question-step-3c2">
-          <div className="bold font-32 question-text-3 margin-left-4">
+          <div className="before-title-space" />
+          <div className="bold font-23 question-text-3 margin-left-4">
             New Subjects
           </div>
+          <div className="mobile-space-2" />
           <div className="font-16 margin-left-4">
             Here are some students’ thoughts about<br />
             why they chose particular subjects.

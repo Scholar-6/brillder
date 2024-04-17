@@ -13,12 +13,12 @@ interface WelcomeProps {
 
 const ThirdStepWelcome: React.FC<WelcomeProps> = (props) => {
   return (
-    <div className="question">
-      <img src="/images/choicesTool/Step2background.png" className="step2background-img" />
+    <div className="question question-interests-welcome">
+      <img src={isPhone() ? "/images/choicesTool/phone/INTERESTS.png" : "/images/choicesTool/Step2background.png"} className="step2background-img" />
       <div className="text-container-5432">
         <div>
           <div className="font-20">Step 3</div>
-          <div className="font-40 bold s-text-323">INTERESTS & EXTRACURRICULAR ACTIVITIES</div>
+          <div className={isPhone() ? "font-32 bold" : "font-40 bold s-text-323"}>INTERESTS & EXTRACURRICULAR ACTIVITIES</div>
         </div>
       </div>
       <BackButtonSix onClick={props.moveBack} />

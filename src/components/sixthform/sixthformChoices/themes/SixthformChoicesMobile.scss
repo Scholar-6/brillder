@@ -439,6 +439,14 @@
     height: 6%;
   }
 
+  .just-school-name {
+    margin-top: 0 !important;
+  }
+
+  .step1-name-box {
+    padding-left: 4vw !important;
+  }
+
   .collenge-selection-question .mobile-img-r34 {
     top: -4vw;
     right: 0;
@@ -454,12 +462,19 @@
     margin-bottom: 0 !important;
   }
 
-  .question-1-name {
-    .step3watching-img-v2 {
-      width: 30vw;
-      height: unset;
-    }
+  .question-subject-type .step1-img-course {
+    top: 16vw !important;
+    height: calc(10% + 10vw) !important;
+  }
 
+  .step-zero-img {
+    position: absolute;
+    top: 16vw !important;
+    right: 0;
+    height: calc(10% + 17vw);
+  }
+
+  .question-1-name {
     .space-r1-34 {
       height: 8vw;
     }
@@ -500,19 +515,24 @@
       border-radius: 1.4vw;
       width: 10vw !important;
     }
+  }
 
-    .absolute-name-s1 {
-      margin-left: 4vw;
-      padding-right: 2vw;
+  .absolute-name-s1 {
+    margin-left: 4vw;
+    padding-right: 2vw;
 
-      svg {
-        margin-left: 2vw;
-        margin-right: 2vw;
-      }
+    bottom: calc(7% + 16vw) !important;
+
+    svg {
+      margin-left: 2vw;
+      margin-right: 2vw;
     }
   }
 
   .question-step-1gcses {
+    height: 83% !important;
+    margin-top: 0 !important;
+    padding-top: 16vw !important;
     .third-step-img {
       top: -10.6vw;
       height: 35vw !important;
@@ -557,7 +577,7 @@
           width: 50vw;
           text-align: center;
 
-          > div {
+          >div {
             margin: 0.8vw;
             width: 22vw;
             padding-top: 1.3vw;
@@ -565,8 +585,7 @@
             border-radius: 2vw;
           }
 
-          div:nth-child(2) {
-          }
+          div:nth-child(2) {}
         }
 
         .subjects-box-s6-r21 {
@@ -652,7 +671,6 @@
   }
 
   .question-step1gcses2 {
-
     >div {
       margin-left: 4vw;
     }
@@ -671,7 +689,13 @@
 
     .question-top-step1 {
       overflow-y: scroll;
-      height: 19% !important;
+      height: 22% !important;
+      display: flex;
+      align-items: center;
+
+      .question-text-3 {
+        line-height: 1.3;
+      }
     }
 
     .question-text-3 {
@@ -680,7 +704,7 @@
     }
 
     .third-step-img {
-      top: -4vw;
+      top: 12vw;
     }
   }
 
@@ -727,6 +751,7 @@
 
         input {
           font-size: 4.2vw !important;
+
           &:focus {
             border-radius: 2vw;
             border: 1px solid var(--theme-green) !important;
@@ -812,7 +837,7 @@
 
   .phone-subjects {
     width: 92vw;
-    height: 70%;
+    height: 78%;
     overflow-y: scroll;
   }
 
@@ -867,6 +892,7 @@
   }
 
   .question-text-t4 {
+    margin-top: 8vw !important;
     margin-left: 4vw;
 
     >div {
@@ -898,11 +924,27 @@
     height: calc(83% - 16vw) !important;
 
     .third-step-img {
-      top: -10vw;
+      top: -10vw !important;
     }
 
     .question-step-3c1 {
       height: 100%;
+
+      .question-text-3 {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        line-height: 1 !important;
+      }
+    }
+
+    .question-step-3c2 {
+      height: 100%;
+
+      .question-text-3 {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        line-height: 1 !important;
+      }
     }
 
     .top-part {
@@ -1023,7 +1065,7 @@
     }
 
     .bottom-next-btn-container {
-      height: calc(7.7% + 9%) !important;
+      height: calc(7.7% + 8.5%) !important;
 
       .absolute-contunue-btn {
         height: 30% !important;
@@ -1056,8 +1098,14 @@
       height: auto !important;
     }
 
+    .mobile-interests-c-343 {
+      height: 100%;
+    }
+
     .question-text-3 {
-      line-height: 1.2 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      line-height: 1.1 !important;
     }
   }
 }
@@ -1115,8 +1163,12 @@
 
 // new subjects
 .SixthformChoicesPage .question-new-subjects {
+  padding-top: 16vw !important;
+  margin-top: 0 !important;
+  height: calc(83%) !important;
+
   .third-step-img {
-    top: 1vw !important;
+    top: -15vw !important;
     height: 37vw;
   }
 }
@@ -1139,7 +1191,7 @@
   }
 
   .bottom-next-btn-container {
-    height: calc(7.7% + 9%) !important;
+    height: calc(7.7% + 8.5%) !important;
 
     .absolute-contunue-btn {
       height: 30% !important;
@@ -1186,12 +1238,13 @@
 // step 2 subjects
 .SixthformChoicesPage .mobile-interests-c-343 {
   .your-interests-img {
-    top: -4vh !important;
+    top: 0 !important;
   }
+
   .mobile-subject-c-343 {
     padding-top: 2vw;
     padding-bottom: 2vw;
-    margin-top: 2vw;
+    margin-top: 5vw;
     margin-bottom: 2vw;
     margin-left: 4vw;
     width: 92vw;
@@ -1235,10 +1288,11 @@
 
 .SixthformChoicesPage .question-c3 {
   position: initial !important;
-  > div {
+
+  >div {
     position: initial !important;
-    height: 100%;
   }
+
   .progress-container-r1-323 {
     margin-left: 4vw;
 
@@ -1249,8 +1303,14 @@
     }
   }
 
+  .tick-container-c3-r23 {
+    .text-block-c3-r23 {
+      height: calc(32vw + 1vh + 4vh) !important;
+    }
+  }
+
   .icons-block-c3-r23 {
-    > div {
+    >div {
       width: 30vw !important;
       border-radius: 2vw !important;
 
@@ -1266,6 +1326,200 @@
       &:nth-child(3) {
         margin-left: 2.5vw !important;
       }
+    }
+  }
+}
+
+// step 2 vocational
+.SixthformChoicesPage .question-step-3e-r33 {
+  padding-top: 16vw !important;
+  margin-top: 0 !important;
+  height: calc(83%) !important;
+  .question-step-3e {
+    height: 100%;
+
+    .question-text-3 {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      line-height: 1;
+    }
+
+    .third-step-img {
+      top: -4.4vw;
+      height: calc(5vh + 10vw + 4.4vw);
+    }
+
+    .progress-description-container-r3234 {
+      margin-left: 4vw;
+      width: 92vw;
+      border-radius: 2vw;
+
+      .progress-bar-sixthform .line-r23 {
+        height: 1vw !important;
+      }
+
+      .progress-custom-r32 {
+        width: 92vw;
+        height: 29vw;
+      }
+
+      .animating-left, .animating-right {
+        margin-top: 5vw;
+        padding-left: 4vw;
+        padding-right: 4vw;
+        width: 92vw !important;
+      }
+    }
+
+    .containers-3c1 {
+      margin-left: 2.5vw;
+      width: 94vw;
+    }
+
+    .containers-3c1 {
+      border-radius: 2vw;
+
+      svg {
+        width: 5vw !important;
+        height: 5vw !important;
+      }
+
+      font-size: 4vw !important;
+    }
+
+    .container-3c1 {
+      width: 45vw;
+      height: 7vh;
+      margin-left: 1.5vw;
+      margin-right: 1.5vw;
+      border-radius: 2vw !important;
+
+      svg {
+        width: 5vw !important;
+        height: 5vw !important;
+      }
+
+      font-size: 4vw !important;
+
+      .absolute-svg-3c1 {
+        position: absolute;
+        top: 1vw;
+        right: 1vw;
+      }
+    }
+  }
+}
+
+.SixthformChoicesPage .question-3d {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+  height: 83% !important;
+  .third-step-img {
+    top: calc(-4vw - 4vh) !important;
+  }
+  .question-text-3 {
+    line-height: 1 !important;
+  }
+
+  .d3-table-scroll-container {
+    height: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .d3-table-leaf {
+    display: block !important;
+
+    > div {
+      margin-left: 4vw;
+      width: 92vw !important;
+
+      .course-box-r-23 {
+        border-radius: 2vw !important;
+      }
+
+      .big-r-23 svg {
+        margin-left: 3vw !important;
+        margin-right: 3vw !important;
+        width: 5vw !important;
+        height: 5vw !important;
+      }
+
+      .course-name-r23 {
+        width: 72vw !important;
+      }
+
+      .coursor-pointer svg {
+        width: 4vw !important;
+        height: 4vw !important;
+      }
+
+      .text-container-r23 {
+        margin-left: 3vw !important;
+        width: 85vw !important;
+        padding-left: 2vw;
+        padding-right: 2vw;
+        padding-top: 3.5vw;
+        padding-bottom: 3.5vw;
+        border-radius: 2vw !important;
+        background: #4C608A1A;
+
+        &.active {
+          color: white;
+          background: #4C608A;
+        }
+      }
+    }
+  }
+
+  .question-t-level1 {
+    .third-step-img {
+      width: 35vw !important;
+      top: calc(-8.7vw - 17vw) !important;
+    }
+    .question-text-3 {
+      margin-top: 17vw !important;
+      margin-bottom: 3vw !important;
+    }
+    .text-container-t-r34 {
+      padding-right: 5vw;
+    }
+    .text-before-btns-r56 {
+      margin-top: 3vh;
+    }
+    .button-r34 {
+      padding-left: 3vw !important;
+      max-width: unset !important;
+      width: 92vw !important;
+      border-radius: 2vw !important;
+
+      &:hover, &:focus {
+        color: white !important;
+        background: #4C608A !important;
+      }
+    }
+  }
+  .question-step-3d-tableleaf {
+    .third-step-img {
+      width: 40vw !important;
+      height: unset !important;
+      top: calc(-16vw - 7vw) !important;
+    }
+    .question-text-3 {
+      margin-top: 7vw !important;
+      margin-bottom: 3vw !important;
+    }
+  }
+}
+
+// step 3 cover
+.SixthformChoicesPage .question-interests-welcome {
+  .text-container-5432 {
+    left: 0 !important;
+    margin-top: 82vw;
+    text-align: center;
+
+    .font-20 {
+      margin-bottom: 2vh;
     }
   }
 }
@@ -1323,6 +1577,26 @@
   }
 }
 
+.SixthformChoicesPage .btns-container-r32 {
+  margin-top: 0;
+  margin-left: 5vw;
+  width: 90vw;
+
+  .btn {
+    z-index: 10;
+    border-radius: 2vw;
+    width: 30vw;
+
+    &.btn-red {
+      margin-right: 2vw;
+    }
+
+    &.btn-green {
+      margin-left: 2vw;
+    }
+  }
+}
+
 // step 6 dreams
 .SixthformChoicesPage .question-dreams-r33 {
   img {
@@ -1356,25 +1630,215 @@
   .phone-middle-space-r66 {
     height: 5%;
   }
+}
 
-  .btns-container-r32 {
-    margin-top: 0;
-    margin-left: 5vw;
-    width: 90vw;
+.SixthformChoicesPage .question-reading {
+  height: 83% !important;
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
 
-    .btn {
-      z-index: 10;
-      border-radius: 2vw;
-      width: 30vw;
+  .question-text {
+    margin-top: 0 !important;
+    padding-top: 7vw;
+    padding-bottom: 3vw;
+  }
+  .third-step-img {
+    top: -18vw !important;
+    width: 43vw !important;
+  }
+  .boxes-container {
+    margin-top: 7vw !important;
+  }
+  .reading-long-btn {
+    padding-left: 3vw;
+    padding-right: 3vw;
+    border-radius: 3vw;
+    max-width: 92vw !important;
+  }
+}
 
-      &.btn-red {
-        margin-right: 2vw;
-      }
+.SixthformChoicesPage .question-reading-v2 {
+  .third-step-img {
+    top: -29vw !important;
+    width: 48vw !important;
+  }
 
-      &.btn-green {
-        margin-left: 2vw;
+  .check-box-container.active {
+    color: white;
+    background: #4C608A;
+  }
+
+  .hover-area {
+    position: absolute;
+    bottom: 0;
+    right: 4vw;
+    height: 21%;
+
+    svg {
+      width: 6vw !important;
+      height: 6vw !important;
+    }
+    .hover-content {
+      display: block;
+    }
+  }
+}
+
+.SixthformChoicesPage .question-6-writing {
+  .third-step-img {
+    top: -23.5vw !important;
+    height: unset !important;
+  }
+  .button-r34 {
+    padding-left: 4vw !important;
+    padding-right: 8vw !important;
+    border-radius: 2vw;
+    max-width: 92vw !important;
+
+    &:hover, &:focus {
+      color: white !important;
+      background: #4C608A !important;
+    }
+  }
+}
+
+.SixthformChoicesPage .question-6-writing-B {
+  .writing-image-b {
+    position: absolute;
+    right: 0;
+    top: -15.5vw !important;
+    height: unset !important;
+    width: 35vw !important;
+  }
+  .progress-description-container-r3234 {
+    margin-left: 4vw !important;
+    width: 92vw !important;
+    border-radius: 2vw !important;
+    margin-bottom: 3vh;
+    margin-top: 10vw !important;
+
+    .line-r23 {
+      height: 1vw !important;
+    }
+    svg {
+      width: 6vw !important;
+      height: 6vw !important;
+    }
+
+    .progress-content-box-r233 {
+      margin-bottom: 2vw;
+      width: 92vw !important;
+      .animating-left, .animating-right {
+        width: 92vw !important;
       }
     }
+  }
+}
+
+.SixthformChoicesPage .question {
+  .progress-description-container-r3234 {
+    margin-left: 4vw;
+    width: 92vw;
+    border-radius: 2vw !important;
+    margin-bottom: 3vw;
+
+    .progress-content-box-r233 {
+      width: 92vw;
+    }
+
+    .line-r23 {
+      height: 1vw !important;
+    }
+
+    .animating-left, .animating-right {
+      padding-left: 4vw;
+      padding-right: 4vw;
+      width: 92vw;
+    }
+  }
+}
+
+.SixthformChoicesPage .question-just-watching {
+  .question-title-44 {
+    margin-top: 0 !important;
+    padding-top: 7vw !important;
+  }
+  .question-text {
+    line-height: 1.2 !important;
+    margin-top: 0 !important;
+    padding-top: 3vw !important;
+  }
+  .step3watching-img-v2 {
+    top: -12vw !important;
+    width: 34vw !important;
+  }
+  .progress-description-container-r3234 {
+    margin-top: 5vw !important;
+    margin-bottom: 3vh;
+    .line-r23 {
+      height: 1vw;
+    }
+
+    &.progress-entusiasm-bar svg {
+      width: 6vw !important;
+      height: 6vw !important;
+    }
+  }
+}
+
+.SixthformChoicesPage .question-listening-r545 {
+  .step3watching-img-v2 {
+    top: -12vw !important;
+    width: 34vw !important;
+  }
+  .progress-description-container-r3234 {
+    margin-top: 5vw !important;
+    margin-bottom: 3vh;
+
+    &.progress-entusiasm-bar svg {
+      width: 6vw !important;
+      height: 6vw !important;
+    }
+  }
+}
+
+.SixthformChoicesPage .question-5-speaking {
+  .step3watching-img-v2 {
+    top: -7.5vw !important;
+    width: 35vw !important;
+  }
+  .progress-description-container-r3234 {
+    margin-top: 11vw;
+  }
+}
+
+.SixthformChoicesPage .question-enthusiasm {
+  .step3watching-img-v2 {
+    top: -3vw !important;
+    width: 34vw !important;
+  }
+  .progress-bar-long-r233 {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    height: 1vw;
+  }
+  .paging-3c1 {
+    margin-left: 2vw;
+  }
+  .progress-entusiasm-bar svg {
+    width: 6vw !important;
+    height: 6vw !important;
+  }
+  .btns-container-r32 {
+    font-size: 4vw !important;
+  }
+}
+
+.SixthformChoicesPage .question-education-welcome {
+  .text-container-5432 {
+    left: 0 !important;
+    text-align: center;
+    top: 78vw !important;
   }
 }
 
@@ -1421,6 +1885,29 @@
         &:hover {
           opacity: 1;
         }
+      }
+    }
+  }
+}
+
+.too-many-dialog {
+  font-size: 4.5vw;
+
+  .MuiPaper-root {
+    padding: 1vw;
+    border-radius: 2vw;
+    color: var(--theme-dark-blue);
+
+    .btn {
+      cursor: pointer;
+      color: white;
+      text-align: center;
+      margin-top: 2vh;
+      border-radius: 1.5vw !important;
+      background: var(--theme-green);
+
+      &:hover {
+        opacity: 1 !important;
       }
     }
   }

@@ -6,6 +6,7 @@ import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import ButtonR34 from "../ButtonR34";
 import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 export enum ThirdStepDChoice {
   First = 1,
@@ -197,10 +198,11 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
                     }
                     onChange();
                   }}>
-                    <div className="flex-center">
-                      <SpriteIcon name={subject.checked ? 'radio-btn-active' : 'radio-btn-blue'} />
-                    </div>
-                    <div className="flex-y-center text-container-r23 font-15">
+                    {!isPhone() &&
+                      <div className="flex-center">
+                        <SpriteIcon name={subject.checked ? 'radio-btn-active' : 'radio-btn-blue'} />
+                      </div>}
+                    <div className={`flex-y-center text-container-r23 font-15 ${subject.checked ? 'active' : ''}`}>
                       {subject.name}
                     </div>
                   </div>)}
@@ -235,6 +237,45 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
   render() {
     if (this.state.subStep === ThirdStepDSubStep.TableLeaf) {
       let oneOrMore = this.state.tLevelCoursesPart1.some(course => course.subjects.some(s => s.checked)) || this.state.tLevelCoursesPart2.some(course => course.subjects.some(s => s.checked));
+
+      if (isPhone()) {
+        return (
+          <div className="font-16 question-step-3d-tableleaf">
+            <div className="relative">
+              <img src="/images/choicesTool/phone/TLevel.png" className="third-step-img"></img>
+            </div>
+            <div className="bold font-23 question-text-3 margin-left-4">
+              T-level Courses
+            </div>
+            <div className="margin-left-4">
+              Below are the currently offered<br />
+              T-level categories. Expand them<br />
+              to view individual courses.<br />
+              Select any that you would be interested in studying.
+            </div>
+            <div className="d3-table-scroll-container">
+              <div className="d3-table-leaf">
+                {this.renderList("first-b-r-23", this.state.tLevelCoursesPart1, () => {
+                  this.setState({ tLevelCoursesPart1: [...this.state.tLevelCoursesPart1] })
+                })}
+                {this.renderList("second-b-r-23", this.state.tLevelCoursesPart2, () => {
+                  this.setState({ tLevelCoursesPart2: [...this.state.tLevelCoursesPart2] })
+                })}
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: ThirdStepDSubStep.Start })} />
+            <NextButtonSix label={oneOrMore ? 'Continue' : 'Skip'} onClick={() => {
+              this.saveAnswer();
+              this.props.moveNext();
+            }} />
+          </div>
+        );
+      }
+
       return (
         <div className="font-16 question-step-3d-tableleaf">
           <img src="/images/choicesTool/ThirdStepR7.png" className="third-step-img"></img>
@@ -242,7 +283,7 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
             T-level Courses
           </div>
           <div>
-            Below are the currently offered T-level categories. Expand them to view individual courses. Select any<br/>
+            Below are the currently offered T-level categories. Expand them to view individual courses. Select any<br />
             that you would be interested in studying.
           </div>
           <div className="d3-table-scroll-container">
@@ -268,6 +309,37 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
       );
     }
 
+    if (isPhone()) {
+      return (
+        <div className="question-t-level1">
+          <div className="relative">
+            <img src="/images/choicesTool/phone/TLevel1.png" className="third-step-img third-step-img-r5"></img>
+          </div>
+          <div className="bold font-23 question-text-3 margin-left-4">
+            Technical Levels (T-levels)
+          </div>
+          <div className="absolute-container-3d margin-left-4">
+            <div className="font-16 text-container-t-r34">
+              T-levels are new, two-year vocational courses worth three A-levels: you only take one, and they can’t be combined with other subjects. T-levels focus on the skills required for a particular sector or job. As part of the course, students undertake a work placement.
+            </div>
+            <div className="font-20 bold text-before-btns-r56">Would you be interested in knowing more about T-levels?</div>
+            <div className="font-16">
+              <ButtonR34
+                currentChoice={ThirdStepDChoice.First} choice={this.state.choice}
+                label="I’d be interested in taking a T-level." setChoice={choice => this.setChoice(choice)}
+              />
+              <ButtonR34
+                currentChoice={ThirdStepDChoice.Second} choice={this.state.choice}
+                label="I don’t think T-levels are right for me." setChoice={choice => this.setChoice(choice)}
+              />
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
+          {this.renderNextDButton()}
+        </div>
+      );
+    }
+
     return (
       <div>
         <div className="bold font-32 question-text-3">
@@ -276,9 +348,9 @@ class ThirdStepD extends Component<ThirdProps, ThirdQuestionState> {
         <img src="/images/choicesTool/ThirdStepR5.png" className="third-step-img third-step-img-r5"></img>
         <div className="absolute-container-3d">
           <div className="font-16 line-d3">
-            T-levels are new, two-year vocational courses worth three A-levels: you only take one, and<br/>
-            they can’t be combined with other subjects. T-levels focus on the skills required for a<br/>
-            particular sector or job. As part of the course, students undertake a work placement. 
+            T-levels are new, two-year vocational courses worth three A-levels: you only take one, and<br />
+            they can’t be combined with other subjects. T-levels focus on the skills required for a<br />
+            particular sector or job. As part of the course, students undertake a work placement.
           </div>
           <div className="font-20 bold text-before-btns-r56">Would you be interested in knowing more about T-levels?</div>
           <div className="font-24">

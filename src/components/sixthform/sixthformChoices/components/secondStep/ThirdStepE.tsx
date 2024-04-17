@@ -5,6 +5,7 @@ import BackButtonSix from "../BackButtonSix";
 import { Grid } from "@material-ui/core";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 interface ThirdProps {
   pairAnswers: any[];
@@ -31,28 +32,34 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
 
     let subjects = [{
       correctIndex: 0,
+      icon: "CriminologE",
       name: "Criminology"
     }, {
       correctIndex: 1,
+      icon: "ForensicScienceE",
       name: "Forensic Science"
     }, {
       correctIndex: 2,
+      icon: "ProductionArtsE",
       name: "Production Arts"
     }, {
       correctIndex: 3,
+      icon: "eSportE",
       name: "eSports"
     }, {
       correctIndex: 4,
+      icon: "UniformedServicesE",
       name: "Uniformed Services"
     },
     // just filler data 
     {
       correctIndex: 10,
+      icon: "EnvironmentalScience-3c2",
       name: 'Forestry'
     }];
-    
+
     subjects = shuffle(subjects);
-    
+
     let answers = [{
       name: "A multi-disciplinary field which draws on psychology, sociology and statistics<br/> to evaluate criminal behaviour and the policing, justice and penal systems"
     }, {
@@ -111,11 +118,46 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
 
   render() {
     const currentAnswer = this.state.answers[this.state.step];
+    if (isPhone()) {
+      return (
+        <div className="question-step-3e">
+          <div className="relative">
+            <img src="/images/choicesTool/ThirdStepR9Vaps.png" className="third-step-img" />
+          </div>
+          <div className="before-title-space" />
+          <div className="bold font-23 question-text-3 margin-left-4">
+            Vocational and<br /> Technical Subjects
+          </div>
+          <div className="mobile-space-2" />
+          <div className="font-16 margin-left-4">
+            In the sixth form, some new subjects are offered as vocational or technical qualifications.
+          </div>
+          <ProgressBarStep3C2 step={this.state.step} topLabel="" total={this.state.answers.length} subjectDescription={currentAnswer.name} />
+          <Grid container direction="row" className="containers-3c1">
+            {this.state.subjects.map(s => this.renderSubjectBox(s, currentAnswer))}
+          </Grid>
+          <BackButtonSix onClick={() => {
+            if (this.state.step > 0) {
+              this.setState({ step: this.state.step - 1 });
+            } else {
+              this.props.moveBack();
+            }
+          }} />
+          <NextButtonSix label="Continue" onClick={() => {
+            if (this.state.step < this.state.answers.length - 1) {
+              this.setState({ step: this.state.step + 1 });
+            } else {
+              this.props.moveNext();
+            }
+          }} />
+        </div>
+      );
+    }
     return (
       <div className="question-step-3e">
         <img src="/images/choicesTool/ThirdStepR9Vaps.png" className="third-step-img"></img>
         <div className="bold font-32 question-text-3">
-          Vocational, Applied and Practical Courses
+          Vocational and Technical Subjects
         </div>
         <div className="font-16">
           In the sixth form, some new subjects are offered as vocational or technical qualifications.
@@ -126,14 +168,14 @@ class ThirdStepE extends Component<ThirdProps, ThirdQuestionState> {
         </Grid>
         <BackButtonSix onClick={() => {
           if (this.state.step > 0) {
-            this.setState({step: this.state.step - 1});
+            this.setState({ step: this.state.step - 1 });
           } else {
             this.props.moveBack();
           }
         }} />
         <NextButtonSix label="Continue" onClick={() => {
           if (this.state.step < this.state.answers.length - 1) {
-            this.setState({step: this.state.step + 1});
+            this.setState({ step: this.state.step + 1 });
           } else {
             this.props.moveNext();
           }

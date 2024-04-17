@@ -496,21 +496,16 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
         <FourthStepListening
           listeningChoices={this.state.listeningChoices}
           onChange={listeningChoices => this.setState({ listeningChoices })}
-          moveBack={() => this.setState({ subStep: SubStep.Watching })}
+          moveBack={() => {
+            if (this.state.writingChoice === WritingChoice.first || this.state.writingChoice === WritingChoice.second) {
+              this.setState({ subStep: SubStep.WritingB });
+            } else {
+              this.setState({ subStep: SubStep.WritingA });
+            }
+          }}
           moveNext={async () => {
             this.props.saveAnswer(this.getAnswer());
             this.setState({ subStep: SubStep.Speaking });
-          }} />
-      );
-    } else if (this.state.subStep === SubStep.Watching) {
-      return (
-        <ThirdStepWatching
-          watchingChoices={this.state.watchingChoices}
-          onChange={watchingChoices => this.setState({ watchingChoices })}
-          moveBack={() => this.setState({ subStep: SubStep.WritingB })}
-          moveNext={async () => {
-            await this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.Listening });
           }} />
       );
     } else if (this.state.subStep === SubStep.WritingB) {
@@ -523,7 +518,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
         }}
         moveNext={() => {
           this.props.saveAnswer(this.getAnswer());
-          this.setState({ subStep: SubStep.Watching });
+          this.setState({ subStep: SubStep.Listening });
         }}
       />
     } else if (this.state.subStep === SubStep.WritingA) {
@@ -533,21 +528,34 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           setWritingChoice={writingChoice => this.setState({ writingChoice })}
           moveBack={() => {
             this.props.saveAnswer(this.getAnswer());
-            if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
-              this.setState({ subStep: SubStep.ReadingV2 });
-            } else {
-              this.setState({ subStep: SubStep.ReadingV1 });
-            }
+            this.setState({ subStep: SubStep.Watching });
           }}
           moveNext={() => {
             this.props.saveAnswer(this.getAnswer());
             if (this.state.writingChoice === WritingChoice.first || this.state.writingChoice === WritingChoice.second) {
               this.setState({ subStep: SubStep.WritingB });
             } else {
-              this.setState({ subStep: SubStep.Watching });
+              this.setState({ subStep: SubStep.Listening });
             }
           }}
         />
+      );
+    } else if (this.state.subStep === SubStep.Watching) {
+      return (
+        <ThirdStepWatching
+          watchingChoices={this.state.watchingChoices}
+          onChange={watchingChoices => this.setState({ watchingChoices })}
+          moveBack={() => {
+            if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
+              this.setState({ subStep: SubStep.ReadingV2 });
+            } else {
+              this.setState({ subStep: SubStep.ReadingV1 });
+            }
+          }}
+          moveNext={async () => {
+            await this.props.saveAnswer(this.getAnswer());
+            this.setState({ subStep: SubStep.WritingA });
+          }} />
       );
     } else if (this.state.subStep === SubStep.ReadingV2) {
       return (
@@ -560,7 +568,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
           }}
           moveNext={() => {
             this.props.saveAnswer(this.getAnswer());
-            this.setState({ subStep: SubStep.WritingA });
+            this.setState({ subStep: SubStep.Watching });
           }}
         />
       );
@@ -578,7 +586,7 @@ class ThirdStep extends Component<SecondQuestionProps, SecondQuestionState> {
             if (this.state.readingChoice === ReadingChoice.first || this.state.readingChoice === ReadingChoice.second) {
               this.setState({ subStep: SubStep.ReadingV2 });
             } else {
-              this.setState({ subStep: SubStep.WritingA });
+              this.setState({ subStep: SubStep.Watching });
             }
           }}
         />

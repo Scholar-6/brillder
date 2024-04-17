@@ -238,16 +238,21 @@ class ThirdStepC3 extends Component<ThirdProps, ThirdQuestionState> {
           {this.renderBox(category)}
         </div>
         <BackButtonSix onClick={() => {
+          console.log(this.state.step);
           if (this.state.step > 0) {
             this.setState({ step: this.state.step - 1 });
           } else {
+            console.log('move back');
             this.props.moveBack();
           }
         }} />
         <NextButtonSix label="Continue" onClick={() => {
+          console.log('move back');
           if (this.state.step < this.state.categories.length - 1) {
+            console.log('step -1')
             this.setState({ step: this.state.step + 1 });
           } else {
+            console.log('move next')
             this.props.moveNext();
           }
         }} />

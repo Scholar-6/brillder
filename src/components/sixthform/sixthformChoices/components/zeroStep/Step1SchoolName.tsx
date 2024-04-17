@@ -24,7 +24,6 @@ const Step1SchoolName: React.FC<ThirdProps> = (props) => {
 
   useEffect(() => {
     if (props.user.isFromInstitution && !props.schoolName) {
-      console.log('checking');
       let schoolNameInit = '';
       const domain = props.user.email.split("@")[1];
       if (domain === 'heartofmercia.org.uk') {
@@ -43,7 +42,7 @@ const Step1SchoolName: React.FC<ThirdProps> = (props) => {
 
   const renderFullNameBox = () => {
     return (
-      <div className="step1-name-box just-email">
+      <div className="step1-name-box just-email just-school-name">
         <div className="font-16">
           My current school:
         </div>
@@ -57,10 +56,12 @@ const Step1SchoolName: React.FC<ThirdProps> = (props) => {
   if (isPhone()) {
     return (
       <div className="question question-6 question-3-watching question-1-name">
-        <img src="/images/choicesTool/Step1R25.png" className="step3watching-img-v2" />
-        <div className="space-r1-34"></div>
-        <div className="font-32 title-r1-34 bold">Where are you currently studying?</div>
+        <img src="/images/choicesTool/Step1R25.png" className="step-zero-img" />
+        <div className="before-title-space" />
+        <div className="font-24 title-r1-34 bold">Where are you<br/> currently studying?</div>
+        <div className="mobile-space-2" />
         <div className="font-16 text-r1-34">Type in your current school below. (This is Optional)</div>
+        <div className="mobile-space-6" />
         {renderFullNameBox()}
         <div className="help-without absolute-name-s1 font-13">
           <div>
@@ -79,6 +80,7 @@ const Step1SchoolName: React.FC<ThirdProps> = (props) => {
   return (
     <div className="question question-6 question-3-watching question-1-name">
       <img src="/images/choicesTool/Step1R25.png" className="step3watching-img-v2" />
+      <div className='space-r133-34' />
       <div className="font-32 bold">Where are you currently studying?</div>
       <div className="font-16">Type in your current school below. (This is Optional)</div>
       {renderFullNameBox()}

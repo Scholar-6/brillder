@@ -69,7 +69,7 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
     if (isPhone()) {
       return (
         <div className="question question-subject-type">
-          <img src="/images/choicesTool/MaskGroup.png" alt="step1" className="mask-step-img" />
+          <img src="/images/choicesTool/MaskGroup.png" alt="step1" className="mask-step-img step1-img-course" />
           <div className="before-title-space-3444"/>
           <div className="bold font-24 question-text">
             <span>What type of course<br /> are you considering<br /> for the sixth form?</span>
@@ -95,7 +95,7 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
             />
           </div>
           <BackButtonSix onClick={this.props.moveBack} />
-          <NextButtonSix disabled={this.state.choice === null} label="Continue to Step 2"
+          <NextButtonSix disabled={this.state.choice === null} label="Continue"
             onClick={this.props.moveNext}
           />
           {this.state.popup && this.renderPopup()}
@@ -128,7 +128,7 @@ class StepCourseSelect extends Component<FirstQuestionProps, FirstQuestionState>
           />
         </div>
         <BackButtonSix onClick={this.props.moveBack} />
-        <NextButtonSix disabled={this.state.choice === null} label="Continue to Step 2"
+        <NextButtonSix disabled={this.state.choice === null} label="Continue"
           onClick={this.props.moveNext}
         />
         {this.state.popup && this.renderPopup()}

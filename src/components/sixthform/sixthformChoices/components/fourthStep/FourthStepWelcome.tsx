@@ -1,6 +1,8 @@
 import React from "react";
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
+import NextButtonSix from "../NextButtonSix";
 
 interface WelcomeProps {
   canSkip: boolean;
@@ -11,8 +13,8 @@ interface WelcomeProps {
 
 const FourthStepWelcome: React.FC<WelcomeProps> = (props) => {
   return (
-    <div className="question">
-    <img src="/images/choicesTool/Step4background.png" className="step2background-img" />
+    <div className="question question-education-welcome">
+    <img src={isPhone() ? "/images/choicesTool/phone/EDUCATION.png" : "/images/choicesTool/Step4background.png"} className="step2background-img" />
     <div className="text-container-5432">
       <div>
         <div className="font-20">Step 4</div>
@@ -20,11 +22,8 @@ const FourthStepWelcome: React.FC<WelcomeProps> = (props) => {
       </div>
     </div>
     <BackButtonSix onClick={props.moveBack} />
-    {props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
-    <button
-      className="absolute-contunue-btn font-24"
-      onClick={props.moveNext}
-    >Start</button>
+    {!isPhone() && props.canSkip && <div className="absolute-skip-btn font-24" onClick={props.onSkip}>Skip to end<SpriteIcon name="Skip-six" /></div>}
+    <NextButtonSix label="Start" onClick={props.moveNext} />
   </div>
   );
 }
