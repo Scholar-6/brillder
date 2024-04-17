@@ -4,6 +4,9 @@ import { Dialog } from "@material-ui/core";
 import CheckBoxV2 from "../CheckBox";
 import BackButtonSix from "../BackButtonSix";
 import { FirstChoice } from "../firstStep/StepCourseSelect";
+import { isPhone } from "services/phone";
+import NextButtonSix from "../NextButtonSix";
+import CheckBoxPhone from "../CheckBoxPhone";
 
 interface FourthAProps {
   choice: FirstChoice;
@@ -44,6 +47,53 @@ class FourthStepA extends Component<FourthAProps, FourthAState> {
   }
 
   render() {
+    if (isPhone()) {
+      return (
+        <div className="question question-step4-a">
+          <div className="relative">
+            <img src="/images/choicesTool/phone/Step4Second.png" className="step2background-img" alt="step background" />
+          </div>
+          <div className="step-4a-absolute-box">
+            <div className="bold font-24 question-text-4 margin-left-4">
+              Based on your answers, we<br/> think you are . . .
+            </div>
+            <div className="boxes-container checkbox-container-r64 font-16">
+              <CheckBoxPhone
+                currentChoice={FirstChoice.ALevel} choice={this.state.choice}
+                label="Someone who will go to university after completing A-levels"
+                setChoice={() => this.onChoiceChanged(FirstChoice.ALevel)}
+              />
+              <CheckBoxPhone
+                currentChoice={FirstChoice.ShowMeAll || FirstChoice.Other}
+                choice={this.state.choice}
+                label="Someone who may go to university after completing A-levels and/or vocational courses"
+                setChoice={() => this.onChoiceChanged(FirstChoice.ShowMeAll)}
+              />
+              <CheckBoxPhone
+                currentChoice={FirstChoice.Vocational as any} choice={this.state.choice}
+                label="Someone who will go directly into work or an apprenticeship after completing vocational studies"
+                setChoice={() => this.onChoiceChanged(FirstChoice.Vocational)}
+              />
+            </div>
+            <div className="font-16 white-blue bottom-text-s5 margin-left-4">
+              If you’ve changed your mind, select the category above that best applies to you.
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.props.moveBack()} />
+          <NextButtonSix label="Continue" onClick={this.props.moveNext} />
+          {this.state.popupOpen && <Dialog className="new-school-popup" open={true}>
+            {this.state.prevChoice === FirstChoice.ALevel && this.state.choice === FirstChoice.Vocational && <div>
+              It looks like you’ve changed your mind since Step 1. Best go back to the beginning to make sure that you are more focussed on vocational courses.
+            </div>}
+            {this.state.prevChoice === FirstChoice.Vocational && this.state.choice === FirstChoice.ALevel && <div>
+              It looks like you’ve changed your mind since Step 1. Best go back to the beginning to make sure that you are focussed on subject choices with a view to A-levels.
+            </div>}
+            <div className="btn" onClick={() => this.setState({ popupOpen: false })}>Continue</div>
+          </Dialog>
+          }
+        </div>
+      );
+    }
     return (
       <div className="question">
         <img src="/images/choicesTool/Step4backgroundR1.png" className="step2background-img" alt="step background" />
@@ -72,7 +122,7 @@ class FourthStepA extends Component<FourthAProps, FourthAState> {
           <div className="font-16 white-blue bottom-text-s5">If you’ve changed your mind, select the category above that best applies to you.</div>
         </div>
         <BackButtonSix onClick={() => this.props.moveBack()} />
-        <button className="absolute-contunue-btn font-24" onClick={this.props.moveNext}>Continue</button>
+        <NextButtonSix label="Continue" onClick={this.props.moveNext} />
         {this.state.popupOpen && <Dialog className="new-school-popup" open={true}>
           {this.state.prevChoice === FirstChoice.ALevel && this.state.choice === FirstChoice.Vocational && <div>
             It looks like you’ve changed your mind since Step 1. Best go back to the beginning to make sure that you are more focussed on vocational courses.
