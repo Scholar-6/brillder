@@ -2026,6 +2026,185 @@
   }
 }
 
+.SixthformChoicesPage .question-career-5a {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+  height: 83% !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  width: 100vw !important;
+  .question-text-4 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 7vw !important;
+    padding-bottom: 3vw !important;
+  }
+  .third-step-img {
+    top: -5vw !important;
+    height: unset !important;
+    width: 38vw !important;
+  }
+  .progress-description-container-r3234 {
+    margin-left: 0 !important;
+    .progress-content-box-r323 {
+      width: 92vw !important;
+    }
+  }
+
+  .container-3c1 {
+    position: relative;
+    svg {
+      position: absolute;
+      top: 1vw;
+      right: 1vw;
+      width: 4vw !important;
+      height: 4vw !important;
+    }
+    width: 92vw !important;
+    background: #4C608A1A !important;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+    border-radius: 1.5vw !important;
+    margin-bottom: 2vw !important;
+
+    &.correct {
+      background: rgba(48, 196, 116, 0.2) !important;
+    }
+
+    &.incorrect {
+      background: rgba(196, 60, 48, 0.2) !important;
+    }
+  }
+}
+
+.SixthformChoicesPage .question-step-5b {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+
+  height: 83% !important;
+  .question-text-4 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 7vw !important;
+    padding-bottom: 3vw !important;
+  }
+
+  .third-step-img {
+    top: -7.3vw !important;
+    height: unset !important;
+    width: 32vw !important;
+  }
+  .drag-container-r22 {
+    margin-top: 4vw !important;
+    width: 92vw !important;
+    height: unset !important;
+    background: white !important;
+    overflow-y: visible !important;
+
+    .container-r22 {
+      display: block !important;
+      .drag-boxv2-r22 {
+        > div:first-child {
+          margin-bottom: 1.3vw;
+        }
+        margin-bottom: 2vw !important;
+        padding: 3vw !important;
+        border-radius: 1.5vw !important;
+        background: #4C608A1A;
+
+        &.active {
+          color: white;
+          background: #4C608A;
+        }
+      }
+    }
+  
+    > div {
+      width: 92vw !important;
+    }
+  }
+  .last-none-box {
+    margin: 0 !important;
+    border-radius: 1.5vw !important;
+    padding: 3vw !important;
+    width: 92vw !important;
+    background: #4C608A1A !important;
+  }
+}
+
+.SixthformChoicesPage .question-5c {
+  margin-top: 0 !important;
+  padding-top: 16vw !important;
+
+  height: 83% !important;
+  .question-text-4 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 7vw !important;
+    padding-bottom: 3vw !important;
+  }
+
+  .third-step-img {
+    top: -10vw !important;
+    height: unset !important;
+    width: 34vw !important;
+  }
+
+  .drag-container-5c {
+    width: 92vw !important;
+
+    .table-body-5c {
+      height: unset !important;
+    }
+
+    .subjects-table-5c {
+      background: inherit !important;
+      .table-5c-column {
+        overflow: hidden !important;
+        display: flex;
+        width: 87vw !important;
+        background: none !important;
+
+        .job-name {
+          width: 80vw !important;
+        }
+
+        svg {
+          width: 4vw;
+          height: 4vw;
+        }
+      }
+      .table-5c-body-row {
+        display: block !important;
+        padding-left: 3vw !important;
+        width: 91.5vw !important;
+        margin-bottom: 1vw;
+        border-radius: 1.5vw !important;
+        background: #4C608A1A !important;
+      }
+      .table-5c-body-row.active {
+        color: white;
+        background: #4C608A !important;
+      }
+
+      .helping-column {
+        padding-bottom: 3vw;
+        .title-r976 {
+          margin-bottom: 1.5vw;
+        }
+        > div {
+          width: 28vw;
+          text-align: center;
+
+          &:first-child, &:nth-child(2) {
+            border-right: 1px solid #475F924D;
+          }
+        }
+      }
+    }
+  }
+}
+
 // final
 .SixthformChoicesPage .question-6-final {
   .background-confetti-sixthform .confeti-sixthform {

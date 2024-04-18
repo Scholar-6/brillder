@@ -7,6 +7,7 @@ import SpriteIcon from "components/baseComponents/SpriteIcon";
 import FifthStepWelcome from "./FifthStepWelcome";
 import FifthStepB from "./FifthStepB";
 import NextButtonSix from "../NextButtonSix";
+import { isPhone } from "services/phone";
 
 enum SubStep {
   welcome,
@@ -159,6 +160,97 @@ class SixStep extends Component<Props, State> {
 
   render() {
     if (this.state.subStep === SubStep.sub5c) {
+      if (isPhone()) {
+        return (
+          <div className="question question-5c">
+            <div className="relative">
+              <img src="/images/choicesTool/phone/CareersC.png" className="third-step-img fifth-step-img-r15"></img>
+            </div>
+            <div className="bold font-24 question-text-4 margin-left-4">
+              Careers with A-level<br /> Requirements
+            </div>
+            <div className="font-16 margin-left-4">
+              The following careers favour specific A-levels, usually because relevant degree courses require them.<br />
+              Most of you will probably select “None are for me”, but be aware of what you might be ruling out.
+            </div>
+            <div className="drag-container-5c margin-left-4">
+              <div className="subjects-table subjects-table-5c">
+                <div className="table-body-5c">
+                  {this.state.careers.map((career, i) => {
+                    if (career.jobName === 'None of the above') {
+                      return (
+                        <div key={i} className={`table-5c-body-row font-14 ${career.active === true ? 'active' : ''}`} onClick={() => {
+                          let careerCopy = Object.assign({}, career);
+                          this.state.careers.map(c => c.active = false);
+                          career.active = !careerCopy.active;
+                          console.log(this.state.careers);
+                          this.setState({ careers: this.state.careers });
+                        }}>
+                          <div className="table-5c-column value-column-5c first">
+                            {career.jobName}
+                          </div>
+                          <div className="table-5c-column value-column-5c-big font-12">
+                            I could be ruling out, or making very difficult, the above career paths by choosing other A-levels, and I’m happy with that.
+                          </div>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={i} className={`table-5c-body-row font-14 ${career.active === true ? 'active' : ''}`} onClick={() => {
+                        let none = this.state.careers.find(c => c.jobName === 'None of the above');
+                        if (none) {
+                          none.active = false;
+                        }
+                        let activeCount = this.state.careers.filter(c => c.active).length;
+                        if (activeCount >= 3 && !career.active) {
+                          this.setState({ overflowOpen: true });
+                        } else {
+                          career.active = !career.active;
+                        }
+                        this.setState({ careers: this.state.careers });
+                      }}>
+                        <div className="table-5c-column value-column-5c bold first">
+                          <div className="job-name">
+                            {career.jobName}
+                          </div>
+                          <SpriteIcon name="arrow-down" onClick={(e) => {
+                            e.stopPropagation();
+                            career.expanded = !career.expanded;
+                            this.setState({ careers: this.state.careers });
+                          }} />
+                        </div>
+                        {career.expanded && <div className="table-5c-column helping-column">
+                          <div>
+                            <div className="bold title-r976">Essential</div>
+                            {career.essential && career.essential.map((subject: any, j: number) => <div key={j}>{subject}</div>)}
+                          </div>
+                          <div>
+                            <div className="bold title-r976">Advisory</div>
+                            {career.advisory && career.advisory.map((subject: any, j: number) => <div key={j}>{subject}</div>)}
+                          </div>
+                          <div>
+                            <div className="bold title-r976">Handy</div>
+                            {career.handy && career.handy.map((subject: any, j: number) => <div key={j}>{subject}</div>)}
+                          </div>
+                        </div>}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+            {this.state.overflowOpen && <Dialog className='too-many-dialog' open={true} onClose={() => this.setState({ overflowOpen: false })}>
+              Oops! You’ve tried to pick too many.
+              <div className="btn" onClick={() => this.setState({ overflowOpen: false })}>Close</div>
+            </Dialog>}
+            <BackButtonSix onClick={() => this.setState({ subStep: SubStep.sub5b })} />
+            <NextButtonSix label="Continue" onClick={() => {
+              this.props.saveAnswer(this.getAnswer());
+              this.props.moveNext(this.getAnswer());
+            }} />
+          </div >
+        );
+      }
       return (
         <div className="question">
           <img src="/images/choicesTool/FifthStepR15.png" className="third-step-img fifth-step-img-r15"></img>

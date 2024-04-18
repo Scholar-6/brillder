@@ -113,7 +113,7 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
         }}>
           <SpriteIcon name={subject.icon} />
           <div className="text-center">
-            <div className="font-16">{subject.name}</div>
+            <div className="font-16 bold">{subject.name}</div>
             <div className="font-13">{subject.subName}</div>
           </div>
           {answerStatus === AnswerStatus.Incorrect && <SpriteIcon className="absolute-svg-3c1" name="bad-answer-3c1" />}
@@ -128,28 +128,29 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
     if (isPhone()) {
       return (
         <div className="question-career-container-5a">
-          <img src="/images/choicesTool/phone/Career1.png" className="third-step-img fifth-step-img-r13" />
           <div className="question question-step-5a question-career-5a">
-            <div className="bold question-text-4 font-23">
+            <div className="relative">
+              <img src="/images/choicesTool/phone/Career1.png" className="third-step-img fifth-step-img-r13" />
+            </div>
+            <div className="bold question-text-4 font-23 margin-left-4">
               Categories of Career
             </div>
-            <div className="font-16">
+            <div className="font-16 margin-left-4">
               For many careers, you can study <br /> almost any combination of subjects in <br /> sixth form.
             </div>
             <div className="between-texts-er3434" />
-            <div className="font-16">
+            <div className="font-16 margin-left-4">
               However, a number of professions have specific <br /> expectations for post-16 education.
             </div>
             <div className="between-texts-er3434" />
-            <div className="font-16">
+            <div className="font-16 margin-left-4">
               Match the statement with the professional category.
             </div>
-            <div className="question-step-5a categories-of-carreer">
+            <div className="question-step-5a categories-of-carreer margin-left-4">
               <ProgressBarR2 step={this.state.step} total={this.state.careers.length} description={currentAnswer.name} />
-              <Grid container direction="row" className="containers-3c1">
-                {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
-              </Grid>
-              <BackButtonSix onClick={() => {
+              {this.state.answers.map(s => this.renderSubjectBox(s, currentAnswer))}
+            </div>
+            <BackButtonSix onClick={() => {
                 if (this.state.step <= 0) {
                   this.props.moveBack(this.getAnswer());
                 } else {
@@ -163,7 +164,6 @@ class FifthStepA extends Component<ThirdProps, ThirdQuestionState> {
                   this.setState({ step: this.state.step + 1 });
                 }
               }} />
-            </div>
           </div>
         </div>
       )
