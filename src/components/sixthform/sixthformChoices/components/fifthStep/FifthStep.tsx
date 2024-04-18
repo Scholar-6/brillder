@@ -179,17 +179,16 @@ class SixStep extends Component<Props, State> {
                   {this.state.careers.map((career, i) => {
                     if (career.jobName === 'None of the above') {
                       return (
-                        <div key={i} className={`table-5c-body-row font-14 ${career.active === true ? 'active' : ''}`} onClick={() => {
+                        <div key={i} className={`table-5c-body-row none-button font-14 ${career.active === true ? 'active' : ''}`} onClick={() => {
                           let careerCopy = Object.assign({}, career);
                           this.state.careers.map(c => c.active = false);
                           career.active = !careerCopy.active;
-                          console.log(this.state.careers);
                           this.setState({ careers: this.state.careers });
                         }}>
-                          <div className="table-5c-column value-column-5c first">
+                          <div className="table-5c-column bold">
                             {career.jobName}
                           </div>
-                          <div className="table-5c-column value-column-5c-big font-12">
+                          <div className="table-5c-column font-12">
                             I could be ruling out, or making very difficult, the above career paths by choosing other A-levels, and I’m happy with that.
                           </div>
                         </div>

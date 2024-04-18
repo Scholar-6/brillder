@@ -1888,6 +1888,65 @@
     > div > div {
       border-radius: 2vw !important;
       width: 92vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 12vw !important;
+
+      svg {
+        width: 13vw;
+        height: 7vw;
+      }
+
+      div {
+        text-align: left;
+        width: 70vw;
+      }
+
+      .expand-arrow-4544 {
+        width: 4vw;
+        height: 4vw;
+      }
+
+      &.hovered-category {
+        height: 35vw !important;
+        display: block;
+        .h-title-r24 {
+          display: flex;
+          align-items: center;
+          width: 90vw;
+
+          svg {
+            width: 11vw;
+            height: 7vw;
+          }
+          
+          div {
+            width: 70vw;
+          }
+
+          .expand-arrow-4544 {
+            width: 4vw;
+            height: 4vw;
+          }
+        }
+        .lozengies-container {
+          width: 90vw !important;
+
+          div {
+            padding: 1.3vw !important;
+            width: auto !important;
+            margin-right: 2vw !important;
+          }
+
+          .just-text-r3367 {
+            padding-top: 1.4vw;
+            margin-left: 4vw;
+            padding: 0 !important;
+            width: 6vw !important;
+          }
+        }
+      }
     }
   }
 }
@@ -1923,11 +1982,25 @@
       padding-left: 4vw;
       padding-right: 4vw;
 
+      .description-4-r434 {
+        margin-top: 2vw;
+        margin-bottom: 3vw;
+      }
+
+
       .checkbox-container-r23 {
         display: block !important;
 
         .check-box-container {
+          padding: 2vw !important;
+          padding-left: 3vw !important;
+          border-radius: 1.5vw !important;
           width: 84vw !important;
+
+          &.active {
+            color: white;
+            background: #4C608A;
+          }
         }
       }
     }
@@ -2017,11 +2090,12 @@
     > div {
       margin-left: 4vw !important;
       width: 92vw !important;
-
-      .hovered-category {
-        border-radius: 2vw !important;
-        width: 92vw !important;
-      }
+    }
+    > div div.hovered-category {
+      border-radius: 2vw !important;
+      width: 92vw !important;
+      
+      height: auto !important;
     }
   }
 }
@@ -2199,6 +2273,13 @@
           &:first-child, &:nth-child(2) {
             border-right: 1px solid #475F924D;
           }
+        }
+      }
+
+      .none-button {
+        padding: 3vw !important;
+        .table-5c-column {
+          margin-bottom: 2vw !important;
         }
       }
     }
