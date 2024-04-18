@@ -2512,6 +2512,10 @@
             >div {
               color: var(--theme-dark-blue);
               background: #4C608A66;
+
+              &.just-text-r3367 {
+                background: none !important;
+              }
             }
           }
 
@@ -2530,11 +2534,28 @@
             > div.active {
               color: white;
               background: var(--theme-dark-blue);
+
+              
             }
           }
 
           &.active .lozengies-container>div {
             background: white;
+
+            &.just-text-r3367 {
+              color: white !important;
+            }
+          }
+        }
+
+        > div {
+          min-height: unset !important;
+          height: calc(4vh + 3vw) !important;
+          transition: height 300ms ease-in-out !important;
+          overflow-y: hidden;
+
+          &.hovered-category {
+            height: calc(2.5vh + 7.5vw) !important;
           }
         }
       }

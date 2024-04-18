@@ -1,5 +1,6 @@
 import SpriteIcon from 'components/baseComponents/SpriteIcon';
 import React from 'react';
+import { isPhone } from 'services/phone';
 
 interface Props {
   currentChoice: boolean;
@@ -9,6 +10,14 @@ interface Props {
 
 const CheckBoxV2:React.FC<Props> = (props) => {
   const {currentChoice, label} = props;
+
+  if (isPhone()) {
+    return (
+      <label className={`check-box-container container ${currentChoice === true ? "active" : ""}`} onClick={() => props.toggleChoice()}>
+        {label}
+      </label>
+    );
+  }
 
   return (
     <label className={`check-box-container container ${currentChoice === true ? "bold" : ""}`} onClick={() => props.toggleChoice()}>
