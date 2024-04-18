@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import BackButtonSix from "../BackButtonSix";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
+import { isPhone } from "services/phone";
+import NextButtonSix from "../NextButtonSix";
 
 interface ThirdProps {
   abAnswer: any;
@@ -92,6 +94,54 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
   }
 
   render() {
+    if (isPhone()) {
+      return (
+        <div className="question question-step-5b">
+          <div className="relative">
+            <img src="/images/choicesTool/phone/CarreersB.png" className="third-step-img fifth-step-img-r14"></img>
+          </div>
+          <div className="bold font-24 question-text-4 margin-left-4">
+            Possible Careers for You
+          </div>
+          <div className="font-16 margin-left-4">
+            Now select up to <span className="bold">two</span> career categories<br /> that currently interest you.
+          </div>
+          <div className="drag-container-r22 margin-left-4 drag-container-5a drag-container-5b">
+            <div className="container-r22">
+              {this.state.subjects.map((subject: any, i: number) => {
+                let answer = this.state.answers[i];
+                return (
+                  <div className={"drag-boxv2-r22 font-13" + (subject.active ? ' active' : '')} key={i} onClick={() => {
+                    let activeCount = this.state.subjects.filter(s => s.active === true).length;
+                    if (activeCount >= 2 && !subject.active) {
+                      // skip
+                    } else {
+                      subject.active = !subject.active;
+                      this.setState({ subjects: this.state.subjects, none: false });
+                    }
+                  }}>
+                    <div><span className="bold">{subject.name}</span> {subject.subName}</div>
+                    <div>{answer.name}</div>
+                  </div>
+                );
+              })}
+            </div>
+            <div>
+              <div className={"last-none-box font-13" + (this.state.none ? ' active' : '')} onClick={() => {
+                this.state.subjects.map(s => s.active = false);
+                this.setState({ none: true, subjects: this.state.subjects });
+              }}>
+                <div className="bold-italic">My career interests don’t fit any of these categories.</div>
+              </div>
+            </div>
+          </div>
+          <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
+          <NextButtonSix label="Continue" onClick={() => {
+            this.props.moveNext(this.getAnswer());
+          }} />
+        </div>
+      );
+    }
     return (
       <div className="question question-step-5b">
         <img src="/images/choicesTool/FifthStepR14.png" className="third-step-img fifth-step-img-r14"></img>
@@ -156,9 +206,9 @@ class FifthStepB extends Component<ThirdProps, ThirdQuestionState> {
             </div>
           </div>
           <BackButtonSix onClick={() => this.props.moveBack(this.getAnswer())} />
-          <button className="absolute-contunue-btn font-24" onClick={() => {
+          <NextButtonSix label="Continue" onClick={() => {
             this.props.moveNext(this.getAnswer());
-          }}>Continue</button>
+          }} />
         </div>
       </div>
     );
