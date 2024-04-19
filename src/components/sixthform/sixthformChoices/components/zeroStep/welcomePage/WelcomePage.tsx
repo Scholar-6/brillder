@@ -18,16 +18,20 @@ const WelcomePage: React.FC<TasterProps> = (props) => {
       <div className="WelcomePageChoices">
         <MobileTheme />
         <div className="welcome-page-top-part">
-          <img className="absolute-welcome-img" src="/images/choicesTool/phone/instruction.png" />
-          <img className="absolute-gradient-w-img" src="/images/choicesTool/phone/gradient-white.png" />
-          <div className="absolute-welcome-content">
-            <div className="relative">
-              <div className="bold big-text-q1 font-40">Start to shape<br/> your future.</div>
-              <div className="flex-center margin-top-3vh">
-                <ChoiceStepsSvgM />
-              </div>
-              <div className="flex-center">
-                <ChoiceSidebarSvgM />
+          <div className="relative">
+            <img className="absolute-welcome-img" src="/images/choicesTool/phone/instruction.png" />
+            <img className="absolute-gradient-w-img" src="/images/choicesTool/phone/gradient-white.png" />
+          </div>
+          <div className="relative relative-content-r3424">
+            <div className="absolute-welcome-content">
+              <div className="relative">
+                <div className="bold big-text-q1 font-40">Start to shape<br /> your future.</div>
+                <div className="flex-center margin-top-3vh">
+                  <ChoiceStepsSvgM />
+                </div>
+                <div className="flex-center">
+                  <ChoiceSidebarSvgM />
+                </div>
               </div>
             </div>
           </div>

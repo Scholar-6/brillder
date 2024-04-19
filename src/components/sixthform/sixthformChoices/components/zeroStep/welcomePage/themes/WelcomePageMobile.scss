@@ -22,6 +22,10 @@
     width: 100vw;    
   }
 
+  .relative-content-r3424 {
+    height: calc(134vw + 3vh);
+  }
+
   .absolute-welcome-content {
     position: absolute;
     z-index: 2;
@@ -43,18 +47,22 @@
     }
 
     .choice-steps-svg {
-      max-width: 100vw !important;
-      height: calc(22vh - 10vw) !important;
+      max-width: 92vw !important;
+      width: 92vw !important;
+      height: auto !important;
     }
 
     .choice-sidebar-svg {
-      max-width: 100vw !important;
-      height: calc(22vh - 10vw) !important;
+      max-width: 92vw !important;
+      width: 92vw !important;
+      height: auto !important;
     }
   }
 
   .welcome-page-top-part {
     height: 84%;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   .welcome-part-bottom-part {
