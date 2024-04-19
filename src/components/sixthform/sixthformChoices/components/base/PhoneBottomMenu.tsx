@@ -13,6 +13,7 @@ enum ChoiceEnum {
 interface Props {
   page: Pages;
   firstAnswer: any;
+  showPopup(subject: any): void;
   subjects: SixthformSubject[];
   subjectType: SubjectType;
   updateSubject(subject: SixthformSubject): void;
@@ -103,7 +104,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
             }
             subject.userChoice = UserSubjectChoice.Favourite;
             props.updateSubject(subject);
-          }}>Definitely!</div>
+          }}>Favorite</div>
         <div
           className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow yellow-switch' : 'yellow-switch'}`}
           onClick={() => {
@@ -146,7 +147,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
     if (subject.brick) {
       return (
         <div className="brick-container">
-          <div className="try-taster-btn">Try a taster topic</div> 
+          <div className="try-taster-btn">Try a taster topic</div>
           <div className="scroll-block" style={{ backgroundImage: `url(${fileUrl(subject.brick.coverImage)})` }}></div>
           <div className="bottom-description-color" />
           <div className="bottom-description font-8 bold" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
@@ -209,11 +210,26 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
         {subject.brick &&
           <div className="taste-container" onClick={() => {
             if (subject.brick) {
-              //props.showPopup();
+              props.showPopup(subject);
             }
           }}>
             {renderBrick(subject)}
           </div>}
+      </div>
+    );
+  }
+
+  if (expanded && expandedSubject) {
+    return (
+      <div className="sixthform-bottom-menu expanded ">
+        <div className="flex-center top-part-r54 top-part-r55">
+          <SpriteIcon name="arrow-left" onClick={() => setExpandedSubject(null)} />
+          <div className="label-r323 bold" onClick={() => setExpandedSubject(null)}> Back to subject rankings</div>
+          <SpriteIcon name="double-arrows-r342" className={expanded ? 'expanded' : ''} onClick={() => setExpanded(!expanded)} />
+        </div>
+        <div className="bottom-part-r54 bottom-part-r55">
+          {renderExpandedSubject()}
+        </div>
       </div>
     );
   }
@@ -230,10 +246,8 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
           {renderSidebarCheckbox(SubjectType.VocationalSubjects, 'Vocational Subjects Only')}
           {renderSidebarCheckbox(SubjectType.AllSubjects, 'All Subjects')}
         </div>
-        {expandedSubject 
-          ? <div className="label-r555 bold" onClick={() => setExpandedSubject(null)}><SpriteIcon name="arrow-left" /> Back to subject rankings</div>
-          : <div className="label-r323 bold">Your subject rankings</div>}
-        {expandedSubject ? renderExpandedSubject() : renderSubjectList()}
+        <div className="label-r323 bold">Your subject rankings</div>
+        {renderSubjectList()}
       </div>}
     </div>
   );

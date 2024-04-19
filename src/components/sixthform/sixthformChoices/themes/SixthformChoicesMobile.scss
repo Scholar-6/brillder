@@ -105,6 +105,22 @@
       margin-left: 3vw;
     }
 
+    .top-part-r55 .label-r323  {
+      width: 78vw;
+      margin-left: 0;
+    }
+
+    .switch-button {
+      border-radius: 1.5vw;
+      > div {
+        margin-right: 1vw !important;
+        margin-left: 1vw !important;
+        margin-top: 1vw;
+        margin-bottom: 1vw;
+        border-radius: 1.5vw;
+      }
+    }
+
     svg {
       width: 7vw;
       height: 7vw;
@@ -137,6 +153,11 @@
       .bottom-part-r54 {
         margin-top: 0;
         height: 91%;
+
+        &.bottom-part-r55 {
+          padding-top: 3vw;
+          height: calc(100%);
+        }
 
         .subjects-select-box {
           height: 20vw;
@@ -196,7 +217,8 @@
 
         .subject-sixth-popup {
           overflow-y: auto;
-          height: calc(98% - 16vw - 7vw - 3vh);
+          height: auto;
+          max-height: 100%;
           margin-left: 5vw;
           padding-left: 3vw;
           padding-right: 3vw;
@@ -2352,6 +2374,57 @@
 
       &:hover {
         opacity: 1 !important;
+      }
+    }
+  }
+}
+
+.taster-brick-popup {
+  $font-scale: 3;
+
+  .MuiPaper-root {
+    width: 92% !important;
+    border-radius: 6vw !important;
+    .font-25 {
+      font-size: calc(1.56vw * $font-scale);
+    }
+
+    .font-36 {
+      font-size: calc(2.25vw * $font-scale);
+    }
+
+    .title-e234 {
+      margin-bottom: 2vh;
+    }
+
+    svg {
+      margin-top: 4vh !important;
+      width: 10vw;
+      height: 10vw;
+    }
+
+    .dialog-footer {
+      padding-left: 5vw;
+      padding-right: 5vw;
+      margin-top: 5vh;
+      margin-bottom: 3vh !important;
+
+      .bg-custom-blue {
+        color: white;
+        background: #4C608A;
+
+        &:hover {
+          background: var(--theme-dark-blue);
+        }
+      }
+
+      .bg-theme-green:hover {
+        background: var(--theme-dark-blue) !important;
+      }
+
+      button {
+        border-radius: 2vw !important;
+        width: 41vw;
       }
     }
   }

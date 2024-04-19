@@ -814,6 +814,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             {isPhone() 
               ? <PhoneBottomMenu
                 page={this.state.page}
+                showPopup={subject => this.setState({ brickPopup: { isOpen: true, brick: subject.brick } })}
                 subjects={this.state.subjects}
                 subjectType={this.state.subjectType}
                 updateSubject={(subject) => this.updateSubject(subject)}
