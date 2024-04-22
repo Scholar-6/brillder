@@ -295,9 +295,10 @@ class SixStep extends Component<Props, State> {
               </div>
               <div className="table-body-5c">
                 {this.state.careers.map((career, i) => {
-                  if (career.jobName === 'None are for me') {
+                  if (career.jobName === 'None of the above') {
                     return (
                       <div key={i} className="table-5c-body-row font-14" onClick={() => {
+                        console.log('start')
                         let careerCopy = Object.assign({}, career);
                         this.state.careers.map(c => c.active = false);
                         career.active = !careerCopy.active;
@@ -317,7 +318,7 @@ class SixStep extends Component<Props, State> {
                   }
                   return (
                     <div key={i} className="table-5c-body-row font-14" onClick={() => {
-                      this.state.careers.find(c => c.jobName === 'None are for me').active = false;
+                      this.state.careers.find(c => c.jobName === 'None of the above').active = false;
                       let activeCount = this.state.careers.filter(c => c.active).length;
                       if (activeCount >= 3 && !career.active) {
                         this.setState({ overflowOpen: true });
