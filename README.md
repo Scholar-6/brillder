@@ -19,7 +19,7 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
 * add an entry to the hosts file   
 ** linux /etc/hosts  
 ** windows C:\Windows\System32\Drivers\etc\hosts  
-`127.0.0.1 local-brillder.scholar6.org` 
+`127.0.0.1 local-brillder.brillder.com` 
 * create .env file with the following values  
         REACT_APP_BACKEND_HOST=https://dev-api.brillder.com  
         REACT_APP_ZENDESK_ID=33210b3d-b3d5-43ba-9b07-70acce8c10b6  
@@ -34,6 +34,7 @@ Run the project locally (Windows and Linux) and connect to the dev-api:
         # comment the following out if running the backend locally
         HTTPS=true  
         REACT_APP_MATOMO_URL=https://matomo.brillder.com/js/container_UkdV64XH.js  
+* You may need Python 9.1.0 or a later (try asking chatgpt to setup a virtual environment)
 * `npm install`  
 * `npm start`  
 * Go to http://localbrillder.com:3000  
