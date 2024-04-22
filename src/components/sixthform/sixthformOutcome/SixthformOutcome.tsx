@@ -223,13 +223,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.setState({ definetlyList: this.state.definetlyList, possibleList: this.state.possibleList });
         }}>
           <div>
-            {subject.facilitatingSubject &&
-              <div className="facilitation-container font-12">
-                <div>
-                  <SpriteIcon name="facilitating-badge" />
-                  <span>Facilitating Subject</span>
-                </div>
-              </div>}
             <div className="subject-name font-24">
               <span className="left-part-e323">
                 {this.renderCircle(subject)}
@@ -303,13 +296,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
           this.setState({ definetlyList: this.state.definetlyList, possibleList: this.state.possibleList });
         }}>
           <div>
-            {subject.facilitatingSubject &&
-              <div className="facilitation-container font-12">
-                <div>
-                  <SpriteIcon name="facilitating-badge" />
-                  <span>Facilitating Subject</span>
-                </div>
-              </div>}
             <div className="subject-name font-24 bold">
               {this.renderCircle(subject)}
               <span className="subject-name-only">
@@ -370,13 +356,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
         this.setState({ definetlyList: this.state.definetlyList, possibleList: this.state.possibleList });
       }}>
         <div>
-          {subject.facilitatingSubject &&
-            <div className="facilitation-container font-12">
-              <div>
-                <SpriteIcon name="facilitating-badge" />
-                <span>Facilitating Subject</span>
-              </div>
-            </div>}
           <div className="subject-name font-24 bold">
             {this.renderCircle(subject)}
             <span className="subject-name-only">
