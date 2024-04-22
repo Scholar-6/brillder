@@ -172,13 +172,6 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
     let subject = expandedSubject;
     return (
       <div className={`subject-sixth-popup ${subject.isTLevel ? 'big-T-level' : ''}`}>
-        {subject.facilitatingSubject &&
-          <div className="facilitation-container font-12">
-            <div>
-              <SpriteIcon name="facilitating-badge" />
-              <span>Facilitating Subject</span>
-            </div>
-          </div>}
         <div className="subject-name font-24 bold">
           {renderCircle(subject)}
           <span className="subject-name-only">
