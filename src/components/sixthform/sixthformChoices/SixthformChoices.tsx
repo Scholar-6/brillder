@@ -135,7 +135,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     if (subjects) {
       for (let subject of subjects) {
         if (!subject.userChoice) {
-          subject.score = 3;
+          subject.score = 0.7;
           subject.userChoice = UserSubjectChoice.Maybe;
         }
       }
@@ -488,7 +488,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question3);
     if (result) {
       for (let subject of this.state.allSubjects) {
-        subject.score = 0;
+        subject.score = 0.5;
       }
       let scores = result.subjectScores.filter(s => s.score !== 0);
       for (let subject of this.state.allSubjects) {
@@ -505,7 +505,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question4);
     if (result) {
       for (let subject of this.state.allSubjects) {
-        subject.score = 0;
+        subject.score = 0.5;
       }
       let scores = result.subjectScores.filter(s => s.score !== 0);
       for (let subject of this.state.allSubjects) {
@@ -522,7 +522,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question5);
     if (result) {
       for (let subject of this.state.allSubjects) {
-        subject.score = 0;
+        subject.score = 0.5;
       }
       let scores = result.subjectScores.filter(s => s.score !== 0);
       for (let subject of this.state.allSubjects) {
@@ -539,7 +539,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
     const result = await saveSixthformAnswer(JSON.stringify(answer), Pages.Question6);
     if (result) {
       for (let subject of this.state.allSubjects) {
-        subject.score = 0;
+        subject.score = 0.5;
       }
       let scores = result.subjectScores.filter(s => s.score !== 0);
       for (let subject of this.state.allSubjects) {
@@ -785,7 +785,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               {this.renderCircle(subject)}
               <div className="subject-name">{subject.name}</div>
               <div className="level-round font-12">{this.renderSubjectGroup(subject)}</div>
-              <div className="score-container">{subject.score}</div>
+              <div className="score-container">{Math.round(subject.score * 100)}</div>
               <SubjectSidebarPopup
                 subject={subject}
                 popupSubject={this.state.popupSubject}

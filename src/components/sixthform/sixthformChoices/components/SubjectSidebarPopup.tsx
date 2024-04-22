@@ -2,6 +2,7 @@ import React from "react";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { SixthformSubject, UserSubjectChoice } from "services/axios/sixthformChoices";
 import { fileUrl } from "components/services/uploadFile";
+import { sigmoid, logit } from '../services/scoring';
 
 interface Props {
   subject: any;
@@ -51,15 +52,18 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
           className={`${subject.userChoice === UserSubjectChoice.Favourite ? 'active active-green green-switch' : 'green-switch'}`}
           onClick={() => {
             if (!subject.score) {
-              subject.score = 0;
+              subject.score = 0.5;
             }
+            let logOdds = logit(subject.score);
             if (subject.userChoice === UserSubjectChoice.Maybe) {
-              subject.score += 2;
+              logOdds += Math.log(1.2); // Adjust the log odds
             } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              subject.score += 15;
+              // TODO: This seems wrong but is probably legacy to do with being favourited
+              logOdds += Math.log(1.9); // Adjust the log odds
             } else {
-              subject.score += 5;
+              logOdds += Math.log(1.5); // Adjust the log odds
             }
+            subject.score = sigmoid(logOdds); // Update the score using the sigmoid of the log odds
             subject.userChoice = UserSubjectChoice.Favourite;
             props.updateSubject(subject);
           }}>Favourite!</div>
@@ -67,16 +71,17 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
           className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow yellow-switch' : 'yellow-switch'}`}
           onClick={() => {
             if (!subject.score) {
-              subject.score = 0;
+              subject.score = 0.5;
             }
-
+            let logOdds = logit(subject.score);
             if (subject.userChoice === UserSubjectChoice.Favourite) {
-              subject.score -= 2;
+              logOdds += Math.log(0.8); // Adjust the log odds
             } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              subject.score += 13;
+              logOdds += Math.log(1.9); // Adjust the log odds
             } else {
-              subject.score += 3;
+              logOdds += Math.log(1.3); // Adjust the log odds
             }
+            subject.score = sigmoid(logOdds); // Update the score using the sigmoid of the log odds
             subject.userChoice = UserSubjectChoice.Maybe;
             props.updateSubject(subject);
           }}>Maybe</div>
@@ -84,16 +89,17 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
           className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red red-switch' : 'red-switch'}`}
           onClick={() => {
             if (!subject.score) {
-              subject.score = 0;
+              subject.score = 0.5;
             }
-
+            let logOdds = logit(subject.score);
             if (subject.userChoice === UserSubjectChoice.Favourite) {
-              subject.score -= 15;
+              logOdds += Math.log(0.1); // Adjust the log odds
             } else if (subject.userChoice === UserSubjectChoice.Maybe) {
-              subject.score -= 13;
+              logOdds += Math.log(0.5); // Adjust the log odds
             } else {
-              subject.score -= 10;
+              logOdds += Math.log(0.8); // Adjust the log odds
             }
+            subject.score = sigmoid(logOdds); // Update the score using the sigmoid of the log odds
             subject.userChoice = UserSubjectChoice.NotForMe;
             props.updateSubject(subject);
           }}>Not for me</div>
