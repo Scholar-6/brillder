@@ -11,7 +11,7 @@ const NextButtonSix: React.FC<BackButtonProps> = (props) => {
   if (isPhone()) {
     return (
       <div className="bottom-next-btn-container">
-        <button className={`absolute-contunue-btn font-20 ${props.disabled ? "disabled" : ""}`} onClick={props.onClick}>
+        <button className={`absolute-contunue-btn font-20 ${props.disabled ? "disabled" : ""}`} disabled={props.disabled ? true : false} onClick={props.onClick}>
           {props.label}
         </button>
       </div>
@@ -19,7 +19,7 @@ const NextButtonSix: React.FC<BackButtonProps> = (props) => {
   }
 
   return (
-    <button className={`absolute-contunue-btn font-24 ${props.disabled ? "disabled" : ""}`} onClick={props.onClick}>
+    <button className={`absolute-contunue-btn font-24 ${props.disabled ? "disabled" : ""}`} disabled={props.disabled ? true : false} onClick={props.onClick}>
       {props.label}
     </button>
   );

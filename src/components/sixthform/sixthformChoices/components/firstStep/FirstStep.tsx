@@ -143,9 +143,14 @@ class FirstStep extends Component<SecondQuestionProps, SecondQuestionState> {
     const subjects = await getKeyStage4Subjects();
     if (subjects) {
       let subjectSelections: KeyStage4Subject[] = [];
+      
 
       for (let subject of subjects) {
-        subject.predicedStrength = 0;
+        if (subject.isVocational) {
+          subject.predicedStrength = 3; // merit by default
+        } else {
+          subject.predicedStrength = 6;
+        }
       }
 
       if (this.props.answer && this.props.answer.answer) {

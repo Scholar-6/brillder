@@ -1206,18 +1206,17 @@
           margin-bottom: 0;
         }
 
+        .suggest-topic-label {
+          line-height: 1;
+        }
+
         .brick-title-e342 {
+          padding-top: 0.5vw;
           width: 15vw;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
           text-transform: uppercase;
 
-          >p {
+          > p {
             text-transform: uppercase;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
           }
         }
       }
