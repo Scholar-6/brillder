@@ -258,7 +258,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                 <div className="taste-container smaller">
                   <div className="label-container">
                     <div>
-                      <div className="bold font-18 margin-bottom-0">Suggested Taster Topic</div>
+                      <div className="bold font-18 margin-bottom-0 suggest-topic-label">Suggested Taster Topic</div>
                       <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
                       <div className="btn-orange font-16" onClick={() => {
                         if (subject.brick) {
@@ -333,9 +333,9 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
               <div className="taste-container smaller">
                 <div className="label-container">
                   <div>
-                    <div className="bold font-18 margin-bottom-0">Completed Taster Topic</div>
+                    <div className="bold font-18 margin-bottom-0 suggest-topic-label">Completed Taster Topic</div>
                     <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
-                    <div className="font-32 percentages">{percentages}%</div>
+                    <div className="font-24 percentages">{percentages}%</div>
                   </div>
                 </div>
                 <div>
@@ -391,7 +391,7 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             <div className="taste-container smaller">
               <div className="label-container">
                 <div>
-                  <div className="bold font-18 margin-bottom-0">Suggested Taster Topic</div>
+                  <div className="bold font-18 margin-bottom-0 suggest-topic-label">Suggested Taster Topic</div>
                   <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
                   <div className="btn-orange font-16" onClick={() => {
                     if (subject.brick) {
