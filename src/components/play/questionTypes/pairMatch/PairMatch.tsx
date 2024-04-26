@@ -268,6 +268,7 @@ class PairMatch extends CompComponent<PairMatchProps, PairMatchState> {
   }
 
   renderOptions() {
+    console.log(this.props.component.list)
     return (
       <List style={{ padding: 0 }} className="answers-list">
         {
