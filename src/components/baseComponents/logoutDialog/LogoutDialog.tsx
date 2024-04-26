@@ -13,6 +13,7 @@ const mapDispatch = (dispatch: any) => {
 interface LogoutComponentProps {
   isOpen: boolean;
   history: any;
+  logoutUrl?: string;
   close(): void;
   logout(): void;
 }
@@ -20,7 +21,11 @@ interface LogoutComponentProps {
 const LogoutDialog: React.FC<LogoutComponentProps> = (props) => {
   const logout = () => {
     props.logout();
-    props.history.push(map.Login);
+    if (props.logoutUrl) {
+      props.history.push(props.logoutUrl);
+    } else {
+      props.history.push(map.Login);
+    }
   }
 
   return (

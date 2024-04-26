@@ -102,7 +102,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       let subjectsSorted = this.sortByScore(subjects);
       let definetlyList: any[] = subjects.filter(s => s.userChoice === UserSubjectChoice.Favourite);
       let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Favourite);
-      let possibleList:any[] = [];
+      let possibleList: any[] = [];
+
 
       if (answers) {
         var firstAnswer = answers.find(a => a.step === Pages.Question1);
@@ -112,6 +113,8 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
             possibleList = subjectsR1.splice(0, 6);
           } else if (firstAnswer.answer.subjectType === SubjectType.VocationalSubjects) {
             subjectsR1 = subjectsR1.filter(s => s.isVocational);
+            possibleList = subjectsR1.splice(0, 6);
+          } else {
             possibleList = subjectsR1.splice(0, 6);
           }
         }
@@ -262,7 +265,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                       <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
                       <div className="btn-orange font-16" onClick={() => {
                         if (subject.brick) {
-                          this.props.history.push(playCover(subject.brick));
+                          const a = document.createElement('a');
+                          a.target = "_blank";
+                          a.href = "https://app.brillder.com" + playCover(subject.brick);
+                          a.click();
                         }
                       }}>Try it out</div>
                     </div>
@@ -395,7 +401,10 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
                   <div className="font-14 brick-title-e342" dangerouslySetInnerHTML={{ __html: subject.brick.title }} />
                   <div className="btn-orange font-16" onClick={() => {
                     if (subject.brick) {
-                      this.props.history.push(playCover(subject.brick));
+                      const a = document.createElement('a');
+                      a.target = "_blank";
+                      a.href = "https://app.brillder.com" + playCover(subject.brick);
+                      a.click();
                     }
                   }}>Try it out</div>
                 </div>

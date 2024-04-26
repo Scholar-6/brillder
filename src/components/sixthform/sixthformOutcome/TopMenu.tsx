@@ -19,6 +19,7 @@ import NotificationPopup from 'components/baseComponents/notificationPopup/Notif
 import { isPhone } from 'services/phone';
 import map from 'components/map';
 import { SixActivePage } from './SixthformOutcome';
+import routes from '../login/routes';
 
 
 interface Props {
@@ -115,6 +116,7 @@ const TopMenu: React.FC<Props> = (props) => {
           <LogoutDialog
             isOpen={logoutOpen}
             close={() => setLogoutOpen(false)}
+            logoutUrl={routes.SignIn}
             history={props.history}
           />}
         {user &&
