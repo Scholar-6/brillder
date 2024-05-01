@@ -2,7 +2,6 @@ import React from "react";
 import SpriteIcon from "components/baseComponents/SpriteIcon";
 import { SixthformSubject, UserSubjectChoice } from "services/axios/sixthformChoices";
 import { fileUrl } from "components/services/uploadFile";
-import { sigmoid, logit } from '../services/scoring';
 
 interface Props {
   subject: any;
@@ -54,16 +53,16 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
             if (!subject.score) {
               subject.score = 0.5;
             }
-            let logOdds = logit(subject.score);
             if (subject.userChoice === UserSubjectChoice.Maybe) {
-              logOdds += Math.log(1.2); // Adjust the log odds
+              subject.score += 0.2;
             } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              // TODO: This seems wrong but is probably legacy to do with being favourited
-              logOdds += Math.log(1.9); // Adjust the log odds
+              subject.score += 0.15;
             } else {
-              logOdds += Math.log(1.5); // Adjust the log odds
+              subject.score += 0.5;
             }
-            subject.score = sigmoid(logOdds); // Update the score using the sigmoid of the log odds
+            if (subject.score > 1) {
+              subject.score = 1;
+            }
             subject.userChoice = UserSubjectChoice.Favourite;
             props.updateSubject(subject);
           }}>Favourite!</div>
@@ -73,15 +72,16 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
             if (!subject.score) {
               subject.score = 0.5;
             }
-            let logOdds = logit(subject.score);
-            if (subject.userChoice === UserSubjectChoice.Favourite) {
-              logOdds += Math.log(0.8); // Adjust the log odds
+            if (subject.userChoice === UserSubjectChoice.Maybe) {
+              subject.score += 0.2;
             } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              logOdds += Math.log(1.9); // Adjust the log odds
+              subject.score += 0.15;
             } else {
-              logOdds += Math.log(1.3); // Adjust the log odds
+              subject.score += 0.5;
             }
-            subject.score = sigmoid(logOdds); // Update the score using the sigmoid of the log odds
+            if (subject.score > 1) {
+              subject.score = 1;
+            }
             subject.userChoice = UserSubjectChoice.Maybe;
             props.updateSubject(subject);
           }}>Maybe</div>
@@ -91,15 +91,18 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
             if (!subject.score) {
               subject.score = 0.5;
             }
-            let logOdds = logit(subject.score);
             if (subject.userChoice === UserSubjectChoice.Favourite) {
-              logOdds += Math.log(0.1); // Adjust the log odds
+              subject.score -= 0.15;
             } else if (subject.userChoice === UserSubjectChoice.Maybe) {
-              logOdds += Math.log(0.5); // Adjust the log odds
+              subject.score -= 0.13;
             } else {
-              logOdds += Math.log(0.8); // Adjust the log odds
+              subject.score -= 0.10;
             }
-            subject.score = sigmoid(logOdds); // Update the score using the sigmoid of the log odds
+
+            if (subject.score < 0) {
+              subject.score = 0;
+            }
+            
             subject.userChoice = UserSubjectChoice.NotForMe;
             props.updateSubject(subject);
           }}>Not for me</div>
