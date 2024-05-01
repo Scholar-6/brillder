@@ -72,8 +72,7 @@ const PhoneBottomMenu: React.FC<Props> = (props) => {
     return (
       <div className={`subjects-scrollbar font-16 ${props.page > Pages.Question1 ? 'big-subjects-sidebar' : ''}`}>
         {props.subjects.map((subject, i) => {
-          return <div key={i} className="subject-box-r1" onMouseEnter={(event) => {
-          }} onMouseLeave={(e) => {
+          return <div key={i} className="subject-box-r1" onMouseLeave={(e) => {
           }}>
             {renderCircle(subject)}
             <div className="subject-name">{subject.name}</div>
