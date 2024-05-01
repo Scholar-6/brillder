@@ -50,59 +50,18 @@ const SubjectSidebarPopup: React.FC<Props> = (props) => {
         <div
           className={`${subject.userChoice === UserSubjectChoice.Favourite ? 'active active-green green-switch' : 'green-switch'}`}
           onClick={() => {
-            if (!subject.score) {
-              subject.score = 0.5;
-            }
-            if (subject.userChoice === UserSubjectChoice.Maybe) {
-              subject.score += 0.2;
-            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              subject.score += 0.15;
-            } else {
-              subject.score += 0.5;
-            }
-            if (subject.score > 1) {
-              subject.score = 1;
-            }
             subject.userChoice = UserSubjectChoice.Favourite;
             props.updateSubject(subject);
           }}>Favourite!</div>
         <div
           className={`${subject.userChoice === UserSubjectChoice.Maybe || !subject.userChoice ? 'active active-yellow yellow-switch' : 'yellow-switch'}`}
           onClick={() => {
-            if (!subject.score) {
-              subject.score = 0.5;
-            }
-            if (subject.userChoice === UserSubjectChoice.Maybe) {
-              subject.score += 0.2;
-            } else if (subject.userChoice === UserSubjectChoice.NotForMe) {
-              subject.score += 0.15;
-            } else {
-              subject.score += 0.5;
-            }
-            if (subject.score > 1) {
-              subject.score = 1;
-            }
             subject.userChoice = UserSubjectChoice.Maybe;
             props.updateSubject(subject);
           }}>Maybe</div>
         <div
           className={`${subject.userChoice === UserSubjectChoice.NotForMe ? 'active active-red red-switch' : 'red-switch'}`}
           onClick={() => {
-            if (!subject.score) {
-              subject.score = 0.5;
-            }
-            if (subject.userChoice === UserSubjectChoice.Favourite) {
-              subject.score -= 0.15;
-            } else if (subject.userChoice === UserSubjectChoice.Maybe) {
-              subject.score -= 0.13;
-            } else {
-              subject.score -= 0.10;
-            }
-
-            if (subject.score < 0) {
-              subject.score = 0;
-            }
-            
             subject.userChoice = UserSubjectChoice.NotForMe;
             props.updateSubject(subject);
           }}>Not for me</div>

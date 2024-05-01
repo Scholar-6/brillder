@@ -676,7 +676,11 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
 
   async updateSubject(subject: SixthformSubject) {
     await setSixthformSubjectChoice(subject);
+    const firstAnswer = this.state.answers.find(a => a.step === Pages.Question1);
     this.setState({ popupSubject: subject, subjects: this.sortByScore(this.state.subjects) });
+    if (firstAnswer) {
+      await this.saveFirstAnswer(firstAnswer ? firstAnswer.answer : { subjectType: this.state.subjectType });
+    }
   }
 
   renderSubjectGroup(subject: SixthformSubject) {
