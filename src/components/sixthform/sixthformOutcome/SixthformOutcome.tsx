@@ -104,7 +104,6 @@ class SixthformChoices extends Component<UserProfileProps, UserProfileState> {
       let subjectsR1 = subjectsSorted.filter(s => s.userChoice !== UserSubjectChoice.Favourite);
       let possibleList: any[] = [];
 
-
       if (answers) {
         var firstAnswer = answers.find(a => a.step === Pages.Question1);
         if (firstAnswer && firstAnswer.answer) {
